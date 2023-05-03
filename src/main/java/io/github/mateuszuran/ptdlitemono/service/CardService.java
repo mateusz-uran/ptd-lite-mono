@@ -2,10 +2,14 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.CardRequest;
 import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
+import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
 import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
 import io.github.mateuszuran.ptdlitemono.mapper.CardMapper;
+import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
+import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
@@ -24,6 +29,8 @@ import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 public class CardService {
     private final CardRepository repository;
     private final CardMapper cardMapper;
+    private final FuelMapper fuelMapper;
+    private final TripMapper tripMapper;
 
     public Card checkIfCardExists(Long cardId) {
         return repository.findById(cardId).orElseThrow(CardNotFoundException::new);
@@ -71,5 +78,23 @@ public class CardService {
                 () -> {
                     throw new CardNotFoundException();
                 });
+    }
+
+    public List<FuelResponse> getFuelsFromCard(Long id) {
+        return repository.findById(id)
+                .orElseThrow(CardNotFoundException::new)
+                .getFuels().stream()
+                .map(fuelMapper::mapToFuelResponseWithModelMapper)
+                .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
+                .collect(Collectors.toList());
+    }
+
+    public List<TripResponse> getTripsFromCard(Long id) {
+        return repository.findById(id)
+                .orElseThrow(CardNotFoundException::new)
+                .getTrips().stream()
+                .map(tripMapper::mapToTripResponseWithModelMapper)
+                .sorted(Comparator.comparing(TripResponse::getCounterEnd))
+                .collect(Collectors.toList());
     }
 }

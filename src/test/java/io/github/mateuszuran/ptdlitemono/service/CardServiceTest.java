@@ -2,11 +2,17 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.CardRequest;
 import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
+import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
 import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
 import io.github.mateuszuran.ptdlitemono.mapper.CardMapper;
+import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
+import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
+import io.github.mateuszuran.ptdlitemono.model.Fuel;
+import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
@@ -36,11 +39,15 @@ class CardServiceTest {
     @Mock
     private CardRepository repository;
     @Mock
-    private CardMapper modelMapper;
+    private CardMapper mapper;
+    @Mock
+    private FuelMapper fuelMapper;
+    @Mock
+    private TripMapper tripMapper;
 
     @BeforeEach
     void setUp() {
-        service = new CardService(repository, modelMapper);
+        service = new CardService(repository, mapper, fuelMapper, tripMapper);
     }
 
     @Test
@@ -72,7 +79,7 @@ class CardServiceTest {
         Card card = Card.builder().number("ABC").creationTime(date).build();
         CardRequest request = CardRequest.builder().number("ABC").build();
         CardResponse response = CardResponse.builder().number("ABC").build();
-        when(modelMapper.mapToCardResponseWithFormattedCreationTime(card)).thenReturn(response);
+        when(mapper.mapToCardResponseWithFormattedCreationTime(card)).thenReturn(response);
         //when
         var result = service.saveCard(request, 2023, 5, 3);
         //then
@@ -123,10 +130,10 @@ class CardServiceTest {
         List<Card> cards = dummyModelData();
         List<CardResponse> expectedResponse = dummyDtoData();
 
-        when(modelMapper.mapToCardResponseWithFormattedCreationTime(cards.get(0))).thenReturn(expectedResponse.get(0));
-        when(modelMapper.mapToCardResponseWithFormattedCreationTime(cards.get(1))).thenReturn(expectedResponse.get(1));
-        when(modelMapper.mapToCardResponseWithFormattedCreationTime(cards.get(2))).thenReturn(expectedResponse.get(2));
-        when(modelMapper.mapToCardResponseWithFormattedCreationTime(cards.get(3))).thenReturn(expectedResponse.get(3));
+        when(mapper.mapToCardResponseWithFormattedCreationTime(cards.get(0))).thenReturn(expectedResponse.get(0));
+        when(mapper.mapToCardResponseWithFormattedCreationTime(cards.get(1))).thenReturn(expectedResponse.get(1));
+        when(mapper.mapToCardResponseWithFormattedCreationTime(cards.get(2))).thenReturn(expectedResponse.get(2));
+        when(mapper.mapToCardResponseWithFormattedCreationTime(cards.get(3))).thenReturn(expectedResponse.get(3));
 
         when(repository.findAllByUsernameAndCreationTimeBetween("admin", startDate, endDate)).thenReturn(cards);
         //when
@@ -154,6 +161,53 @@ class CardServiceTest {
         assertThatThrownBy(() -> service.deleteCard(anyLong()))
                 .isInstanceOf(CardNotFoundException.class)
                 .hasMessageContaining("Card not found");
+    }
+
+    @Test
+    void givenCardId_whenFindAll_thenReturnMappedList() {
+        //given
+        Fuel fuel1 = Fuel.builder().refuelingAmount(300).vehicleCounter(100).build();
+        Fuel fuel2 = Fuel.builder().refuelingAmount(230).vehicleCounter(500).build();
+        Fuel fuel3 = Fuel.builder().refuelingAmount(600).vehicleCounter(200).build();
+        Card card = Card.builder().number("XYZ")
+                .fuels(List.of(fuel1, fuel2, fuel3))
+                .build();
+        when(repository.findById(anyLong())).thenReturn(Optional.of(card));
+
+        FuelResponse response1 = FuelResponse.builder().refuelingAmount(300).vehicleCounter(100).build();
+        FuelResponse response2 = FuelResponse.builder().refuelingAmount(230).vehicleCounter(500).build();
+        FuelResponse response3 = FuelResponse.builder().refuelingAmount(600).vehicleCounter(200).build();
+        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel1)).thenReturn(response1);
+        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel2)).thenReturn(response2);
+        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel3)).thenReturn(response3);
+        //when
+        var result = service.getFuelsFromCard(anyLong());
+        //then
+        assertThat(result).isEqualTo(List.of(response1, response3, response2));
+    }
+
+    @Test
+    void givenCardId_whenFindAll_thenReturnMappedListOfTrips() {
+        //given
+        Trip trip1 = Trip.builder().counterStart(111).counterEnd(222).build();
+        Trip trip2 = Trip.builder().counterStart(333).counterEnd(444).build();
+        Trip trip3 = Trip.builder().counterStart(555).counterEnd(666).build();
+        Card card = Card.builder().number("XYZ")
+                .trips(List.of(trip1, trip2, trip3))
+                .build();
+        when(repository.findById(anyLong())).thenReturn(Optional.of(card));
+
+        TripResponse response1 = TripResponse.builder().counterStart(111).counterEnd(222).build();
+        TripResponse response2 = TripResponse.builder().counterStart(333).counterEnd(444).build();
+        TripResponse response3 = TripResponse.builder().counterStart(555).counterEnd(666).build();
+        when(tripMapper.mapToTripResponseWithModelMapper(trip1)).thenReturn(response1);
+        when(tripMapper.mapToTripResponseWithModelMapper(trip2)).thenReturn(response2);
+        when(tripMapper.mapToTripResponseWithModelMapper(trip3)).thenReturn(response3);
+
+        //when
+        var result = service.getTripsFromCard(anyLong());
+        //then
+        assertThat(result).isEqualTo(List.of(response1, response2, response3));
     }
 
     private List<Card> dummyModelData() {
