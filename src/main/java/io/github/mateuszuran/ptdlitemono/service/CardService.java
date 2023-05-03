@@ -9,10 +9,18 @@ import io.github.mateuszuran.ptdlitemono.mapper.CardMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 
+import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CardService {
@@ -42,5 +50,20 @@ public class CardService {
         repository.save(card);
 
         return cardMapper.mapToCardResponseWithFormattedCreationTime(card);
+    }
+
+    public List<Card> getAllCardsByUserAndDate(String username, int year, int month) {
+        var actualDate = LocalDate.of(year, month, 1);
+
+        LocalDateTime startDate = actualDate.with(firstDayOfMonth()).atStartOfDay();
+        LocalDateTime endDate = actualDate.with(lastDayOfMonth()).atStartOfDay();
+
+        return repository.findAllByUsernameAndCreationTimeBetween(username, startDate, endDate);
+    }
+
+    public List<CardResponse> getCardsSorted(String username, int year, int month) {
+        return getAllCardsByUserAndDate(username, year, month).stream().map(cardMapper::mapToCardResponseWithFormattedCreationTime)
+                .sorted(Comparator.comparing(CardResponse::getCreationTime).reversed())
+                .toList();
     }
 }
