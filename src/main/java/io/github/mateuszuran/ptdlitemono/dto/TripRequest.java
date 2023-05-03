@@ -1,17 +1,15 @@
-package io.github.mateuszuran.ptdlitemono.model;
+package io.github.mateuszuran.ptdlitemono.dto;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "card_trips")
 @Data
 @Builder
-public class Trip {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class TripRequest {
     private String dayStart;
     private String hourStart;
     private String locationStart;
@@ -22,9 +20,4 @@ public class Trip {
     private String countryEnd;
     private Integer counterStart;
     private Integer counterEnd;
-    private Integer carMileage;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id", nullable = false)
-    private Card card;
 }
