@@ -1,11 +1,13 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name = "card_fuels")
 @Data
+@Builder
 public class Fuel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
