@@ -25,6 +25,24 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({CardExistsException.class})
+    public ResponseEntity<ErrorMessage> handleAddExistingCard(CardExistsException exception) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.CONFLICT.value(),
+                ErrorMessage.trimExceptionTimestamp(),
+                exception.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler({CardEmptyException.class})
+    public ResponseEntity<ErrorMessage> handleAddEmptyCard(CardEmptyException exception) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorMessage.trimExceptionTimestamp(),
+                exception.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
     @AllArgsConstructor
     @NoArgsConstructor
     @Data
