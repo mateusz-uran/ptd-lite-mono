@@ -135,6 +135,27 @@ class CardServiceTest {
         assertThat(expectedResponse).isEqualTo(result);
     }
 
+    @Test
+    void givenCardId_whenExists_delete() {
+        //given
+        Card card = Card.builder().id(anyLong()).number("ABC").build();
+        when(repository.findById(card.getId())).thenReturn(Optional.of(card));
+        //when
+        service.deleteCard(card.getId());
+        //then
+        verify(repository, times(1)).deleteById(card.getId());
+    }
+
+    @Test
+    void givenCardId_whenOptionalEmpty_thenThrowException() {
+        //given + when
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+        //then
+        assertThatThrownBy(() -> service.deleteCard(anyLong()))
+                .isInstanceOf(CardNotFoundException.class)
+                .hasMessageContaining("Card not found");
+    }
+
     private List<Card> dummyModelData() {
         var cardOne = Card.builder().username("admin").number("ABC")
                 .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();

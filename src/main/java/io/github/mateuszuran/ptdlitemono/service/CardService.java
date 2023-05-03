@@ -66,4 +66,12 @@ public class CardService {
                 .sorted(Comparator.comparing(CardResponse::getCreationTime).reversed())
                 .toList();
     }
+
+    public void deleteCard(Long cardId) {
+        repository.findById(cardId).ifPresentOrElse(
+                (card) -> repository.deleteById(card.getId()),
+                () -> {
+                    throw new CardNotFoundException();
+                });
+    }
 }
