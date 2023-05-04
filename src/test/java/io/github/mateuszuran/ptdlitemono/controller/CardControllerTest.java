@@ -3,7 +3,10 @@ package io.github.mateuszuran.ptdlitemono.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
+import io.github.mateuszuran.ptdlitemono.model.Fuel;
+import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
+import io.github.mateuszuran.ptdlitemono.repository.FuelRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -140,7 +143,60 @@ class CardControllerTest {
     void givenCardId_whenCardNotFound_thenThrowException() throws Exception {
         // when + then
         mockMvc.perform(delete("/api/card/delete")
-                        .param("cardId", String.valueOf(1L))
+                        .param("cardId", String.valueOf(123L))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Card not found."));
+    }
+
+    @Test
+    void givenCardId_whenGetAllFuels_thenReturnList() throws Exception {
+        //given
+        Fuel fuel1 = Fuel.builder().vehicleCounter(1500).refuelingAmount(250).card(card).build();
+        Fuel fuel2 = Fuel.builder().vehicleCounter(1750).refuelingAmount(400).card(card).build();
+        card.setFuels(List.of(fuel1, fuel2));
+        repository.saveAndFlush(card);
+        //when + then
+        mockMvc.perform(get("/api/card/fuel")
+                .param("id", String.valueOf(card.getId()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()", is(2)));
+    }
+
+    @Test
+    void givenCardId_whenGetAllFuelsFromNonExistingCard_thenThrowException() throws Exception {
+        mockMvc.perform(get("/api/card/fuel")
+                        .param("id", String.valueOf(123L))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Card not found."));
+    }
+
+    @Test
+    void givenCardId_whenGetAllTrips_thenReturnList() throws Exception {
+        //given
+        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).card(card).build();
+        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).card(card).build();
+        Trip trip3 = Trip.builder().counterStart(400).counterEnd(500).card(card).build();
+        card.setTrips(List.of(trip1, trip2, trip3));
+        repository.saveAndFlush(card);
+        //when + then
+        mockMvc.perform(get("/api/card/trip")
+                        .param("id", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()", is(3)));
+    }
+
+    @Test
+    void givenCardId_whenGetAllTripsFromNonExistingCard_thenThrowException() throws Exception {
+        mockMvc.perform(get("/api/card/trip")
+                        .param("id", String.valueOf(123L))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(print())

@@ -1,13 +1,17 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "card_trips")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
