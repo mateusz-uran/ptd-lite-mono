@@ -14,3 +14,7 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: 'false'
+
+pdf:
+  csv:
+    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1681720314/user_metadata_j0fuwm.csv
