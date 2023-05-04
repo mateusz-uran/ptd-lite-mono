@@ -4,7 +4,6 @@ import io.github.mateuszuran.ptdlitemono.exception.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -63,7 +62,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({UserNotFoundException.class})
-    public ResponseEntity<ErrorMessage> handleUserNotFound(CsvFileException exception) {
+    public ResponseEntity<ErrorMessage> handleUserNotFound(UserNotFoundException exception) {
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.FORBIDDEN.value(),
                 ErrorMessage.trimExceptionTimestamp(),

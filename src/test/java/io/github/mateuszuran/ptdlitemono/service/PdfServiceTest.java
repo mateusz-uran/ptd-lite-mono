@@ -3,7 +3,10 @@ package io.github.mateuszuran.ptdlitemono.service;
 import io.github.mateuszuran.ptdlitemono.dto.PdfCsvReader;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyValuesException;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
-import io.github.mateuszuran.ptdlitemono.pdf.*;
+import io.github.mateuszuran.ptdlitemono.pdf.CardFuels;
+import io.github.mateuszuran.ptdlitemono.pdf.CardTrips;
+import io.github.mateuszuran.ptdlitemono.pdf.Counters;
+import io.github.mateuszuran.ptdlitemono.pdf.PdfRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,7 +26,8 @@ class PdfServiceTest {
     @BeforeEach
     void setUp() {
         String testFilePath = getClass().getResource("/test.csv").getPath();
-        service = new PdfService("file:" + testFilePath);
+        service = new PdfService();
+        service.setCsvLink("file:" + testFilePath);
     }
 
     @Test

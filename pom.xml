@@ -16,6 +16,8 @@
 	<properties>
 		<java.version>17</java.version>
 		<model.mapper.version>3.1.1</model.mapper.version>
+		<itext.pdfhtml.version>4.0.3</itext.pdfhtml.version>
+		<itext.kernel.version>7.2.3</itext.kernel.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -31,6 +33,16 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>html2pdf</artifactId>
+			<version>${itext.pdfhtml.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>kernel</artifactId>
+			<version>${itext.kernel.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.modelmapper</groupId>
@@ -51,6 +63,10 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

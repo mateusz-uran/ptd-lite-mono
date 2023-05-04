@@ -8,7 +8,10 @@ import io.github.mateuszuran.ptdlitemono.exception.CardEmptyValuesException;
 import io.github.mateuszuran.ptdlitemono.exception.CsvFileException;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
 import io.github.mateuszuran.ptdlitemono.pdf.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +23,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class PdfService {
 
     @Value("${pdf.csv.link}")
-    private final String csvLink;
+    private String csvLink;
+
+    public void setCsvLink(String csvLink) {
+        this.csvLink = csvLink;
+    }
 
     public List<PdfCsvReader> getCsvFileWithData() {
         try {
