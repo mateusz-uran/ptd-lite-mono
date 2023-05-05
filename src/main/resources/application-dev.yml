@@ -1,0 +1,20 @@
+pdf:
+  csv:
+    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1681720314/user_metadata_j0fuwm.csv
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/card-db
+    driver-class-name: org.postgresql.Driver
+    username: mateuszuran
+    password: password
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          audience: https://ptd-lite/api
+          issuer-uri: https://dev-t6j70c45sd0mgjac.eu.auth0.com/

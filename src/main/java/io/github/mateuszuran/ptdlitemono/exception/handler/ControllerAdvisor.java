@@ -1,9 +1,9 @@
-package io.github.mateuszuran.ptdlitemono.exception;
+package io.github.mateuszuran.ptdlitemono.exception.handler;
 
+import io.github.mateuszuran.ptdlitemono.exception.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -41,6 +41,33 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 ErrorMessage.trimExceptionTimestamp(),
                 exception.getMessage());
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({CsvFileException.class})
+    public ResponseEntity<ErrorMessage> handleCsvFile(CsvFileException exception) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(),
+                ErrorMessage.trimExceptionTimestamp(),
+                exception.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({CardEmptyValuesException.class})
+    public ResponseEntity<ErrorMessage> handleEmptyValuesInCard(CsvFileException exception) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(),
+                ErrorMessage.trimExceptionTimestamp(),
+                exception.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({UserNotFoundException.class})
+    public ResponseEntity<ErrorMessage> handleUserNotFound(UserNotFoundException exception) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.FORBIDDEN.value(),
+                ErrorMessage.trimExceptionTimestamp(),
+                exception.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 
     @AllArgsConstructor
