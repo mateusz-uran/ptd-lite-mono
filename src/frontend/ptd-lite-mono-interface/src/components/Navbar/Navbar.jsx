@@ -6,7 +6,7 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import Divider from '@mui/material/Divider';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '@mui/material';
-import CardsList from './CardsList';
+import CardsList from '../CardList/CardsList';
 
 function Navbar(props) {
     const { user, logout, loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
@@ -65,7 +65,7 @@ function Navbar(props) {
                 </div>
                 <Divider sx={{ borderBottomWidth: 2, marginBottom: 0 }} />
                 {
-                    isAuthenticated &&
+                    isAuthenticated && user.nickname &&
                     <div>
                         <CardsList mode={darkMode} user={user.nickname} />
                     </div>

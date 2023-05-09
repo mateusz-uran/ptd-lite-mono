@@ -5,4 +5,4 @@ export const getAuthConfig = async (getAccessTokenSilently) => {
             'Authorization': `Bearer ${token}`
         }
     };
-}
+}   

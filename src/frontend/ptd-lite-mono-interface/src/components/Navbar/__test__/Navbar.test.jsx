@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import Navbar from "../components/Navbar"
+import Navbar from "../Navbar";
 
 test('button is not toggled when localstorage is empty', () => {
     localStorage.clear();
