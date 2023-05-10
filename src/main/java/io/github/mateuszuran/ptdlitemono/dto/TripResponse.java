@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TripResponse {private Long id;
+public class TripResponse {
+    private Long id;
     private String dayStart;
     private String hourStart;
     private String locationStart;

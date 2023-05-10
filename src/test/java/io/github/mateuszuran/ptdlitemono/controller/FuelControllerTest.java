@@ -12,17 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WithMockUser(value = "user123")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("it")
 @AutoConfigureMockMvc
@@ -37,16 +38,16 @@ class FuelControllerTest {
     private CardRepository cardRepository;
     private Card card;
 
+    @BeforeEach
+    void setUp() {
+        card = Card.builder().username("user123").number("ABC")
+                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
+        cardRepository.save(card);
+    }
+
     @AfterEach
     void flush() {
         repository.deleteAll();
-    }
-
-    @BeforeEach
-    void setUp() {
-        card = Card.builder().username("admin").number("ABC")
-                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
-        cardRepository.save(card);
     }
 
     @Test

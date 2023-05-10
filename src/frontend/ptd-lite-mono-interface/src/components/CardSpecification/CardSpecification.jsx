@@ -10,8 +10,7 @@ import GeneratePDF from '../PDF/GeneratePDF';
 
 function CardSpecification(props) {
     const [cardId, cardNumber, user] = useOutletContext();
-    const { getTripFromCard } = useCardService();
-    const { getFuelFromCard } = useCardService();
+    const { getCardDetails } = useCardService();
 
     const [cardTrips, setCardTrips] = useState([]);
     const [cardFuels, setCardFuels] = useState([]);
@@ -29,10 +28,9 @@ function CardSpecification(props) {
         setIsLoading(true);
         const fetchData = async () => {
             try {
-                const tripsResponse = await getTripFromCard(cardId);
-                const fuelsResponse = await getFuelFromCard(cardId);
-                setCardTrips(tripsResponse.data);
-                setCardFuels(fuelsResponse.data);
+                const cardDetails = await getCardDetails(cardId);
+                setCardTrips(cardDetails.data.trips);
+                setCardFuels(cardDetails.data.fuels);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);

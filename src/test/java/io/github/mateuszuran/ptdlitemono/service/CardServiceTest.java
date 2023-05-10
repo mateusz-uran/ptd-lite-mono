@@ -1,9 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.CardRequest;
-import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
-import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
-import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
+import io.github.mateuszuran.ptdlitemono.dto.*;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
 import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
@@ -208,6 +205,46 @@ class CardServiceTest {
         var result = service.getTripsFromCard(anyLong());
         //then
         assertThat(result).isEqualTo(List.of(response1, response2, response3));
+    }
+
+    @Test
+    void givenCardId_whenStreamCard_thenReturnFuelsAndTrips() {
+        //given
+        Trip trip1 = Trip.builder().counterStart(111).counterEnd(222).build();
+        Trip trip2 = Trip.builder().counterStart(333).counterEnd(444).build();
+        Trip trip3 = Trip.builder().counterStart(555).counterEnd(666).build();
+        Fuel fuel1 = Fuel.builder().refuelingAmount(300).vehicleCounter(100).build();
+        Fuel fuel2 = Fuel.builder().refuelingAmount(230).vehicleCounter(500).build();
+        Fuel fuel3 = Fuel.builder().refuelingAmount(600).vehicleCounter(200).build();
+        Card card = Card.builder().number("XYZ")
+                .trips(List.of(trip1, trip2, trip3))
+                .fuels(List.of(fuel1, fuel2, fuel3))
+                .build();
+        when(repository.findById(anyLong())).thenReturn(Optional.of(card));
+
+        TripResponse response1 = TripResponse.builder().counterStart(111).counterEnd(222).build();
+        TripResponse response2 = TripResponse.builder().counterStart(333).counterEnd(444).build();
+        TripResponse response3 = TripResponse.builder().counterStart(555).counterEnd(666).build();
+        when(tripMapper.mapToTripResponseWithModelMapper(trip1)).thenReturn(response1);
+        when(tripMapper.mapToTripResponseWithModelMapper(trip2)).thenReturn(response2);
+        when(tripMapper.mapToTripResponseWithModelMapper(trip3)).thenReturn(response3);
+        FuelResponse response4 = FuelResponse.builder().refuelingAmount(300).vehicleCounter(100).build();
+        FuelResponse response5 = FuelResponse.builder().refuelingAmount(230).vehicleCounter(500).build();
+        FuelResponse response6 = FuelResponse.builder().refuelingAmount(600).vehicleCounter(200).build();
+        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel1)).thenReturn(response4);
+        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel2)).thenReturn(response5);
+        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel3)).thenReturn(response6);
+
+        CardDetailsResponse response = CardDetailsResponse.builder()
+                .trips(List.of(response1, response2, response3))
+                .fuels(List.of(response4, response6, response5))
+                .build();
+
+        //when
+        var result = service.getCardDetails(anyLong());
+        //then
+        assertThat(result).isEqualTo(response);
+
     }
 
     private List<Card> dummyModelData() {
