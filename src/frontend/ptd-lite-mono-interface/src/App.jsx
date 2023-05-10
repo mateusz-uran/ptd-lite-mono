@@ -40,7 +40,7 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/", element: <Navbar themeMode={darkMode} />,
+      path: "/", element: <Navbar />,
       errorElement: <ErrorPage />,
       children: [
         {

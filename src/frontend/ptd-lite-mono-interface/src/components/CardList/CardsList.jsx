@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { CircularProgress, Divider, IconButton, List, ListItemButton, ListItemText, TextField, } from '@mui/material';
+import { CircularProgress, Divider, IconButton, List, ListItemButton, ListItemText, TextField, useTheme, } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useCardService from '../../api/CardService/CardServiceHook';
@@ -10,7 +10,8 @@ import Backdrop from '@mui/material/Backdrop';
 import AlertDialog from '../misc/AlertDialog';
 
 function CardsList(props) {
-    const { user, mode } = props;
+    const theme = useTheme()
+    const { user } = props;
     const current = new Date();
 
     const { createCard, getCards, deleteCard } = useCardService();
@@ -98,7 +99,7 @@ function CardsList(props) {
     }, [])
 
     return (
-        <div className={`flex lg:flex-row flex-col px-4 ${mode ? 'text-white' : ''}`}>
+        <div className={`flex lg:flex-row flex-col px-4 ${theme.palette.mode === 'ligth' ? 'text-white' : ''}`}>
             <Backdrop
                 open={openBackdrop}
             >
@@ -131,7 +132,7 @@ function CardsList(props) {
                             type="submit"
                             data-testid='material-icon-button'
                         >
-                            <AddIcon className={mode ? 'text-white' : ''} />
+                            <AddIcon className={theme.palette.mode === 'dark' ? 'text-white' : ''} />
                         </IconButton>
                     </div>
                 </form>
@@ -145,7 +146,10 @@ function CardsList(props) {
                                         onClick={() => handleCardInformation(card.id, card.number)}
                                     >
                                         <ListItemText
-                                            sx={{ textTransform: 'uppercase' }}
+                                            sx={{
+                                                textTransform: 'uppercase',
+                                                color: theme.palette.mode === 'dark' ? 'white' : ''
+                                            }}
                                             primary={card.number}
                                             data-testid="material-text-item"
                                         />

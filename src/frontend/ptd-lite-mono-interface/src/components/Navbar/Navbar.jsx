@@ -1,15 +1,15 @@
 import React from 'react';
 import Divider from '@mui/material/Divider';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button } from '@mui/material';
+import { Button, useTheme } from '@mui/material';
 import CardsList from '../CardList/CardsList';
 
 function Navbar(props) {
     const { user, logout, loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
-    const { themeMode } = props;
+    const theme = useTheme()
 
     return (
-        <div className={`${themeMode ? 'dark bg-slate-700' : 'bg-blue-200'}`}>
+        <div className={`${theme.palette.mode === 'dark' ? 'dark bg-slate-700' : 'bg-blue-200'}`}>
             <div className='p-4 flex justify-between items-center'>
                 <div className='flex'>
                     &nbsp;
@@ -31,7 +31,7 @@ function Navbar(props) {
             {
                 isAuthenticated && user.nickname &&
                 <div>
-                    <CardsList mode={themeMode} user={user.nickname} />
+                    <CardsList user={user.nickname} />
                 </div>
             }
         </div >
