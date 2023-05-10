@@ -1,9 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
-import io.github.mateuszuran.ptdlitemono.dto.CardRequest;
-import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
-import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
-import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
+import io.github.mateuszuran.ptdlitemono.dto.*;
 import io.github.mateuszuran.ptdlitemono.service.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,6 +30,12 @@ public class CardController {
     public ResponseEntity<?> delete(@RequestParam Long cardId) {
         service.deleteCard(cardId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<CardDetailsResponse> getCardDetails(@RequestParam Long id) {
+        return ResponseEntity.ok()
+                .body(service.getCardDetails(id));
     }
 
     @GetMapping("/fuel")

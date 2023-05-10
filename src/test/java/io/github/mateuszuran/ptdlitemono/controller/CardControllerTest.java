@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
+@WithMockUser(value = "user123")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("it")
 @AutoConfigureMockMvc
@@ -36,21 +38,21 @@ class CardControllerTest {
     private ObjectMapper mapper;
     private Card card;
 
+    @BeforeEach
+    void setUp() {
+        card = Card.builder().username("user123").number("ABC")
+                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
+    }
+
     @AfterEach
     void flush() {
         repository.deleteAll();
     }
 
-    @BeforeEach
-    void setUp() {
-        card = Card.builder().username("admin").number("ABC")
-                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
-    }
-
     @Test
     void givenUsernameAndDate_whenFindCards_thenReturnList() throws Exception {
         //given
-        Card card2 = Card.builder().username("admin").number("XYZ")
+        Card card2 = Card.builder().username("user123").number("XYZ")
                 .creationTime(LocalDateTime.of(2023, 5, 2, 13, 0)).build();
         repository.saveAllAndFlush(List.of(card, card2));
 
@@ -199,5 +201,24 @@ class CardControllerTest {
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Card not found."));
+    }
+
+
+    @Test
+    void givenCardId_whenGetTripsAndFuels_thenReturnCardDetails() throws Exception {
+        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).card(card).build();
+        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).card(card).build();
+        Trip trip3 = Trip.builder().counterStart(400).counterEnd(500).card(card).build();
+        Fuel fuel1 = Fuel.builder().vehicleCounter(1500).refuelingAmount(250).card(card).build();
+        Fuel fuel2 = Fuel.builder().vehicleCounter(1750).refuelingAmount(400).card(card).build();
+        card.setFuels(List.of(fuel1, fuel2));
+        card.setTrips(List.of(trip1, trip2, trip3));
+        repository.saveAndFlush(card);
+        //when + then
+        mockMvc.perform(get("/api/card/details")
+                        .param("id", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 }

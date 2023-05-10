@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { useAuth0 } from "@auth0/auth0-react";
-import Navbar from "../components/Navbar";
 import { vi } from "vitest";
+import Navbar from "../Navbar";
 
 vi.mock("@auth0/auth0-react");
 
@@ -39,6 +39,11 @@ describe("The Application Component in logged out state", () => {
     beforeEach(() => {
       useAuth0.mockReturnValue({
         isAuthenticated: true,
+        user: {
+          name: "Juan",
+          email: "jc@example.com",
+          picture: "https://avatar.com",
+        },
       });
     });
   

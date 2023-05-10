@@ -15,6 +15,13 @@ spring:
       ddl-auto: create-drop
     show-sql: 'false'
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          audience: https://ptd-lite/api
+          issuer-uri: https://dev-t6j70c45sd0mgjac.eu.auth0.com/
+
 pdf:
   csv:
     link: file:/test.csv

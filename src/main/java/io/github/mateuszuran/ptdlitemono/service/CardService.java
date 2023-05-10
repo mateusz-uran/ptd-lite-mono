@@ -1,9 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.CardRequest;
-import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
-import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
-import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
+import io.github.mateuszuran.ptdlitemono.dto.*;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
 import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
@@ -96,5 +93,18 @@ public class CardService {
                 .map(tripMapper::mapToTripResponseWithModelMapper)
                 .sorted(Comparator.comparing(TripResponse::getCounterEnd))
                 .collect(Collectors.toList());
+    }
+
+    public CardDetailsResponse getCardDetails(Long id) {
+        Card card = repository.findById(id).orElseThrow(CardNotFoundException::new);
+        List<FuelResponse> fuels = card.getFuels().stream()
+                .map(fuelMapper::mapToFuelResponseWithModelMapper)
+                .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
+                .collect(Collectors.toList());
+        List<TripResponse> trips = card.getTrips().stream()
+                .map(tripMapper::mapToTripResponseWithModelMapper)
+                .sorted(Comparator.comparing(TripResponse::getCounterEnd))
+                .collect(Collectors.toList());
+        return new CardDetailsResponse(trips, fuels);
     }
 }
