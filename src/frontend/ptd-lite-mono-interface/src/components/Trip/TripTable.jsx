@@ -87,12 +87,13 @@ function TripTable(props) {
                                     <DeleteIcon />
                                 </IconButton>
                             </TableCell>
-                            <TableCell align="center" colSpan={7}>
+                            <TableCell align="center" colSpan={5} sx={{borderLeft: 1}}>
                                 Start
                             </TableCell>
-                            <TableCell align="center" colSpan={5}>
+                            <TableCell align="center" colSpan={5} sx={{borderLeft: 1, borderRight: 1}}>
                                 End
                             </TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell padding="checkbox">
@@ -111,6 +112,7 @@ function TripTable(props) {
                             <TableCell>Location</TableCell>
                             <TableCell>Country</TableCell>
                             <TableCell>Counter</TableCell>
+                            <TableCell>Mileage</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -137,6 +139,7 @@ function TripTable(props) {
                                     <TableCell>{row.locationEnd}</TableCell>
                                     <TableCell>{row.countryEnd}</TableCell>
                                     <TableCell>{row.counterEnd}</TableCell>
+                                    <TableCell>{row.carMileage}</TableCell>
                                 </TableRow>
                             );
                         })}
