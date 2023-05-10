@@ -175,7 +175,7 @@ function CardsList(props) {
                 })) :
                     (<List>
                         <ListItemButton>
-                            <ListItemText>No cards found</ListItemText>
+                            <ListItemText sx={{ color: theme.palette.mode === 'dark' ? 'white' : '' }}>No cards found</ListItemText>
                         </ListItemButton>
                     </List>)
                 }

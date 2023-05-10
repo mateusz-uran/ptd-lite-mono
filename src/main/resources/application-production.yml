@@ -1,6 +1,11 @@
+server:
+  port: ${PORT}
+
 pdf:
   csv:
-    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1681720314/user_metadata_j0fuwm.csv
+    link: ${CSV_LINK}
+frontend:
+  url: ${FRONTEND_API_URI}
 
 spring:
   jpa:
@@ -16,5 +21,5 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          audience: https://ptd-lite/api
-          issuer-uri: https://dev-t6j70c45sd0mgjac.eu.auth0.com/
+          audience: ${AUTH0_AUDIENCE}
+          issuer-uri: ${AUTH0_ISSUER_URI}
