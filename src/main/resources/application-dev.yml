@@ -2,15 +2,18 @@ pdf:
   csv:
     link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1681720314/user_metadata_j0fuwm.csv
 
+frontend:
+  url: http://localhost:5173
+
 spring:
   jpa:
     hibernate:
       ddl-auto: update
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
+    url: jdbc:postgresql://localhost:5432/card-db
     driver-class-name: org.postgresql.Driver
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    username: mateuszuran
+    password: password
 
   security:
     oauth2:

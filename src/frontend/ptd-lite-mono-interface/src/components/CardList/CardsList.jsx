@@ -42,7 +42,7 @@ function CardsList(props) {
                 number: values.number,
                 username: user
             }
-            createCard(cardPayload, current.getFullYear(), current.getMonth(), current.getDate())
+            createCard(cardPayload, current.getFullYear(), current.getMonth() + 1, current.getDate())
                 .then(response => {
                     setCardsList(cardsList => [...cardsList, response.data]);
                     resetForm();
@@ -77,6 +77,7 @@ function CardsList(props) {
     }
 
     useEffect(() => {
+        console.log(current.getMonth() + 1);
         setOpenBackdrop(true);
         async function fetchCards() {
             const response = await getCards(user, current.getFullYear(), current.getMonth() + 1);

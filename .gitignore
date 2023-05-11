@@ -33,3 +33,4 @@ build/
 .vscode/
 /card-db/
 /src/frontend/ptd-lite-mono-interface/.env
+/src/frontend/ptd-lite-mono-interface/.env.production
