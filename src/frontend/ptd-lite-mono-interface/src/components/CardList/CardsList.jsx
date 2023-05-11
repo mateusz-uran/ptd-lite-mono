@@ -77,6 +77,7 @@ function CardsList(props) {
     }
 
     useEffect(() => {
+        console.log(current.getMonth() + 1);
         setOpenBackdrop(true);
         async function fetchCards() {
             const response = await getCards(user, current.getFullYear(), current.getMonth() + 1);
