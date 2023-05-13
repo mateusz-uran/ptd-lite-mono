@@ -1,8 +1,10 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import usePdfService from '../../api/PdfService/PdfServiceHook';
+import { useTranslation } from 'react-i18next';
 
 function GeneratePDF(props) {
+    const { t } = useTranslation();
     const { user, cardNumber, cardTrips, cardFuels, setProgress, setSnackbarInformation } = props;
     const { generatePdf } = usePdfService();
 
@@ -18,9 +20,10 @@ function GeneratePDF(props) {
         })
             .then(response => {
                 const file = new Blob([response.data], { type: "application/pdf" });
-                const fileURL = URL.createObjectURL(file);
-                const pdfWindow = window.open();
-                pdfWindow.location.href = fileURL;
+                var link = document.createElement("a");
+                link.href = window.URL.createObjectURL(file);
+                link.download = cardNumber + ".pdf";
+                link.click();
                 setProgress(0);
             }, (error) => {
                 console.log("Error: ", error);
@@ -28,7 +31,7 @@ function GeneratePDF(props) {
                     ...prevState,
                     open: true,
                     type: 'warning',
-                    message: 'Something went wrong, please try again later.',
+                    message: t('pdf.warningMessage'),
                 }))
                 setProgress(0);
             });
@@ -36,7 +39,7 @@ function GeneratePDF(props) {
 
     return (
         <div>
-            <Button onClick={() => generate()} variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>Generate PDF</Button>
+            <Button onClick={() => generate()} variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('pdf.genratePdfButton')}</Button>
         </div>
     );
 }

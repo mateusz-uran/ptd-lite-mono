@@ -1,0 +1,67 @@
+{
+  "navbar": {
+    "login": "Zaloguj",
+    "logout": "Wyloguj"
+  },
+  "yup": {
+    "empty": "Pole musi być wypełnione",
+    "number": "Wartość musi być liczbą",
+    "positive": "Wartość musi być dodatnia"
+  },
+  "cardsList": {
+    "cardFormLabel": "numer",
+    "cardFormYupValidation": "Pole musi być wypełnione",
+    "confirmDialogTitle": "Usuń kartę z numerem: ",
+    "confirmDialogSubtitle": "Tej akcji nie można cofnąć."
+  },
+  "cardsSpecification": {
+    "addTripButton": "Dodaj trasę",
+    "addFuelButton": "Dodaj tankowanie"
+  },
+  "fuelTable": {
+    "tableCellDate": "Data",
+    "tableCellLocation": "Lokalizacja",
+    "tableCellCounter": "Licznik",
+    "tableCellAmount": "Ilość"
+  },
+  "addFuel": {
+    "goBackButton": "Wróć",
+    "date": "Data",
+    "location": "Miejscowość",
+    "counter": "Licznik",
+    "amount": "Ilość",
+    "submit": "Zapisz"
+  },
+  "tripTable": {
+    "start": "WYJAZD",
+    "end": "PRZYJAZD",
+    "day": "Dzień",
+    "hour": "Godzina",
+    "location": "Miejscowość",
+    "counter": "Licznik",
+    "mileage": "Przebieg",
+    "paginationLabel": "Wszystkie",
+    "paginationRowsPerPageLabel": "Ilość wierszy"
+  },
+  "addTrip": {
+    "day": "Dzień",
+    "hour": "Godzina",
+    "location": "Lokalizacja",
+    "country": "Kraj",
+    "counter": "Licznik",
+    "removeButton": "Usuń",
+    "submitButton": "Zapisz",
+    "addRowButton": "Dodaj wiersz"
+  },
+  "pdf": {
+    "genratePdfButton": "Generuj PDF",
+    "warningMessage": "Coś poszło nie tak, proszę spróbować później."
+  },
+  "misc": {
+    "goBackButton": "Wróć",
+    "start": "WYJAZD",
+    "end": "PRZYJAZD",
+    "alertDialogButtonYes": "Tak",
+    "alertDialogButtonNo": "Nie"
+  }
+}

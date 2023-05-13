@@ -1,0 +1,67 @@
+{
+  "navbar": {
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "yup": {
+    "empty": "Cannot be empty",
+    "number": "Must be number",
+    "positive": "Must be positive"
+  },
+  "cardsList": {
+    "cardFormLabel": "number",
+    "cardFormYupValidation": "Cannot be empty",
+    "confirmDialogTitle": "Delete card with number: ",
+    "confirmDialogSubtitle": "This action cannot be undone."
+  },
+  "cardsSpecification": {
+    "addTripButton": "Add trip",
+    "addFuelButton": "Add fuel"
+  },
+  "fuelTable": {
+    "tableCellDate": "Date",
+    "tableCellLocation": "Localization",
+    "tableCellCounter": "Counter",
+    "tableCellAmount": "Amount"
+  },
+  "addFuel": {
+    "goBackButton": "Back",
+    "date": "Date",
+    "location": "Localization",
+    "counter": "Counter",
+    "amount": "Amount",
+    "submit": "Submit"
+  },
+  "tripTable": {
+    "start": "Start",
+    "end": "End",
+    "day": "Day",
+    "hour": "Hour",
+    "location": "Localization",
+    "counter": "Counter",
+    "mileage": "Mileage",
+    "paginationLabel": "All",
+    "paginationRowsPerPageLabel": "Rows per page"
+  },
+  "addTrip": {
+    "day": "Day",
+    "hour": "Hour",
+    "location": "Localization",
+    "country": "Country",
+    "counter": "Counter",
+    "removeButton": "Remove",
+    "submitButton": "Submit",
+    "addRowButton": "Add row"
+  },
+  "pdf": {
+    "genratePdfButton": "Generate PDF",
+    "warningMessage": "Something went wrong, please try again later."
+  },
+  "misc": {
+    "goBackButton": "Back",
+    "start": "Start",
+    "end": "End",
+    "alertDialogButtonYes": "Yes",
+    "alertDialogButtonNo": "No"
+  }
+}

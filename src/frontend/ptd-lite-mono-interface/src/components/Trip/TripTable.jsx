@@ -2,8 +2,10 @@ import { Checkbox, IconButton, Table, TableBody, TableCell, TableContainer, Tabl
 import DeleteIcon from '@mui/icons-material/Delete';
 import useTripService from "../../api/TripService/TripServiceHook";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function TripTable(props) {
+    const { t } = useTranslation();
     const { cardId, cardTrips } = props;
 
     const { deleteManyTrips } = useTripService();
@@ -88,10 +90,10 @@ function TripTable(props) {
                                 </IconButton>
                             </TableCell>
                             <TableCell align="center" colSpan={5} sx={{borderLeft: 1}}>
-                                Start
+                                {t('misc.start')}
                             </TableCell>
                             <TableCell align="center" colSpan={5} sx={{borderLeft: 1, borderRight: 1}}>
-                                End
+                                {t('misc.end')}
                             </TableCell>
                             <TableCell></TableCell>
                         </TableRow>
@@ -102,17 +104,17 @@ function TripTable(props) {
                                     onClick={(event) => handleSelectAllClick(event)}
                                 />
                             </TableCell>
-                            <TableCell>Day</TableCell>
-                            <TableCell>Hour</TableCell>
-                            <TableCell>Location</TableCell>
+                            <TableCell>{t('tripTable.day')}</TableCell>
+                            <TableCell>{t('tripTable.hour')}</TableCell>
+                            <TableCell>{t('tripTable.location')}</TableCell>
                             <TableCell>Country</TableCell>
-                            <TableCell>Counter</TableCell>
-                            <TableCell>Day</TableCell>
-                            <TableCell>Hour</TableCell>
-                            <TableCell>Location</TableCell>
+                            <TableCell>{t('tripTable.counter')}</TableCell>
+                            <TableCell>{t('tripTable.day')}</TableCell>
+                            <TableCell>{t('tripTable.hour')}</TableCell>
+                            <TableCell>{t('tripTable.location')}</TableCell>
                             <TableCell>Country</TableCell>
-                            <TableCell>Counter</TableCell>
-                            <TableCell>Mileage</TableCell>
+                            <TableCell>{t('tripTable.counter')}</TableCell>
+                            <TableCell>{t('tripTable.mileage')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -152,13 +154,14 @@ function TripTable(props) {
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                rowsPerPageOptions={[5, 10, 25, { label: t('tripTable.paginationLabel'), value: -1 }]}
                                 colSpan={11}
                                 count={trips.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}
+                                labelRowsPerPage={t('tripTable.paginationRowsPerPageLabel')}
                             />
                         </TableRow>
                     </TableFooter>

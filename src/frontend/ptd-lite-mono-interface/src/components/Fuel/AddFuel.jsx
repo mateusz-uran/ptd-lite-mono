@@ -4,8 +4,10 @@ import * as Yup from 'yup';
 import { Button, TextField } from '@mui/material';
 import { useFormik } from "formik";
 import useFuelService from '../../api/FuelService/FuelServiceHook';
+import { useTranslation } from 'react-i18next';
 
 function AddFuel(props) {
+    const { t } = useTranslation();
     const { createFuel } = useFuelService();
 
     const navigate = useNavigate();
@@ -19,10 +21,10 @@ function AddFuel(props) {
             refuelingAmount: ''
         },
         validationSchema: Yup.object({
-            refuelingDate: Yup.string().required("Cannot be empty"),
-            refuelingLocation: Yup.string().required("Cannot be empty"),
-            vehicleCounter: Yup.string().required("Cannot be empty"),
-            refuelingAmount: Yup.string().required("Cannot be empty"),
+            refuelingDate: Yup.string().required(t('yup.empty')),
+            refuelingLocation: Yup.string().required(t('yup.empty')),
+            vehicleCounter: Yup.string().required(t('yup.empty')),
+            refuelingAmount: Yup.string().required(t('yup.empty')),
         }),
         onSubmit: (values) => {
             createFuel(cardId, values)
@@ -37,13 +39,13 @@ function AddFuel(props) {
     return (
         <div className='flex flex-col'>
             <div className='text-left p-2'>
-                <Button variant="outlined" onClick={() => navigate(-1)} sx={{ fontWeight: 'bold' }}>Go back</Button>
+                <Button variant="outlined" onClick={() => navigate(-1)} sx={{ fontWeight: 'bold' }}>{t('misc.goBackButton')}</Button>
             </div>
             <form onSubmit={formik.handleSubmit} className='text-center'>
                 <div>
                     <TextField
                         name="refuelingDate"
-                        label="Date"
+                        label={t('addFuel.date')}
                         value={formik.values.refuelingDate}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -53,7 +55,7 @@ function AddFuel(props) {
                     />
                     <TextField
                         name="refuelingLocation"
-                        label="Location"
+                        label={t('addFuel.location')}
                         value={formik.values.refuelingLocation}
                         onChange={formik.handleChange}
                         error={formik.touched.refuelingLocation && Boolean(formik.errors.refuelingLocation)}
@@ -62,7 +64,7 @@ function AddFuel(props) {
                     />
                     <TextField
                         name="vehicleCounter"
-                        label="Counter"
+                        label={t('addFuel.counter')}
                         value={formik.values.vehicleCounter}
                         onChange={formik.handleChange}
                         error={formik.touched.vehicleCounter && Boolean(formik.errors.vehicleCounter)}
@@ -71,7 +73,7 @@ function AddFuel(props) {
                     />
                     <TextField
                         name="refuelingAmount"
-                        label="Amount"
+                        label={t('addFuel.amount')}
                         value={formik.values.refuelingAmount}
                         onChange={formik.handleChange}
                         error={formik.touched.refuelingAmount && Boolean(formik.errors.refuelingAmount)}
@@ -80,7 +82,7 @@ function AddFuel(props) {
                     />
                 </div>
                 <div className='text-right p-2'>
-                    <Button type="submit" variant='contained' sx={{ marginRight: 1, fontWeight: 'bold' }}>Submit</Button>
+                    <Button type="submit" variant='contained' sx={{ marginRight: 1, fontWeight: 'bold' }}>{t('addFuel.submit')}</Button>
                 </div>
             </form>
         </div>

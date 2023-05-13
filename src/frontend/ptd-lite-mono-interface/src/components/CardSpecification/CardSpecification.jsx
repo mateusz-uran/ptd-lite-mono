@@ -7,8 +7,10 @@ import LinearProgressWithLabel from '../misc/LinearProgressWithLabel';
 import TripTable from '../Trip/TripTable';
 import FuelTable from '../Fuel/FuelTable';
 import GeneratePDF from '../PDF/GeneratePDF';
+import { useTranslation } from 'react-i18next';
 
 function CardSpecification(props) {
+    const { t } = useTranslation();
     const [cardId, cardNumber, user] = useOutletContext();
     const { getCardDetails } = useCardService();
 
@@ -51,11 +53,11 @@ function CardSpecification(props) {
             <div className='lg:px-5 my-2'>
                 <div className='flex pb-1'>
                     <Link to={`../${cardId}/add-trip`} relative="path">
-                        <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>Add Trip</Button>
+                        <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addTripButton')}</Button>
                     </Link>
 
                     <Link to={`../${cardId}/add-fuel`} relative="path">
-                        <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>Add Fuel</Button>
+                        <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addFuelButton')}</Button>
                     </Link>
 
                     {cardTrips && cardTrips.length > 1 && cardFuels && cardFuels.length > 0 &&
