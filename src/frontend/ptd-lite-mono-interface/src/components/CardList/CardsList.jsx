@@ -8,8 +8,10 @@ import useCardService from '../../api/CardService/CardServiceHook';
 import { Link, Outlet } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import AlertDialog from '../misc/AlertDialog';
+import { useTranslation } from 'react-i18next';
 
 function CardsList(props) {
+    const { t } = useTranslation();
     const theme = useTheme()
     const { user } = props;
     const current = new Date();
@@ -35,7 +37,7 @@ function CardsList(props) {
             number: '',
         },
         validationSchema: yup.object({
-            number: yup.string().required("Cannot be empty"),
+            number: yup.string().required(t('cardsList.cardFormYupValidation')),
         }),
         onSubmit: (values, { resetForm }) => {
             let cardPayload = {
@@ -120,7 +122,7 @@ function CardsList(props) {
                         <TextField
                             id="number"
                             name="number"
-                            label="number"
+                            label={t('cardsList.cardFormLabel')}
                             value={formik.values.number}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
@@ -160,8 +162,8 @@ function CardsList(props) {
                                                     ...prevState,
                                                     confirmation: true,
                                                     cardId: card.id,
-                                                    title: 'Delete card number: ',
-                                                    subtitle: 'This action cannot be undone.',
+                                                    title: t('cardsList.confirmDialogTitle'),
+                                                    subtitle: t('cardsList.confirmDialogSubtitle'),
                                                     number: card.number,
                                                     confirmFunction: handleDeleteCard
                                                 }))}>

@@ -7,13 +7,13 @@ import CardSpecification from './components/CardSpecification/CardSpecification'
 import ErrorPage from './components/misc/ErrorPage';
 import AddTrip from './components/Trip/AddTrip';
 import AddFuel from './components/Fuel/AddFuel';
-import { createTheme, Switch, ThemeProvider } from '@mui/material';
+import { createTheme, FormControl, InputLabel, MenuItem, Select, Switch, ThemeProvider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import { useTranslation } from 'react-i18next';
 
 function App() {
-
   const [darkMode, setDarkMode] = useState(false);
 
   const handleChangeTheme = (event) => {

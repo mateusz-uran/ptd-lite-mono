@@ -4,8 +4,10 @@ import * as Yup from 'yup';
 import { Button, Divider, TextField } from '@mui/material';
 import { useFormik } from "formik";
 import useTripService from '../../api/TripService/TripServiceHook';
+import { useTranslation } from 'react-i18next';
 
 function AddTrip(props) {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { createFixed } = useTripService();
     let { cardId } = useParams();
@@ -20,17 +22,17 @@ function AddTrip(props) {
         validationSchema: Yup.object().shape({
             rows: Yup.array().of(
                 Yup.object().shape({
-                    dayStart: Yup.string().min(2, 'Must be longer then 2 characters').required("Day start cannot be empty"),
-                    hourStart: Yup.string().required("Hour start cannot be empty"),
-                    locationStart: Yup.string().required("Location start cannot be empty"),
-                    countryStart: Yup.string().required("Country start cannot be empty"),
-                    counterStart: Yup.number("Must be number").positive("Must be positive").integer("Must be number").required("Counter start cannot be empty"),
+                    dayStart: Yup.string().required(t('yup.empty')),
+                    hourStart: Yup.string().required(t('yup.empty')),
+                    locationStart: Yup.string().required(t('yup.empty')),
+                    countryStart: Yup.string().required(t('yup.empty')),
+                    counterStart: Yup.number().typeError(t('yup.number')).positive(t('yup.positive')).required(t('yup.empty')),
 
-                    dayEnd: Yup.string().required("Day end cannot be empty"),
-                    hourEnd: Yup.string().required("Hour end cannot be empty"),
-                    locationEnd: Yup.string().required("Location end cannot be empty"),
-                    countryEnd: Yup.string().required("Country end cannot be empty"),
-                    counterEnd: Yup.number().positive("Must be positive").integer().required("Counter end cannot be empty"),
+                    dayEnd: Yup.string().required(t('yup.empty')),
+                    hourEnd: Yup.string().required(t('yup.empty')),
+                    locationEnd: Yup.string().required(t('yup.empty')),
+                    countryEnd: Yup.string().required(t('yup.empty')),
+                    counterEnd: Yup.number().typeError(t('yup.number')).positive(t('yup.positive')).required(t('yup.empty')),
                 })
             )
         }),
@@ -74,16 +76,16 @@ function AddTrip(props) {
     return (
         <div className='flex flex-col'>
             <div className='text-left p-2'>
-                <Button variant="outlined" onClick={() => navigate(-1)} sx={{ fontWeight: 'bold' }}>Go back</Button>
+                <Button variant="outlined" onClick={() => navigate(-1)} sx={{ fontWeight: 'bold' }}>{t('misc.goBackButton')}</Button>
             </div>
             <form onSubmit={formik.handleSubmit} className='text-center'>
                 {formik.values.rows.map((row, index) => (
                     <div key={index}>
                         <div className='flex flex-col'>
                             <div>
-                                <p>Start</p>
+                                <p>{t('misc.start')}</p>
                                 <TextField
-                                    label="Day"
+                                    label={t('addTrip.day')}
                                     name={`rows.${index}.dayStart`}
                                     value={formik.values.rows[index].dayStart}
                                     onChange={formik.handleChange}
@@ -92,7 +94,7 @@ function AddTrip(props) {
                                     sx={{ margin: 1 }}
                                 />
                                 <TextField
-                                    label="Hour"
+                                    label={t('addTrip.hour')}
                                     name={`rows.${index}.hourStart`}
                                     value={formik.values.rows[index].hourStart}
                                     onChange={formik.handleChange}
@@ -101,7 +103,7 @@ function AddTrip(props) {
                                     sx={{ margin: 1 }}
                                 />
                                 <TextField
-                                    label="Location"
+                                    label={t('addTrip.location')}
                                     name={`rows.${index}.locationStart`}
                                     value={formik.values.rows[index].locationStart}
                                     onChange={formik.handleChange}
@@ -110,7 +112,7 @@ function AddTrip(props) {
                                     sx={{ margin: 1 }}
                                 />
                                 <TextField
-                                    label="Country"
+                                    label={t('addTrip.country')}
                                     name={`rows.${index}.countryStart`}
                                     value={formik.values.rows[index].countryStart}
                                     onChange={formik.handleChange}
@@ -119,7 +121,7 @@ function AddTrip(props) {
                                     sx={{ margin: 1 }}
                                 />
                                 <TextField
-                                    label="Counter"
+                                    label={t('addTrip.counter')}
                                     name={`rows.${index}.counterStart`}
                                     value={formik.values.rows[index].counterStart}
                                     onChange={formik.handleChange}
@@ -129,9 +131,9 @@ function AddTrip(props) {
                                 />
                             </div>
                             <div>
-                                <p>End</p>
+                                <p>{t('misc.end')}</p>
                                 <TextField
-                                    label="Day"
+                                    label={t('addTrip.day')}
                                     name={`rows.${index}.dayEnd`}
                                     value={formik.values.rows[index].dayEnd}
                                     onChange={formik.handleChange}
@@ -140,7 +142,7 @@ function AddTrip(props) {
                                     sx={{ margin: 1 }}
                                 />
                                 <TextField
-                                    label="Hour"
+                                    label={t('addTrip.hour')}
                                     name={`rows.${index}.hourEnd`}
                                     value={formik.values.rows[index].hourEnd}
                                     onChange={formik.handleChange}
@@ -149,7 +151,7 @@ function AddTrip(props) {
                                     sx={{ margin: 1 }}
                                 />
                                 <TextField
-                                    label="Location"
+                                    label={t('addTrip.location')}
                                     name={`rows.${index}.locationEnd`}
                                     value={formik.values.rows[index].locationEnd}
                                     onChange={formik.handleChange}
@@ -158,7 +160,7 @@ function AddTrip(props) {
                                     sx={{ margin: 1 }}
                                 />
                                 <TextField
-                                    label="Country"
+                                    label={t('addTrip.country')}
                                     name={`rows.${index}.countryEnd`}
                                     value={formik.values.rows[index].countryEnd}
                                     onChange={formik.handleChange}
@@ -167,7 +169,7 @@ function AddTrip(props) {
                                     sx={{ margin: 1 }}
                                 />
                                 <TextField
-                                    label="Counter"
+                                    label={t('addTrip.counter')}
                                     name={`rows.${index}.counterEnd`}
                                     value={formik.values.rows[index].counterEnd}
                                     onChange={formik.handleChange}
@@ -182,15 +184,15 @@ function AddTrip(props) {
                                     onClick={() => handleRemoveRow(index)}
                                     disabled={formik.values.rows.length < 2 ? true : false}
                                     variant="outlined"
-                                >Remove</Button>
+                                >{t('addTrip.removeButton')}</Button>
                             </div>
                         </div>
                         <Divider sx={{ paddingBottom: 2 }} />
                     </div>
                 ))}
                 <div className='text-right p-2'>
-                    <Button type="submit" variant='contained' sx={{ marginRight: 1, fontWeight: 'bold' }}>Submit</Button>
-                    <Button type="button" onClick={handleAddRow} variant="outlined">Add Row</Button>
+                    <Button type="submit" variant='contained' sx={{ marginRight: 1, fontWeight: 'bold' }}>{t('addTrip.submitButton')}</Button>
+                    <Button type="button" onClick={handleAddRow} variant="outlined">{t('addTrip.addRowButton')}</Button>
                 </div>
             </form>
         </div>

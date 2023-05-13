@@ -2,8 +2,10 @@ import { Checkbox, IconButton, Table, TableBody, TableCell, TableContainer, Tabl
 import DeleteIcon from '@mui/icons-material/Delete';
 import useFuelService from "../../api/FuelService/FuelServiceHook"
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function FuelTable(props) {
+    const { t } = useTranslation();
     const { cardId, cardFuels } = props;
     const { deleteFuel } = useFuelService();
 
@@ -44,10 +46,10 @@ function FuelTable(props) {
                                     <DeleteIcon />
                                 </IconButton>
                             </TableCell>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Location</TableCell>
-                            <TableCell>Counter</TableCell>
-                            <TableCell>Amount</TableCell>
+                            <TableCell>{t('fuelTable.tableCellDate')}</TableCell>
+                            <TableCell>{t('fuelTable.tableCellLocation')}</TableCell>
+                            <TableCell>{t('fuelTable.tableCellCounter')}</TableCell>
+                            <TableCell>{t('fuelTable.tableCellAmount')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
