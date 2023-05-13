@@ -38,6 +38,7 @@
     "day": "Day",
     "hour": "Hour",
     "location": "Localization",
+    "country": "Country",
     "counter": "Counter",
     "mileage": "Mileage",
     "paginationLabel": "All",

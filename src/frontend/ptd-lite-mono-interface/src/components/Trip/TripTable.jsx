@@ -107,12 +107,12 @@ function TripTable(props) {
                             <TableCell>{t('tripTable.day')}</TableCell>
                             <TableCell>{t('tripTable.hour')}</TableCell>
                             <TableCell>{t('tripTable.location')}</TableCell>
-                            <TableCell>Country</TableCell>
+                            <TableCell>{t('tripTable.country')}</TableCell>
                             <TableCell>{t('tripTable.counter')}</TableCell>
                             <TableCell>{t('tripTable.day')}</TableCell>
                             <TableCell>{t('tripTable.hour')}</TableCell>
                             <TableCell>{t('tripTable.location')}</TableCell>
-                            <TableCell>Country</TableCell>
+                            <TableCell>{t('tripTable.country')}</TableCell>
                             <TableCell>{t('tripTable.counter')}</TableCell>
                             <TableCell>{t('tripTable.mileage')}</TableCell>
                         </TableRow>
