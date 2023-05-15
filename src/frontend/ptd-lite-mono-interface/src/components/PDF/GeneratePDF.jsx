@@ -27,12 +27,21 @@ function GeneratePDF(props) {
                 setProgress(0);
             }, (error) => {
                 console.log("Error: ", error);
-                setSnackbarInformation(prevState => ({
-                    ...prevState,
-                    open: true,
-                    type: 'warning',
-                    message: t('pdf.warningMessage'),
-                }))
+                if (error.response.status == 403) {
+                    setSnackbarInformation(prevState => ({
+                        ...prevState,
+                        open: true,
+                        type: 'warning',
+                        message: t('pdf.warningCsvMessage'),
+                    }))
+                } else {
+                    setSnackbarInformation(prevState => ({
+                        ...prevState,
+                        open: true,
+                        type: 'warning',
+                        message: t('pdf.warningMessage'),
+                    }))
+                }
                 setProgress(0);
             });
     }

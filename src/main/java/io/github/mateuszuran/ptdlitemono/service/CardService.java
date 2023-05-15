@@ -34,7 +34,7 @@ public class CardService {
     }
 
     public CardResponse saveCard(CardRequest cardRequest, int year, int month, int dayOfMonth) {
-        if (repository.existsByNumberAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
+        if (repository.existsByNumberIgnoreCaseAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
             throw new CardExistsException(cardRequest.getNumber());
         }
 
@@ -45,7 +45,7 @@ public class CardService {
         var now = LocalDateTime.now();
         var date = LocalDateTime.of(year, month, dayOfMonth, now.getHour(), now.getMinute(), now.getSecond());
         var card = Card.builder()
-                .number(cardRequest.getNumber())
+                .number(cardRequest.getNumber().toUpperCase())
                 .username(cardRequest.getUsername())
                 .creationTime(date)
                 .build();

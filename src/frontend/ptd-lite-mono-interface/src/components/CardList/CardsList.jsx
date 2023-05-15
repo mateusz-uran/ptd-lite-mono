@@ -9,12 +9,15 @@ import { Link, Outlet } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import AlertDialog from '../misc/AlertDialog';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from "react-router-dom"
+import CustomSnackbar from '../misc/CustomSnackbar';
 
 function CardsList(props) {
     const { t } = useTranslation();
     const theme = useTheme()
     const { user } = props;
     const current = new Date();
+    const navigate = useNavigate()
 
     const { createCard, getCards, deleteCard } = useCardService();
 
@@ -30,6 +33,12 @@ function CardsList(props) {
         subtitle: '',
         number: '',
         confirmFunction: ''
+    });
+
+    const [snackBarInformation, setSnackbarInformation] = useState({
+        open: false,
+        type: '',
+        message: ''
     });
 
     const formik = useFormik({
@@ -49,7 +58,14 @@ function CardsList(props) {
                     setCardsList(cardsList => [...cardsList, response.data]);
                     resetForm();
                 }, (error) => {
-                    console.log(error)
+                    if (error.response.data.description != null) {
+                        setSnackbarInformation(prevState => ({
+                            ...prevState,
+                            open: true,
+                            type: 'warning',
+                            message: error.response.data.description,
+                        }))
+                    }  
                 })
         },
     });
@@ -116,6 +132,12 @@ function CardsList(props) {
                 setOpen={setConfirmOpen}
                 onConfirm={confirmOpen.confirmFunction}
             ></AlertDialog>
+            <CustomSnackbar
+                open={snackBarInformation.open}
+                description={snackBarInformation.message}
+                severity={snackBarInformation.type}
+                setOpen={setSnackbarInformation}
+            />
             <div className='lg:w-1/6 my-2'>
                 <form onSubmit={formik.handleSubmit}>
                     <div className='flex items-center'>
@@ -149,7 +171,6 @@ function CardsList(props) {
                                     >
                                         <ListItemText
                                             sx={{
-                                                textTransform: 'uppercase',
                                                 color: theme.palette.mode === 'dark' ? 'white' : ''
                                             }}
                                             primary={card.number}

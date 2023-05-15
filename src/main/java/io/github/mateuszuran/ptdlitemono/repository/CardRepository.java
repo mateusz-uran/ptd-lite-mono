@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
-    boolean existsByNumberAndUsername(String number, String username);
+    boolean existsByNumberIgnoreCaseAndUsername(String number, String username);
 
     Optional<Card> findById(Long id);
 
