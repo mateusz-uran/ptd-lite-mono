@@ -88,7 +88,7 @@ class CardServiceTest {
     void givenCardObject_whenSaveWithExistingNumber_thenThrowException() {
         //given + when
         CardRequest request = CardRequest.builder().number("ABC").username("admin").build();
-        when(repository.existsByNumberAndUsername(request.getNumber(), request.getUsername())).thenReturn(true);
+        when(repository.existsByNumberIgnoreCaseAndUsername(request.getNumber(), request.getUsername())).thenReturn(true);
         //then
         assertThatThrownBy(() -> service.saveCard(request, 2023, 3, 5))
                 .isInstanceOf(CardExistsException.class)

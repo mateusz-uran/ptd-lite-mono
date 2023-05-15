@@ -56,7 +56,8 @@
   },
   "pdf": {
     "genratePdfButton": "Generate PDF",
-    "warningMessage": "Something went wrong, please try again later."
+    "warningMessage": "Something went wrong, please try again later.",
+    "warningCsvMessage": "User not found in csv file, please contact admin."
   },
   "misc": {
     "goBackButton": "Back",
