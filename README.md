@@ -38,8 +38,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Main page Screen Shot][home]
-
 Application to manage data requiered to fill road card for proffessional truck driver. Backend is created with spring boot to work as a REST api, 
 frontend is react which uses tailwindcss and material ui. Application is secured with auth0, API as resource server and frontend with PKCE authorization. 
 Project is in beta faze right now so it can have some bugs.
