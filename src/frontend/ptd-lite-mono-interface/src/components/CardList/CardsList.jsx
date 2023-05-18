@@ -138,7 +138,7 @@ function CardsList(props) {
                 severity={snackBarInformation.type}
                 setOpen={setSnackbarInformation}
             />
-            <div className='lg:w-1/6 my-2'>
+            <div className='lg:w-1/8 my-2'>
                 <form onSubmit={formik.handleSubmit}>
                     <div className='flex items-center'>
                         <TextField

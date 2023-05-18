@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import useTripService from "../../api/TripService/TripServiceHook";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import TripsGroup from "./TripsGroup";
 
 function TripTable(props) {
     const { t } = useTranslation();
@@ -89,13 +90,22 @@ function TripTable(props) {
                                     <DeleteIcon />
                                 </IconButton>
                             </TableCell>
-                            <TableCell align="center" colSpan={5} sx={{borderLeft: 1}}>
+                            <TableCell align="center" colSpan={5} sx={{ borderLeft: 1 }}>
                                 {t('misc.start')}
                             </TableCell>
-                            <TableCell align="center" colSpan={5} sx={{borderLeft: 1, borderRight: 1}}>
+                            <TableCell align="center" colSpan={5} sx={{ borderLeft: 1, borderRight: 1 }}>
                                 {t('misc.end')}
                             </TableCell>
-                            <TableCell></TableCell>
+                            <TableCell sx={{ borderRight: 1 }}></TableCell>
+                            <TableCell>
+                                <IconButton
+                                    disabled={selected.length <= 0}
+                                    edge="end"
+                                    onClick={() => handleDeleteSelectedTrips()}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell padding="checkbox">
@@ -104,17 +114,18 @@ function TripTable(props) {
                                     onClick={(event) => handleSelectAllClick(event)}
                                 />
                             </TableCell>
-                            <TableCell>{t('tripTable.day')}</TableCell>
+                            <TableCell sx={{ borderLeft: 1 }}>{t('tripTable.day')}</TableCell>
                             <TableCell>{t('tripTable.hour')}</TableCell>
                             <TableCell>{t('tripTable.location')}</TableCell>
                             <TableCell>{t('tripTable.country')}</TableCell>
                             <TableCell>{t('tripTable.counter')}</TableCell>
-                            <TableCell>{t('tripTable.day')}</TableCell>
+                            <TableCell sx={{ borderLeft: 1 }}>{t('tripTable.day')}</TableCell>
                             <TableCell>{t('tripTable.hour')}</TableCell>
                             <TableCell>{t('tripTable.location')}</TableCell>
                             <TableCell>{t('tripTable.country')}</TableCell>
-                            <TableCell>{t('tripTable.counter')}</TableCell>
-                            <TableCell>{t('tripTable.mileage')}</TableCell>
+                            <TableCell sx={{ borderRight: 1 }}>{t('tripTable.counter')}</TableCell>
+                            <TableCell sx={{ borderRight: 1 }}>{t('tripTable.mileage')}</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -131,17 +142,20 @@ function TripTable(props) {
                                             checked={isItemSelected}
                                         />
                                     </TableCell>
-                                    <TableCell>{row.dayStart}</TableCell>
+                                    <TableCell sx={{ borderLeft: 1 }}>{row.dayStart}</TableCell>
                                     <TableCell>{row.hourStart}</TableCell>
                                     <TableCell>{row.locationStart}</TableCell>
                                     <TableCell>{row.countryStart}</TableCell>
                                     <TableCell>{row.counterStart}</TableCell>
-                                    <TableCell>{row.dayEnd}</TableCell>
+                                    <TableCell sx={{ borderLeft: 1 }}>{row.dayEnd}</TableCell>
                                     <TableCell>{row.hourEnd}</TableCell>
                                     <TableCell>{row.locationEnd}</TableCell>
                                     <TableCell>{row.countryEnd}</TableCell>
-                                    <TableCell>{row.counterEnd}</TableCell>
-                                    <TableCell>{row.carMileage}</TableCell>
+                                    <TableCell sx={{ borderRight: 1 }}>{row.counterEnd}</TableCell>
+                                    <TableCell sx={{ borderRight: 1 }}>{row.carMileage}</TableCell>
+                                    <TableCell sx={{ borderRight: 1, borderBottom: 0 }}>
+                                        {/* <TripsGroup selectedTrip={selected} /> */}
+                                    </TableCell>
                                 </TableRow>
                             );
                         })}
