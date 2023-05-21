@@ -3,6 +3,7 @@ package io.github.mateuszuran.ptdlitemono.service;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
+import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +37,8 @@ class TripServiceTest {
     @Test
     void givenCardIdAndTripList_whenSave_thenDoNothing() {
         //given
-        Card card = Card.builder().id(anyLong()).number("XYZ").build();
+        List<Trip> emptyTripList = new ArrayList<>();
+        Card card = Card.builder().id(anyLong()).number("XYZ").trips(emptyTripList).build();
         when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
 
         TripRequest request1 = TripRequest.builder().counterStart(111).counterEnd(222).build();

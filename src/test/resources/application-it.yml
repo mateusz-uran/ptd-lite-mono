@@ -25,3 +25,6 @@ spring:
 pdf:
   csv:
     link: file:/test.csv
+
+frontend:
+  url: http://localhost:5173

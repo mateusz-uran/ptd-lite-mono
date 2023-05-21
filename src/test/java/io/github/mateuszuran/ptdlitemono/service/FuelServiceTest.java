@@ -11,6 +11,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,8 +37,9 @@ class FuelServiceTest {
 
     @Test
     void givenFuelObjectAndCardId_whenSave_thenDoNothing() {
+        List<Fuel> emptyFuelList = new ArrayList<>();
         //given
-        Card card = Card.builder().id(anyLong()).number("XYZ").build();
+        Card card = Card.builder().id(anyLong()).number("XYZ").fuels(emptyFuelList).build();
         when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
         FuelRequest request = FuelRequest.builder().refuelingAmount(300).build();
         Fuel fuel = Fuel.builder().refuelingAmount(300).build();
