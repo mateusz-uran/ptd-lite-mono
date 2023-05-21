@@ -3,6 +3,7 @@ package io.github.mateuszuran.ptdlitemono.service;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
+import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,8 @@ public class TripService {
                 tripValues -> {
                     var trip = tripMapper.mapToTripValuesWithModelMapper(tripValues);
                     trip.setCarMileage(calculateCarMileage(tripValues.getCounterStart(), tripValues.getCounterEnd()));
-                    trip.setCard(card);
+                    card.getTrips().add(trip);
+                    service.updateCard(card);
                     tripsToSave.add(trip);
                 }
         );
@@ -33,8 +35,18 @@ public class TripService {
     }
 
     public void deleteSelected(List<Long> selectedTrips) {
-        var result = repository.findAllById(selectedTrips);
+        var result = repository.findAllByIdIn(selectedTrips).orElseThrow();
         repository.deleteAll(result);
+    }
+
+    public void updateEachTripWithGroup(List<Long> tripsIds, TripGroup group) {
+        var trips = repository.findAllById(tripsIds);
+        List<Trip> updatedTrips = new ArrayList<>();
+        for (Trip trip : trips) {
+            trip.setGroup(group);
+            updatedTrips.add(trip);
+        }
+        repository.saveAll(updatedTrips);
     }
 
     private Integer calculateCarMileage(Integer min, Integer max) {

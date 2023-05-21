@@ -53,7 +53,7 @@ class FuelControllerTest {
     @Test
     void givenCardIdAndFuelObject_whenPost_thenReturnStatus() throws Exception {
         //given
-        Fuel fuel = Fuel.builder().vehicleCounter(1500).refuelingAmount(300).card(card).build();
+        Fuel fuel = Fuel.builder().vehicleCounter(1500).refuelingAmount(300).build();
         //when + then
         mockMvc.perform(post("/api/fuel")
                         .param("id", String.valueOf(card.getId()))
@@ -66,7 +66,7 @@ class FuelControllerTest {
     @Test
     void givenCardIdAndIdList_whenDelete_thenReturnStatus() throws Exception {
         //given
-        Fuel fuel = Fuel.builder().vehicleCounter(1500).refuelingAmount(300).card(card).build();
+        Fuel fuel = Fuel.builder().vehicleCounter(1500).refuelingAmount(300).build();
         repository.saveAndFlush(fuel);
         //when + then
         mockMvc.perform(delete("/api/fuel")

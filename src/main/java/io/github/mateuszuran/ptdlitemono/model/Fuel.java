@@ -20,7 +20,4 @@ public class Fuel {
     private String refuelingLocation;
     private Integer vehicleCounter;
     private Integer refuelingAmount;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id", nullable = false)
-    private Card card;
 }

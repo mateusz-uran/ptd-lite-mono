@@ -153,8 +153,8 @@ class CardControllerTest {
     @Test
     void givenCardId_whenGetAllFuels_thenReturnList() throws Exception {
         //given
-        Fuel fuel1 = Fuel.builder().vehicleCounter(1500).refuelingAmount(250).card(card).build();
-        Fuel fuel2 = Fuel.builder().vehicleCounter(1750).refuelingAmount(400).card(card).build();
+        Fuel fuel1 = Fuel.builder().vehicleCounter(1500).refuelingAmount(250).build();
+        Fuel fuel2 = Fuel.builder().vehicleCounter(1750).refuelingAmount(400).build();
         card.setFuels(List.of(fuel1, fuel2));
         repository.saveAndFlush(card);
         //when + then
@@ -179,9 +179,9 @@ class CardControllerTest {
     @Test
     void givenCardId_whenGetAllTrips_thenReturnList() throws Exception {
         //given
-        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).card(card).build();
-        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).card(card).build();
-        Trip trip3 = Trip.builder().counterStart(400).counterEnd(500).card(card).build();
+        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).build();
+        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).build();
+        Trip trip3 = Trip.builder().counterStart(400).counterEnd(500).build();
         card.setTrips(List.of(trip1, trip2, trip3));
         repository.saveAndFlush(card);
         //when + then
@@ -206,11 +206,11 @@ class CardControllerTest {
 
     @Test
     void givenCardId_whenGetTripsAndFuels_thenReturnCardDetails() throws Exception {
-        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).card(card).build();
-        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).card(card).build();
-        Trip trip3 = Trip.builder().counterStart(400).counterEnd(500).card(card).build();
-        Fuel fuel1 = Fuel.builder().vehicleCounter(1500).refuelingAmount(250).card(card).build();
-        Fuel fuel2 = Fuel.builder().vehicleCounter(1750).refuelingAmount(400).card(card).build();
+        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).build();
+        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).build();
+        Trip trip3 = Trip.builder().counterStart(400).counterEnd(500).build();
+        Fuel fuel1 = Fuel.builder().vehicleCounter(1500).refuelingAmount(250).build();
+        Fuel fuel2 = Fuel.builder().vehicleCounter(1750).refuelingAmount(400).build();
         card.setFuels(List.of(fuel1, fuel2));
         card.setTrips(List.of(trip1, trip2, trip3));
         repository.saveAndFlush(card);

@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
-import io.github.mateuszuran.ptdlitemono.dto.TripGroupDto;
+import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
+import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.service.TripGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class TripGroupController {
     private final TripGroupService service;
 
-    @PostMapping
-    public ResponseEntity<?> createGroup(@RequestBody TripGroupDto request) {
-        return ResponseEntity.ok().body(service.createGroup(request));
+    @PostMapping("/create")
+    public ResponseEntity<TripGroupResponse> createGroupWithTrips(@RequestBody TripGroupRequest request) {
+        return ResponseEntity.ok().body(service.createGroupTrips(request));
     }
 
-    @GetMapping
-    public ResponseEntity<?> getGroup(@RequestParam String cargo) {
-        return ResponseEntity.ok().body(service.getGroup(cargo));
+    @GetMapping("/single")
+    public ResponseEntity<TripGroupResponse> getGroup(@RequestParam Long groupId) {
+        return ResponseEntity.ok().body(service.getGroup(groupId));
     }
 }

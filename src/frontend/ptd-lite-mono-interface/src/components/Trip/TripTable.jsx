@@ -3,7 +3,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import useTripService from "../../api/TripService/TripServiceHook";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import TripsGroup from "./TripsGroup";
 
 function TripTable(props) {
     const { t } = useTranslation();
@@ -42,7 +41,6 @@ function TripTable(props) {
                 selected.slice(selectedIndex + 1),
             );
         }
-
         setSelected(newSelected);
     };
 
@@ -54,7 +52,6 @@ function TripTable(props) {
                 setTrips((prevTrips) =>
                     prevTrips.filter((trip) => !selected.includes(trip.id))
                 );
-                // Clear the selected state to reflect the successful delete
                 setSelected([]);
             })
     }
@@ -97,15 +94,7 @@ function TripTable(props) {
                                 {t('misc.end')}
                             </TableCell>
                             <TableCell sx={{ borderRight: 1 }}></TableCell>
-                            <TableCell>
-                                <IconButton
-                                    disabled={selected.length <= 0}
-                                    edge="end"
-                                    onClick={() => handleDeleteSelectedTrips()}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </TableCell>
+                            <TableCell colSpan={2}></TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell padding="checkbox">
@@ -125,17 +114,18 @@ function TripTable(props) {
                             <TableCell>{t('tripTable.country')}</TableCell>
                             <TableCell sx={{ borderRight: 1 }}>{t('tripTable.counter')}</TableCell>
                             <TableCell sx={{ borderRight: 1 }}>{t('tripTable.mileage')}</TableCell>
-                            <TableCell></TableCell>
+                            <TableCell sx={{ borderRight: 1 }}>Cargo</TableCell>
+                            <TableCell>Weight</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0
                             ? trips.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : trips
-                        ).map((row) => {
+                        ).map((row, index) => {
                             const isItemSelected = isSelected(row.id);
                             return (
-                                <TableRow key={row.id} hover onClick={(event) => handleClick(event, row.id)} >
+                                <TableRow key={row.id} hover selected={selected.includes(row.id)} onClick={(event) => handleClick(event, row.id)} >
                                     <TableCell padding="checkbox">
                                         <Checkbox
                                             color="primary"
@@ -153,15 +143,15 @@ function TripTable(props) {
                                     <TableCell>{row.countryEnd}</TableCell>
                                     <TableCell sx={{ borderRight: 1 }}>{row.counterEnd}</TableCell>
                                     <TableCell sx={{ borderRight: 1 }}>{row.carMileage}</TableCell>
-                                    <TableCell sx={{ borderRight: 1, borderBottom: 0 }}>
-                                        {/* <TripsGroup selectedTrip={selected} /> */}
+                                    <TableCell align="center" colSpan={2}>
+                                        group
                                     </TableCell>
                                 </TableRow>
                             );
                         })}
                         {emptyRows > 0 && (
                             <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={11} />
+                                <TableCell colSpan={14} />
                             </TableRow>
                         )}
                     </TableBody>
@@ -169,7 +159,7 @@ function TripTable(props) {
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25, { label: t('tripTable.paginationLabel'), value: -1 }]}
-                                colSpan={11}
+                                colSpan={14}
                                 count={trips.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}

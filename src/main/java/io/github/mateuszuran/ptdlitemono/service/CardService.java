@@ -8,8 +8,11 @@ import io.github.mateuszuran.ptdlitemono.mapper.CardMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
+import io.github.mateuszuran.ptdlitemono.model.Trip;
+import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CardService {
@@ -77,34 +81,22 @@ public class CardService {
                 });
     }
 
-    public List<FuelResponse> getFuelsFromCard(Long id) {
-        return repository.findById(id)
-                .orElseThrow(CardNotFoundException::new)
-                .getFuels().stream()
-                .map(fuelMapper::mapToFuelResponseWithModelMapper)
-                .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
-                .collect(Collectors.toList());
-    }
-
-    public List<TripResponse> getTripsFromCard(Long id) {
-        return repository.findById(id)
-                .orElseThrow(CardNotFoundException::new)
-                .getTrips().stream()
-                .map(tripMapper::mapToTripResponseWithModelMapper)
-                .sorted(Comparator.comparing(TripResponse::getCounterEnd))
-                .collect(Collectors.toList());
-    }
-
     public CardDetailsResponse getCardDetails(Long id) {
         Card card = repository.findById(id).orElseThrow(CardNotFoundException::new);
+
         List<FuelResponse> fuels = card.getFuels().stream()
                 .map(fuelMapper::mapToFuelResponseWithModelMapper)
                 .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
                 .collect(Collectors.toList());
+
         List<TripResponse> trips = card.getTrips().stream()
                 .map(tripMapper::mapToTripResponseWithModelMapper)
                 .sorted(Comparator.comparing(TripResponse::getCounterEnd))
                 .collect(Collectors.toList());
         return new CardDetailsResponse(trips, fuels);
+    }
+
+    public void updateCard(Card card) {
+        repository.save(card);
     }
 }

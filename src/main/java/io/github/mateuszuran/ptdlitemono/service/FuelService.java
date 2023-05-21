@@ -16,7 +16,8 @@ public class FuelService {
     public void addRefuelling(FuelRequest fuelDto, Long id) {
         var card = service.checkIfCardExists(id);
         var fuel = fuelMapper.mapToFuelRequest(fuelDto);
-        fuel.setCard(card);
+        card.getFuels().add(fuel);
+        service.updateCard(card);
         repository.save(fuel);
     }
 

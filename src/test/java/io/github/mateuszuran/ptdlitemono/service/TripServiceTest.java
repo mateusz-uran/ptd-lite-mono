@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -64,7 +65,7 @@ class TripServiceTest {
         Trip trip3 = Trip.builder().counterStart(555).counterEnd(666).build();
         List<Trip> trips = List.of(trip1, trip2, trip3);
         List<Long> selectedTrips = List.of(1L, 2L, 3L);
-        when(repository.findAllById(selectedTrips)).thenReturn(trips);
+        when(repository.findAllByIdIn(selectedTrips)).thenReturn(Optional.of(trips));
         //when
         service.deleteSelected(List.of(1L, 2L, 3L));
         //then

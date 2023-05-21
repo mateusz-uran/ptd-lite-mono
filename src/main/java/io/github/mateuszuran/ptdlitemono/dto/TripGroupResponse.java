@@ -11,9 +11,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TripGroupDto {
+public class TripGroupResponse {
     private String cargoName;
     private Integer temperature;
     private Integer weight;
-    private List<Long> tripsIds;
 }

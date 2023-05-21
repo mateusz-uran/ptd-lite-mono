@@ -1,22 +1,19 @@
-package io.github.mateuszuran.ptdlitemono.model;
+package io.github.mateuszuran.ptdlitemono.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "trip_group")
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TripGroup {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class TripGroupRequest {
     private String cargoName;
     private Integer temperature;
     private Integer weight;
+    private List<Long> tripsIds;
 }

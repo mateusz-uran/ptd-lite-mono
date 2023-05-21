@@ -1,9 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.TripGroupDto;
-import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
-import io.github.mateuszuran.ptdlitemono.exception.GroupNotFoundException;
+import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.mapper.TripGroupMapper;
+import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import io.github.mateuszuran.ptdlitemono.repository.TripGroupRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,13 +11,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,51 +25,43 @@ class TripGroupServiceTest {
     private TripGroupRepository repository;
     @Mock
     private TripGroupMapper mapper;
+    @Mock
+    private CardService cardService;
 
     @BeforeEach
     void setUp() {
-        service = new TripGroupService(repository, mapper);
+        service = new TripGroupService(repository, mapper, cardService);
     }
 
     @Test
-    void givenTripGroup_whenSave_thenReturnGroupDto() {
-        // given
-        TripGroupDto request = createGroupDto();
+    void givenTripGroupDto_whenSave_thenReturnCreatedGroup() {
+        //given
 
-        TripGroup group = createGroup();
+        TripGroupResponse request = createGroupDto();
+        TripGroup group = TripGroup.builder()
+                .cargoName(request.getCargoName())
+                .weight(request.getWeight())
+                .temperature(request.getTemperature())
+                .tripsIds(List.of(1L, 2L, 3L))
+                .build();
 
-        when(mapper.mapToTripGroup(request)).thenReturn(group);
         when(repository.save(group)).thenReturn(group);
-        when(mapper.mapToDto(group)).thenReturn(request);
-        // when
-        var result = service.createGroup(request);
-        // then
+        //when
+        var result = service.createGroupTrips(request, anyLong());
+        //then
         verify(repository, times(1)).save(group);
         assertThat(result.getCargoName()).isEqualTo(group.getCargoName());
     }
 
-    @Test
-    void givenCargoName_whenExists_returnGroup() {
-        //given
-        TripGroup group = createGroup();
-        TripGroupDto response = createGroupDto();
-        when(repository.findByCargoName(group.getCargoName())).thenReturn(Optional.of(group));
-        when(mapper.mapToDto(group)).thenReturn(response);
-        //when
-        var result = service.getGroup(group.getCargoName());
-        //then
-        assertThat(result.getTemperature()).isEqualTo(15);
-    }
-
-    @Test
-    void givenCargoName_whenNotFound_thenThrowException() {
-        //given
-        String cargoName = "medicine";
-        when(repository.findByCargoName(cargoName)).thenReturn(Optional.empty());
-        //when + then
-        assertThatThrownBy(() -> service.getGroup(cargoName))
-                .isInstanceOf(GroupNotFoundException.class)
-                .hasMessageContaining("Group not found");
+    private static List<Trip> createListOfTrips() {
+        List<Trip> trips = new ArrayList<>();
+        Trip trip1 = Trip.builder().id(1L).counterStart(111).counterEnd(222).build();
+        Trip trip2 = Trip.builder().id(2L).counterStart(333).counterEnd(444).build();
+        Trip trip3 = Trip.builder().id(3L).counterStart(555).counterEnd(666).build();
+        trips.add(trip1);
+        trips.add(trip2);
+        trips.add(trip3);
+        return trips;
     }
 
     private static TripGroup createGroup() {
@@ -81,16 +70,16 @@ class TripGroupServiceTest {
                 .cargoName("medicine")
                 .temperature(15)
                 .weight(20)
-                .tripsIds(List.of(2L, 3L, 4L, 5L))
+                .tripsIds(List.of(1L, 2L, 3L))
                 .build();
     }
 
-    private static TripGroupDto createGroupDto() {
-        return TripGroupDto.builder()
+    private static TripGroupResponse createGroupDto() {
+        return TripGroupResponse.builder()
                 .cargoName("medicine")
                 .temperature(15)
                 .weight(20)
-                .tripsIds(List.of(2L, 3L, 4L, 5L))
+                .tripsIds(List.of(1L, 2L, 3L))
                 .build();
     }
 }

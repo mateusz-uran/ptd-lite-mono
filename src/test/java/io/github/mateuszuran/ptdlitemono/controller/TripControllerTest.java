@@ -54,8 +54,8 @@ class TripControllerTest {
     @Test
     void givenCardIdAndTripList_whenPost_thenReturnStatus() throws Exception {
         //given
-        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).card(card).build();
-        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).card(card).build();
+        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).build();
+        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).build();
         //when + then
         mockMvc.perform(post("/api/trip")
                         .param("cardId", String.valueOf(card.getId()))
@@ -68,8 +68,8 @@ class TripControllerTest {
     @Test
     void givenCardIdAndIdList_whenDelete_thenReturnStatus() throws Exception {
         //given
-        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).card(card).build();
-        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).card(card).build();
+        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).build();
+        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).build();
         repository.saveAllAndFlush(List.of(trip1, trip2));
         //when + then
         mockMvc.perform(delete("/api/trip")

@@ -21,6 +21,14 @@ const useTripService = () => {
         });
     }
 
-    return { createFixed, deleteManyTrips };
+    const createGroup = async (group) => {
+        const config = await getAuthConfig(getAccessTokenSilently);
+        return axiosInstance.post("/group", {
+            data: group,
+            ...config
+        });
+    }
+
+    return { createFixed, deleteManyTrips, createGroup };
 }
 export default useTripService;

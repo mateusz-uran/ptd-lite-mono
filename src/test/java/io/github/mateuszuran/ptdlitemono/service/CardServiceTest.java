@@ -161,53 +161,6 @@ class CardServiceTest {
     }
 
     @Test
-    void givenCardId_whenFindAll_thenReturnMappedList() {
-        //given
-        Fuel fuel1 = Fuel.builder().refuelingAmount(300).vehicleCounter(100).build();
-        Fuel fuel2 = Fuel.builder().refuelingAmount(230).vehicleCounter(500).build();
-        Fuel fuel3 = Fuel.builder().refuelingAmount(600).vehicleCounter(200).build();
-        Card card = Card.builder().number("XYZ")
-                .fuels(List.of(fuel1, fuel2, fuel3))
-                .build();
-        when(repository.findById(anyLong())).thenReturn(Optional.of(card));
-
-        FuelResponse response1 = FuelResponse.builder().refuelingAmount(300).vehicleCounter(100).build();
-        FuelResponse response2 = FuelResponse.builder().refuelingAmount(230).vehicleCounter(500).build();
-        FuelResponse response3 = FuelResponse.builder().refuelingAmount(600).vehicleCounter(200).build();
-        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel1)).thenReturn(response1);
-        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel2)).thenReturn(response2);
-        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel3)).thenReturn(response3);
-        //when
-        var result = service.getFuelsFromCard(anyLong());
-        //then
-        assertThat(result).isEqualTo(List.of(response1, response3, response2));
-    }
-
-    @Test
-    void givenCardId_whenFindAll_thenReturnMappedListOfTrips() {
-        //given
-        Trip trip1 = Trip.builder().counterStart(111).counterEnd(222).build();
-        Trip trip2 = Trip.builder().counterStart(333).counterEnd(444).build();
-        Trip trip3 = Trip.builder().counterStart(555).counterEnd(666).build();
-        Card card = Card.builder().number("XYZ")
-                .trips(List.of(trip1, trip2, trip3))
-                .build();
-        when(repository.findById(anyLong())).thenReturn(Optional.of(card));
-
-        TripResponse response1 = TripResponse.builder().counterStart(111).counterEnd(222).build();
-        TripResponse response2 = TripResponse.builder().counterStart(333).counterEnd(444).build();
-        TripResponse response3 = TripResponse.builder().counterStart(555).counterEnd(666).build();
-        when(tripMapper.mapToTripResponseWithModelMapper(trip1)).thenReturn(response1);
-        when(tripMapper.mapToTripResponseWithModelMapper(trip2)).thenReturn(response2);
-        when(tripMapper.mapToTripResponseWithModelMapper(trip3)).thenReturn(response3);
-
-        //when
-        var result = service.getTripsFromCard(anyLong());
-        //then
-        assertThat(result).isEqualTo(List.of(response1, response2, response3));
-    }
-
-    @Test
     void givenCardId_whenStreamCard_thenReturnFuelsAndTrips() {
         //given
         Trip trip1 = Trip.builder().counterStart(111).counterEnd(222).build();

@@ -22,4 +22,5 @@ public class TripResponse {
     private Integer counterStart;
     private Integer counterEnd;
     private Integer carMileage;
+    private TripGroupResponse group;
 }
