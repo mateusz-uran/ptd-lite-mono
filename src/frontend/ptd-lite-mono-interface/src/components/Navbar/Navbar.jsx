@@ -6,14 +6,9 @@ import CardsList from '../CardList/CardsList';
 import { useTranslation } from 'react-i18next';
 
 function Navbar(props) {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const { user, logout, loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
     const theme = useTheme()
-
-    const locales = {
-        en: { title: 'English' },
-        pl: { title: 'Polski' },
-      };
 
     return (
         <div className={`${theme.palette.mode === 'dark' ? 'dark bg-slate-700' : 'bg-blue-200'}`}>
@@ -38,7 +33,7 @@ function Navbar(props) {
             {
                 isAuthenticated && user.nickname &&
                 <div>
-                    <CardsList user={user.nickname} />
+                    <CardsList user={user.nickname} themeProp={theme.palette.mode} />
                 </div>
             }
         </div >

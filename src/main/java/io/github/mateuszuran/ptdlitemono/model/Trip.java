@@ -27,8 +27,4 @@ public class Trip {
     private Integer counterStart;
     private Integer counterEnd;
     private Integer carMileage;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "group_id")
-    private TripGroup group;
 }

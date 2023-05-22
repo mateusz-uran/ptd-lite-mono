@@ -18,7 +18,6 @@ public class FuelService {
         var fuel = fuelMapper.mapToFuelRequest(fuelDto);
         card.getFuels().add(fuel);
         service.updateCard(card);
-        repository.save(fuel);
     }
 
     public void delete(Long id) {

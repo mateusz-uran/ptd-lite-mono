@@ -15,7 +15,7 @@ import CustomSnackbar from '../misc/CustomSnackbar';
 function CardsList(props) {
     const { t } = useTranslation();
     const theme = useTheme()
-    const { user } = props;
+    const { user, themeProp } = props;
     const current = new Date();
     const navigate = useNavigate()
 
@@ -114,10 +114,11 @@ function CardsList(props) {
             setCardNumber(storedCardNumber);
             setRenderCardInfoHandler(true);
         }
+
     }, [])
 
     return (
-        <div className={`flex lg:flex-row flex-col px-4 ${theme.palette.mode === 'ligth' ? 'text-white' : ''}`}>
+        <div className='flex lg:flex-row flex-col px-4'>
             <Backdrop
                 open={openBackdrop}
             >

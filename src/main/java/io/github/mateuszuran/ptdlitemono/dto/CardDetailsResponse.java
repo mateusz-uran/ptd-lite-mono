@@ -14,4 +14,5 @@ import java.util.List;
 public class CardDetailsResponse {
     private List<TripResponse> trips;
     private List<FuelResponse> fuels;
+    private List<AdBlueResponse> blue;
 }

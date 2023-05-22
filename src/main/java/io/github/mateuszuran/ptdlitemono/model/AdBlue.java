@@ -7,18 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "card_fuels")
+@Table(name = "card_adblue")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Fuel {
+public class AdBlue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String refuelingDate;
-    private String refuelingLocation;
-    private Integer vehicleCounter;
-    private Integer refuelingAmount;
-    private String paymentMethod;
+    private String date;
+    private String localization;
+    private Integer amount;
 }

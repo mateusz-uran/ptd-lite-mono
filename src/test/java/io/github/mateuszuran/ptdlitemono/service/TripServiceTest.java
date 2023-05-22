@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -55,9 +56,10 @@ class TripServiceTest {
         when(mapper.mapToTripValuesWithModelMapper(request3)).thenReturn(trip3);
 
         //when
-        service.addManyTips(tripRequests, anyLong());
+        service.addManyTips(tripRequests, card.getId());
         //then
-        verify(repository, times(1)).saveAll(trips);
+        var updatedCard = cardService.checkIfCardExists(card.getId());
+        assertThat(updatedCard.getTrips()).isEqualTo(List.of(trip1, trip2, trip3));
     }
 
     @Test

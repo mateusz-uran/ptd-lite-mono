@@ -93,7 +93,11 @@ public class CardService {
                 .map(tripMapper::mapToTripResponseWithModelMapper)
                 .sorted(Comparator.comparing(TripResponse::getCounterEnd))
                 .collect(Collectors.toList());
-        return new CardDetailsResponse(trips, fuels);
+
+        List<AdBlueResponse> blue = card.getAdBlue().stream()
+                .map(fuelMapper::mapToAdBlueResponse)
+                .toList();
+        return new CardDetailsResponse(trips, fuels, blue);
     }
 
     public void updateCard(Card card) {

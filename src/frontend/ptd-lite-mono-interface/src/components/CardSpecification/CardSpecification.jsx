@@ -8,6 +8,8 @@ import TripTable from '../Trip/TripTable';
 import FuelTable from '../Fuel/FuelTable';
 import GeneratePDF from '../PDF/GeneratePDF';
 import { useTranslation } from 'react-i18next';
+import TripGroupTable from '../Trip/TripGroupTable';
+import AdBlueTable from '../Fuel/AdBlueTable';
 
 function CardSpecification(props) {
     const { t } = useTranslation();
@@ -16,6 +18,7 @@ function CardSpecification(props) {
 
     const [cardTrips, setCardTrips] = useState([]);
     const [cardFuels, setCardFuels] = useState([]);
+    const [cardAdBlue, setCardAdBlue] = useState([]);
 
     const [progress, setProgress] = useState(0);
     const [snackBarInformation, setSnackbarInformation] = useState({
@@ -33,6 +36,7 @@ function CardSpecification(props) {
                 const cardDetails = await getCardDetails(cardId);
                 setCardTrips(cardDetails.data.trips);
                 setCardFuels(cardDetails.data.fuels);
+                setCardAdBlue(cardDetails.data.blue);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
@@ -60,6 +64,10 @@ function CardSpecification(props) {
                         <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addFuelButton')}</Button>
                     </Link>
 
+                    <Link to={`../${cardId}/add-blue`} relative="path">
+                        <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addAdBlueButton')}</Button>
+                    </Link>
+
                     {cardTrips && cardTrips.length > 1 && cardFuels && cardFuels.length > 0 &&
                         <GeneratePDF
                             user={user}
@@ -76,8 +84,11 @@ function CardSpecification(props) {
                 </div>
                 {isLoading ? (<></>) : (
                     <>
-                        <TripTable cardId={cardId} cardTrips={cardTrips} />
-                        <FuelTable cardId={cardId} cardFuels={cardFuels} />
+                        <div>
+                            <TripTable cardId={cardId} cardTrips={cardTrips} />
+                            <FuelTable cardId={cardId} cardFuels={cardFuels} />
+                            <AdBlueTable cardId={cardId} cardAdBlue={cardAdBlue} />
+                        </div>
                     </>
                 )}
             </div>

@@ -16,7 +16,8 @@
   },
   "cardsSpecification": {
     "addTripButton": "Dodaj trasę",
-    "addFuelButton": "Dodaj tankowanie"
+    "addFuelButton": "Dodaj tankowanie",
+    "addAdBlueButton": "Dodaj AdBlue"
   },
   "fuelTable": {
     "tableCellDate": "Data",

@@ -15,4 +15,5 @@ public class FuelResponse {
     private String refuelingLocation;
     private Integer vehicleCounter;
     private Integer refuelingAmount;
+    private String paymentMethod;
 }

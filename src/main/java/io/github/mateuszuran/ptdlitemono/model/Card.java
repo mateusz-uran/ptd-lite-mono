@@ -33,4 +33,8 @@ public class Card {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "card_id")
     private List<Trip> trips = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_id")
+    private List<AdBlue> adBlue = new ArrayList<>();
 }

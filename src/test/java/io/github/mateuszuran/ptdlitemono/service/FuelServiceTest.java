@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -47,7 +48,8 @@ class FuelServiceTest {
         //when
         service.addRefuelling(request, anyLong());
         //then
-        verify(repository, times(1)).save(fuel);
+        var updatedCard = cardService.checkIfCardExists(card.getId());
+        assertThat(updatedCard.getFuels()).isEqualTo(List.of(fuel));
     }
 
     @Test

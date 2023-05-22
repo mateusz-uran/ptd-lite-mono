@@ -1,17 +1,16 @@
-import { Checkbox, Divider, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useTheme } from "@mui/material";
+import { Checkbox, Divider, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useTheme } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import useFuelService from "../../api/FuelService/FuelServiceHook"
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useEffect, useState } from 'react';
+import useFuelService from '../../api/FuelService/FuelServiceHook';
+import { useTranslation } from 'react-i18next';
 
-function FuelTable(props) {
+function AdBlueTable(props) {
     const { t } = useTranslation();
     const theme = useTheme()
-    const { cardId, cardFuels } = props;
-    const { deleteFuel } = useFuelService();
+    const { cardId, cardAdBlue } = props;
+    const { deleteAdBlue } = useFuelService();
 
-    const [fuels, setFuels] = useState(cardFuels);
-
+    const [adBlue, setAdBlue] = useState(cardAdBlue);
     const [selected, setSelected] = useState(0);
 
     const handleClick = (event, name) => {
@@ -20,10 +19,11 @@ function FuelTable(props) {
 
     const isSelected = (fuelId) => selected === fuelId;
 
-    const handleDeleteSelectedFuels = () => {
-        deleteFuel(selected)
+    const handleDeleteSelectedAdBlue = () => {
+        console.log(selected)
+        deleteAdBlue(selected, cardId)
             .then(() => {
-                setFuels(fuels.filter(fuel => fuel.id !== selected));
+                setAdBlue(adBlue.filter(blue => blue.id !== selected));
                 // Clear the selected state to reflect the successful delete
                 setSelected(-1);
             })
@@ -31,10 +31,11 @@ function FuelTable(props) {
 
     useEffect(() => {
         setSelected(-1);
-    }, [cardId])
+    }, [])
+
     return (
-        <div className="px-2 mt-10">
-            <Divider><h2 className={`font-bold ${theme.palette.mode === 'dark' ? 'text-slate-200' : 'text-slate-700'}`}>Fuel</h2></Divider>
+        <div className='px-2 mt-10'>
+            <Divider><h2 className={`font-bold ${theme.palette.mode === 'dark' ? 'text-slate-200' : 'text-slate-700'}`}>Ad Blue</h2></Divider>
             <TableContainer>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -43,20 +44,18 @@ function FuelTable(props) {
                                 <IconButton
                                     disabled={selected <= 0}
                                     edge="start"
-                                    onClick={() => handleDeleteSelectedFuels()}
+                                    onClick={() => handleDeleteSelectedAdBlue()}
                                 >
                                     <DeleteIcon />
                                 </IconButton>
                             </TableCell>
                             <TableCell>{t('fuelTable.tableCellDate')}</TableCell>
                             <TableCell>{t('fuelTable.tableCellLocation')}</TableCell>
-                            <TableCell>{t('fuelTable.tableCellCounter')}</TableCell>
                             <TableCell>{t('fuelTable.tableCellAmount')}</TableCell>
-                            <TableCell>Payment method</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {(fuels).map((row) => {
+                        {(adBlue).map((row) => {
                             const isItemSelected = isSelected(row.id);
                             return (
                                 <TableRow key={row.id} hover onClick={(event) => handleClick(event, row.id)} >
@@ -66,11 +65,9 @@ function FuelTable(props) {
                                             checked={isItemSelected}
                                         />
                                     </TableCell>
-                                    <TableCell>{row.refuelingDate}</TableCell>
-                                    <TableCell>{row.refuelingLocation}</TableCell>
-                                    <TableCell>{row.vehicleCounter}</TableCell>
-                                    <TableCell>{row.refuelingAmount}</TableCell>
-                                    <TableCell>{row.paymentMethod}</TableCell>
+                                    <TableCell>{row.date}</TableCell>
+                                    <TableCell>{row.localization}</TableCell>
+                                    <TableCell>{row.amount}</TableCell>
                                 </TableRow>
                             );
                         })}
@@ -81,4 +78,4 @@ function FuelTable(props) {
     );
 }
 
-export default FuelTable;
+export default AdBlueTable;

@@ -16,7 +16,8 @@
   },
   "cardsSpecification": {
     "addTripButton": "Add trip",
-    "addFuelButton": "Add fuel"
+    "addFuelButton": "Add fuel",
+    "addAdBlueButton": "Add adBlue"
   },
   "fuelTable": {
     "tableCellDate": "Date",

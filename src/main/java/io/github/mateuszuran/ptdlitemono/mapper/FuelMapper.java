@@ -1,8 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.mapper;
 
 import io.github.mateuszuran.ptdlitemono.config.ModelMapperConfig;
+import io.github.mateuszuran.ptdlitemono.dto.AdBlueResponse;
 import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,5 +20,9 @@ public class FuelMapper {
 
     public Fuel mapToFuelRequest(FuelRequest fuelRequest) {
         return mapper.modelMapper().map(fuelRequest, Fuel.class);
+    }
+
+    public AdBlueResponse mapToAdBlueResponse(AdBlue adBlue) {
+        return mapper.modelMapper().map(adBlue, AdBlueResponse.class);
     }
 }
