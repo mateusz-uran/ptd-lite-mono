@@ -14,4 +14,5 @@ public class FuelRequest {
     private String refuelingLocation;
     private Integer vehicleCounter;
     private Integer refuelingAmount;
+    private String paymentMethod;
 }

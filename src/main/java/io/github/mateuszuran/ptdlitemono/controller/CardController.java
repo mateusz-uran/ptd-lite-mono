@@ -37,16 +37,4 @@ public class CardController {
         return ResponseEntity.ok()
                 .body(service.getCardDetails(id));
     }
-
-    @GetMapping("/fuel")
-    public ResponseEntity<List<FuelResponse>> getFuelsFromCard(@RequestParam Long id) {
-        return ResponseEntity.ok()
-                .body(service.getFuelsFromCard(id));
-    }
-
-    @GetMapping("/trip")
-    public ResponseEntity<List<TripResponse>> getTripsFromCard(@RequestParam Long id) {
-        return ResponseEntity.ok()
-                .body(service.getTripsFromCard(id));
-    }
 }

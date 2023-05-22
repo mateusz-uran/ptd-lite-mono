@@ -3,6 +3,7 @@ package io.github.mateuszuran.ptdlitemono.service;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
+import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,21 +20,18 @@ public class TripService {
 
     public void addManyTips(List<TripRequest> trips, Long cardId) {
         var card = service.checkIfCardExists(cardId);
-
-        List<Trip> tripsToSave = new ArrayList<>();
         trips.forEach(
                 tripValues -> {
                     var trip = tripMapper.mapToTripValuesWithModelMapper(tripValues);
                     trip.setCarMileage(calculateCarMileage(tripValues.getCounterStart(), tripValues.getCounterEnd()));
-                    trip.setCard(card);
-                    tripsToSave.add(trip);
+                    card.getTrips().add(trip);
+                    service.updateCard(card);
                 }
         );
-        repository.saveAll(tripsToSave);
     }
 
     public void deleteSelected(List<Long> selectedTrips) {
-        var result = repository.findAllById(selectedTrips);
+        var result = repository.findAllByIdIn(selectedTrips).orElseThrow();
         repository.deleteAll(result);
     }
 

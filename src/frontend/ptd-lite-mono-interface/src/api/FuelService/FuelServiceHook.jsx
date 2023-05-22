@@ -13,6 +13,14 @@ const useFuelService = () => {
         });
     }
 
+    const createAdBlue = async (cardId, blue) => {
+        const config = await getAuthConfig(getAccessTokenSilently);
+        return axiosInstance.post("/fuel/adblue", blue, {
+            params: { cardId: cardId },
+            ...config
+        });
+    }
+
     const deleteFuel = async (id) => {
         const config = await getAuthConfig(getAccessTokenSilently);
         return axiosInstance.delete("/fuel", {
@@ -21,6 +29,14 @@ const useFuelService = () => {
         })
     }
 
-    return { createFuel, deleteFuel };
+    const deleteAdBlue = async (blueId, cardId) => {
+        const config = await getAuthConfig(getAccessTokenSilently);
+        return axiosInstance.delete("/fuel/remove-blue", {
+            params: { cardId: cardId, blueId: blueId },
+            ...config
+        })
+    }
+
+    return { createFuel, createAdBlue, deleteFuel, deleteAdBlue };
 }
 export default useFuelService;

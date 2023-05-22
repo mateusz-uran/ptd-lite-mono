@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FuelResponse {
+public class AdBlueResponse {
     private Long id;
-    private String refuelingDate;
-    private String refuelingLocation;
-    private Integer vehicleCounter;
-    private Integer refuelingAmount;
-    private String paymentMethod;
+    private String date;
+    private String localization;
+    private Integer amount;
 }

@@ -305,6 +305,14 @@
         page-break-before: auto;
         break-before: auto;
     }
+
+    #fuel_final_table tr:nth-child(+n+11) {
+        display: none;
+    }
+
+    #fuel_final_table tr:last-child {
+        display: visible;
+    }
     </style>
 </head>
 
@@ -336,7 +344,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="card_info">Data od....................godz............
+                    <td class="card_info"
+                        th:text="'Data od: ' + ${pdf.cardTripsList[0].dayStart} + '&nbsp;&nbsp; godz. ' + ${pdf.cardTripsList[0].hourStart} +
+                        '&nbsp;&nbsp; do ' + ${pdf.cardTripsList[0].dayEnd} + '&nbsp;&nbsp; godz ' + ${pdf.cardTripsList[0].hourEnd}">Data od....................godz............
                         do..................godz................
                     </td>
                 </tr>
@@ -471,7 +481,7 @@
                     <td th:text="${fuel.vehicleCounter}">&nbsp;</td>
                     <td>&nbsp;</td>
                     <td th:text="${fuel.refuelingAmount}">&nbsp;</td>
-                    <td>&nbsp;</td>
+                    <td th:text="${fuel.paymentMethod}">&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
@@ -594,6 +604,10 @@
                     <td colspan="3" class="text_left">Ad Blue/miejscowosc</td>
                     <td>Ilosc / litry</td>
                 </tr>
+                <tr th:each="blue,iterator : ${pdf.cardAdBlueList}">
+                    <td colspan="3" th:text="${iterator.index+1 + '. ' + blue.localization + ' ' + blue.date}"></td>
+                    <td th:text="${blue.amount}">&nbsp;</td>
+                </tr>
                 <tr>
                     <td colspan="3">&nbsp;</td>
                     <td>&nbsp;</td>
@@ -682,7 +696,7 @@
     </tr>
     </tfoot>
 </table>
-<table id="end_table" style="font-size: 14px;">
+<table id="end_table" style="font-size: 14px; page-break-before: auto; break-before: auto; page-break-inside: avoid;">
     <tr>
         <td>Dane etapowe z przejazdu z wg. wskazan komputera:</td>
     </tr>

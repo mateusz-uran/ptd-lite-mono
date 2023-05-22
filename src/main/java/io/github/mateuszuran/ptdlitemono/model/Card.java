@@ -1,5 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,11 +25,16 @@ public class Card {
     private String username;
     @Column(name = "creation_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime creationTime;
-    @OneToMany(mappedBy = "card", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_id")
     private List<Fuel> fuels = new ArrayList<>();
 
-    @OneToMany(mappedBy = "card", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_id")
     private List<Trip> trips = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_id")
+    private List<AdBlue> adBlue = new ArrayList<>();
 }

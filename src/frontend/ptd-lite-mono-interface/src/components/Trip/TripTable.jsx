@@ -1,10 +1,11 @@
-import { Checkbox, IconButton, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
+import { Checkbox, Divider, IconButton, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, useTheme } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useTripService from "../../api/TripService/TripServiceHook";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 function TripTable(props) {
+    const theme = useTheme()
     const { t } = useTranslation();
     const { cardId, cardTrips } = props;
 
@@ -36,27 +37,19 @@ function TripTable(props) {
         } else if (selectedIndex === selected.length - 1) {
             newSelected = newSelected.concat(selected.slice(0, -1));
         } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
+            newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
         }
-
         setSelected(newSelected);
     };
 
     const isSelected = (tripId) => selected.indexOf(tripId) !== -1;
 
     const handleDeleteSelectedTrips = () => {
-        deleteManyTrips(selected)
-            .then(() => {
-                setTrips((prevTrips) =>
-                    prevTrips.filter((trip) => !selected.includes(trip.id))
-                );
-                // Clear the selected state to reflect the successful delete
-                setSelected([]);
-            })
-    }
+        deleteManyTrips(selected).then(() => {
+            setTrips((prevTrips) => prevTrips.filter((trip) => !selected.includes(trip.id)));
+            setSelected([]);
+        });
+    };
 
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - trips.length) : 0;
@@ -72,10 +65,11 @@ function TripTable(props) {
 
     useEffect(() => {
         setSelected([]);
+    }, [cardId]);
 
-    }, [cardId])
     return (
         <div>
+            <Divider><h2 className={`font-bold ${theme.palette.mode === 'dark' ? 'text-slate-200' : 'text-slate-700'}`}>Trips</h2></Divider>
             <TableContainer>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -89,65 +83,60 @@ function TripTable(props) {
                                     <DeleteIcon />
                                 </IconButton>
                             </TableCell>
-                            <TableCell align="center" colSpan={5} sx={{borderLeft: 1}}>
+                            <TableCell align="center" colSpan={5} sx={{ borderLeft: 1 }}>
                                 {t('misc.start')}
                             </TableCell>
-                            <TableCell align="center" colSpan={5} sx={{borderLeft: 1, borderRight: 1}}>
+                            <TableCell align="center" colSpan={5} sx={{ borderLeft: 1, borderRight: 1 }}>
                                 {t('misc.end')}
                             </TableCell>
-                            <TableCell></TableCell>
+                            <TableCell sx={{ borderRight: 1 }}></TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell padding="checkbox">
-                                <Checkbox
-                                    color="primary"
-                                    onClick={(event) => handleSelectAllClick(event)}
-                                />
+                                <Checkbox color="primary" onClick={(event) => handleSelectAllClick(event)} />
                             </TableCell>
-                            <TableCell>{t('tripTable.day')}</TableCell>
+                            <TableCell sx={{ borderLeft: 1 }}>{t('tripTable.day')}</TableCell>
                             <TableCell>{t('tripTable.hour')}</TableCell>
                             <TableCell>{t('tripTable.location')}</TableCell>
                             <TableCell>{t('tripTable.country')}</TableCell>
                             <TableCell>{t('tripTable.counter')}</TableCell>
-                            <TableCell>{t('tripTable.day')}</TableCell>
+                            <TableCell sx={{ borderLeft: 1 }}>{t('tripTable.day')}</TableCell>
                             <TableCell>{t('tripTable.hour')}</TableCell>
                             <TableCell>{t('tripTable.location')}</TableCell>
                             <TableCell>{t('tripTable.country')}</TableCell>
-                            <TableCell>{t('tripTable.counter')}</TableCell>
-                            <TableCell>{t('tripTable.mileage')}</TableCell>
+                            <TableCell sx={{ borderRight: 1 }}>{t('tripTable.counter')}</TableCell>
+                            <TableCell sx={{ borderRight: 1 }}>{t('tripTable.mileage')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0
                             ? trips.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : trips
-                        ).map((row) => {
+                        ).map((row, index) => {
                             const isItemSelected = isSelected(row.id);
+                            let rowspan = 1;
                             return (
-                                <TableRow key={row.id} hover onClick={(event) => handleClick(event, row.id)} >
+                                <TableRow key={row.id} hover selected={isItemSelected} onClick={(event) => handleClick(event, row.id)}>
                                     <TableCell padding="checkbox">
-                                        <Checkbox
-                                            color="primary"
-                                            checked={isItemSelected}
-                                        />
+                                        <Checkbox color="primary" checked={isItemSelected} />
                                     </TableCell>
-                                    <TableCell>{row.dayStart}</TableCell>
+                                    <TableCell sx={{ borderLeft: 1 }}>{row.dayStart}</TableCell>
                                     <TableCell>{row.hourStart}</TableCell>
                                     <TableCell>{row.locationStart}</TableCell>
                                     <TableCell>{row.countryStart}</TableCell>
                                     <TableCell>{row.counterStart}</TableCell>
-                                    <TableCell>{row.dayEnd}</TableCell>
+                                    <TableCell sx={{ borderLeft: 1 }}>{row.dayEnd}</TableCell>
                                     <TableCell>{row.hourEnd}</TableCell>
                                     <TableCell>{row.locationEnd}</TableCell>
                                     <TableCell>{row.countryEnd}</TableCell>
-                                    <TableCell>{row.counterEnd}</TableCell>
-                                    <TableCell>{row.carMileage}</TableCell>
+                                    <TableCell sx={{ borderRight: 1 }}>{row.counterEnd}</TableCell>
+                                    <TableCell sx={{ borderRight: 1 }}>{row.carMileage}</TableCell>
                                 </TableRow>
                             );
                         })}
                         {emptyRows > 0 && (
                             <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={11} />
+                                <TableCell colSpan={14} />
                             </TableRow>
                         )}
                     </TableBody>
@@ -155,7 +144,7 @@ function TripTable(props) {
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25, { label: t('tripTable.paginationLabel'), value: -1 }]}
-                                colSpan={11}
+                                colSpan={14}
                                 count={trips.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}

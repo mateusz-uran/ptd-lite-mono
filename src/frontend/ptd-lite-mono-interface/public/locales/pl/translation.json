@@ -16,7 +16,8 @@
   },
   "cardsSpecification": {
     "addTripButton": "Dodaj trasę",
-    "addFuelButton": "Dodaj tankowanie"
+    "addFuelButton": "Dodaj tankowanie",
+    "addAdBlueButton": "Dodaj AdBlue"
   },
   "fuelTable": {
     "tableCellDate": "Data",
@@ -30,6 +31,7 @@
     "location": "Miejscowość",
     "counter": "Licznik",
     "amount": "Ilość",
+    "payment": "Forma płatności",
     "submit": "Zapisz"
   },
   "tripTable": {

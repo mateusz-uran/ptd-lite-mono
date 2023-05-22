@@ -18,56 +18,45 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({CardNotFoundException.class})
     public ResponseEntity<ErrorMessage> handleCardNotFound(CardNotFoundException exception) {
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.NOT_FOUND.value(),
-                ErrorMessage.trimExceptionTimestamp(),
-                exception.getMessage());
-        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({CardExistsException.class})
     public ResponseEntity<ErrorMessage> handleAddExistingCard(CardExistsException exception) {
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.CONFLICT.value(),
-                ErrorMessage.trimExceptionTimestamp(),
-                exception.getMessage());
-        return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        return createErrorResponse(exception, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler({CardEmptyException.class})
     public ResponseEntity<ErrorMessage> handleAddEmptyCard(CardEmptyException exception) {
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.BAD_REQUEST.value(),
-                ErrorMessage.trimExceptionTimestamp(),
-                exception.getMessage());
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        return createErrorResponse(exception, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({CsvFileException.class})
     public ResponseEntity<ErrorMessage> handleCsvFile(CsvFileException exception) {
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.NOT_FOUND.value(),
-                ErrorMessage.trimExceptionTimestamp(),
-                exception.getMessage());
-        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({CardEmptyValuesException.class})
-    public ResponseEntity<ErrorMessage> handleEmptyValuesInCard(CsvFileException exception) {
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.NOT_FOUND.value(),
-                ErrorMessage.trimExceptionTimestamp(),
-                exception.getMessage());
-        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorMessage> handleEmptyValuesInCard(CardEmptyValuesException exception) {
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<ErrorMessage> handleUserNotFound(UserNotFoundException exception) {
+        return createErrorResponse(exception, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({GroupNotFoundException.class})
+    public ResponseEntity<ErrorMessage> handleGroupNotFound(GroupNotFoundException exception) {
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
+    }
+
+    private ResponseEntity<ErrorMessage> createErrorResponse(Exception exception, HttpStatus httpStatus) {
         ErrorMessage message = new ErrorMessage(
-                HttpStatus.FORBIDDEN.value(),
+                httpStatus.value(),
                 ErrorMessage.trimExceptionTimestamp(),
                 exception.getMessage());
-        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(message, httpStatus);
     }
 
     @AllArgsConstructor

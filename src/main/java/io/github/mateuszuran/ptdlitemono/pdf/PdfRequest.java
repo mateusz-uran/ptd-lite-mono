@@ -15,4 +15,5 @@ public class PdfRequest {
     private String number;
     private List<CardTrips> cardTripsList;
     private List<CardFuels> cardFuelsList;
+    private List<CardAdBlue> cardAdBlueList;
 }

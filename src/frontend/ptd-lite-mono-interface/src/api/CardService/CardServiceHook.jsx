@@ -37,22 +37,6 @@ const useCardService = () => {
         })
     }
 
-    const getTripFromCard = async (id) => {
-        const config = await getAuthConfig(getAccessTokenSilently);
-        return axiosInstance.get('/card/trip', {
-            params: { id: id },
-            ...config
-        })
-    };
-
-    const getFuelFromCard = async (id) => {
-        const config = await getAuthConfig(getAccessTokenSilently);
-        return axiosInstance.get('/card/fuel', {
-            params: { id: id },
-            ...config
-        })
-    };
-
     const getCardDetails = async (id) => {
         const config = await getAuthConfig(getAccessTokenSilently);
         return axiosInstance.get('/card/details', {
@@ -61,7 +45,7 @@ const useCardService = () => {
         })
     };
 
-    return { createCard, getCards, deleteCard, getTripFromCard, getFuelFromCard, getCardDetails };
+    return { createCard, getCards, deleteCard, getCardDetails };
 }
 
 export default useCardService;

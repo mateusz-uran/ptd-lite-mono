@@ -16,7 +16,8 @@
   },
   "cardsSpecification": {
     "addTripButton": "Add trip",
-    "addFuelButton": "Add fuel"
+    "addFuelButton": "Add fuel",
+    "addAdBlueButton": "Add adBlue"
   },
   "fuelTable": {
     "tableCellDate": "Date",
@@ -30,6 +31,7 @@
     "location": "Localization",
     "counter": "Counter",
     "amount": "Amount",
+    "payment": "Payment",
     "submit": "Submit"
   },
   "tripTable": {

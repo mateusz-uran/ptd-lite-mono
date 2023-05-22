@@ -18,13 +18,15 @@ function AddFuel(props) {
             refuelingDate: '',
             refuelingLocation: '',
             vehicleCounter: '',
-            refuelingAmount: ''
+            refuelingAmount: '',
+            paymentMethod: '',
         },
         validationSchema: Yup.object({
             refuelingDate: Yup.string().required(t('yup.empty')),
             refuelingLocation: Yup.string().required(t('yup.empty')),
             vehicleCounter: Yup.string().required(t('yup.empty')),
             refuelingAmount: Yup.string().required(t('yup.empty')),
+            paymentMethod: Yup.string().required(t('yup.empty')),
         }),
         onSubmit: (values) => {
             createFuel(cardId, values)
@@ -78,6 +80,15 @@ function AddFuel(props) {
                         onChange={formik.handleChange}
                         error={formik.touched.refuelingAmount && Boolean(formik.errors.refuelingAmount)}
                         helperText={formik.touched.refuelingAmount && formik.errors.refuelingAmount}
+                        sx={{ margin: 1 }}
+                    />
+                    <TextField
+                        name="paymentMethod"
+                        label='payment'
+                        value={formik.values.paymentMethod}
+                        onChange={formik.handleChange}
+                        error={formik.touched.paymentMethod && Boolean(formik.errors.paymentMethod)}
+                        helperText={formik.touched.paymentMethod && formik.errors.paymentMethod}
                         sx={{ margin: 1 }}
                     />
                 </div>
