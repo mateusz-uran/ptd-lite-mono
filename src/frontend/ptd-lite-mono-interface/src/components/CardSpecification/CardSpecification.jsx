@@ -55,30 +55,38 @@ function CardSpecification(props) {
                 setOpen={setSnackbarInformation}
             />
             <div className='lg:px-5 my-2'>
-                <div className='flex pb-1'>
-                    <Link to={`../${cardId}/add-trip`} relative="path">
-                        <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addTripButton')}</Button>
-                    </Link>
+                <div className='flex flex-wrap'>
+                    <div className='py-1'>
+                        <Link to={`../${cardId}/add-trip`} relative="path">
+                            <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addTripButton')}</Button>
+                        </Link>
+                    </div>
 
-                    <Link to={`../${cardId}/add-fuel`} relative="path">
-                        <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addFuelButton')}</Button>
-                    </Link>
+                    <div className='py-1'>
+                        <Link to={`../${cardId}/add-fuel`} relative="path">
+                            <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addFuelButton')}</Button>
+                        </Link>
+                    </div>
 
-                    <Link to={`../${cardId}/add-blue`} relative="path">
-                        <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addAdBlueButton')}</Button>
-                    </Link>
+                    <div className='py-1'>
+                        <Link to={`../${cardId}/add-blue`} relative="path">
+                            <Button variant="outlined" sx={{ fontWeight: 'bold', marginX: 1 }}>{t('cardsSpecification.addAdBlueButton')}</Button>
+                        </Link>
+                    </div>
 
-                    {cardTrips && cardTrips.length > 1 && cardFuels && cardFuels.length > 0 &&
-                        <GeneratePDF
-                            user={user}
-                            cardNumber={cardNumber}
-                            cardTrips={cardTrips}
-                            cardFuels={cardFuels}
-                            cardAdBlue={cardAdBlue}
-                            setProgress={setProgress}
-                            setSnackbarInformation={setSnackbarInformation}
-                        />
-                    }
+                    <div className='py-1'>
+                        {cardTrips && cardTrips.length > 1 && cardFuels && cardFuels.length > 0 &&
+                            <GeneratePDF
+                                user={user}
+                                cardNumber={cardNumber}
+                                cardTrips={cardTrips}
+                                cardFuels={cardFuels}
+                                cardAdBlue={cardAdBlue}
+                                setProgress={setProgress}
+                                setSnackbarInformation={setSnackbarInformation}
+                            />
+                        }
+                    </div>
                 </div>
                 <div>
                     <LinearProgressWithLabel value={progress} />
