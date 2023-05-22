@@ -343,10 +343,10 @@
                         nr
                     </td>
                 </tr>
-                <tr>
+                <tr th:if="${not #lists.isEmpty(pdf.cardTripsList)}">
                     <td class="card_info"
                         th:text="'Data od: ' + ${pdf.cardTripsList[0].dayStart} + '&nbsp;&nbsp; godz. ' + ${pdf.cardTripsList[0].hourStart} +
-                        '&nbsp;&nbsp; do ' + ${pdf.cardTripsList[0].dayEnd} + '&nbsp;&nbsp; godz ' + ${pdf.cardTripsList[0].hourEnd}">Data od....................godz............
+                        '&nbsp;&nbsp; do ' + ${pdf.cardTripsList[pdf.cardTripsList.size() - 1].dayEnd} + '&nbsp;&nbsp; godz ' + ${pdf.cardTripsList[pdf.cardTripsList.size() - 1].hourEnd}">Data od....................godz............
                         do..................godz................
                     </td>
                 </tr>
