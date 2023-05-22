@@ -82,6 +82,7 @@ public class PdfService {
                 .cardNumber(pdfRequest.getNumber())
                 .cardTripsList(pdfRequest.getCardTripsList())
                 .cardFuelsList(pdfRequest.getCardFuelsList())
+                .cardAdBlueList(pdfRequest.getCardAdBlueList())
                 .build();
     }
 }

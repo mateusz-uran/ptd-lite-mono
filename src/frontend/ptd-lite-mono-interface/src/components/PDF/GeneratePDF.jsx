@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 function GeneratePDF(props) {
     const { t } = useTranslation();
-    const { user, cardNumber, cardTrips, cardFuels, setProgress, setSnackbarInformation } = props;
+    const { user, cardNumber, cardTrips, cardFuels, cardAdBlue, setProgress, setSnackbarInformation } = props;
     const { generatePdf } = usePdfService();
 
     const generate = () => {
@@ -13,6 +13,7 @@ function GeneratePDF(props) {
             number: cardNumber,
             cardTripsList: cardTrips,
             cardFuelsList: cardFuels,
+            cardAdBlueList: cardAdBlue,
         }
 
         generatePdf(user, pdfRequest, (progressEvent) => {

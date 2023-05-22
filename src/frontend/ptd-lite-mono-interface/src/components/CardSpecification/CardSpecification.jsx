@@ -74,6 +74,7 @@ function CardSpecification(props) {
                             cardNumber={cardNumber}
                             cardTrips={cardTrips}
                             cardFuels={cardFuels}
+                            cardAdBlue={cardAdBlue}
                             setProgress={setProgress}
                             setSnackbarInformation={setSnackbarInformation}
                         />
