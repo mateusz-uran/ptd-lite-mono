@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { storeAuthInformation } from './features/auth/authSlice';
 
 function App() {
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
 
   const fetchAccessToken = async () => {

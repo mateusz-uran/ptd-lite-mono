@@ -7,24 +7,21 @@ import {
   getThreeCards,
   getThreeCardsStatus,
 } from '../../features/card/cardMiniListSlice';
-import {
-  getToken,
-  getTokenStatus,
-  getUsername,
-} from '../../features/auth/authSlice';
+import { getToken, getTokenStatus } from '../../features/auth/authSlice';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const CardsMini = () => {
+  const { user, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
-
   const cards = useSelector(getThreeCards);
   const status = useSelector(getThreeCardsStatus);
   const token = useSelector(getToken);
-  const username = useSelector(getUsername);
   const loadingToken = useSelector(getTokenStatus);
 
   useEffect(() => {
-    if (!status && !loadingToken) {
-      dispatch(getLastThreeCards(token));
+    if (!status && !loadingToken && isAuthenticated) {
+      let payload = { token: token, username: user.nickname };
+      dispatch(getLastThreeCards(payload));
     }
   }, []);
 

@@ -170,7 +170,7 @@
   align-items: center;
   background: var(--primary-color);
   transition: var(--tran-03);
-  margin: 0 2px;
+  margin: 0 5px;
   color: #fff;
 }
 

@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   token: '',
-  username: '',
   isLoading: true,
 };
 
@@ -19,7 +18,6 @@ const authSlice = createSlice({
 export const { storeAuthInformation } = authSlice.actions;
 
 export const getToken = (state) => state.auth.token;
-export const getUsername = (state) => state.auth.username;
 export const getTokenStatus = (state) => state.auth.isLoading;
 
 export default authSlice.reducer;
