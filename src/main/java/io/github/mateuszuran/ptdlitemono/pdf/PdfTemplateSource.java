@@ -1,6 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.pdf;
 
-import io.github.mateuszuran.ptdlitemono.dto.PdfCsvReader;
+import io.github.mateuszuran.ptdlitemono.dto.pdf.PdfCsvReader;
 import lombok.Builder;
 import lombok.Data;
 

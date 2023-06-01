@@ -1,7 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueRequest;
-import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.service.AdBlueService;
 import io.github.mateuszuran.ptdlitemono.service.FuelService;
 import lombok.RequiredArgsConstructor;

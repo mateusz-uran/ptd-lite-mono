@@ -1,4 +1,5 @@
-package io.github.mateuszuran.ptdlitemono.dto;
+package io.github.mateuszuran.ptdlitemono.dto.response;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdBlueResponse {
+public class CardResponse {
     private Long id;
-    private String date;
-    private String localization;
-    private Integer amount;
+    private String number;
+    private String creationTime;
 }

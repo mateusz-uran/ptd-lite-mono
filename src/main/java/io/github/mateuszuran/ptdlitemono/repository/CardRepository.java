@@ -2,7 +2,9 @@ package io.github.mateuszuran.ptdlitemono.repository;
 
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -13,4 +15,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     Optional<Card> findById(Long id);
 
     List<Card> findAllByUsernameAndCreationTimeBetween(String username, LocalDateTime start, LocalDateTime end);
+
+    @Query(value = "SELECT * FROM Cards WHERE username=:username ORDER BY creation_time DESC LIMIT 3", nativeQuery = true)
+    List<Card> findLastThreeEntitiesByUsernameAndOrderByCreationTime(String username);
 }

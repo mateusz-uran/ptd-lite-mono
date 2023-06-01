@@ -1,7 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.mapper;
 
 import io.github.mateuszuran.ptdlitemono.config.ModelMapperConfig;
-import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

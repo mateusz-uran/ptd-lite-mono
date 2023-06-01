@@ -1,0 +1,32 @@
+.logout-button button {
+  padding: 10px 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  display: flex;
+  font-size: 18px;
+  color: var(--text-color);
+  font-weight: 400;
+  align-items: center;
+  border-radius: 10px;
+  transition: var(--tran-03);
+}
+
+.logout-button button:hover {
+  background: var(--primary-color);
+  color: #fff;
+  cursor: pointer;
+}
+
+.logout-button button i {
+  min-width: 60px;
+}
+
+.logout-button button span {
+  transition: var(--tran-03);
+}
+
+.sidebar.close .logout-button button span {
+  opacity: 0;
+  visibility: hidden;
+}

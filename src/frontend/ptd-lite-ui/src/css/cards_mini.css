@@ -1,0 +1,34 @@
+.cards-mini {
+  width: 100%;
+  background: var(--primary-color);
+}
+
+.cards-mini ul li {
+  margin: 0;
+}
+
+.cards-mini ul li.empty-list {
+  padding: 10px 0;
+}
+
+.cards-mini ul li.empty-list span {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  opacity: 0.6;
+}
+
+.cards-mini ul li a::before {
+  content: '';
+  min-width: 60px;
+}
+
+.cards-mini ul li a {
+  color: #fff;
+  opacity: 0.6;
+}
+
+.cards-mini ul li a:hover {
+  opacity: 1;
+}

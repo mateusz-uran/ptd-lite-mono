@@ -1,6 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
-import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
 import io.github.mateuszuran.ptdlitemono.service.TripService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

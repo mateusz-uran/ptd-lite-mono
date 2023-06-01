@@ -1,9 +1,9 @@
 package io.github.mateuszuran.ptdlitemono.mapper;
 
 import io.github.mateuszuran.ptdlitemono.config.ModelMapperConfig;
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueResponse;
-import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
-import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

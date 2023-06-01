@@ -2,16 +2,11 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import io.github.mateuszuran.ptdlitemono.dto.PdfCsvReader;
-import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
+import io.github.mateuszuran.ptdlitemono.dto.pdf.PdfCsvReader;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyValuesException;
 import io.github.mateuszuran.ptdlitemono.exception.CsvFileException;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
 import io.github.mateuszuran.ptdlitemono.pdf.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

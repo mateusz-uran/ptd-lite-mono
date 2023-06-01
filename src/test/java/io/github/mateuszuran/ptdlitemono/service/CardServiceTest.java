@@ -1,6 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.*;
+import io.github.mateuszuran.ptdlitemono.dto.pdf.CardDetailsResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.CardRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
 import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
@@ -19,6 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -198,6 +203,26 @@ class CardServiceTest {
         //then
         assertThat(result).isEqualTo(response);
 
+    }
+
+    private List<Card> lastThreeCards() {
+        var cardOne = Card.builder().username("admin").number("ABC")
+                .creationTime(LocalDateTime.of(2023, 3, 1, 12, 0)).build();
+        var cardTwo = Card.builder().username("admin").number("ABC")
+                .creationTime(LocalDateTime.of(2023, 3, 2, 12, 0)).build();
+        var cardThree = Card.builder().username("admin").number("ABC")
+                .creationTime(LocalDateTime.of(2023, 3, 3, 12, 0)).build();
+        var cardFourth = Card.builder().username("admin").number("ABC")
+                .creationTime(LocalDateTime.of(2023, 3, 4, 12, 0)).build();
+        var cardFifth = Card.builder().username("admin").number("ABC")
+                .creationTime(LocalDateTime.of(2023, 3, 5, 12, 0)).build();
+        List<Card> listOfCards = new ArrayList<>();
+        listOfCards.add(cardOne);
+        listOfCards.add(cardTwo);
+        listOfCards.add(cardThree);
+        listOfCards.add(cardFourth);
+        listOfCards.add(cardFifth);
+        return listOfCards.subList(listOfCards.size() - 3, listOfCards.size());
     }
 
     private List<Card> dummyModelData() {

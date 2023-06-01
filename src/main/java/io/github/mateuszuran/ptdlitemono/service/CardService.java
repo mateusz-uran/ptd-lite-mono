@@ -1,6 +1,11 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.*;
+import io.github.mateuszuran.ptdlitemono.dto.pdf.CardDetailsResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.CardRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
 import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
@@ -8,8 +13,6 @@ import io.github.mateuszuran.ptdlitemono.mapper.CardMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
-import io.github.mateuszuran.ptdlitemono.model.Trip;
-import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +68,13 @@ public class CardService {
         LocalDateTime endDate = actualDate.with(lastDayOfMonth()).atStartOfDay();
 
         return repository.findAllByUsernameAndCreationTimeBetween(username, startDate, endDate);
+    }
+
+    public List<CardResponse> getLastThreeCardsSortedDescByTime(String username) {
+        return repository.findLastThreeEntitiesByUsernameAndOrderByCreationTime(username)
+                .stream()
+                .map(cardMapper::mapToCardResponseWithFormattedCreationTime)
+                .toList();
     }
 
     public List<CardResponse> getCardsSorted(String username, int year, int month) {

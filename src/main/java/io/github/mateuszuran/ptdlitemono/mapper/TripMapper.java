@@ -1,8 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.mapper;
 
 import io.github.mateuszuran.ptdlitemono.config.ModelMapperConfig;
-import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
-import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
