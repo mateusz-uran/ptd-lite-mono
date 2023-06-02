@@ -12,13 +12,22 @@ const CardsMini = () => {
     isSuccess,
   } = useGetLastCardsQuery(user.nickname);
 
+  function storeSelectedCard(cardId) {
+    localStorage.setItem('selected_card', Number(cardId));
+  }
+
   if (!isLoading && isSuccess && lastCards?.length > 1) {
     return (
       <section className="cards-mini">
         {lastCards.map((card, index) => (
           <ul key={index}>
             <li>
-              <Link to={`${card.number}`}>{card.number}</Link>
+              <Link
+                to={`${card.number}`}
+                onClick={() => storeSelectedCard(card.id)}
+              >
+                {card.number}
+              </Link>
             </li>
           </ul>
         ))}

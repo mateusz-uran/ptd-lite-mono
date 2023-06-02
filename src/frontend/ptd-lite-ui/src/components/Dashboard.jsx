@@ -1,7 +1,19 @@
+import { useEffect } from 'react';
+
 const Dashboard = () => {
+  useEffect(() => {
+    let selecteCard = localStorage.getItem('selected_card');
+    if (selecteCard != null && selecteCard != '') {
+      console.log(selecteCard);
+    }
+  });
   return (
     <main>
-      <header>url</header>
+      <header className="comp-header">
+        <i class="bx bx-home-alt icon"></i>
+        <i class="bx bx-chevron-right icon-right"></i>
+        <span>Dashboard</span>
+      </header>
       <section>selected card based on localstorage, stats etc</section>
     </main>
   );

@@ -13,11 +13,7 @@ export const apiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getLastCards: builder.query({
-      query: (username) => ({
-        url: '/card/last',
-        method: 'GET',
-        params: { username: username },
-      }),
+      query: (username) => `/card/last?username=${username}`,
     }),
   }),
 });

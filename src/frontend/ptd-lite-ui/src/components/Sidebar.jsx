@@ -18,22 +18,21 @@ const Sidebar = () => {
   return (
     <div className="sidebar-wrapper">
       <nav className="sidebar close">
+        <header>
+          <div className="logo">
+            <span className="image">
+              <img src={logo} alt="logo" />
+            </span>
+            <span className="text">Lite</span>
+          </div>
+          <div className="toggle-icon">
+            <i
+              className="bx bx-chevron-right toggle"
+              onClick={handleSideBarClick}
+            ></i>
+          </div>
+        </header>
         <div className="menu">
-          <header>
-            <div className="logo">
-              <span className="image">
-                <img src={logo} alt="logo" />
-              </span>
-              <span className="text">Lite</span>
-            </div>
-            <div className="toggle-icon">
-              <i
-                className="bx bx-chevron-right toggle"
-                onClick={handleSideBarClick}
-              ></i>
-            </div>
-          </header>
-
           <ul>
             <li>
               <Link to={'dashboard'}>
@@ -77,11 +76,11 @@ const Sidebar = () => {
               </Link>
             </li>
           </ul>
-        </div>
 
-        <footer>
-          <LogoutButton />
-        </footer>
+          <footer>
+            <LogoutButton />
+          </footer>
+        </div>
       </nav>
 
       <div className="outlet-wrapper">
