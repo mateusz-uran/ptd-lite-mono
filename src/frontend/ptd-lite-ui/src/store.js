@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cardReducer from './features/card/cardMiniListSlice';
-import authReducer from './features/auth/authSlice';
+import auht0Reducer from './features/auth/auth0Slice';
+import { apiSlice } from './api/apiSlice';
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    auth0: auht0Reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
     card: cardReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });

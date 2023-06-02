@@ -1,8 +1,8 @@
 import { Link, Outlet } from 'react-router-dom';
-import '../../css/sidebar.css';
-import logo from '../assets/logo-bg.png';
-import CardsMini from '../cards_mini/CardsMini';
-import LogoutButton from '../logout/LogoutButton';
+import '../css/sidebar.css';
+import logo from './assets/logo-bg.png';
+import CardsMini from './CardsMini';
+import LogoutButton from './LogoutButton';
 
 const Sidebar = () => {
   const handleSideBarClick = (event) => {

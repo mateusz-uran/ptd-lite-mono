@@ -5,6 +5,7 @@ import './index.css';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { store } from './store.js';
 import { Provider } from 'react-redux';
+import Auth0Wrapper from './components/Auth0Wrapper.jsx';
 
 const providerConfig = {
   domain: import.meta.env.VITE_AUTH0_DOMAIN,
@@ -21,7 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Auth0Provider {...providerConfig}>
     <React.StrictMode>
       <Provider store={store}>
-        <App />
+        <Auth0Wrapper>
+          <App />
+        </Auth0Wrapper>
       </Provider>
     </React.StrictMode>
   </Auth0Provider>

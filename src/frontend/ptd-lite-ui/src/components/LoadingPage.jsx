@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/misc.css';
+import '../css/misc.css';
 
 function LoadingPage(props) {
   return (

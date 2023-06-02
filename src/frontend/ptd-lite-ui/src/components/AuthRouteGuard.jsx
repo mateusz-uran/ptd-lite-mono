@@ -1,6 +1,6 @@
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import React from 'react';
-import LoadingPage from '../loading/LoadingPage';
+import LoadingPage from './LoadingPage';
 
 export const AuthRouteGuard = ({ component }) => {
   const Component = withAuthenticationRequired(component, {
