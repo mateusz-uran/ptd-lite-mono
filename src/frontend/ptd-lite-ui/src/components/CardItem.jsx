@@ -1,23 +1,17 @@
 import { useParams } from 'react-router-dom';
-import { useGetSelectedCardQuery } from '../api/apiSlice';
 
 const CardItem = () => {
   const { cardNumber } = useParams();
   const selectedCard = localStorage.getItem('selected_card');
-  const {
-    data: selectedCardResponse,
-    isLoading,
-    isSuccess,
-  } = useGetSelectedCardQuery(selectedCard);
 
   let section;
-  if (isLoading) {
-    section = <section>Loading card details...</section>;
-  }
+  // if (isLoading) {
+  //   section = <section>Loading card details...</section>;
+  // }
 
-  if (isSuccess) {
-    section = <section>card details - trips, fuels, adblue etc</section>;
-  }
+  // if (isSuccess) {
+  //   section = <section>card details - trips, fuels, adblue etc</section>;
+  // }
 
   return (
     <main>

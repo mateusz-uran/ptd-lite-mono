@@ -1,22 +1,27 @@
 import { Link } from 'react-router-dom';
 import '../css/cards_mini.css';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useGetLastCardsQuery } from '../api/apiSlice';
+import {
+  selectAllCards,
+  useGetLastCardsQuery,
+} from '../features/card/cardSlice';
+import { useSelector } from 'react-redux';
 
 const CardsMini = () => {
   const { user } = useAuth0();
 
-  const {
-    data: lastCards,
-    isLoading,
-    isSuccess,
-  } = useGetLastCardsQuery(user.nickname);
+  const { isLoading, isSuccess, isError } = useGetLastCardsQuery(user.nickname);
+
+  const cards = useSelector(selectAllCards);
+
+  console.log(cards);
+  let lastCards;
 
   function storeSelectedCard(cardId) {
     localStorage.setItem('selected_card', Number(cardId));
   }
 
-  if (!isLoading && isSuccess && lastCards?.length > 1) {
+  if (!isLoading && !isError && isSuccess && lastCards?.length > 1) {
     return (
       <section className="cards-mini">
         {lastCards.map((card, index) => (
@@ -35,7 +40,7 @@ const CardsMini = () => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading && !isError) {
     return (
       <section className="cards-mini">
         <ul>
