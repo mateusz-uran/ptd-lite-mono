@@ -15,7 +15,10 @@ export const apiSlice = createApi({
     getLastCards: builder.query({
       query: (username) => `/card/last?username=${username}`,
     }),
+    getSelectedCard: builder.query({
+      query: (cardId) => `/card/details?id=${cardId}`,
+    }),
   }),
 });
 
-export const { useGetLastCardsQuery } = apiSlice;
+export const { useGetLastCardsQuery, useGetSelectedCardQuery } = apiSlice;

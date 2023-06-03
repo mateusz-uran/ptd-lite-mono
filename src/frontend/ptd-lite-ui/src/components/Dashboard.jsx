@@ -10,8 +10,8 @@ const Dashboard = () => {
   return (
     <main>
       <header className="comp-header">
-        <i class="bx bx-home-alt icon"></i>
-        <i class="bx bx-chevron-right icon-right"></i>
+        <i className="bx bx-home-alt icon"></i>
+        <i className="bx bx-chevron-right icon-right"></i>
         <span>Dashboard</span>
       </header>
       <section>selected card based on localstorage, stats etc</section>
