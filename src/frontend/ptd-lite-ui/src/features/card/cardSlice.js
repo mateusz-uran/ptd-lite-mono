@@ -22,12 +22,19 @@ export const cardApiSlice = apiSlice.injectEndpoints({
 
 export const { useGetLastCardsQuery } = cardApiSlice;
 
-export const selectCardsResult = cardApiSlice.endpoints.getLastCards.select();
+export const getSelectors = (username) => {
+  const selectCardsResult =
+    cardApiSlice.endpoints.getLastCards.select(username);
 
-const selectCardsData = createSelector(
-  selectCardsResult,
-  (cardsResult) => cardsResult.data
-);
+  const adapterSelectors = createSelector(selectCardsResult, (result) =>
+    cardAdapter.getSelectors(() => result?.data ?? initialState)
+  );
 
-export const { selectAll: selectAllCards, selectIds: selectCardsIds } =
-  cardAdapter.getSelectors((state) => selectCardsData(state) ?? initialState);
+  return {
+    selectAll: createSelector(adapterSelectors, (s) => s.selectAll(undefined)),
+    selectIds: createSelector(adapterSelectors, (s) => s.selectIds(undefined)),
+    selectEntities: createSelector(adapterSelectors, (s) =>
+      s.selectEntities(undefined)
+    ),
+  };
+};
