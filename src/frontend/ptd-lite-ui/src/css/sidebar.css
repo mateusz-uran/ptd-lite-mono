@@ -207,5 +207,5 @@
   width: calc(100% - 210px);
   background-color: var(--body-color);
   transition: var(--tran-05);
-  padding: 12px 30px;
+  padding: 12px 20px;
 }
