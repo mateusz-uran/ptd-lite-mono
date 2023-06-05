@@ -1,22 +1,17 @@
 import { Link } from 'react-router-dom';
 import '../css/cards_mini.css';
 import { useAuth0 } from '@auth0/auth0-react';
-import { getSelectors, useGetLastCardsQuery } from '../features/card/cardSlice';
-import { useSelector } from 'react-redux';
+import { useGetLastCardsQuery } from '../features/card/cardSlice';
 
 const CardsMini = () => {
   const { user } = useAuth0();
 
-  const { data, isLoading, isSuccess, isError } = useGetLastCardsQuery(
-    user.nickname
-  );
-  console.log(data);
-
-  const { selectAll, selectIds, selectEntities } = getSelectors(user.nickname);
-
-  const cards = useSelector(selectEntities);
-
-  let lastCards;
+  const {
+    data: lastCards,
+    isSuccess,
+    isError,
+    isLoading,
+  } = useGetLastCardsQuery(user.nickname);
 
   function storeSelectedCard(cardId) {
     localStorage.setItem('selected_card', Number(cardId));

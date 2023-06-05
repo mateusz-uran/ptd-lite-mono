@@ -1,0 +1,112 @@
+.card-item .success-section header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-color);
+  margin-top: 20px;
+}
+
+.card-item .success-section header h4,
+.card-item .success-section header .pdf-button {
+  padding: 05px;
+}
+
+.card-item .success-section header .pdf-button {
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  transition: var(--tran-03);
+}
+
+.card-item .success-section header .pdf-button:hover {
+  background: var(--primary-color);
+  cursor: pointer;
+  color: #fff;
+}
+
+.card-item .success-section header .pdf-button .text {
+  margin-left: 5px;
+}
+
+/*tables content in success section*/
+.card-item .success-section .tables-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-item .success-section .tables-wrapper .fuel {
+  display: flex;
+}
+
+/* tables css */
+.card-item .success-section .tables-wrapper table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.card-item .success-section .tables-wrapper table tr th {
+  background-color: #fff;
+}
+
+.card-item .success-section .tables-wrapper table tr th,
+.card-item .success-section .tables-wrapper table tr td {
+  padding: 5px 10px;
+  color: var(--text-color);
+  font-size: 12px;
+}
+
+.card-item .success-section .tables-wrapper .empty-row {
+  border-top: 1px solid #ddd;
+}
+
+.card-item .success-section .tables-wrapper .empty-row-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-item .success-section .tables-wrapper .empty-row-button button {
+  background: #ddd;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  color: var(--text-color);
+  transition: var(--tran-03);
+  margin-top: 10px;
+}
+
+.card-item .success-section .tables-wrapper .empty-row-button button:hover {
+  cursor: pointer;
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.card-item .success-section .tables-wrapper .empty-row-button .text {
+  margin-right: 5px;
+}
+
+.card-item .success-section .tables-wrapper .empty-row-button .text,
+.card-item .success-section .tables-wrapper .empty-row-button .icon {
+  font-size: 14px;
+}
+
+.card-item .success-section .tables-wrapper .fuel .petrol,
+.card-item .success-section .tables-wrapper .fuel .adblue {
+  width: 50%;
+}
+
+.card-item .success-section .tables-wrapper .fuel .petrol {
+  margin-right: 15px;
+}

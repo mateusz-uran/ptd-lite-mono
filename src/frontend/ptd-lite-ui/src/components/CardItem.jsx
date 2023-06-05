@@ -1,20 +1,56 @@
 import { useParams } from 'react-router-dom';
+import { useGetCardsDetailsQuery } from '../features/card/cardSlice';
+import '../css/card_item.css';
+import TripTable from './TripTable';
+import PetrolTable from './PetrolTable';
+import AdBlueTable from './AdBlueTable';
 
 const CardItem = () => {
   const { cardNumber } = useParams();
   const selectedCard = localStorage.getItem('selected_card');
 
-  let section;
-  // if (isLoading) {
-  //   section = <section>Loading card details...</section>;
-  // }
+  const {
+    data: card,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useGetCardsDetailsQuery(selectedCard);
 
-  // if (isSuccess) {
-  //   section = <section>card details - trips, fuels, adblue etc</section>;
-  // }
+  let section;
+  if (isLoading) {
+    section = <section>Loading card details...</section>;
+  } else if (isError) {
+    section = <section>Card is not available at the moment.</section>;
+  } else if (isSuccess) {
+    section = (
+      <section className="success-section">
+        <header>
+          <h4>Card</h4>
+          <button className="pdf-button">
+            <i className="bx bxs-cloud-download icon"></i>
+            <span className="text">Download PDF</span>
+          </button>
+        </header>
+        <div className="tables-wrapper">
+          <div className="trip">
+            <TripTable trips={card.trips} />
+          </div>
+          <div className="fuel">
+            <div className="petrol">
+              <PetrolTable petrol={card.fuels} />
+            </div>
+            <div className="adblue">
+              <AdBlueTable adBlue={card.blue} />
+            </div>
+          </div>
+          <div className="final-content">additional info</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <main>
+    <main className="card-item">
       <header className="comp-header">
         <i className="bx bx-home-alt icon"></i>
         <i className="bx bx-chevron-right icon-right"></i>
