@@ -25,14 +25,14 @@ public class CardController {
         return ResponseEntity.ok().body(service.getCardsSorted(username, year, month));
     }
 
-    @GetMapping("/last")
+    @GetMapping
     public ResponseEntity<List<CardResponse>> getLastThreeCardsByMonth(@RequestParam String username) {
         return ResponseEntity.ok().body(service.getLastThreeCardsSortedDescByTime(username));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> saveCard(@RequestBody CardRequest cardRequest, @RequestParam int year, @RequestParam int month, @RequestParam int dayOfMonth) {
-        return ResponseEntity.ok().body(service.saveCard(cardRequest, year, month, dayOfMonth));
+    public ResponseEntity<?> saveCard(@RequestBody CardRequest cardRequest) {
+        return ResponseEntity.ok().body(service.saveCard(cardRequest));
     }
 
     @DeleteMapping("/delete")

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const TripTable = ({ trips }) => {
   const shouldRenderMinimumRows = trips.length < 5;
@@ -44,10 +45,12 @@ const TripTable = ({ trips }) => {
           <tr className="empty-row">
             <td colSpan={10} style={{ height: `${emptyRowCount * 25}px` }}>
               <div className="empty-row-button">
-                <button>
-                  <span className="text">Add</span>
-                  <i className="bx bx-message-square-add icon"></i>
-                </button>
+                <Link to={'addtrip'}>
+                  <button>
+                    <span className="text">Add</span>
+                    <i className="bx bx-message-square-add icon"></i>
+                  </button>
+                </Link>
               </div>
             </td>
           </tr>

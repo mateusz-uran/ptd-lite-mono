@@ -23,6 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,13 +78,14 @@ class CardServiceTest {
     void givenCardObject_whenSave_thenReturnCard() {
         //given
         var now = LocalDateTime.now();
-        var date = LocalDateTime.of(2023, 5, 3, now.getHour(), now.getMinute(), now.getSecond());
-        Card card = Card.builder().number("ABC").creationTime(date).build();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        var formattedDate = now.format(formatter);
+        Card card = Card.builder().number("ABC").creationTime(now).build();
         CardRequest request = CardRequest.builder().number("ABC").build();
-        CardResponse response = CardResponse.builder().number("ABC").build();
-        when(mapper.mapToCardResponseWithFormattedCreationTime(card)).thenReturn(response);
+        CardResponse response = CardResponse.builder().number("ABC").creationTime(formattedDate).build();
+//        when(mapper.mapToCardResponseWithFormattedCreationTime(card)).thenReturn(response);
         //when
-        var result = service.saveCard(request, 2023, 5, 3);
+        var result = service.saveCard(request);
         //then
         verify(repository, times(1)).save(card);
         assertThat(result).isEqualTo(response);
@@ -95,7 +97,7 @@ class CardServiceTest {
         CardRequest request = CardRequest.builder().number("ABC").username("admin").build();
         when(repository.existsByNumberIgnoreCaseAndUsername(request.getNumber(), request.getUsername())).thenReturn(true);
         //then
-        assertThatThrownBy(() -> service.saveCard(request, 2023, 3, 5))
+        assertThatThrownBy(() -> service.saveCard(request))
                 .isInstanceOf(CardExistsException.class)
                 .hasMessageContaining("Card with number: " + request.getNumber() + " already exists.");
     }
@@ -104,7 +106,7 @@ class CardServiceTest {
     void givenCardObject_whenSaveWithEmptyNumber_thenThrowException() {
         //given + when
         CardRequest request = CardRequest.builder().number("").username("admin").build();
-        assertThatThrownBy(() -> service.saveCard(request, 2023, 3, 5))
+        assertThatThrownBy(() -> service.saveCard(request))
                 .isInstanceOf(CardEmptyException.class)
                 .hasMessageContaining("Card is empty.");
     }

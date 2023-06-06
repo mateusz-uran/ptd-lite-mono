@@ -4,6 +4,7 @@ import '../css/card_item.css';
 import TripTable from './TripTable';
 import PetrolTable from './PetrolTable';
 import AdBlueTable from './AdBlueTable';
+import CardForm from '../features/card/CardForm';
 
 const CardItem = () => {
   const { cardNumber } = useParams();
@@ -26,6 +27,7 @@ const CardItem = () => {
       <section className="success-section">
         <header>
           <h4>Card</h4>
+          <CardForm />
           <button className="pdf-button">
             <i className="bx bxs-cloud-download icon"></i>
             <span className="text">Download PDF</span>

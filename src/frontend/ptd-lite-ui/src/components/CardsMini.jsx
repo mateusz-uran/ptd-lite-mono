@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import '../css/cards_mini.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useGetLastCardsQuery } from '../features/card/cardSlice';
+import CardForm from '../features/card/CardForm';
 
 const CardsMini = () => {
   const { user } = useAuth0();
@@ -17,7 +18,7 @@ const CardsMini = () => {
     localStorage.setItem('selected_card', Number(cardId));
   }
 
-  if (!isLoading && !isError && isSuccess && lastCards?.length > 1) {
+  if (!isLoading && !isError && isSuccess && lastCards?.length >= 1) {
     return (
       <section className="cards-mini">
         {lastCards.map((card, index) => (

@@ -8,6 +8,7 @@ import Statistics from './components/Statistics';
 import Archives from './components/Archives';
 import CardItem from './components/CardItem';
 import Sidebar from './components/Sidebar';
+import TripForm from './components/TripForm';
 
 function App() {
   const router = createBrowserRouter([
@@ -21,6 +22,7 @@ function App() {
         { path: '/home/stats', element: <Statistics /> },
         { path: '/home/archive', element: <Archives /> },
         { path: '/home/:cardNumber', element: <CardItem /> },
+        { path: '/home/:cardNumber/addtrip', element: <TripForm /> },
       ],
     },
   ]);

@@ -40,21 +40,20 @@ public class CardService {
         return repository.findById(cardId).orElseThrow(CardNotFoundException::new);
     }
 
-    public CardResponse saveCard(CardRequest cardRequest, int year, int month, int dayOfMonth) {
+    public CardResponse saveCard(CardRequest cardRequest) {
         if (repository.existsByNumberIgnoreCaseAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
             throw new CardExistsException(cardRequest.getNumber());
         }
 
-        if (cardRequest.getNumber().trim().isEmpty()) {
+        if (cardRequest.getNumber().isEmpty() || cardRequest.getNumber().trim().isEmpty()) {
             throw new CardEmptyException();
         }
 
         var now = LocalDateTime.now();
-        var date = LocalDateTime.of(year, month, dayOfMonth, now.getHour(), now.getMinute(), now.getSecond());
         var card = Card.builder()
                 .number(cardRequest.getNumber().toUpperCase())
                 .username(cardRequest.getUsername())
-                .creationTime(date)
+                .creationTime(now)
                 .build();
         repository.save(card);
 
