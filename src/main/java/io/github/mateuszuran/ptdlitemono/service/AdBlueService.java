@@ -2,6 +2,7 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
+import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,21 +10,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AdBlueService {
     private final CardService service;
+    private final AdBlueRepository repository;
 
     public void addAdBlue(AdBlueRequest request, Long cardId) {
         var card = service.checkIfCardExists(cardId);
         AdBlue adblue = AdBlue.builder()
-                .date(request.getDate())
-                .localization(request.getLocalization())
-                .amount(request.getAmount())
+                .adBlueDate(request.getDate())
+                .adBlueLocalization(request.getLocalization())
+                .adBlueAmount(request.getAmount())
                 .build();
-        card.getAdBlue().add(adblue);
-        service.updateCard(card);
+        card.addBlue(adblue);
+        repository.save(adblue);
     }
 
-    public void deleteAdBlue(Long cardId, Long blueId) {
-        var card = service.checkIfCardExists(cardId);
-        card.getAdBlue().removeIf(blue -> blueId.equals(blue.getId()));
-        service.updateCard(card);
+    public void deleteAdBlue(Long blueId) {
+        repository.deleteById(blueId);
     }
 }

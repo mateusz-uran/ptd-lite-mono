@@ -27,6 +27,7 @@
 .cards-mini ul li a {
   color: #fff;
   opacity: 0.6;
+  font-size: 12px;
 }
 
 .cards-mini ul li a:hover {

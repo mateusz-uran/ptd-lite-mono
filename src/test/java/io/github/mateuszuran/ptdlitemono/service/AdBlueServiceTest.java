@@ -3,6 +3,8 @@ package io.github.mateuszuran.ptdlitemono.service;
 import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
+import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,19 +13,23 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+@Slf4j
 @ExtendWith(MockitoExtension.class)
 class AdBlueServiceTest {
     private AdBlueService service;
     @Mock
     private CardService cardService;
+    @Mock
+    private AdBlueRepository repository;
 
     @BeforeEach
     void setUp() {
-        service = new AdBlueService(cardService);
+        service = new AdBlueService(cardService, repository);
     }
 
     @Test
@@ -37,16 +43,19 @@ class AdBlueServiceTest {
                 .amount(5)
                 .build();
         AdBlue blue = AdBlue.builder()
-                .date("1.01")
-                .localization("Warsaw")
-                .amount(5)
+                .adBlueDate("1.01")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(5)
                 .build();
         when(cardService.checkIfCardExists(123L)).thenReturn(card);
         //when
         service.addAdBlue(request, card.getId());
         //then
         var updatedCardWithBlue = cardService.checkIfCardExists(card.getId());
-        assertThat(updatedCardWithBlue.getAdBlue().contains(blue)).isEqualTo(true);
+        assertThat(updatedCardWithBlue.getAdBlue())
+                .hasSize(1)
+                .extracting(AdBlue::getAdBlueLocalization)
+                .contains(blue.getAdBlueLocalization());
     }
 
     @Test
@@ -54,18 +63,13 @@ class AdBlueServiceTest {
         //given
         AdBlue blue = AdBlue.builder()
                 .id(55L)
-                .date("1.01")
-                .localization("Warsaw")
-                .amount(5)
+                .adBlueDate("1.01")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(5)
                 .build();
-        List<AdBlue> blueList = new ArrayList<>();
-        blueList.add(blue);
-        Card card = Card.builder().id(123L).number("ABC").adBlue(blueList).build();
-        when(cardService.checkIfCardExists(123L)).thenReturn(card);
         //when
-        service.deleteAdBlue(card.getId(), 55L);
+        service.deleteAdBlue(55L);
         //then
-        var updatedCard = cardService.checkIfCardExists(card.getId());
-        assertThat(updatedCard.getAdBlue()).isEmpty();
+        verify(repository, times(1)).deleteById(blue.getId());
     }
 }

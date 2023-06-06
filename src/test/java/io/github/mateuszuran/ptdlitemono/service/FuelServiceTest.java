@@ -5,6 +5,7 @@ import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.repository.FuelRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
+@Slf4j
 @ExtendWith(MockitoExtension.class)
 class FuelServiceTest {
     private FuelService service;
@@ -47,7 +49,10 @@ class FuelServiceTest {
         service.addRefuelling(request, anyLong());
         //then
         var updatedCard = cardService.checkIfCardExists(card.getId());
-        assertThat(updatedCard.getFuels()).isEqualTo(List.of(fuel));
+        assertThat(updatedCard.getFuels())
+                .hasSize(1)
+                .extracting(Fuel::getRefuelingAmount)
+                .contains(fuel.getRefuelingAmount());
     }
 
     @Test

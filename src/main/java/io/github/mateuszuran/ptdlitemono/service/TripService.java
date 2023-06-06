@@ -21,8 +21,8 @@ public class TripService {
                 tripValues -> {
                     var trip = tripMapper.mapToTripValuesWithModelMapper(tripValues);
                     trip.setCarMileage(calculateCarMileage(tripValues.getCounterStart(), tripValues.getCounterEnd()));
-                    card.getTrips().add(trip);
-                    service.updateCard(card);
+                    card.addTrip(trip);
+                    repository.save(trip);
                 }
         );
     }

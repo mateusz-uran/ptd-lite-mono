@@ -10,7 +10,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://localhost:5432/card-db
+    url: jdbc:postgresql://localhost:5432/card-db-v2
     driver-class-name: org.postgresql.Driver
     username: mateuszuran
     password: password

@@ -10,6 +10,7 @@
   align-items: center;
   border-radius: 10px;
   transition: var(--tran-03);
+  font-size: 14px;
 }
 
 .logout-button button:hover {

@@ -3,7 +3,7 @@ services:
     container_name: ptd-lite-db
     image: postgres:alpine3.16
     environment:
-      POSTGRES_DB: card-db
+      POSTGRES_DB: card-db-v2
       POSTGRES_USER: mateuszuran
       POSTGRES_PASSWORD: password
       PGDATA: /data/postgres

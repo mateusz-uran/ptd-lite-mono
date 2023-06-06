@@ -1,14 +1,12 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "card_adblue")
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +14,11 @@ public class AdBlue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String date;
-    private String localization;
-    private Integer amount;
+    private String adBlueDate;
+    private String adBlueLocalization;
+    private Integer adBlueAmount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "card_id")
+    private Card card;
 }
