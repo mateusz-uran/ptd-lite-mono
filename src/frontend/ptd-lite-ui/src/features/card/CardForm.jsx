@@ -1,9 +1,18 @@
-import { useAddNewCardMutation } from './cardSlice';
+import { useAddNewCardMutation, useUpdateCardMutation } from './cardSlice';
 import { useAuth0 } from '@auth0/auth0-react';
 import '../../css/cards.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  cardIdToUpdate,
+  cardNumberToUpdate,
+  isCardEditing,
+  stopEditing,
+  updateCardStatus,
+} from './updateCardSlice';
+import { useEffect } from 'react';
 
 const schema = yup.object({
   number: yup
@@ -14,23 +23,39 @@ const schema = yup.object({
 
 const CardForm = () => {
   const { user } = useAuth0();
+  const dispatch = useDispatch();
+
+  const editStatus = useSelector(isCardEditing);
+  const cardId = useSelector(cardIdToUpdate);
+  const cardNumber = useSelector(cardNumberToUpdate);
   const [addNewCard, { isLoading }] = useAddNewCardMutation();
+  const [updateCard] = useUpdateCardMutation();
 
   const {
     register,
     handleSubmit,
     setError,
+    setValue,
     formState: { errors },
     reset,
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async (data) => {
     try {
-      let card = {
-        number: data.number,
-        username: user.nickname,
-      };
-      await addNewCard(card).unwrap();
+      if (!editStatus) {
+        let card = {
+          number: data.number,
+          username: user.nickname,
+        };
+        await addNewCard(card).unwrap();
+      } else {
+        let card = {
+          id: cardId,
+          number: data.number,
+        };
+        await updateCard(card).unwrap();
+        dispatch(stopEditing(false));
+      }
       reset();
     } catch (err) {
       console.log(err);
@@ -42,6 +67,12 @@ const CardForm = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (editStatus) {
+      setValue('number', cardNumber);
+    }
+  }, [editStatus]);
 
   return (
     <section className="card-form">

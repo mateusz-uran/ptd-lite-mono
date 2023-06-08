@@ -37,4 +37,5 @@ export const {
   useGetLastCardsQuery,
   useGetCardsDetailsQuery,
   useAddNewCardMutation,
+  useUpdateCardMutation,
 } = cardApiSlice;

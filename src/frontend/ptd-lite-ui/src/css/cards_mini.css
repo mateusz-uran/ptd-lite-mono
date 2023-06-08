@@ -5,6 +5,9 @@
 
 .cards-mini ul li {
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .cards-mini ul li.empty-list {
@@ -33,4 +36,22 @@
 
 .cards-mini ul li a:hover {
   opacity: 1;
+}
+
+.cards-mini ul li .edit-button {
+  background: transparent;
+  outline: 0;
+  margin-right: 15px;
+  border: 0;
+}
+
+.cards-mini ul li .edit {
+  color: #fff;
+  opacity: 0.6;
+  display: flex;
+}
+
+.cards-mini ul li .edit-button :hover {
+  opacity: 1;
+  cursor: pointer;
 }

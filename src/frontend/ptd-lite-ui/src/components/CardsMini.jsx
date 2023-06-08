@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 import '../css/cards_mini.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useGetLastCardsQuery } from '../features/card/cardSlice';
-import CardForm from '../features/card/CardForm';
+import { useDispatch } from 'react-redux';
+import { updateCardStatus } from '../features/card/updateCardSlice';
 
 const CardsMini = () => {
   const { user } = useAuth0();
+  const dispatch = useDispatch();
 
   const {
     data: lastCards,
@@ -17,6 +19,11 @@ const CardsMini = () => {
   function storeSelectedCard(cardId) {
     localStorage.setItem('selected_card', Number(cardId));
   }
+
+  const handleSingleCard = (id, number) => {
+    var result = { id, number };
+    dispatch(updateCardStatus(result));
+  };
 
   if (!isLoading && !isError && isSuccess && lastCards?.length >= 1) {
     return (
@@ -30,6 +37,12 @@ const CardsMini = () => {
               >
                 {card.number}
               </Link>
+              <button
+                className="edit-button"
+                onClick={() => handleSingleCard(card.id, card.number)}
+              >
+                <i className="bx bxs-edit edit"></i>
+              </button>
             </li>
           </ul>
         ))}

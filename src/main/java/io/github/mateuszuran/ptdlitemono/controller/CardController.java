@@ -38,6 +38,8 @@ public class CardController {
 
     @PatchMapping
     public ResponseEntity<?> editCardNumber(@RequestParam Long cardId, @RequestBody String number) {
+        log.info("Card ID :" + cardId);
+        log.info("Card number :" + number);
         return ResponseEntity.ok().body(service.editCard(cardId, number));
     }
 
