@@ -1,3 +1,6 @@
+import CardForm from '../features/card/CardForm';
+import '../css/cards.css';
+
 const Cards = () => {
   return (
     <main>
@@ -6,7 +9,9 @@ const Cards = () => {
         <i className="bx bx-chevron-right icon-right"></i>
         <span>Cards</span>
       </header>
-      <section>last three cards with basic data</section>
+      <section>
+        <CardForm />
+      </section>
     </main>
   );
 };

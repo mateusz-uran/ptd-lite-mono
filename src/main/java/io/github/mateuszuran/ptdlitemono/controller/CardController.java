@@ -32,7 +32,13 @@ public class CardController {
 
     @PostMapping("/add")
     public ResponseEntity<?> saveCard(@RequestBody CardRequest cardRequest) {
-        return ResponseEntity.ok().body(service.saveCard(cardRequest));
+        service.saveCard(cardRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> editCardNumber(@RequestParam Long cardId, @RequestBody String number) {
+        return ResponseEntity.ok().body(service.editCard(cardId, number));
     }
 
     @DeleteMapping("/delete")

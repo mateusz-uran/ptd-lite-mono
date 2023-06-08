@@ -1,0 +1,81 @@
+/*card form style*/
+.card-form {
+  margin: 15px 0;
+}
+
+.card-form form {
+  display: flex;
+  align-items: center;
+}
+
+.card-form .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 150px;
+  position: relative;
+  padding: 20px 0;
+}
+
+.card-form .input-wrapper input {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid #ccc;
+  outline: 0;
+  transition: var(--tran-03);
+  display: block;
+}
+
+.card-form .input-wrapper input:focus {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.card-form .input-wrapper label {
+  font-size: 12px;
+  position: absolute;
+  transition: var(--tran-03);
+  pointer-events: none;
+  top: 20px;
+  color: var(--text-color);
+}
+
+.card-form .input-wrapper input::placeholder {
+  color: transparent;
+}
+
+.card-form .input-wrapper input:focus ~ label,
+.card-form .input-wrapper input:not(:placeholder-shown) ~ label {
+  top: 0;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.card-form .input-wrapper p {
+  position: absolute;
+  bottom: -5px;
+  font-size: 10px;
+  color: red;
+}
+
+.card-form .input-wrapper input:not:focus p {
+  visibility: hidden;
+}
+
+.card-form button {
+  border: 0;
+  margin-left: 5px;
+  background: var(--primary-color);
+  padding: 5px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 11px;
+  transition: var(--tran-03);
+}
+
+.card-form button:hover {
+  cursor: pointer;
+  background: var(--toggle-color);
+  color: var(--primary-color);
+  font-weight: 800;
+}
+/**/

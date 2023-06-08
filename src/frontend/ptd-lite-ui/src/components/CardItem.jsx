@@ -26,8 +26,10 @@ const CardItem = () => {
     section = (
       <section className="success-section">
         <header>
-          <h4>Card</h4>
-          <CardForm />
+          <div>
+            <h4>Card</h4>
+            <CardForm />
+          </div>
           <button className="pdf-button">
             <i className="bx bxs-cloud-download icon"></i>
             <span className="text">Download PDF</span>

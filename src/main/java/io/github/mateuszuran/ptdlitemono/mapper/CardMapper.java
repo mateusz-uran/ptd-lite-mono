@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 public class CardMapper {
     private final ModelMapperConfig mapper;
 
-    public CardResponse mapToCardResponseWithModelMapper(Card card) {
+    public CardResponse mapToCardResponse(Card card) {
         return mapper.modelMapper().map(card, CardResponse.class);
     }
 

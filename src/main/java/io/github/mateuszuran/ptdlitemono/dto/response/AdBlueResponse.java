@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdBlueResponse {
     private Long id;
-    private String date;
-    private String localization;
-    private Integer amount;
+    private String adBlueDate;
+    private String adBlueLocalization;
+    private Integer adBlueAmount;
 }

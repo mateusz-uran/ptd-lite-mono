@@ -6,7 +6,7 @@ export const cardApiSlice = apiSlice.injectEndpoints({
       query: (username) => `/card?username=${username}`,
       providesTags: (result = [], error, arg) => [
         'Card',
-        'newCard',
+        'miniList',
         ...result.map((id) => ({ type: 'Card', id })),
       ],
     }),
@@ -20,7 +20,15 @@ export const cardApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: card,
       }),
-      invalidatesTags: ['newCard'],
+      invalidatesTags: ['miniList'],
+    }),
+    updateCard: builder.mutation({
+      query: (card) => ({
+        url: `/card?cardId=${card.id}`,
+        method: 'PATCH',
+        body: card.number,
+      }),
+      invalidatesTags: ['miniList'],
     }),
   }),
 });

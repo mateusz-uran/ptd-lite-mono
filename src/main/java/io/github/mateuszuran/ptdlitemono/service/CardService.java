@@ -40,7 +40,7 @@ public class CardService {
         return repository.findById(cardId).orElseThrow(CardNotFoundException::new);
     }
 
-    public CardResponse saveCard(CardRequest cardRequest) {
+    public void saveCard(CardRequest cardRequest) {
         if (repository.existsByNumberIgnoreCaseAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
             throw new CardExistsException(cardRequest.getNumber());
         }
@@ -56,8 +56,13 @@ public class CardService {
                 .creationTime(now)
                 .build();
         repository.save(card);
+    }
 
-        return cardMapper.mapToCardResponseWithFormattedCreationTime(card);
+    public CardResponse editCard(Long cardId, String number) {
+        var cardToBeEdited = checkIfCardExists(cardId);
+        cardToBeEdited.setNumber(number);
+        var editedCard = repository.save(cardToBeEdited);
+        return cardMapper.mapToCardResponseWithFormattedCreationTime(editedCard);
     }
 
     public List<Card> getAllCardsByUserAndDate(String username, int year, int month) {

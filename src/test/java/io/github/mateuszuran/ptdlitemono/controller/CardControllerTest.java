@@ -82,16 +82,27 @@ class CardControllerTest {
     }
 
     @Test
-    void givenCardObjectAndDate_whenSave_thenReturnObject() throws Exception {
+    void givenCardObjectAndDate_whenSave_thenStatus() throws Exception {
         mockMvc.perform(post("/api/card/add")
                         .param("year", String.valueOf(2023))
                         .param("month", String.valueOf(5))
                         .param("dayOfMonth", String.valueOf(12))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(card)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$.number").value(card.getNumber()));
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    void givenCardNumberAndId_whenUpdate_thenReturnUpdatedObject() throws Exception {
+        //given
+        repository.save(card);
+        // when + then
+        mockMvc.perform(patch("/api/card")
+                .param("cardId", String.valueOf(card.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("\"test\"")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.number").value("\"test\""));
     }
 
     @Test
