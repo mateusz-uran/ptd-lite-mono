@@ -78,4 +78,35 @@
   color: var(--primary-color);
   font-weight: 800;
 }
+
+.card-form .revert-button {
+  background: transparent;
+  color: var(--text-color);
+  font-size: 15px;
+}
+
+.card-form .revert-button:hover {
+  color: #000;
+}
+
+@media only screen and (max-width: 1024px) {
+  .card-form form {
+    flex-direction: column;
+    justify-content: right;
+    align-items: flex-end;
+  }
+
+  .card-form .input-wrapper label {
+    top: 5px;
+  }
+
+  .card-form form .input-wrapper {
+    padding: 5px;
+  }
+
+  .card-form .input-wrapper input:focus ~ label,
+  .card-form .input-wrapper input:not(:placeholder-shown) ~ label {
+    top: -15px;
+  }
+}
 /**/

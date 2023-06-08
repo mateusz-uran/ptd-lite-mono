@@ -11,10 +11,6 @@
 }
 
 .card-item .success-section header .pdf-button {
-  padding: 5px;
-}
-
-.card-item .success-section header .pdf-button {
   display: flex;
   align-items: center;
   color: var(--text-color);
@@ -25,6 +21,7 @@
   border-radius: 10px;
   background: #fff;
   transition: var(--tran-03);
+  padding: 0.4em;
 }
 
 .card-item .success-section header .pdf-button:hover {
@@ -35,6 +32,7 @@
 
 .card-item .success-section header .pdf-button .text {
   margin-left: 5px;
+  font-size: 1em;
 }
 
 /*tables content in success section*/
@@ -131,5 +129,13 @@
     display: flex;
     width: 100%;
     overflow-x: scroll;
+  }
+
+  .card-item .success-section header .pdf-button {
+    padding: 0.2em;
+  }
+
+  .card-item .success-section header .pdf-button .text {
+    font-size: 0.6em;
   }
 }

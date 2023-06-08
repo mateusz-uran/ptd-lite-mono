@@ -68,11 +68,18 @@ const CardForm = () => {
     }
   };
 
+  const handleClearInput = () => {
+    if (editStatus) {
+      dispatch(stopEditing(false));
+    }
+    reset();
+  };
+
   useEffect(() => {
     if (editStatus) {
       setValue('number', cardNumber);
     }
-  }, [editStatus]);
+  }, [editStatus, cardNumber]);
 
   return (
     <section className="card-form">
@@ -87,9 +94,18 @@ const CardForm = () => {
           <label htmlFor="cardNumber">Number</label>
           {errors.number?.message && <p>{errors.number?.message}</p>}
         </div>
-        <button type="submit" disabled={isLoading}>
-          Save
-        </button>
+        <div>
+          <button type="submit" disabled={isLoading}>
+            Save
+          </button>
+          <button
+            type="button"
+            className="revert-button"
+            onClick={() => handleClearInput()}
+          >
+            <i className="bx bx-reset revert"></i>
+          </button>
+        </div>
       </form>
     </section>
   );
