@@ -8,7 +8,7 @@ import Statistics from './components/Statistics';
 import Archives from './components/Archives';
 import CardItem from './components/CardItem';
 import Sidebar from './components/Sidebar';
-import TripForm from './components/TripForm';
+import TripForm from './features/trip/TripForm';
 
 function App() {
   const router = createBrowserRouter([

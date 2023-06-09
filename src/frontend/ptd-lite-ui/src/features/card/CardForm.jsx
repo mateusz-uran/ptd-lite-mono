@@ -10,7 +10,6 @@ import {
   cardNumberToUpdate,
   isCardEditing,
   stopEditing,
-  updateCardStatus,
 } from './updateCardSlice';
 import { useEffect } from 'react';
 
