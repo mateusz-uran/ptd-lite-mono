@@ -91,6 +91,28 @@
   opacity: 1;
 }
 
+.trip-form .fields-wrapper .single-input label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.8rem;
+  color: var(--text-color);
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--tran-03);
+}
+
+.trip-form .fields-wrapper .single-input input:focus::placeholder {
+  opacity: 0;
+}
+
+.trip-form .fields-wrapper .single-input input:focus ~ label,
+.trip-form .fields-wrapper .single-input input:not(:placeholder-shown) ~ label {
+  top: -10px;
+  opacity: 0.6;
+  font-size: 0.6rem;
+}
+
 .trip-form .fields-wrapper .single-input p {
   font-size: 0.6rem;
   color: red;

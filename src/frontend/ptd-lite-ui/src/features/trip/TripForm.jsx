@@ -61,7 +61,7 @@ const TripForm = () => {
                         defaultValue={field[input.name] || ''}
                         style={{ minWidth: input?.width }}
                       />
-
+                      <label>{input.label}</label>
                       <p>{errors?.inputs?.[index]?.[input.name]?.message}</p>
                     </div>
                   ))}
@@ -80,6 +80,7 @@ const TripForm = () => {
                         defaultValue={field[input.name] || ''}
                         style={{ minWidth: input?.width }}
                       />
+                      <label>{input.label}</label>
                       <p>{errors?.inputs?.[index]?.[input.name]?.message}</p>
                     </div>
                   ))}
