@@ -44,57 +44,68 @@ const TripForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {fields.map((field, index) => (
-        <div key={field.id}>
-          <div>
-            <h3>Start</h3>
-            {inputs.slice(0, 5).map((input) => (
-              <div key={input.name}>
-                <label>{input.label}</label>
-                <input
-                  type={input.type}
-                  placeholder={input.placeholder}
-                  {...register(`inputs.${index}.${input.name}`)}
-                  defaultValue={field[input.name] || ''}
-                />
-                <p>{errors?.inputs?.[index]?.[input.name]?.message}</p>
-              </div>
-            ))}
-          </div>
+    <section className="trip-form">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {fields.map((field, index) => (
+          <div key={field.id} className="fields-wrapper">
+            <div className="inputs-wrapper">
+              <div className="start-wrapper">
+                <h5>start</h5>
+                <div className="inputs">
+                  {inputs.slice(0, 5).map((input) => (
+                    <div key={input.name} className="single-input">
+                      <input
+                        placeholder={input.placeholder}
+                        type={input.type}
+                        {...register(`inputs.${index}.${input.name}`)}
+                        defaultValue={field[input.name] || ''}
+                        style={{ minWidth: input?.width }}
+                      />
 
-          <div>
-            <h3>End</h3>
-            {inputs.slice(5).map((input) => (
-              <div key={input.name}>
-                <label>{input.label}</label>
-                <input
-                  type={input.type}
-                  placeholder={input.placeholder}
-                  {...register(`inputs.${index}.${input.name}`)}
-                  defaultValue={field[input.name] || ''}
-                />
-                <p>{errors?.inputs?.[index]?.[input.name]?.message}</p>
+                      <p>{errors?.inputs?.[index]?.[input.name]?.message}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
 
-          <button
-            type="button"
-            onClick={() => remove(index)}
-            disabled={fields.length === 1}
-          >
-            Remove
+              <div className="end-wrapper">
+                <h5>end</h5>
+                <div className="inputs">
+                  {inputs.slice(5).map((input) => (
+                    <div key={input.name} className="single-input">
+                      <input
+                        placeholder={input.placeholder}
+                        type={input.type}
+                        {...register(`inputs.${index}.${input.name}`)}
+                        defaultValue={field[input.name] || ''}
+                        style={{ minWidth: input?.width }}
+                      />
+                      <p>{errors?.inputs?.[index]?.[input.name]?.message}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => remove(index)}
+              disabled={fields.length === 1}
+            >
+              <i className="bx bx-minus-circle remove"></i>
+            </button>
+          </div>
+        ))}
+
+        <div className="form-buttons">
+          <button type="button" onClick={handleAddRow}>
+            <i className="bx bxs-down-arrow add-row"></i>
           </button>
+
+          <button type="submit">Submit</button>
         </div>
-      ))}
-
-      <button type="button" onClick={handleAddRow}>
-        Add Row
-      </button>
-
-      <button type="submit">Submit</button>
-    </form>
+      </form>
+    </section>
   );
 };
 export default TripForm;

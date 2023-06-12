@@ -1,0 +1,190 @@
+.trip-form {
+  height: 100%;
+}
+
+.trip-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.trip-form .fields-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 5px 5px;
+  justify-content: center;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.28);
+  border-radius: 5px;
+  padding-right: 0.2rem;
+  background: #fff;
+}
+
+.trip-form .fields-wrapper .inputs-wrapper {
+  display: flex;
+  width: 100%;
+  background: transparent;
+  border-radius: 5px;
+}
+
+.trip-form .fields-wrapper .inputs-wrapper h5 {
+  color: var(--text-color);
+  opacity: 0.4;
+  text-transform: uppercase;
+  transition: var(--tran-03);
+  font-size: 0.8rem;
+  margin-bottom: 0.8%;
+}
+
+.trip-form .fields-wrapper .start-wrapper {
+  border-right: 2px solid var(--primary-color);
+}
+
+.trip-form .fields-wrapper .start-wrapper,
+.trip-form .fields-wrapper .end-wrapper {
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.trip-form .fields-wrapper .inputs {
+  padding: 0 5px 2px;
+  display: flex;
+}
+
+.trip-form .fields-wrapper input::placeholder {
+  opacity: 0.6;
+  transition: var(--tran-03);
+}
+
+.trip-form .fields-wrapper input:focus::placeholder {
+  color: var(--primary-color);
+  opacity: 1;
+  font-weight: 600;
+}
+
+.trip-form .fields-wrapper .single-input {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.trip-form .fields-wrapper .single-input input {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid #ccc;
+  outline: 0;
+  margin-right: 5px;
+  transition: var(--tran-03);
+  width: 100%;
+}
+
+.trip-form .fields-wrapper .single-input input:focus {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.trip-form .fields-wrapper .start-wrapper:focus-within h5,
+.trip-form .fields-wrapper .end-wrapper:focus-within h5 {
+  opacity: 1;
+}
+
+.trip-form .fields-wrapper .single-input p {
+  font-size: 0.6rem;
+  color: red;
+  position: absolute;
+  bottom: 0;
+}
+
+.trip-form .fields-wrapper button {
+  display: flex;
+  outline: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 5px;
+  padding: 0.1rem;
+  font-size: 1.2rem;
+  margin-left: 5px;
+  transition: var(--tran-03);
+}
+
+.trip-form .fields-wrapper button .remove {
+  color: var(--text-color);
+  transition: var(--tran-03);
+}
+
+.trip-form .fields-wrapper button:hover {
+  cursor: pointer;
+  background: var(--primary-color);
+}
+
+.trip-form .fields-wrapper button:hover .remove {
+  color: #ccc;
+}
+
+.trip-form .form-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 10px 5px;
+}
+
+.trip-form .form-buttons button {
+  outline: 0;
+  background: transparent;
+  border: 0;
+  transition: var(--tran-03);
+  padding: 0.5rem;
+}
+
+.trip-form .form-buttons button:first-child {
+  background: transparent;
+}
+
+.trip-form .form-buttons button:first-child:hover {
+  cursor: pointer;
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+
+.trip-form .form-buttons button:first-child:hover .add-row {
+  color: #fff;
+}
+
+.trip-form .form-buttons button:last-child {
+  margin-left: 5px;
+  background: var(--primary-color);
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.trip-form .form-buttons button:last-child:hover {
+  background: var(--toggle-color);
+  color: #000;
+  cursor: pointer;
+}
+
+.trip-form .form-buttons .add-row {
+  color: var(--text-color);
+  transition: var(--tran-03);
+}
+
+@media screen and (max-width: 1200px) {
+  .trip-form .fields-wrapper .inputs-wrapper {
+    flex-direction: column;
+  }
+
+  .trip-form .fields-wrapper .start-wrapper {
+    border-right: 2px solid transparent;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .trip-form .fields-wrapper .inputs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
