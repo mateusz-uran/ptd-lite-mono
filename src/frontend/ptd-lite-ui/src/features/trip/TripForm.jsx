@@ -3,8 +3,8 @@ import '../../css/trip_form.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './yupSchema';
 import inputs from './tripInputs';
-import { useSaveTripsMutation } from './tripSlice';
 import { useNavigate } from 'react-router-dom';
+import { useSaveTripsMutation } from './tripApiSlice';
 
 const TripForm = () => {
   const selectedCard = localStorage.getItem('selected_card');

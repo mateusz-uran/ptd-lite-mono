@@ -5,7 +5,7 @@ import TripTable from './TripTable';
 import PetrolTable from './PetrolTable';
 import AdBlueTable from './AdBlueTable';
 import CardForm from '../features/card/CardForm';
-import { useGetTripsByCardIdQuery } from '../features/trip/tripSlice';
+import { useGetTripsByCardIdQuery } from '../features/trip/tripApiSlice';
 import { useGetPetrolByCardIdQuery } from '../features/petrol/petrolSlice';
 import { useGetBlueByCardIdQuery } from '../features/adBlue/blueSlice';
 
@@ -13,16 +13,19 @@ const CardItem = () => {
   const { cardNumber } = useParams();
   const selectedCard = localStorage.getItem('selected_card');
 
-  const {
-    data: card,
-    isLoading,
-    isSuccess,
-    isError,
-  } = useGetCardsDetailsQuery(selectedCard);
+  // const {
+  //   data: card,
+  //   isLoading,
+  //   isSuccess,
+  //   isError,
+  // } = useGetCardsDetailsQuery(selectedCard);
+  let card = [];
+  let isLoading = false;
+  let isSuccess = true;
+  let isError = false;
 
-  const { data: trips } = useGetTripsByCardIdQuery(selectedCard);
-  const { data: petrol } = useGetPetrolByCardIdQuery(selectedCard);
-  const { data: blue } = useGetBlueByCardIdQuery(selectedCard);
+  // const { data: petrol } = useGetPetrolByCardIdQuery(selectedCard);
+  // const { data: blue } = useGetBlueByCardIdQuery(selectedCard);
 
   let section;
   if (isLoading) {
@@ -44,14 +47,14 @@ const CardItem = () => {
         </header>
         <div className="tables-wrapper">
           <div className="trip">
-            <TripTable trips={card.trips} />
+            <TripTable cardId={selectedCard} />
           </div>
           <div className="fuel">
             <div className="petrol">
-              <PetrolTable petrol={card.fuels} />
+              {/* <PetrolTable petrol={card.fuels} /> */}
             </div>
             <div className="adblue">
-              <AdBlueTable adBlue={card.blue} />
+              {/* <AdBlueTable adBlue={card.blue} /> */}
             </div>
           </div>
           <div className="final-content">additional info</div>
