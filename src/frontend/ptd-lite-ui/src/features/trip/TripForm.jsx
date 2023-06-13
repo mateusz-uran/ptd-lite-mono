@@ -3,8 +3,14 @@ import '../../css/trip_form.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './yupSchema';
 import inputs from './tripInputs';
+import { useSaveTripsMutation } from './tripSlice';
+import { useNavigate } from 'react-router-dom';
 
 const TripForm = () => {
+  const selectedCard = localStorage.getItem('selected_card');
+  const navigate = useNavigate();
+  const [saveTrips] = useSaveTripsMutation();
+
   const {
     register,
     handleSubmit,
@@ -23,8 +29,17 @@ const TripForm = () => {
     name: 'inputs',
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      let tripPayload = {
+        cardId: selectedCard,
+        trips: data.inputs,
+      };
+      await saveTrips(tripPayload).unwrap();
+      navigate(-1);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleAddRow = () => {

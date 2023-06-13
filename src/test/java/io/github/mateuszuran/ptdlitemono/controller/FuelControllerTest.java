@@ -1,8 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
+import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import io.github.mateuszuran.ptdlitemono.repository.FuelRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -17,10 +19,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.core.Is.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WithMockUser(value = "user123")
@@ -34,6 +38,8 @@ class FuelControllerTest {
     private ObjectMapper mapper;
     @Autowired
     private FuelRepository repository;
+    @Autowired
+    private AdBlueRepository adBlueRepository;
     @Autowired
     private CardRepository cardRepository;
     private Card card;
@@ -74,5 +80,54 @@ class FuelControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print());
+    }
+
+    @Test
+    void givenCardId_whenGetFuels_thenReturnMappedPetrolList() throws Exception {
+        //given
+        Fuel fuel1 = Fuel.builder().vehicleCounter(1500).refuelingAmount(300).card(card).build();
+        Fuel fuel2 = Fuel.builder().vehicleCounter(1800).refuelingAmount(230).card(card).build();
+        repository.saveAll(List.of(fuel1, fuel2));
+        //when + then
+        mockMvc.perform(get("/api/fuel/petrol")
+                .param("cardId", String.valueOf(card.getId()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()", is(2)));
+    }
+
+    @Test
+    void givenCardId_whenGetAdBlue_thenReturnMappedBlueList() throws Exception {
+        //given
+        AdBlue blue1 = AdBlue.builder().adBlueAmount(300).adBlueLocalization("Warsaw").card(card).build();
+        adBlueRepository.save(blue1);
+        //when + then
+        mockMvc.perform(get("/api/fuel/blue")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()", is(1)));
+    }
+
+    @Test
+    void givenCardId_whenNoPetrolData_thenThrowException() throws Exception {
+        mockMvc.perform(get("/api/fuel/petrol")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Petrol data is empty"));
+    }
+
+    @Test
+    void givenCardId_whenNoBlueData_thenThrowException() throws Exception {
+        mockMvc.perform(get("/api/fuel/blue")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("AdBlue data is empty"));
     }
 }

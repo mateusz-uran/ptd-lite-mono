@@ -4,6 +4,7 @@ import io.github.mateuszuran.ptdlitemono.exception.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,21 +14,25 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Slf4j
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({CardNotFoundException.class})
     public ResponseEntity<ErrorMessage> handleCardNotFound(CardNotFoundException exception) {
+        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({CardExistsException.class})
     public ResponseEntity<ErrorMessage> handleAddExistingCard(CardExistsException exception) {
+        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler({CardEmptyException.class})
     public ResponseEntity<ErrorMessage> handleAddEmptyCard(CardEmptyException exception) {
+        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.BAD_REQUEST);
     }
 
@@ -48,6 +53,24 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({GroupNotFoundException.class})
     public ResponseEntity<ErrorMessage> handleGroupNotFound(GroupNotFoundException exception) {
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({TripsEmptyException.class})
+    public ResponseEntity<ErrorMessage> handleTripEmpty(TripsEmptyException exception) {
+        log.info(exception.getMessage());
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({PetrolEmptyException.class})
+    public ResponseEntity<ErrorMessage> handlePetrolEmpty(PetrolEmptyException exception) {
+        log.info(exception.getMessage());
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({AdBlueEmptyException.class})
+    public ResponseEntity<ErrorMessage> handleBlueEmpty(AdBlueEmptyException exception) {
+        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 

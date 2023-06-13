@@ -1,11 +1,15 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.exception.PetrolEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.repository.FuelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +35,17 @@ public class FuelService {
     public void delete(Long id) {
         repository.findById(id)
                 .ifPresent(fuel -> repository.deleteById(fuel.getId()));
+    }
+
+    public List<FuelResponse> retrieveFuels(Long cardId) {
+        var fuels = repository.findAllFuelsByCardId(cardId).orElseThrow(PetrolEmptyException::new);
+        if (fuels.isEmpty()) {
+            throw new PetrolEmptyException();
+        } else {
+            return fuels
+                    .stream()
+                    .map(fuelMapper::mapToFuelResponseWithModelMapper)
+                    .toList();
+        }
     }
 }

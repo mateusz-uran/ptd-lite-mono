@@ -5,6 +5,9 @@ import TripTable from './TripTable';
 import PetrolTable from './PetrolTable';
 import AdBlueTable from './AdBlueTable';
 import CardForm from '../features/card/CardForm';
+import { useGetTripsByCardIdQuery } from '../features/trip/tripSlice';
+import { useGetPetrolByCardIdQuery } from '../features/petrol/petrolSlice';
+import { useGetBlueByCardIdQuery } from '../features/adBlue/blueSlice';
 
 const CardItem = () => {
   const { cardNumber } = useParams();
@@ -16,6 +19,10 @@ const CardItem = () => {
     isSuccess,
     isError,
   } = useGetCardsDetailsQuery(selectedCard);
+
+  const { data: trips } = useGetTripsByCardIdQuery(selectedCard);
+  const { data: petrol } = useGetPetrolByCardIdQuery(selectedCard);
+  const { data: blue } = useGetBlueByCardIdQuery(selectedCard);
 
   let section;
   if (isLoading) {

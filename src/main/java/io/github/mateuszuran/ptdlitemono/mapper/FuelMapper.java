@@ -22,6 +22,7 @@ public class FuelMapper {
         return mapper.modelMapper().map(fuelRequest, Fuel.class);
     }
 
+
     public AdBlueResponse mapToAdBlueResponse(AdBlue adBlue) {
         return mapper.modelMapper().map(adBlue, AdBlueResponse.class);
     }

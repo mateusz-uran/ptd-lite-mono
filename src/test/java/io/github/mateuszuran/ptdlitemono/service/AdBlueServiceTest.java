@@ -1,6 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
+import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @Slf4j
@@ -26,10 +29,12 @@ class AdBlueServiceTest {
     private CardService cardService;
     @Mock
     private AdBlueRepository repository;
+    @Mock
+    private FuelMapper mapper;
 
     @BeforeEach
     void setUp() {
-        service = new AdBlueService(cardService, repository);
+        service = new AdBlueService(cardService, repository, mapper);
     }
 
     @Test
@@ -71,5 +76,17 @@ class AdBlueServiceTest {
         service.deleteAdBlue(55L);
         //then
         verify(repository, times(1)).deleteById(blue.getId());
+    }
+
+    @Test
+    void givenCardId_whenGetAllBlue_thenReturnMappedList() {
+        AdBlue blue1 = AdBlue.builder().adBlueAmount(300).build();
+        when(repository.findAllAdBluesByCardId(anyLong())).thenReturn(Optional.of(List.of(blue1)));
+        AdBlueResponse response1 = AdBlueResponse.builder().adBlueAmount(300).build();
+        when(mapper.mapToAdBlueResponse(blue1)).thenReturn(response1);
+        //when
+        var result = service.retrieveAdBlue(anyLong());
+        //then
+        assertEquals(result, List.of(response1));
     }
 }

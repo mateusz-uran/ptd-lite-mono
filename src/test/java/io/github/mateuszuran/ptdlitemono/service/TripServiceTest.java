@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -49,7 +51,6 @@ class TripServiceTest {
         Trip trip1 = Trip.builder().counterStart(111).counterEnd(222).build();
         Trip trip2 = Trip.builder().counterStart(333).counterEnd(444).build();
         Trip trip3 = Trip.builder().counterStart(555).counterEnd(666).build();
-        List<Trip> trips = List.of(trip1, trip2, trip3);
         when(mapper.mapToTripValuesWithModelMapper(request1)).thenReturn(trip1);
         when(mapper.mapToTripValuesWithModelMapper(request2)).thenReturn(trip2);
         when(mapper.mapToTripValuesWithModelMapper(request3)).thenReturn(trip3);
@@ -74,5 +75,31 @@ class TripServiceTest {
         service.deleteSelected(List.of(1L, 2L, 3L));
         //then
         verify(repository, times(1)).deleteAll(trips);
+    }
+
+    @Test
+    void givenCardId_whenFindAll_thenReturnMappedList() {
+        //given
+        Long cardId = 123L;
+        Trip trip1 = Trip.builder().counterStart(111).counterEnd(222).build();
+        Trip trip2 = Trip.builder().counterStart(333).counterEnd(444).build();
+        Trip trip3 = Trip.builder().counterStart(555).counterEnd(666).build();
+        List<Trip> trips = List.of(trip1, trip2, trip3);
+
+        TripResponse response1 = TripResponse.builder().counterStart(111).counterEnd(222).build();
+        TripResponse response2 = TripResponse.builder().counterStart(333).counterEnd(444).build();
+        TripResponse response3 = TripResponse.builder().counterStart(555).counterEnd(666).build();
+        List<TripResponse> response = List.of(response1, response2, response3);
+
+        when(repository.findAllTripsByCardId(cardId)).thenReturn(Optional.of(trips));
+        when(mapper.mapToTripResponseWithModelMapper(trips.get(0))).thenReturn(response.get(0));
+        when(mapper.mapToTripResponseWithModelMapper(trips.get(1))).thenReturn(response.get(1));
+        when(mapper.mapToTripResponseWithModelMapper(trips.get(2))).thenReturn(response.get(2));
+
+        //when
+        List<TripResponse> result = service.retrieveTripsFromCard(cardId);
+
+        //then
+        assertEquals(response, result);
     }
 }

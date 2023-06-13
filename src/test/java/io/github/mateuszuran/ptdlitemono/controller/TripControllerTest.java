@@ -18,11 +18,17 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WithMockUser(value = "user123")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -77,5 +83,30 @@ class TripControllerTest {
                         .content(mapper.writeValueAsString(List.of(trip1.getId(), trip2.getId()))))
                 .andExpect(status().isNoContent())
                 .andDo(print());
+    }
+
+    @Test
+    void givenCardId_whenGet_thenReturnMappedList() throws Exception {
+        //given
+        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).card(card).build();
+        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).card(card).build();
+        repository.saveAll(List.of(trip1, trip2));
+        //when
+        mockMvc.perform(get("/api/trip")
+                        .param("cardId", String.valueOf(card.getId()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()", is(2)));
+    }
+
+    @Test
+    void givenCardId_whenNoData_thenThrowException() throws Exception {
+        mockMvc.perform(get("/api/trip")
+                .param("cardId", String.valueOf(card.getId()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Trips data is empty"));
     }
 }
