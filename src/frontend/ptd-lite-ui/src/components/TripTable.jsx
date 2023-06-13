@@ -1,21 +1,15 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  getSelectors,
+  getTripSelectors,
   useGetTripsByCardIdQuery,
 } from '../features/trip/tripApiSlice';
 import { useSelector } from 'react-redux';
 
 const TripTable = ({ cardId }) => {
-  const {
-    data: trips,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetTripsByCardIdQuery(cardId);
+  const { isLoading, isSuccess, isError } = useGetTripsByCardIdQuery(cardId);
 
-  const { selectAll: selectAllTripsFromCard } = getSelectors(cardId);
+  const { selectAll: selectAllTripsFromCard } = getTripSelectors(cardId);
 
   const tripEntities = useSelector(selectAllTripsFromCard);
 

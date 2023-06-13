@@ -43,9 +43,9 @@ class AdBlueServiceTest {
         List<AdBlue> emptyList = new ArrayList<>();
         Card card = Card.builder().id(123L).number("ABC").adBlue(emptyList).build();
         AdBlueRequest request = AdBlueRequest.builder()
-                .date("1.01")
-                .localization("Warsaw")
-                .amount(5)
+                .adBlueDate("1.01")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(5)
                 .build();
         AdBlue blue = AdBlue.builder()
                 .adBlueDate("1.01")

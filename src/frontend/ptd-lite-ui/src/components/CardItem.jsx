@@ -51,10 +51,10 @@ const CardItem = () => {
           </div>
           <div className="fuel">
             <div className="petrol">
-              {/* <PetrolTable petrol={card.fuels} /> */}
+              <PetrolTable cardId={selectedCard} />
             </div>
             <div className="adblue">
-              {/* <AdBlueTable adBlue={card.blue} /> */}
+              <AdBlueTable cardId={selectedCard} />
             </div>
           </div>
           <div className="final-content">additional info</div>

@@ -36,7 +36,7 @@ export const tripApiSlice = apiSlice.injectEndpoints({
 
 export const { useGetTripsByCardIdQuery, useSaveTripsMutation } = tripApiSlice;
 
-export const getSelectors = (query) => {
+export const getTripSelectors = (query) => {
   const selectTripsResult =
     tripApiSlice.endpoints.getTripsByCardId.select(query);
 

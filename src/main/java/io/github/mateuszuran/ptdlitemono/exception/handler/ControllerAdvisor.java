@@ -14,25 +14,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Slf4j
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({CardNotFoundException.class})
     public ResponseEntity<ErrorMessage> handleCardNotFound(CardNotFoundException exception) {
-        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({CardExistsException.class})
     public ResponseEntity<ErrorMessage> handleAddExistingCard(CardExistsException exception) {
-        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler({CardEmptyException.class})
     public ResponseEntity<ErrorMessage> handleAddEmptyCard(CardEmptyException exception) {
-        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.BAD_REQUEST);
     }
 
@@ -58,19 +54,16 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({TripsEmptyException.class})
     public ResponseEntity<ErrorMessage> handleTripEmpty(TripsEmptyException exception) {
-        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({PetrolEmptyException.class})
     public ResponseEntity<ErrorMessage> handlePetrolEmpty(PetrolEmptyException exception) {
-        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({AdBlueEmptyException.class})
     public ResponseEntity<ErrorMessage> handleBlueEmpty(AdBlueEmptyException exception) {
-        log.info(exception.getMessage());
         return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 

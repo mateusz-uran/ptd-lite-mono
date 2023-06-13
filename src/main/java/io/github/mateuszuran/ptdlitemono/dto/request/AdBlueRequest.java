@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdBlueRequest {
-    private String date;
-    private String localization;
-    private Integer amount;
+    private String adBlueDate;
+    private String adBlueLocalization;
+    private Integer adBlueAmount;
 }
