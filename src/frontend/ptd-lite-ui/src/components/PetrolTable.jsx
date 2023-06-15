@@ -3,8 +3,10 @@ import {
   getPetrolSelectors,
   useGetPetrolByCardIdQuery,
 } from '../features/petrol/petrolSlice';
+import { Link } from 'react-router-dom';
 
 const PetrolTable = ({ cardId }) => {
+  const component = 'petrol';
   const { isLoading, isSuccess, isError } = useGetPetrolByCardIdQuery(cardId);
 
   const { selectAll: selectAllPetrolFromCard } = getPetrolSelectors(cardId);
@@ -61,10 +63,12 @@ const PetrolTable = ({ cardId }) => {
             <td colSpan={5} style={{ height: `${emptyRowCount * 25}px` }}>
               <div className="empty-row-button">
                 {defaultResponse}
-                <button>
-                  <span className="text">Add</span>
-                  <i className="bx bx-message-square-add icon"></i>
-                </button>
+                <Link to={`add/${component}/${cardId}`}>
+                  <button>
+                    <span className="text">Add</span>
+                    <i className="bx bx-message-square-add icon"></i>
+                  </button>
+                </Link>
               </div>
             </td>
           </tr>

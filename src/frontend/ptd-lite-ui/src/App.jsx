@@ -9,6 +9,7 @@ import Archives from './components/Archives';
 import CardItem from './components/CardItem';
 import Sidebar from './components/Sidebar';
 import TripForm from './features/trip/TripForm';
+import FuelForm from './features/fuel/FuelForm';
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +24,10 @@ function App() {
         { path: '/home/archive', element: <Archives /> },
         { path: '/home/:cardNumber', element: <CardItem /> },
         { path: '/home/:cardNumber/addtrip', element: <TripForm /> },
+        {
+          path: '/home/:cardNumber/add/:target/:cardId',
+          element: <FuelForm />,
+        },
       ],
     },
   ]);
