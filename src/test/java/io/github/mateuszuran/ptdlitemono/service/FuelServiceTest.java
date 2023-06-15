@@ -83,4 +83,53 @@ class FuelServiceTest {
         //then
         assertEquals(List.of(response1, response2), result);
     }
+
+    @Test
+    void givenFuelIdAndFuelDto_whenUpdate_thenReturnFuelResponse() {
+        //given
+        Long fuelId = 123L;
+        Fuel fuel = Fuel.builder()
+                .id(fuelId)
+                .refuelingDate("1.05.2023")
+                .refuelingLocation("Warsaw")
+                .vehicleCounter(123456)
+                .refuelingAmount(500)
+                .paymentMethod("e500")
+                .build();
+        when(repository.findById(fuelId)).thenReturn(Optional.of(fuel));
+
+        FuelRequest request = FuelRequest.builder().refuelingAmount(350).build();
+
+        Fuel updatedFuel = Fuel.builder()
+                .id(fuelId)
+                .refuelingDate("1.05.2023")
+                .refuelingLocation("Warsaw")
+                .vehicleCounter(123456)
+                .refuelingAmount(350)
+                .paymentMethod("e500")
+                .build();
+
+        FuelResponse expectedResponse = FuelResponse.builder()
+                .id(fuelId)
+                .refuelingDate("1.05.2023")
+                .refuelingLocation("Warsaw")
+                .vehicleCounter(123456)
+                .refuelingAmount(350)
+                .paymentMethod("e500")
+                .build();
+
+        when(repository.save(fuel)).thenReturn(updatedFuel);
+        when(mapper.mapToFuelResponseWithModelMapper(updatedFuel)).thenReturn(expectedResponse);
+
+        //when
+        FuelResponse result = service.updateFuel(request, fuelId);
+
+        //then
+        verify(repository).findById(fuelId);
+        verify(mapper).merge(eq(request), eq(fuel));
+        verify(repository).save(fuel);
+        verify(mapper).mapToFuelResponseWithModelMapper(updatedFuel);
+
+        assertEquals(expectedResponse, result);
+    }
 }

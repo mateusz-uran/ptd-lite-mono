@@ -93,7 +93,7 @@ const CardForm = () => {
           <label htmlFor="cardNumber">Number</label>
           {errors.number?.message && <p>{errors.number?.message}</p>}
         </div>
-        <div>
+        <div className="button-wrapper">
           <button type="submit" disabled={isLoading}>
             Save
           </button>

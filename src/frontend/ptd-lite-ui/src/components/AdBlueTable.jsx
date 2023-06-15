@@ -1,17 +1,26 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getAdBlueSelectors,
   useGetBlueByCardIdQuery,
 } from '../features/adBlue/blueSlice';
-import { Link } from 'react-router-dom';
+import {
+  componentName,
+  isFormOpen,
+  openFuelForm,
+} from '../features/fuel/fuelFormSlice';
+import FuelForm from '../features/fuel/FuelForm';
+import blueInputs from '../features/fuel/blueInputs';
+import { adBlueSchema } from '../features/fuel/yupSchema';
 
 const AdBlueTable = ({ cardId }) => {
-  const component = 'blue';
+  const dispatch = useDispatch();
   const { isLoading, isSuccess, isError } = useGetBlueByCardIdQuery(cardId);
 
   const { selectAll: selectAllBlueFromCard } = getAdBlueSelectors(cardId);
 
   const blueEntities = useSelector(selectAllBlueFromCard);
+  const fuelFormStatus = useSelector(isFormOpen);
+  const component = useSelector(componentName);
 
   let tableContent;
   let defaultResponse;
@@ -42,35 +51,42 @@ const AdBlueTable = ({ cardId }) => {
     ));
   }
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Location</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tableContent}
+  const toggleFuelForm = () => {
+    dispatch(openFuelForm('blue'));
+  };
 
-        {emptyRowCount > 0 && (
-          <tr className="empty-row">
-            <td colSpan={4} style={{ height: `${emptyRowCount * 25}px` }}>
-              <div className="empty-row-button">
-                {defaultResponse}
-                <Link to={`add/${component}/${cardId}`}>
-                  <button>
+  return (
+    <div style={{ width: '100%' }}>
+      {fuelFormStatus && component === 'blue' && (
+        <FuelForm inputs={blueInputs} schema={adBlueSchema} cardId={cardId} />
+      )}
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tableContent}
+
+          {emptyRowCount > 0 && (
+            <tr className="empty-row">
+              <td colSpan={4} style={{ height: `${emptyRowCount * 25}px` }}>
+                <div className="empty-row-button">
+                  {defaultResponse}
+                  <button onClick={toggleFuelForm}>
                     <span className="text">Add</span>
                     <i className="bx bx-message-square-add icon"></i>
                   </button>
-                </Link>
-              </div>
-            </td>
-          </tr>
-        )}
-      </tbody>
-    </table>
+                </div>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 };
 export default AdBlueTable;

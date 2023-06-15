@@ -1,0 +1,137 @@
+.fuel-form {
+  margin: 0 5px;
+  padding-top: 10px;
+}
+
+.fuel-form .close-button-wrapper {
+  display: flex;
+  margin-right: 5px;
+  justify-content: flex-end;
+}
+
+.fuel-form .close-button-wrapper button {
+  background: #ddd;
+  border-radius: 10px;
+  outline: 0;
+  border: 0;
+  transition: var(--tran-03);
+}
+
+.fuel-form .close-button-wrapper button:hover {
+  cursor: pointer;
+  color: #fff;
+  background: var(--primary-color);
+}
+
+.fuel-form .close-button-wrapper .close {
+  font-size: 1.2rem;
+}
+
+.fuel-form .fields-wrapper {
+  display: flex;
+}
+
+.fuel-form .fields-wrapper .single-input {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.fuel-form .fields-wrapper .single-input {
+  margin-right: 5px;
+  padding-bottom: 1em;
+}
+
+.fuel-form .fields-wrapper .single-input input,
+.fuel-form .fields-wrapper .single-input label,
+.fuel-form .fields-wrapper .single-input p {
+  display: flex;
+  width: 100%;
+}
+
+.fuel-form .fields-wrapper .single-input input {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid #ccc;
+  outline: 0;
+  margin-right: 5px;
+  transition: var(--tran-03);
+}
+
+.fuel-form .fields-wrapper .single-input input::placeholder {
+  opacity: 0.6;
+  transition: var(--tran-03);
+}
+
+.fuel-form .fields-wrapper .single-input input:focus::placeholder {
+  color: var(--primary-color);
+  opacity: 1;
+  font-weight: 600;
+}
+
+.fuel-form .fields-wrapper .single-input input:focus {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.fuel-form .fields-wrapper .single-input label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.8rem;
+  color: var(--text-color);
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--tran-03);
+}
+
+.fuel-form .fields-wrapper .single-input input:focus::placeholder {
+  opacity: 0;
+}
+
+.fuel-form .fields-wrapper .single-input input:focus ~ label,
+.fuel-form .fields-wrapper .single-input input:not(:placeholder-shown) ~ label {
+  top: -10px;
+  opacity: 0.6;
+  font-size: 0.6rem;
+}
+
+.fuel-form .fields-wrapper .single-input p {
+  font-size: 0.6rem;
+  color: red;
+  position: absolute;
+  bottom: 0;
+}
+
+.fuel-form .button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.fuel-form .button-wrapper button {
+  display: flex;
+  outline: 0;
+  border: 0;
+  background: var(--primary-color);
+  border-radius: 5px;
+  padding: 0.3rem;
+  font-size: 0.8rem;
+  margin-left: 5px;
+  transition: var(--tran-03);
+  color: #fff;
+  font-weight: 600;
+}
+
+.fuel-form .button-wrapper button:hover {
+  cursor: pointer;
+  color: black;
+  background: var(--toggle-color);
+}
+
+@media screen and (max-width: 576px) {
+  .fuel-form .fields-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

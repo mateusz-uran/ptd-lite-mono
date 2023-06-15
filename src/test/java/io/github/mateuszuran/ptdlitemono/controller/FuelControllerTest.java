@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
@@ -129,5 +130,26 @@ class FuelControllerTest {
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("AdBlue data is empty"));
+    }
+
+    @Test
+    void givenFuelId_whenUpdate_thenReturnUpdatedObject() throws Exception {
+        Long fuelId = 123L;
+        Fuel fuelToUpdate = Fuel.builder()
+                .id(123L)
+                .refuelingDate("1.05.2023")
+                .refuelingLocation("Warsaw")
+                .vehicleCounter(123456)
+                .refuelingAmount(500)
+                .paymentMethod("e500")
+                .build();
+        repository.saveAndFlush(fuelToUpdate);
+        FuelRequest request = FuelRequest.builder().refuelingAmount(123).build();
+        mockMvc.perform(patch("/api/fuel/petrol/update")
+                .param("fuelId", String.valueOf(123L))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 }

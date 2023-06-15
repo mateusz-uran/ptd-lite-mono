@@ -20,7 +20,6 @@ public class FuelService {
 
     public void addRefuelling(FuelRequest fuelDto, Long id) {
         var card = service.checkIfCardExists(id);
-        var fuel = fuelMapper.mapToFuelRequest(fuelDto);
         Fuel fuelToSave = Fuel.builder()
                 .refuelingDate(fuelDto.getRefuelingDate())
                 .refuelingLocation(fuelDto.getRefuelingLocation())
@@ -47,5 +46,12 @@ public class FuelService {
                     .map(fuelMapper::mapToFuelResponseWithModelMapper)
                     .toList();
         }
+    }
+
+    public FuelResponse updateFuel(FuelRequest request, Long fuelId) {
+        var fuel = repository.findById(fuelId).orElseThrow(PetrolEmptyException::new);
+        fuelMapper.merge(request, fuel);
+        var updatedFuel =  repository.save(fuel);
+        return fuelMapper.mapToFuelResponseWithModelMapper(updatedFuel);
     }
 }

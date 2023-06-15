@@ -26,4 +26,13 @@ public class FuelMapper {
     public AdBlueResponse mapToAdBlueResponse(AdBlue adBlue) {
         return mapper.modelMapper().map(adBlue, AdBlueResponse.class);
     }
+
+    public Fuel mapToFuel(FuelRequest request) {
+        return mapper.modelMapper().map(request, Fuel.class);
+    }
+
+    public <T, V> void merge(T source, V target) {
+        mapper.modelMapper().map(source, target);
+    }
+
 }

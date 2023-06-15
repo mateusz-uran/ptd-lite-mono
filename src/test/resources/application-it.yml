@@ -8,7 +8,7 @@ spring:
     multipart:
       max-file-size: 50MB
   jpa:
-    show-sql: 'true'
+    show-sql: 'false'
     properties:
       hibernate:
         ddl-auto: create-drop

@@ -42,7 +42,6 @@
 .trip-form .fields-wrapper .start-wrapper,
 .trip-form .fields-wrapper .end-wrapper {
   display: flex;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -66,7 +65,6 @@
 
 .trip-form .fields-wrapper .single-input {
   display: flex;
-  flex-wrap: wrap;
   width: 100%;
   position: relative;
   padding-bottom: 10px;

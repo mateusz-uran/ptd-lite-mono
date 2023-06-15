@@ -4,6 +4,7 @@ import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.service.AdBlueService;
 import io.github.mateuszuran.ptdlitemono.service.FuelService;
 import lombok.RequiredArgsConstructor;
@@ -52,5 +53,10 @@ public class FuelController {
     @GetMapping("/blue")
     public ResponseEntity<List<AdBlueResponse>> retrieveAdBlueList(@RequestParam Long cardId) {
         return ResponseEntity.ok().body(adBlueService.retrieveAdBlue(cardId));
+    }
+
+    @PatchMapping("/petrol/update")
+    public ResponseEntity<FuelResponse> update(@RequestBody FuelRequest request, @RequestParam Long fuelId) {
+        return ResponseEntity.ok().body(fuelService.updateFuel(request, fuelId));
     }
 }
