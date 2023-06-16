@@ -41,6 +41,15 @@ export const blueApiSlice = apiSlice.injectEndpoints({
         { type: 'AdBlue', id: arg.blueId },
       ],
     }),
+    deleteAdBlue: builder.mutation({
+      query: (blueId) => ({
+        url: `/fuel/blue/delete?blueId=${blueId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'AdBlue', id: arg.blueId },
+      ],
+    }),
   }),
 });
 
@@ -48,6 +57,7 @@ export const {
   useGetBlueByCardIdQuery,
   useSaveAdBlueMutation,
   useUpdateAdBlueMutation,
+  useDeleteAdBlueMutation,
 } = blueApiSlice;
 
 export const getAdBlueSelectors = (query) => {

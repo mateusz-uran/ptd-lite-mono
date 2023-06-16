@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAdBlueSelectors,
+  useDeleteAdBlueMutation,
   useGetBlueByCardIdQuery,
 } from '../features/adBlue/blueSlice';
 import {
@@ -19,6 +20,7 @@ const AdBlueTable = ({ cardId }) => {
   const blueEntities = useSelector(selectAllBlueFromCard);
   const fuelFormStatus = useSelector(isFormOpen);
   const component = useSelector(componentName);
+  const [deleteAdBlue] = useDeleteAdBlueMutation();
 
   let tableContent;
   let defaultResponse;
@@ -26,12 +28,16 @@ const AdBlueTable = ({ cardId }) => {
   let shouldRenderMinimumRows = 5;
   let emptyRowCount = 5;
 
+  const toggleFuelForm = () => {
+    dispatch(openFuelForm('blue'));
+  };
+
   const handleEditBlue = (blueId) => {
     dispatch(openFuelForm({ component: 'blue', edit: true, blueId: blueId }));
   };
 
-  const toggleFuelForm = () => {
-    dispatch(openFuelForm('blue'));
+  const handleDeleteAdBlue = async (blueId) => {
+    await deleteAdBlue(blueId).unwrap();
   };
 
   if (isLoading) {
@@ -59,7 +65,7 @@ const AdBlueTable = ({ cardId }) => {
           </button>
           <div className="interactive">
             <button onClick={() => handleEditBlue(blue.id)}>edit</button>
-            <button>delete</button>
+            <button onClick={() => handleDeleteAdBlue(blue.id)}>delete</button>
           </div>
         </td>
       </tr>

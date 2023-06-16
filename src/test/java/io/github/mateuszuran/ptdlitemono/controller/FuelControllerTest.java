@@ -134,9 +134,24 @@ class FuelControllerTest {
     }
 
     @Test
-    void givenCardId_whenNoBlueData_thenThrowException() throws Exception {
-        mockMvc.perform(get("/api/fuel/blue")
-                        .param("cardId", String.valueOf(card.getId()))
+    void givenBlueId_whenDelete_thenReturnNoContent() throws Exception {
+        AdBlue blue = AdBlue.builder()
+                .adBlueDate("1.05.2023")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(500)
+                .build();
+        adBlueRepository.save(blue);
+        mockMvc.perform(delete("/api/fuel/blue/delete")
+                        .param("blueId", String.valueOf(blue.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+    }
+
+    @Test
+    void givenBlueId_whenNoBlueData_thenThrowException() throws Exception {
+        mockMvc.perform(delete("/api/fuel/blue/delete")
+                        .param("blueId", String.valueOf(123L))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(print())

@@ -2,6 +2,8 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
+import io.github.mateuszuran.ptdlitemono.exception.AdBlueEmptyException;
+import io.github.mateuszuran.ptdlitemono.exception.PetrolEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -64,7 +67,7 @@ class AdBlueServiceTest {
     }
 
     @Test
-    void givenCardAndBlueId_whenDelete_thenUpdateCard() {
+    void givenBlueId_whenDelete_thenDoNothing() {
         //given
         AdBlue blue = AdBlue.builder()
                 .id(55L)
@@ -72,10 +75,21 @@ class AdBlueServiceTest {
                 .adBlueLocalization("Warsaw")
                 .adBlueAmount(5)
                 .build();
+        when(repository.findById(blue.getId())).thenReturn(Optional.of(blue));
         //when
-        service.deleteAdBlue(55L);
+        service.deleteAdBlue(blue.getId());
         //then
-        verify(repository, times(1)).deleteById(blue.getId());
+        verify(repository, times(1)).delete(blue);
+    }
+
+    @Test
+    void givenBlueId_whenNotFound_thenThrowException() {
+        //given
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+        //when + then
+        assertThatThrownBy(() -> service.deleteAdBlue(anyLong()))
+                .isInstanceOf(AdBlueEmptyException.class)
+                .hasMessageContaining("AdBlue data is empty");
     }
 
     @Test

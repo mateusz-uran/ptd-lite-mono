@@ -38,7 +38,7 @@ public class FuelController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/remove-blue")
+    @DeleteMapping("/blue/delete")
     public ResponseEntity<?> deleteAdBlue(@RequestParam Long blueId) {
         adBlueService.deleteAdBlue(blueId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

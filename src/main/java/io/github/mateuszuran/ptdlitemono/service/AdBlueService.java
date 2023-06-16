@@ -30,7 +30,8 @@ public class AdBlueService {
     }
 
     public void deleteAdBlue(Long blueId) {
-        repository.deleteById(blueId);
+        var blueToDelete = repository.findById(blueId).orElseThrow(AdBlueEmptyException::new);
+        repository.delete(blueToDelete);
     }
 
     public List<AdBlueResponse> retrieveAdBlue(Long cardId) {
