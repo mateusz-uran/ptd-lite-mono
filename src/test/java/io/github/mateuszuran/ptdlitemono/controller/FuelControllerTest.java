@@ -134,9 +134,7 @@ class FuelControllerTest {
 
     @Test
     void givenFuelId_whenUpdate_thenReturnUpdatedObject() throws Exception {
-        Long fuelId = 123L;
         Fuel fuelToUpdate = Fuel.builder()
-                .id(123L)
                 .refuelingDate("1.05.2023")
                 .refuelingLocation("Warsaw")
                 .vehicleCounter(123456)
@@ -146,10 +144,25 @@ class FuelControllerTest {
         repository.saveAndFlush(fuelToUpdate);
         FuelRequest request = FuelRequest.builder().refuelingAmount(123).build();
         mockMvc.perform(patch("/api/fuel/petrol/update")
-                .param("fuelId", String.valueOf(123L))
+                .param("fuelId", String.valueOf(fuelToUpdate.getId()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andDo(print())
+                .andExpect(jsonPath("$.refuelingAmount").value(123));
+    }
+
+    @Test
+    void givenFuelId_whenUpdate_thenReturnError() throws Exception {
+        Long fuelId = 123L;
+        FuelRequest request = FuelRequest.builder().refuelingAmount(123).build();
+        mockMvc.perform(patch("/api/fuel/petrol/update")
+                        .param("fuelId", String.valueOf(fuelId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Petrol data is empty"));
+
     }
 }

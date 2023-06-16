@@ -15,9 +15,7 @@ import {
 const PetrolTable = ({ cardId }) => {
   const dispatch = useDispatch();
   const { isLoading, isSuccess, isError } = useGetPetrolByCardIdQuery(cardId);
-
   const { selectAll: selectAllPetrolFromCard } = getPetrolSelectors(cardId);
-
   const petrolEntities = useSelector(selectAllPetrolFromCard);
   const fuelFormStatus = useSelector(isFormOpen);
   const component = useSelector(componentName);
@@ -27,6 +25,16 @@ const PetrolTable = ({ cardId }) => {
 
   let shouldRenderMinimumRows = 5;
   let emptyRowCount = 5;
+
+  const handleEditPetrol = (petrolId) => {
+    dispatch(
+      openFuelForm({ component: 'petrol', edit: true, petrolId: petrolId })
+    );
+  };
+
+  const toggleFuelForm = () => {
+    dispatch(openFuelForm({ component: 'petrol', edit: false }));
+  };
 
   if (isLoading) {
     defaultResponse = <p>Loading data...</p>;
@@ -51,20 +59,16 @@ const PetrolTable = ({ cardId }) => {
         <td>{fuel.paymentMethod}</td>
         <td className="manage">
           <button>
-            <i class="bx bx-dots-vertical-rounded"></i>
+            <i className="bx bx-dots-vertical-rounded"></i>
           </button>
           <div className="interactive">
-            <button>edit</button>
+            <button onClick={() => handleEditPetrol(fuel.id)}>edit</button>
             <button>delete</button>
           </div>
         </td>
       </tr>
     ));
   }
-
-  const toggleFuelForm = () => {
-    dispatch(openFuelForm('petrol'));
-  };
 
   return (
     <div style={{ width: '100%' }}>

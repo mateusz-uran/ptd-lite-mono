@@ -31,11 +31,24 @@ export const petrolApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Petrol', id: 'LIST' }],
     }),
+    updatePetrol: builder.mutation({
+      query: (fuelPayload) => ({
+        url: `/fuel/petrol/update?fuelId=${fuelPayload.fuelId}`,
+        method: 'PATCH',
+        body: fuelPayload.petrol,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Petrol', id: arg.fuelId },
+      ],
+    }),
   }),
 });
 
-export const { useGetPetrolByCardIdQuery, useSavePetrolMutation } =
-  petrolApiSlice;
+export const {
+  useGetPetrolByCardIdQuery,
+  useSavePetrolMutation,
+  useUpdatePetrolMutation,
+} = petrolApiSlice;
 
 export const getPetrolSelectors = (query) => {
   const selectPetrolResult =
@@ -50,5 +63,7 @@ export const getPetrolSelectors = (query) => {
     selectEntities: createSelector(selectPetrolData, (s) =>
       s.selectEntities(undefined)
     ),
+    selectById: (petrolId) =>
+      createSelector(selectPetrolData, (s) => s.selectById(s, petrolId)),
   };
 };

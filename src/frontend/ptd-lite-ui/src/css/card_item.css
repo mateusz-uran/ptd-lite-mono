@@ -122,8 +122,7 @@
 }
 
 .card-item .success-section .tables-wrapper .fuel .petrol .interactive {
-  position: absolute;
-  opacity: 0;
+  opacity: 1;
 }
 
 .card-item .success-section .tables-wrapper .fuel .petrol {

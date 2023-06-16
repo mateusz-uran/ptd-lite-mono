@@ -23,7 +23,8 @@
   opacity: 0.6;
 }
 
-.cards-mini ul li a::before {
+.cards-mini ul li a::before,
+.cards-mini ul li span::before {
   content: '';
   min-width: 60px;
 }
