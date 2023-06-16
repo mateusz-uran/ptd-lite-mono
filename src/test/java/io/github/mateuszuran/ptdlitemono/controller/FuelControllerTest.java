@@ -72,16 +72,26 @@ class FuelControllerTest {
     }
 
     @Test
-    void givenCardIdAndIdList_whenDelete_thenReturnStatus() throws Exception {
+    void givenFuelId_whenDelete_thenReturnStatus() throws Exception {
         //given
         Fuel fuel = Fuel.builder().vehicleCounter(1500).refuelingAmount(300).build();
         repository.saveAndFlush(fuel);
         //when + then
-        mockMvc.perform(delete("/api/fuel")
-                        .param("id", String.valueOf(fuel.getId()))
+        mockMvc.perform(delete("/api/fuel/petrol/delete")
+                        .param("fuelId", String.valueOf(fuel.getId()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print());
+    }
+
+    @Test
+    void givenFuelId_whenNoData_thenReturnError() throws Exception {
+        mockMvc.perform(delete("/api/fuel/petrol/delete")
+                        .param("fuelId", String.valueOf(123L))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Petrol data is empty"));
     }
 
     @Test

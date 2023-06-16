@@ -77,22 +77,17 @@ const FuelForm = ({ inputs, schema, cardId }) => {
   };
 
   useEffect(() => {
-    if (editStatus && petrol) {
-      // Set initial values for each field
-      Object.keys(petrol).forEach((fieldName) => {
-        setValue(fieldName, petrol[fieldName]);
-      });
-    }
-  }, [editStatus, petrol]);
+    const setInitialFieldValues = (data) => {
+      if (editStatus && data) {
+        Object.keys(data).forEach((fieldName) => {
+          setValue(fieldName, data[fieldName]);
+        });
+      }
+    };
 
-  useEffect(() => {
-    if (editStatus && blue) {
-      // Set initial values for each field
-      Object.keys(blue).forEach((fieldName) => {
-        setValue(fieldName, blue[fieldName]);
-      });
-    }
-  }, [editStatus, blue]);
+    setInitialFieldValues(petrol);
+    setInitialFieldValues(blue);
+  }, [editStatus, petrol, blue]);
 
   return (
     <section className="fuel-form">

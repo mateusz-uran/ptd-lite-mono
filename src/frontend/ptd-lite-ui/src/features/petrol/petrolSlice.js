@@ -41,6 +41,15 @@ export const petrolApiSlice = apiSlice.injectEndpoints({
         { type: 'Petrol', id: arg.fuelId },
       ],
     }),
+    deletePetrol: builder.mutation({
+      query: (fuelId) => ({
+        url: `/fuel/petrol/delete?fuelId=${fuelId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Petrol', id: arg.fuelId },
+      ],
+    }),
   }),
 });
 
@@ -48,6 +57,7 @@ export const {
   useGetPetrolByCardIdQuery,
   useSavePetrolMutation,
   useUpdatePetrolMutation,
+  useDeletePetrolMutation,
 } = petrolApiSlice;
 
 export const getPetrolSelectors = (query) => {

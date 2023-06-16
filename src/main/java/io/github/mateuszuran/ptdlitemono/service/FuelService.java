@@ -32,9 +32,9 @@ public class FuelService {
         repository.save(fuelToSave);
     }
 
-    public void delete(Long id) {
-        repository.findById(id)
-                .ifPresent(fuel -> repository.deleteById(fuel.getId()));
+    public void deleteFuel(Long fuelId) {
+        var fuelToDelete = repository.findById(fuelId).orElseThrow(PetrolEmptyException::new);
+        repository.delete(fuelToDelete);
     }
 
     public List<FuelResponse> retrieveFuels(Long cardId) {

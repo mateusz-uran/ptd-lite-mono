@@ -2,6 +2,8 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
+import io.github.mateuszuran.ptdlitemono.exception.PetrolEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -63,9 +66,19 @@ class FuelServiceTest {
         Fuel fuel = Fuel.builder().refuelingAmount(300).build();
         when(repository.findById(anyLong())).thenReturn(Optional.of(fuel));
         //when
-        service.delete(anyLong());
+        service.deleteFuel(anyLong());
         //then
         verify(repository, times(1)).deleteById(fuel.getId());
+    }
+
+    @Test
+    void givenFuelId_whenNotFound_thenThrowException() {
+        //given
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+        //when + then
+        assertThatThrownBy(() -> service.deleteFuel(anyLong()))
+                .isInstanceOf(PetrolEmptyException.class)
+                .hasMessageContaining("Petrol data is empty");
     }
 
     @Test

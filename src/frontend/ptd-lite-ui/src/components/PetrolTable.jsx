@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getPetrolSelectors,
+  useDeletePetrolMutation,
   useGetPetrolByCardIdQuery,
 } from '../features/petrol/petrolSlice';
 import FuelForm from '../features/fuel/FuelForm';
@@ -19,6 +20,7 @@ const PetrolTable = ({ cardId }) => {
   const petrolEntities = useSelector(selectAllPetrolFromCard);
   const fuelFormStatus = useSelector(isFormOpen);
   const component = useSelector(componentName);
+  const [deletePetrol] = useDeletePetrolMutation();
 
   let tableContent;
   let defaultResponse;
@@ -26,14 +28,18 @@ const PetrolTable = ({ cardId }) => {
   let shouldRenderMinimumRows = 5;
   let emptyRowCount = 5;
 
+  const toggleFuelForm = () => {
+    dispatch(openFuelForm({ component: 'petrol', edit: false }));
+  };
+
   const handleEditPetrol = (petrolId) => {
     dispatch(
       openFuelForm({ component: 'petrol', edit: true, petrolId: petrolId })
     );
   };
 
-  const toggleFuelForm = () => {
-    dispatch(openFuelForm({ component: 'petrol', edit: false }));
+  const handleDeletePetrol = async (petrolId) => {
+    await deletePetrol(petrolId).unwrap();
   };
 
   if (isLoading) {
@@ -63,7 +69,7 @@ const PetrolTable = ({ cardId }) => {
           </button>
           <div className="interactive">
             <button onClick={() => handleEditPetrol(fuel.id)}>edit</button>
-            <button>delete</button>
+            <button onClick={() => handleDeletePetrol(fuel.id)}>delete</button>
           </div>
         </td>
       </tr>

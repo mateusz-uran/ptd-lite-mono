@@ -32,9 +32,9 @@ public class FuelController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestParam Long id) {
-        fuelService.delete(id);
+    @DeleteMapping("/petrol/delete")
+    public ResponseEntity<?> deletePetrol(@RequestParam Long fuelId) {
+        fuelService.deleteFuel(fuelId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
