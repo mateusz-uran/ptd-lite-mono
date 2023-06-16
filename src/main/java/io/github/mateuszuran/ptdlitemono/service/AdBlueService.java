@@ -44,4 +44,11 @@ public class AdBlueService {
                     .toList();
         }
     }
+
+    public AdBlueResponse updateAdBlue(AdBlueRequest request, Long blueId) {
+        var blue = repository.findById(blueId).orElseThrow(AdBlueEmptyException::new);
+        fuelMapper.merge(request, blue);
+        var updatedBlue =  repository.save(blue);
+        return fuelMapper.mapToAdBlueResponse(updatedBlue);
+    }
 }

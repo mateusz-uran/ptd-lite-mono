@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class FuelMapper {
     private final ModelMapperConfig mapper;
 
-    public FuelResponse mapToFuelResponseWithModelMapper(Fuel fuel) {
+    public FuelResponse mapToFuelResponse(Fuel fuel) {
         return mapper.modelMapper().map(fuel, FuelResponse.class);
     }
 
@@ -25,10 +25,6 @@ public class FuelMapper {
 
     public AdBlueResponse mapToAdBlueResponse(AdBlue adBlue) {
         return mapper.modelMapper().map(adBlue, AdBlueResponse.class);
-    }
-
-    public Fuel mapToFuel(FuelRequest request) {
-        return mapper.modelMapper().map(request, Fuel.class);
     }
 
     public <T, V> void merge(T source, V target) {

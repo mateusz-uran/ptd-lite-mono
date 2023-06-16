@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
@@ -163,6 +164,38 @@ class FuelControllerTest {
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Petrol data is empty"));
+
+    }
+
+    @Test
+    void givenBlueId_whenUpdate_thenReturnUpdatedObject() throws Exception {
+        AdBlue blueToUpdate = AdBlue.builder()
+                .adBlueDate("1.05.2023")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(500)
+                .build();
+        adBlueRepository.saveAndFlush(blueToUpdate);
+        AdBlueRequest request = AdBlueRequest.builder().adBlueAmount(123).build();
+        mockMvc.perform(patch("/api/fuel/blue/update")
+                        .param("blueId", String.valueOf(blueToUpdate.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.adBlueAmount").value(123));
+    }
+
+    @Test
+    void givenBlueId_whenUpdate_thenReturnError() throws Exception {
+        Long blueId = 123L;
+        AdBlueRequest request = AdBlueRequest.builder().adBlueAmount(123).build();
+        mockMvc.perform(patch("/api/fuel/blue/update")
+                        .param("blueId", String.valueOf(blueId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("AdBlue data is empty"));
 
     }
 }

@@ -15,9 +15,7 @@ import { adBlueSchema } from '../features/fuel/yupSchema';
 const AdBlueTable = ({ cardId }) => {
   const dispatch = useDispatch();
   const { isLoading, isSuccess, isError } = useGetBlueByCardIdQuery(cardId);
-
   const { selectAll: selectAllBlueFromCard } = getAdBlueSelectors(cardId);
-
   const blueEntities = useSelector(selectAllBlueFromCard);
   const fuelFormStatus = useSelector(isFormOpen);
   const component = useSelector(componentName);
@@ -27,6 +25,14 @@ const AdBlueTable = ({ cardId }) => {
 
   let shouldRenderMinimumRows = 5;
   let emptyRowCount = 5;
+
+  const handleEditBlue = (blueId) => {
+    dispatch(openFuelForm({ component: 'blue', edit: true, blueId: blueId }));
+  };
+
+  const toggleFuelForm = () => {
+    dispatch(openFuelForm('blue'));
+  };
 
   if (isLoading) {
     defaultResponse = <p>Loading data...</p>;
@@ -47,13 +53,18 @@ const AdBlueTable = ({ cardId }) => {
         <td>{blue.adBlueDate}</td>
         <td>{blue.adBlueLocalization}</td>
         <td>{blue.adBlueAmount}</td>
+        <td className="manage">
+          <button>
+            <i className="bx bx-dots-vertical-rounded"></i>
+          </button>
+          <div className="interactive">
+            <button onClick={() => handleEditBlue(blue.id)}>edit</button>
+            <button>delete</button>
+          </div>
+        </td>
       </tr>
     ));
   }
-
-  const toggleFuelForm = () => {
-    dispatch(openFuelForm('blue'));
-  };
 
   return (
     <div style={{ width: '100%' }}>

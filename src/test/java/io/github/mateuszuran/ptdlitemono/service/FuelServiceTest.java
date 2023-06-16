@@ -76,8 +76,8 @@ class FuelServiceTest {
         when(repository.findAllFuelsByCardId(anyLong())).thenReturn(Optional.of(List.of(fuel1, fuel2)));
         FuelResponse response1 = FuelResponse.builder().refuelingAmount(500).build();
         FuelResponse response2 = FuelResponse.builder().refuelingAmount(300).build();
-        when(mapper.mapToFuelResponseWithModelMapper(fuel1)).thenReturn(response1);
-        when(mapper.mapToFuelResponseWithModelMapper(fuel2)).thenReturn(response2);
+        when(mapper.mapToFuelResponse(fuel1)).thenReturn(response1);
+        when(mapper.mapToFuelResponse(fuel2)).thenReturn(response2);
         //when
         var result = service.retrieveFuels(anyLong());
         //then
@@ -119,7 +119,7 @@ class FuelServiceTest {
                 .build();
 
         when(repository.save(fuel)).thenReturn(updatedFuel);
-        when(mapper.mapToFuelResponseWithModelMapper(updatedFuel)).thenReturn(expectedResponse);
+        when(mapper.mapToFuelResponse(updatedFuel)).thenReturn(expectedResponse);
 
         //when
         FuelResponse result = service.updateFuel(request, fuelId);
@@ -128,7 +128,7 @@ class FuelServiceTest {
         verify(repository).findById(fuelId);
         verify(mapper).merge(eq(request), eq(fuel));
         verify(repository).save(fuel);
-        verify(mapper).mapToFuelResponseWithModelMapper(updatedFuel);
+        verify(mapper).mapToFuelResponse(updatedFuel);
 
         assertEquals(expectedResponse, result);
     }

@@ -99,7 +99,7 @@ public class CardService {
         Card card = repository.findById(id).orElseThrow(CardNotFoundException::new);
 
         List<FuelResponse> fuels = card.getFuels().stream()
-                .map(fuelMapper::mapToFuelResponseWithModelMapper)
+                .map(fuelMapper::mapToFuelResponse)
                 .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
                 .collect(Collectors.toList());
 

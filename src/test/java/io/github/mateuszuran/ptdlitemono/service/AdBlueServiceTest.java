@@ -89,4 +89,46 @@ class AdBlueServiceTest {
         //then
         assertEquals(result, List.of(response1));
     }
+
+    @Test
+    void givenBlueId_whenUpdate_ThenReturnUpdatedObject() {
+        Long blueId = 123L;
+        AdBlue blue = AdBlue.builder()
+                .id(blueId)
+                .adBlueDate("1.05.2023")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(500)
+                .build();
+        when(repository.findById(blueId)).thenReturn(Optional.of(blue));
+
+        AdBlueRequest request = AdBlueRequest.builder().adBlueAmount(350).build();
+
+        AdBlue updatedBlue = AdBlue.builder()
+                .id(blueId)
+                .adBlueDate("1.05.2023")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(350)
+                .build();
+
+        AdBlueResponse expectedResponse = AdBlueResponse.builder()
+                .id(blueId)
+                .adBlueDate("1.05.2023")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(350)
+                .build();
+
+        when(repository.save(blue)).thenReturn(updatedBlue);
+        when(mapper.mapToAdBlueResponse(updatedBlue)).thenReturn(expectedResponse);
+
+        //when
+        var result = service.updateAdBlue(request, blueId);
+
+        //then
+        verify(repository).findById(blueId);
+        verify(mapper).merge(eq(request), eq(blue));
+        verify(repository).save(blue);
+        verify(mapper).mapToAdBlueResponse(updatedBlue);
+
+        assertEquals(expectedResponse, result);
+    }
 }

@@ -6,9 +6,14 @@ import {
   useSavePetrolMutation,
   useUpdatePetrolMutation,
 } from '../petrol/petrolSlice';
-import { useSaveAdBlueMutation } from '../adBlue/blueSlice';
+import {
+  getAdBlueSelectors,
+  useSaveAdBlueMutation,
+  useUpdateAdBlueMutation,
+} from '../adBlue/blueSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  blueIdToEdit,
   closeFuelForm,
   componentName,
   isEditingFuel,
@@ -23,11 +28,18 @@ const FuelForm = ({ inputs, schema, cardId }) => {
   const [updatePetrol] = useUpdatePetrolMutation();
 
   const [saveAdBlue] = useSaveAdBlueMutation();
+  const [updateAdBlue] = useUpdateAdBlueMutation();
 
   const { selectById: selectSinglePetrol } = getPetrolSelectors(cardId);
+  const { selectById: selectSingleBlue } = getAdBlueSelectors(cardId);
   const editStatus = useSelector(isEditingFuel);
+
   const petrolId = useSelector(petrolIdToEdit);
   const petrol = useSelector(selectSinglePetrol(petrolId));
+
+  const blueId = useSelector(blueIdToEdit);
+  const blue = useSelector(selectSingleBlue(blueId));
+
   const component = useSelector(componentName);
 
   const {
@@ -39,39 +51,48 @@ const FuelForm = ({ inputs, schema, cardId }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
+
+    let fuelPayload = {
+      cardId: cardId,
+      petrol: data,
+    };
+
     if (component === 'petrol') {
+      fuelPayload.fuelId = petrolId;
       if (editStatus) {
-        let fuelPayload = {
-          fuelId: petrolId,
-          petrol: data,
-        };
         await updatePetrol(fuelPayload).unwrap();
       } else {
-        let fuelPayload = {
-          cardId: cardId,
-          petrol: data,
-        };
         await savePetrol(fuelPayload).unwrap();
       }
     } else if (component === 'blue') {
-      let fuelPayload = {
-        cardId: cardId,
-        blue: data,
-      };
-      await saveAdBlue(fuelPayload).unwrap();
+      fuelPayload.blueId = blueId;
+      if (editStatus) {
+        await updateAdBlue(fuelPayload).unwrap();
+      } else {
+        await saveAdBlue(fuelPayload).unwrap();
+      }
     }
+
     dispatch(closeFuelForm());
   };
 
   useEffect(() => {
     if (editStatus && petrol) {
-      console.log(petrol);
       // Set initial values for each field
       Object.keys(petrol).forEach((fieldName) => {
         setValue(fieldName, petrol[fieldName]);
       });
     }
   }, [editStatus, petrol]);
+
+  useEffect(() => {
+    if (editStatus && blue) {
+      // Set initial values for each field
+      Object.keys(blue).forEach((fieldName) => {
+        setValue(fieldName, blue[fieldName]);
+      });
+    }
+  }, [editStatus, blue]);
 
   return (
     <section className="fuel-form">

@@ -31,10 +31,24 @@ export const blueApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'AdBlue', id: 'LIST' }],
     }),
+    updateAdBlue: builder.mutation({
+      query: (fuelPayload) => ({
+        url: `/fuel/blue/update?blueId=${fuelPayload.blueId}`,
+        method: 'PATCH',
+        body: fuelPayload.blue,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'AdBlue', id: arg.blueId },
+      ],
+    }),
   }),
 });
 
-export const { useGetBlueByCardIdQuery, useSaveAdBlueMutation } = blueApiSlice;
+export const {
+  useGetBlueByCardIdQuery,
+  useSaveAdBlueMutation,
+  useUpdateAdBlueMutation,
+} = blueApiSlice;
 
 export const getAdBlueSelectors = (query) => {
   const selectAdBlueResult =
@@ -49,5 +63,7 @@ export const getAdBlueSelectors = (query) => {
     selectEntities: createSelector(selectBlueData, (s) =>
       s.selectEntities(undefined)
     ),
+    selectById: (blueId) =>
+      createSelector(selectBlueData, (s) => s.selectById(s, blueId)),
   };
 };

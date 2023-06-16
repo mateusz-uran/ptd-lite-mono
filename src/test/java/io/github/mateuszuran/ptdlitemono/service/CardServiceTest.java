@@ -231,9 +231,9 @@ class CardServiceTest {
         FuelResponse response4 = FuelResponse.builder().refuelingAmount(300).vehicleCounter(100).build();
         FuelResponse response5 = FuelResponse.builder().refuelingAmount(230).vehicleCounter(500).build();
         FuelResponse response6 = FuelResponse.builder().refuelingAmount(600).vehicleCounter(200).build();
-        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel1)).thenReturn(response4);
-        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel2)).thenReturn(response5);
-        when(fuelMapper.mapToFuelResponseWithModelMapper(fuel3)).thenReturn(response6);
+        when(fuelMapper.mapToFuelResponse(fuel1)).thenReturn(response4);
+        when(fuelMapper.mapToFuelResponse(fuel2)).thenReturn(response5);
+        when(fuelMapper.mapToFuelResponse(fuel3)).thenReturn(response6);
         AdBlueResponse response7 = AdBlueResponse.builder().adBlueDate("1-02-2023").adBlueLocalization("Warsaw").adBlueAmount(300).build();
         when(fuelMapper.mapToAdBlueResponse(blue)).thenReturn(response7);
 

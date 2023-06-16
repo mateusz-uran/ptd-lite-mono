@@ -9,6 +9,7 @@ import io.github.mateuszuran.ptdlitemono.repository.FuelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -43,7 +44,8 @@ public class FuelService {
         } else {
             return fuels
                     .stream()
-                    .map(fuelMapper::mapToFuelResponseWithModelMapper)
+                    .map(fuelMapper::mapToFuelResponse)
+                    .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
                     .toList();
         }
     }
@@ -52,6 +54,6 @@ public class FuelService {
         var fuel = repository.findById(fuelId).orElseThrow(PetrolEmptyException::new);
         fuelMapper.merge(request, fuel);
         var updatedFuel =  repository.save(fuel);
-        return fuelMapper.mapToFuelResponseWithModelMapper(updatedFuel);
+        return fuelMapper.mapToFuelResponse(updatedFuel);
     }
 }
