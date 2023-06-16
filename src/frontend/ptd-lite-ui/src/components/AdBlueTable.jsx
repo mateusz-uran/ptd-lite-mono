@@ -33,7 +33,7 @@ const AdBlueTable = ({ cardId }) => {
   let emptyRowCount = 5;
 
   const toggleFuelForm = () => {
-    dispatch(openFuelForm('blue'));
+    dispatch(openFuelForm({ component: 'blue', edit: false }));
   };
 
   const handleEditBlue = (blueId) => {
@@ -89,7 +89,7 @@ const AdBlueTable = ({ cardId }) => {
   }
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%' }} className="adblue-table">
       {fuelFormStatus && component === 'blue' && (
         <FuelForm inputs={blueInputs} schema={adBlueSchema} cardId={cardId} />
       )}

@@ -93,7 +93,7 @@ const PetrolTable = ({ cardId }) => {
   }
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%' }} className="petrol-table">
       {fuelFormStatus && component === 'petrol' && (
         <FuelForm inputs={petrolInputs} schema={petrolSchema} cardId={cardId} />
       )}
