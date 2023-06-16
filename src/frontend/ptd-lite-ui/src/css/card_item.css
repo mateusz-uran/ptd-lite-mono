@@ -114,16 +114,79 @@
 
 /*manage buttons for each row in petrol & adBlue tables*/
 
-.card-item .success-section .tables-wrapper .fuel .petrol .manage {
-  width: 5%;
-  height: 100%;
-  padding: 0;
-  position: relative;
+.card-item .success-section .tables-wrapper .last-cell {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.card-item .success-section .tables-wrapper .fuel .petrol .interactive {
+.card-item .success-section .tables-wrapper .last-cell .interactive {
+  display: flex;
+  opacity: 0;
+  transition: var(--tran-03);
+}
+
+.card-item .success-section .tables-wrapper .last-cell .interactive button {
+  font-size: 15px;
+  margin: 0 2px;
+}
+
+.card-item .success-section .tables-wrapper .last-cell .dots {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.card-item .success-section .tables-wrapper .fuel .last-cell button {
+  background: transparent;
+  outline: 0;
+  border: 0;
+  transition: var(--tran-03);
+  border-radius: 5px;
+  padding: 0 2px;
+}
+
+.card-item .success-section .tables-wrapper .last-cell .dots-horizontal {
+  border-radius: 5px;
+  transition: var(--tran-03);
+  cursor: pointer;
+}
+
+/*animate interactive hover buttons*/
+.card-item .success-section .tables-wrapper .last-cell .interactive.show {
   opacity: 1;
 }
+
+.card-item
+  .success-section
+  .tables-wrapper
+  .last-cell
+  .interactive
+  button:hover {
+  background: var(--primary-color);
+  color: #fff;
+  cursor: pointer;
+}
+
+.card-item
+  .success-section
+  .tables-wrapper
+  .last-cell
+  .interactive.show
+  ~ .dots
+  .dots-horizontal {
+  transform: rotate(90deg);
+}
+
+.card-item
+  .success-section
+  .tables-wrapper
+  .last-cell
+  .dots:hover
+  .dots-horizontal {
+  background: #fff;
+  color: var(--primary-color);
+}
+
+/********/
 
 .card-item .success-section .tables-wrapper .fuel .petrol {
   margin-right: 15px;

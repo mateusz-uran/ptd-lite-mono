@@ -12,6 +12,7 @@ import {
 import FuelForm from '../features/fuel/FuelForm';
 import blueInputs from '../features/fuel/blueInputs';
 import { adBlueSchema } from '../features/fuel/yupSchema';
+import { useState } from 'react';
 
 const AdBlueTable = ({ cardId }) => {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ const AdBlueTable = ({ cardId }) => {
   const fuelFormStatus = useSelector(isFormOpen);
   const component = useSelector(componentName);
   const [deleteAdBlue] = useDeleteAdBlueMutation();
+  const [interactiveVisible, setInteractiveVisible] = useState(
+    new Array(blueEntities.length).fill(false)
+  );
 
   let tableContent;
   let defaultResponse;
@@ -38,6 +42,14 @@ const AdBlueTable = ({ cardId }) => {
 
   const handleDeleteAdBlue = async (blueId) => {
     await deleteAdBlue(blueId).unwrap();
+  };
+
+  const toggleInteractiveVisible = (index) => {
+    setInteractiveVisible((prevState) => {
+      const updatedState = [...prevState];
+      updatedState[index] = !prevState[index];
+      return updatedState;
+    });
   };
 
   if (isLoading) {
@@ -59,14 +71,18 @@ const AdBlueTable = ({ cardId }) => {
         <td>{blue.adBlueDate}</td>
         <td>{blue.adBlueLocalization}</td>
         <td>{blue.adBlueAmount}</td>
-        <td className="manage">
-          <button>
-            <i className="bx bx-dots-vertical-rounded"></i>
-          </button>
-          <div className="interactive">
-            <button onClick={() => handleEditBlue(blue.id)}>edit</button>
-            <button onClick={() => handleDeleteAdBlue(blue.id)}>delete</button>
+        <td className="last-cell">
+          <div className={`interactive ${interactiveVisible[i] ? 'show' : ''}`}>
+            <button onClick={() => handleEditBlue(blue.id)}>
+              <i className="bx bxs-edit edit"></i>
+            </button>
+            <button onClick={() => handleDeleteAdBlue(blue.id)}>
+              <i className="bx bxs-trash-alt"></i>
+            </button>
           </div>
+          <button className="dots" onClick={() => toggleInteractiveVisible(i)}>
+            <i className="bx bx-dots-horizontal dots-horizontal"></i>
+          </button>
         </td>
       </tr>
     ));
@@ -83,6 +99,7 @@ const AdBlueTable = ({ cardId }) => {
             <th>Date</th>
             <th>Location</th>
             <th>Amount</th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -90,7 +107,7 @@ const AdBlueTable = ({ cardId }) => {
 
           {emptyRowCount > 0 && (
             <tr className="empty-row">
-              <td colSpan={4} style={{ height: `${emptyRowCount * 25}px` }}>
+              <td colSpan={5} style={{ height: `${emptyRowCount * 25}px` }}>
                 <div className="empty-row-button">
                   {defaultResponse}
                   <button onClick={toggleFuelForm}>
