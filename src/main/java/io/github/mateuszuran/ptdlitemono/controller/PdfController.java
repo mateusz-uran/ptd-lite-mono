@@ -50,6 +50,32 @@ public class PdfController {
                 .body(bytes);
     }
 
+    @GetMapping("/generate-doc")
+    public ResponseEntity<?> generatePdfFromApi(
+            @RequestParam String username,
+            @RequestParam Long cardId,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        var pdf = service.retrieveInformation(username, cardId);
+        var webContext = createContext(request, response);
+        webContext.setVariable("pdf", pdf);
+
+        String orderHtml = template.process("card", webContext);
+        ByteArrayOutputStream target = new ByteArrayOutputStream();
+
+        ConverterProperties converterProperties = new ConverterProperties();
+        converterProperties.setBaseUri("http://localhost:8080");
+
+        HtmlConverter.convertToPdf(orderHtml, target, converterProperties);
+
+        byte[] bytes = target.toByteArray();
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(bytes);
+    }
+
     private static WebContext createContext(HttpServletRequest req, HttpServletResponse res) {
         var application = JakartaServletWebApplication.buildApplication(req.getServletContext());
         var exchange = application.buildExchange(req, res);

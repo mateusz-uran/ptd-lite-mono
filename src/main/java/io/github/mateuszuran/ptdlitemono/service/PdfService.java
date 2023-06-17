@@ -2,11 +2,15 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import io.github.mateuszuran.ptdlitemono.dto.pdf.CardDetailsResponse;
 import io.github.mateuszuran.ptdlitemono.dto.pdf.PdfCsvReader;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyValuesException;
 import io.github.mateuszuran.ptdlitemono.exception.CsvFileException;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
 import io.github.mateuszuran.ptdlitemono.pdf.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +22,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PdfService {
+    private final CardService cardService;
 
     @Value("${pdf.csv.link}")
     private String csvLink;
@@ -78,6 +84,38 @@ public class PdfService {
                 .cardTripsList(pdfRequest.getCardTripsList())
                 .cardFuelsList(pdfRequest.getCardFuelsList())
                 .cardAdBlueList(pdfRequest.getCardAdBlueList())
+                .build();
+    }
+
+    public Counters calculateCounters(CardDetailsResponse response) {
+        var firstCounterFromCard = response.getTrips().stream().mapToInt(TripResponse::getCounterStart).min()
+                .orElseThrow(CardEmptyValuesException::new);
+        var lastCounterFromCard = response.getTrips().stream().mapToInt(TripResponse::getCounterEnd).max()
+                .orElseThrow(CardEmptyValuesException::new);
+
+        var sumMileage = response.getTrips().stream().mapToInt(TripResponse::getCarMileage).sum();
+
+        var cardRefuelingAmount = response.getFuels().stream().mapToInt(FuelResponse::getRefuelingAmount).sum();
+
+        return Counters.builder()
+                .firstCounter(firstCounterFromCard)
+                .lastCounter(lastCounterFromCard)
+                .mileage(sumMileage)
+                .refuelingSum(cardRefuelingAmount)
+                .build();
+    }
+
+    public PdfSource retrieveInformation(String username, Long cardId) {
+        var userInfo = getUserInformation(username);
+        var cardInfo = cardService.getCardDetails(cardId);
+        var counters = calculateCounters(cardInfo);
+        return PdfSource.builder()
+                .pdfCsvReader(userInfo)
+                .counters(counters)
+                .cardNumber(cardInfo.getCardNumber())
+                .cardTripsList(cardInfo.getTrips())
+                .cardFuelsList(cardInfo.getFuels())
+                .cardAdBlueList(cardInfo.getBlue())
                 .build();
     }
 }

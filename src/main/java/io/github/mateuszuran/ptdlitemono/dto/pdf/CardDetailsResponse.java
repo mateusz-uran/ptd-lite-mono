@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CardDetailsResponse {
+    private String cardNumber;
     private List<TripResponse> trips;
     private List<FuelResponse> fuels;
     private List<AdBlueResponse> blue;

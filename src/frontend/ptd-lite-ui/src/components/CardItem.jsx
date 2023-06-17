@@ -4,8 +4,10 @@ import TripTable from './TripTable';
 import PetrolTable from './PetrolTable';
 import AdBlueTable from './AdBlueTable';
 import CardForm from '../features/card/CardForm';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const CardItem = () => {
+  const { user } = useAuth0();
   const { cardNumber } = useParams();
   const selectedCard = localStorage.getItem('selected_card');
 

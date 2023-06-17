@@ -605,8 +605,8 @@
                     <td>Ilosc / litry</td>
                 </tr>
                 <tr th:each="blue,iterator : ${pdf.cardAdBlueList}">
-                    <td colspan="3" th:text="${iterator.index+1 + '. ' + blue.localization + ' ' + blue.date}"></td>
-                    <td th:text="${blue.amount}">&nbsp;</td>
+                    <td colspan="3" th:text="${iterator.index+1 + '. ' + blue.adBlueLocalization + ' ' + blue.adBlueDate}"></td>
+                    <td th:text="${blue.adBlueAmount}">&nbsp;</td>
                 </tr>
                 <tr>
                     <td colspan="3">&nbsp;</td>

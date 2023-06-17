@@ -3,7 +3,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import '../../css/cards.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   cardIdToUpdate,
@@ -12,13 +11,7 @@ import {
   stopEditing,
 } from './updateCardSlice';
 import { useEffect } from 'react';
-
-const schema = yup.object({
-  number: yup
-    .string()
-    .min(3, 'Minimum 3 characters')
-    .required('Cannot be empty'),
-});
+import { cardSchema } from './yupSchema';
 
 const CardForm = () => {
   const { user } = useAuth0();
@@ -37,7 +30,7 @@ const CardForm = () => {
     setValue,
     formState: { errors },
     reset,
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm({ resolver: yupResolver(cardSchema) });
 
   const onSubmit = async (data) => {
     try {
