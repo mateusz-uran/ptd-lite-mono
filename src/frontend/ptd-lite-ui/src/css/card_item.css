@@ -35,13 +35,19 @@
   font-size: 1em;
 }
 
-/*tables content in success section*/
-
 .card-item .success-section .tables-wrapper .fuel {
   display: flex;
 }
 
 /* tables css */
+
+.card-item .success-section .tables-wrapper h5 {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-color);
+  padding: 0.2rem 0;
+  opacity: 0.6;
+}
 
 .card-item .success-section .tables-wrapper table {
   border-collapse: collapse;
@@ -70,6 +76,37 @@
 .card-item .success-section .tables-wrapper .empty-row {
   border-top: 1px solid #ddd;
 }
+
+/*select items trip table*/
+.card-item
+  .success-section
+  .tables-wrapper
+  .trip
+  table
+  tr:not(.empty-row)
+  td:first-of-type,
+.card-item
+  .success-section
+  .tables-wrapper
+  .trip
+  table
+  tr:not(.empty-row)
+  th:first-of-type {
+  width: 5px;
+  padding: 2px 5px;
+}
+
+.card-item .success-section .tables-wrapper .trip .select {
+  accent-color: var(--primary-color);
+}
+
+.card-item .success-section .tables-wrapper .trip .delete-trip {
+  background: transparent;
+  outline: 0;
+  border: 0;
+  font-size: 1rem;
+}
+/**/
 
 .card-item .success-section .tables-wrapper .empty-row-button {
   display: flex;

@@ -90,6 +90,7 @@ const AdBlueTable = ({ cardId }) => {
 
   return (
     <div style={{ width: '100%' }} className="adblue-table">
+      <h5>AdBlue</h5>
       {fuelFormStatus && component === 'blue' && (
         <FuelForm inputs={blueInputs} schema={adBlueSchema} cardId={cardId} />
       )}
@@ -104,7 +105,18 @@ const AdBlueTable = ({ cardId }) => {
         </thead>
         <tbody>
           {tableContent}
-
+          {emptyRowCount === 0 && (
+            <tr className="empty-row">
+              <td colSpan={5}>
+                <div className="empty-row-button">
+                  <button onClick={toggleFuelForm}>
+                    <span className="text">Add</span>
+                    <i className="bx bx-message-square-add icon"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          )}
           {emptyRowCount > 0 && (
             <tr className="empty-row">
               <td colSpan={5} style={{ height: `${emptyRowCount * 25}px` }}>

@@ -24,10 +24,6 @@ function App() {
         { path: '/home/archive', element: <Archives /> },
         { path: '/home/:cardNumber', element: <CardItem /> },
         { path: '/home/:cardNumber/addtrip', element: <TripForm /> },
-        {
-          path: '/home/:cardNumber/add/:target/:cardId',
-          element: <FuelForm />,
-        },
       ],
     },
   ]);

@@ -31,10 +31,24 @@ export const tripApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
     }),
+    deleteTrips: builder.mutation({
+      query: (trips) => ({
+        url: '/trip',
+        method: 'DELETE',
+        body: trips,
+      }),
+      invalidatesTags: (result, error, arg) => {
+        return [{ type: 'Trips', id: 'LIST' }];
+      },
+    }),
   }),
 });
 
-export const { useGetTripsByCardIdQuery, useSaveTripsMutation } = tripApiSlice;
+export const {
+  useGetTripsByCardIdQuery,
+  useSaveTripsMutation,
+  useDeleteTripsMutation,
+} = tripApiSlice;
 
 export const getTripSelectors = (query) => {
   const selectTripsResult =

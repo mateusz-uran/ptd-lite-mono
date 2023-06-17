@@ -1,67 +1,43 @@
 import { useParams } from 'react-router-dom';
-import { useGetCardsDetailsQuery } from '../features/card/cardSlice';
 import '../css/card_item.css';
 import TripTable from './TripTable';
 import PetrolTable from './PetrolTable';
 import AdBlueTable from './AdBlueTable';
 import CardForm from '../features/card/CardForm';
-import { useGetTripsByCardIdQuery } from '../features/trip/tripApiSlice';
-import { useGetPetrolByCardIdQuery } from '../features/petrol/petrolSlice';
-import { useGetBlueByCardIdQuery } from '../features/adBlue/blueSlice';
 
 const CardItem = () => {
   const { cardNumber } = useParams();
   const selectedCard = localStorage.getItem('selected_card');
 
-  // const {
-  //   data: card,
-  //   isLoading,
-  //   isSuccess,
-  //   isError,
-  // } = useGetCardsDetailsQuery(selectedCard);
-  let card = [];
-  let isLoading = false;
-  let isSuccess = true;
-  let isError = false;
-
-  // const { data: petrol } = useGetPetrolByCardIdQuery(selectedCard);
-  // const { data: blue } = useGetBlueByCardIdQuery(selectedCard);
-
-  let section;
-  if (isLoading) {
-    section = <section>Loading card details...</section>;
-  } else if (isError) {
-    section = <section>Card is not available at the moment.</section>;
-  } else if (isSuccess) {
-    section = (
-      <section className="success-section">
-        <header>
-          <div>
-            <h4>Card</h4>
-            <CardForm />
-          </div>
-          <button className="pdf-button">
-            <i className="bx bxs-cloud-download icon"></i>
-            <span className="text">Download PDF</span>
-          </button>
-        </header>
-        <div className="tables-wrapper">
-          <div className="trip">
-            <TripTable cardId={selectedCard} />
-          </div>
-          <div className="fuel">
-            <div className="petrol">
-              <PetrolTable cardId={selectedCard} />
-            </div>
-            <div className="adblue">
-              <AdBlueTable cardId={selectedCard} />
-            </div>
-          </div>
-          <div className="final-content">additional info</div>
+  let section = (
+    <section className="success-section">
+      <header>
+        <div>
+          <h4>Card</h4>
+          <CardForm />
         </div>
-      </section>
-    );
-  }
+        <button className="pdf-button">
+          <i className="bx bxs-cloud-download icon"></i>
+          <span className="text">Download PDF</span>
+        </button>
+      </header>
+      <div className="tables-wrapper">
+        <div className="trip">
+          <h5>Trips</h5>
+          <TripTable cardId={selectedCard} />
+        </div>
+        <div className="fuel">
+          <div className="petrol">
+            <PetrolTable cardId={selectedCard} />
+          </div>
+          <div className="adblue">
+            <AdBlueTable cardId={selectedCard} />
+          </div>
+        </div>
+        <div className="final-content">additional info</div>
+      </div>
+    </section>
+  );
 
   return (
     <main className="card-item">

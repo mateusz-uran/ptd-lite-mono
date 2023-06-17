@@ -3,12 +3,13 @@ import '../../css/trip_form.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './yupSchema';
 import inputs from './tripInputs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSaveTripsMutation } from './tripApiSlice';
 
 const TripForm = () => {
   const selectedCard = localStorage.getItem('selected_card');
   const navigate = useNavigate();
+  const { cardNumber } = useParams();
   const [saveTrips] = useSaveTripsMutation();
 
   const {
@@ -60,6 +61,15 @@ const TripForm = () => {
 
   return (
     <section className="trip-form">
+      <header className="comp-header trip-form-header">
+        <i className="bx bx-home-alt icon"></i>
+        <i className="bx bx-chevron-right icon-right"></i>
+        <span>Card</span>
+        <i className="bx bx-chevron-right icon-right"></i>
+        <span>{cardNumber}</span>
+        <i className="bx bx-chevron-left icon-right"></i>
+        <button onClick={() => navigate(-1)}>Back</button>
+      </header>
       <form onSubmit={handleSubmit(onSubmit)}>
         {fields.map((field, index) => (
           <div key={field.id} className="fields-wrapper">
