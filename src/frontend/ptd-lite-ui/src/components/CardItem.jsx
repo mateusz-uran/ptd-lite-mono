@@ -5,6 +5,7 @@ import PetrolTable from './PetrolTable';
 import AdBlueTable from './AdBlueTable';
 import CardForm from '../features/card/CardForm';
 import { useAuth0 } from '@auth0/auth0-react';
+import AdditionalInfo from '../features/additional/AdditionalInfo';
 
 const CardItem = () => {
   const { user } = useAuth0();
@@ -36,7 +37,9 @@ const CardItem = () => {
             <AdBlueTable cardId={selectedCard} />
           </div>
         </div>
-        <div className="final-content">additional info</div>
+        <div className="final-content">
+          <AdditionalInfo />
+        </div>
       </div>
     </section>
   );

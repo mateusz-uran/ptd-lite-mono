@@ -232,6 +232,10 @@
   margin-right: 5px;
 }
 
+.card-item .success-section .tables-wrapper .final-content {
+  padding-bottom: 40px;
+}
+
 @media only screen and (max-width: 1024px) {
   .card-item .success-section .tables-wrapper .fuel {
     flex-direction: column;

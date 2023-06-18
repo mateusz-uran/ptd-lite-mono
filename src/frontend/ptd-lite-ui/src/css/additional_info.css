@@ -1,0 +1,123 @@
+.additional-info {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  border-radius: 5px;
+}
+
+.additional-info .inputs-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 1.3rem;
+}
+
+.additional-info .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 2px;
+}
+
+.additional-info input {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid #ccc;
+  outline: 0;
+  margin-right: 5px;
+  transition: var(--tran-03);
+}
+
+.additional-info input:focus {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.additional-info input::placeholder {
+  opacity: 0.6;
+  transition: var(--tran-03);
+}
+
+.additional-info input:focus::placeholder {
+  color: var(--primary-color);
+  opacity: 1;
+  font-weight: 600;
+}
+
+.additional-info label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.8rem;
+  color: var(--text-color);
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--tran-03);
+}
+
+.additional-info input:focus::placeholder {
+  opacity: 0;
+}
+
+.additional-info input:focus ~ label,
+.additional-info input:not(:placeholder-shown) ~ label {
+  top: -10px;
+  opacity: 0.6;
+  font-size: 0.6rem;
+}
+
+.additional-info .trip-final .trip-final-wrapper {
+  display: flex;
+}
+
+.additional-info .button-wrapper {
+  padding-left: 1.3rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.8rem;
+  display: flex;
+}
+
+.additional-info .button-wrapper button {
+  display: flex;
+  outline: 0;
+  border: 0;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 0.3rem;
+  font-size: 0.8rem;
+  transition: var(--tran-03);
+}
+
+.additional-info .button-wrapper .submit-button {
+  margin-right: 5px;
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.additional-info .button-wrapper button:hover {
+  cursor: pointer;
+}
+
+.additional-info .button-wrapper .submit-button:hover {
+  background: var(--toggle-color);
+  color: #000;
+}
+
+.additional-info .button-wrapper .revert-button:hover {
+  background: #ccc;
+  color: #000;
+}
+
+@media only screen and (max-width: 888px) {
+  .additional-info .trip-final {
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 625px) {
+  .additional-info .trip-final .trip-final-wrapper {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 445px) {
+  .additional-info {
+    overflow-x: scroll;
+  }
+}
