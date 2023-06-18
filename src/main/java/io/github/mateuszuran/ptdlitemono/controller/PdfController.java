@@ -61,7 +61,7 @@ public class PdfController {
         var webContext = createContext(request, response);
         webContext.setVariable("pdf", pdf);
 
-        String orderHtml = template.process("card", webContext);
+        String orderHtml = template.process("pdf-front", webContext);
         ByteArrayOutputStream target = new ByteArrayOutputStream();
 
         ConverterProperties converterProperties = new ConverterProperties();

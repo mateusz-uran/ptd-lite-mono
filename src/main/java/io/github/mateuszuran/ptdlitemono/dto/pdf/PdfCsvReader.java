@@ -35,4 +35,8 @@ public class PdfCsvReader {
     private String truckImageLink;
     @CsvBindByPosition(position = 12)
     private String truckImageDescription;
+    @CsvBindByPosition(position = 13)
+    private String ceoDetailsLink;
+    @CsvBindByPosition(position = 14)
+    private String driverSurname;
 }
