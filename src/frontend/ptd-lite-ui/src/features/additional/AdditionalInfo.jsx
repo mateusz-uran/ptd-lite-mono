@@ -58,7 +58,7 @@ const AdditionalInfo = () => {
           <div className="trip-details">
             <h5>Trips summary</h5>
             <div className="trip-line">
-              {formInputs.slice(5, 8).map((input) => (
+              {formInputs.slice(5, 7).map((input) => (
                 <div className="input-wrapper" key={input.name}>
                   <input
                     type="text"
@@ -71,7 +71,7 @@ const AdditionalInfo = () => {
               ))}
             </div>
             <div className="trip-line">
-              {formInputs.slice(8, 10).map((input) => (
+              {formInputs.slice(7, 10).map((input) => (
                 <div className="input-wrapper" key={input.name}>
                   <input
                     type="text"

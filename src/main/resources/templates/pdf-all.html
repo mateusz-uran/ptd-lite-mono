@@ -682,15 +682,15 @@
             <p>
               Km przejechane na etapie:
             </p>
-            <p th:text="${pdf.counters.mileage}">...... .</p>
+            <p style="text-decoration: underline;" th:text="${pdf.counters.mileage}">................</p>
             <p>
               Srednie zuzycie paliwa na etapie:
             </p>
-            <p th:text="${pdf.info.avgFuelConsumption}">......</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.avgFuelConsumption}">...............</p>
             <p>
               Calkowite zuzycie paliwa na etapie:
             </p>
-            <p th:text="${pdf.info.totalFuelConsumption}">.......</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.totalFuelConsumption}">................</p>
           </span>
     </td>
   </tr>
@@ -698,9 +698,9 @@
     <td>
           <span>
             <p>Srendia predkosc na etapie:</p>
-            <p th:text="${pdf.info.avgSpeed}">..........................</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.avgSpeed}">..........................</p>
             <p>Zuzycie paliwa na biegu jalowym na etapie:</p>
-            <p th:text="${pdf.info.fuelConsumptionIdle}">..........................</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.fuelConsumptionIdle}">..........................</p>
           </span>
     </td>
   </tr>
@@ -708,11 +708,12 @@
     <td>
           <span>
             <p>Zuzycie paliwa na nieekonomicznych obrotach:</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.fuelConsumptionUneconomical}">..........................</p>
           </span>
     </td>
     <td>
           <span>
-            <p th:text="${pdf.info.fuelConsumptionUneconomical}">............................................</p>
+            <p>............................................</p>
           </span>
     </td>
   </tr>
