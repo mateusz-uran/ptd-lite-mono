@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.dto.pdf;
+package io.github.mateuszuran.ptdlitemono.pdf;
 
 import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;

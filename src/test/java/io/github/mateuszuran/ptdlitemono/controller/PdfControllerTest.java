@@ -1,9 +1,9 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.mateuszuran.ptdlitemono.pdf.CardFuels;
-import io.github.mateuszuran.ptdlitemono.pdf.CardTrips;
-import io.github.mateuszuran.ptdlitemono.pdf.PdfRequest;
+import io.github.mateuszuran.ptdlitemono.pdf.CardDetailsResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -50,36 +50,36 @@ class PdfControllerTest {
                 .andExpect(jsonPath("$.description").value("User not found in csv file, please contact admin."));
     }
 
-    private PdfRequest dataForPdf() {
-        CardTrips trip1 = CardTrips.builder()
+    private CardDetailsResponse dataForPdf() {
+        TripResponse trip1 = TripResponse.builder()
                 .counterStart(200)
                 .counterEnd(300)
                 .carMileage(100)
                 .build();
-        CardTrips trip2 = CardTrips.builder()
+        TripResponse trip2 = TripResponse.builder()
                 .counterStart(300)
                 .counterEnd(400)
                 .carMileage(100)
                 .build();
-        CardTrips trip3 = CardTrips.builder()
+        TripResponse trip3 = TripResponse.builder()
                 .counterStart(400)
                 .counterEnd(500)
                 .carMileage(100)
                 .build();
 
-        CardFuels fuel1 = CardFuels.builder()
+        FuelResponse fuel1 = FuelResponse.builder()
                 .vehicleCounter(200)
                 .refuelingAmount(50)
                 .build();
-        CardFuels fuel2 = CardFuels.builder()
+        FuelResponse fuel2 = FuelResponse.builder()
                 .vehicleCounter(360)
                 .refuelingAmount(70)
                 .build();
 
-        return PdfRequest.builder()
-                .number("ABC")
-                .cardTripsList(List.of(trip1, trip2, trip3))
-                .cardFuelsList(List.of(fuel1, fuel2))
+        return CardDetailsResponse.builder()
+                .cardNumber("ABC")
+                .trips(List.of(trip1, trip2, trip3))
+                .fuels(List.of(fuel1, fuel2))
                 .build();
     }
 }

@@ -1,6 +1,5 @@
 package io.github.mateuszuran.ptdlitemono.pdf;
 
-import io.github.mateuszuran.ptdlitemono.dto.pdf.PdfCsvReader;
 import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;

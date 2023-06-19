@@ -1,6 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
-import io.github.mateuszuran.ptdlitemono.dto.pdf.CardDetailsResponse;
+import io.github.mateuszuran.ptdlitemono.pdf.CardDetailsResponse;
 import io.github.mateuszuran.ptdlitemono.dto.request.CardRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
 import io.github.mateuszuran.ptdlitemono.service.CardService;

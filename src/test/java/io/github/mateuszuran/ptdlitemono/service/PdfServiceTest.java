@@ -1,16 +1,17 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.pdf.PdfCsvReader;
+import io.github.mateuszuran.ptdlitemono.pdf.CardDetailsResponse;
+import io.github.mateuszuran.ptdlitemono.pdf.PdfCsvReader;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyValuesException;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
-import io.github.mateuszuran.ptdlitemono.pdf.CardFuels;
-import io.github.mateuszuran.ptdlitemono.pdf.CardTrips;
 import io.github.mateuszuran.ptdlitemono.pdf.Counters;
-import io.github.mateuszuran.ptdlitemono.pdf.PdfRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -22,11 +23,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @ExtendWith(MockitoExtension.class)
 class PdfServiceTest {
     private PdfService service;
+    @Mock
+    private CardService cardService;
 
     @BeforeEach
     void setUp() {
         String testFilePath = getClass().getResource("/test.csv").getPath();
-        service = new PdfService();
+        service = new PdfService(cardService);
         service.setCsvLink("file:" + testFilePath);
     }
 
@@ -70,7 +73,7 @@ class PdfServiceTest {
     void givenCardInformation_whenTripEmpty_thenThrowException() {
         //given
         var cardInfo = dataForPdf();
-        cardInfo.setCardTripsList(List.of());
+        cardInfo.setTrips(List.of());
         //when + then
         assertThatThrownBy(() -> service.calculateCounters(cardInfo))
                 .isInstanceOf(CardEmptyValuesException.class)
@@ -89,45 +92,45 @@ class PdfServiceTest {
                 .refuelingSum(120)
                 .build();
         //when
-        var readyPdfInfo = service.gatherAllData(cardInfo, username);
+        var readyPdfInfo = service.retrieveInformation(username, 123L);
         //then
         assertThat(readyPdfInfo.getPdfCsvReader().getUsername()).isEqualTo(username);
-        assertThat(readyPdfInfo.getCardNumber()).isEqualTo(dataForPdf().getNumber());
-        assertThat(readyPdfInfo.getCardTripsList()).isEqualTo(dataForPdf().getCardTripsList());
-        assertThat(readyPdfInfo.getCardFuelsList()).isEqualTo(dataForPdf().getCardFuelsList());
+        assertThat(readyPdfInfo.getCardNumber()).isEqualTo(dataForPdf().getCardNumber());
+        assertThat(readyPdfInfo.getCardTripsList()).isEqualTo(dataForPdf().getTrips());
+        assertThat(readyPdfInfo.getCardFuelsList()).isEqualTo(dataForPdf().getFuels());
         assertThat(readyPdfInfo.getCounters()).isEqualTo(counters);
     }
 
-    private PdfRequest dataForPdf() {
-        CardTrips trip1 = CardTrips.builder()
+    private CardDetailsResponse dataForPdf() {
+        TripResponse trip1 = TripResponse.builder()
                 .counterStart(200)
                 .counterEnd(300)
                 .carMileage(100)
                 .build();
-        CardTrips trip2 = CardTrips.builder()
+        TripResponse trip2 = TripResponse.builder()
                 .counterStart(300)
                 .counterEnd(400)
                 .carMileage(100)
                 .build();
-        CardTrips trip3 = CardTrips.builder()
+        TripResponse trip3 = TripResponse.builder()
                 .counterStart(400)
                 .counterEnd(500)
                 .carMileage(100)
                 .build();
 
-        CardFuels fuel1 = CardFuels.builder()
+        FuelResponse fuel1 = FuelResponse.builder()
                 .vehicleCounter(200)
                 .refuelingAmount(50)
                 .build();
-        CardFuels fuel2 = CardFuels.builder()
+        FuelResponse fuel2 = FuelResponse.builder()
                 .vehicleCounter(360)
                 .refuelingAmount(70)
                 .build();
 
-        return PdfRequest.builder()
-                .number("ABC")
-                .cardTripsList(List.of(trip1, trip2, trip3))
-                .cardFuelsList(List.of(fuel1, fuel2))
+        return CardDetailsResponse.builder()
+                .cardNumber("ABC")
+                .trips(List.of(trip1, trip2, trip3))
+                .fuels(List.of(fuel1, fuel2))
                 .build();
     }
 
@@ -145,7 +148,9 @@ class PdfServiceTest {
                 "lop321",
                 "100",
                 "link",
-                "test1/test2");
+                "test1/test2",
+                "linkCeo",
+                "doe");
         PdfCsvReader pdfCsvReader2 = new PdfCsvReader(
                 "will",
                 "test2",
@@ -159,7 +164,9 @@ class PdfServiceTest {
                 "lop789",
                 "200",
                 "link2",
-                "test3/test4");
+                "test3/test4",
+                "linkeCeo2",
+                "smith");
         return List.of(pdfCsvReader1, pdfCsvReader2);
     }
 }

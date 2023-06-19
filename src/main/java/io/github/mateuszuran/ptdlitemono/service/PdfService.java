@@ -2,8 +2,8 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import io.github.mateuszuran.ptdlitemono.dto.pdf.CardDetailsResponse;
-import io.github.mateuszuran.ptdlitemono.dto.pdf.PdfCsvReader;
+import io.github.mateuszuran.ptdlitemono.pdf.CardDetailsResponse;
+import io.github.mateuszuran.ptdlitemono.pdf.PdfCsvReader;
 import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyValuesException;
@@ -54,37 +54,6 @@ public class PdfService {
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()
                 .orElseThrow(UserNotFoundException::new);
-    }
-
-    public Counters calculateCounters(PdfRequest pdfRequest) {
-        var firstCounterFromCard = pdfRequest.getCardTripsList().stream().mapToInt(CardTrips::getCounterStart).min()
-                .orElseThrow(CardEmptyValuesException::new);
-        var lastCounterFromCard = pdfRequest.getCardTripsList().stream().mapToInt(CardTrips::getCounterEnd).max()
-                .orElseThrow(CardEmptyValuesException::new);
-
-        var sumMileage = pdfRequest.getCardTripsList().stream().mapToInt(CardTrips::getCarMileage).sum();
-
-        var cardRefuelingAmount = pdfRequest.getCardFuelsList().stream().mapToInt(CardFuels::getRefuelingAmount).sum();
-
-        return Counters.builder()
-                .firstCounter(firstCounterFromCard)
-                .lastCounter(lastCounterFromCard)
-                .mileage(sumMileage)
-                .refuelingSum(cardRefuelingAmount)
-                .build();
-    }
-
-    public PdfTemplateSource gatherAllData(PdfRequest pdfRequest, String username) {
-        var userInfo = getUserInformation(username);
-        var counterInfo = calculateCounters(pdfRequest);
-        return PdfTemplateSource.builder()
-                .pdfCsvReader(userInfo)
-                .counters(counterInfo)
-                .cardNumber(pdfRequest.getNumber())
-                .cardTripsList(pdfRequest.getCardTripsList())
-                .cardFuelsList(pdfRequest.getCardFuelsList())
-                .cardAdBlueList(pdfRequest.getCardAdBlueList())
-                .build();
     }
 
     public Counters calculateCounters(CardDetailsResponse response) {

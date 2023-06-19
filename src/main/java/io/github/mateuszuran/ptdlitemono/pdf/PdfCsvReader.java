@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.dto.pdf;
+package io.github.mateuszuran.ptdlitemono.pdf;
 
 import com.opencsv.bean.CsvBindByPosition;
 import lombok.AllArgsConstructor;
