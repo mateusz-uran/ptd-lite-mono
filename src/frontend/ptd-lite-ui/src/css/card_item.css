@@ -39,7 +39,44 @@
   display: flex;
 }
 
-/* tables css */
+/* tables headers and printer */
+
+.card-item .success-section .tables-wrapper .pdf-button {
+  display: flex;
+  padding: 0.2em;
+}
+
+.card-item .success-section .tables-wrapper .pdf-button .generate-single-pdf {
+  text-align: left;
+}
+
+.card-item
+  .success-section
+  .tables-wrapper
+  .pdf-button
+  .generate-single-pdf
+  button {
+  background: var(--toggle-color);
+  padding: 0.2em 0.2em;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border: 0;
+  outline: 0;
+  font-size: 20px;
+  color: var(--primary-color);
+  transition: var(--tran-03);
+}
+
+.card-item
+  .success-section
+  .tables-wrapper
+  .pdf-button
+  .generate-single-pdf
+  button:hover {
+  cursor: pointer;
+  background: #ccc;
+  color: #000;
+}
 
 .card-item .success-section .tables-wrapper h5 {
   text-align: center;
@@ -47,7 +84,10 @@
   color: var(--text-color);
   padding: 0.2rem 0;
   opacity: 0.6;
+  width: 100%;
 }
+
+/* tables css */
 
 .card-item .success-section .tables-wrapper table {
   border-collapse: collapse;
@@ -225,6 +265,7 @@
 .card-item .success-section .tables-wrapper .trip {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  border-top-left-radius: 0;
   margin-top: 10px;
 }
 

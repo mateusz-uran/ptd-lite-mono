@@ -28,8 +28,10 @@ const CardItem = () => {
       </header>
       <div className="tables-wrapper">
         <div className="trip">
-          <GenerateSinglePdf cardId={selectedCard} page={'second'} />
-          <h5>Trips</h5>
+          <div className="pdf-button">
+            <GenerateSinglePdf cardId={selectedCard} page={'second'} />
+            <h5>Trips</h5>
+          </div>
           <TripTable cardId={selectedCard} />
         </div>
         <div className="fuel">

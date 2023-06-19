@@ -2,6 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { getAccessToken } from '../auth/auth0Slice';
+import '../../css/misc.css';
 
 const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -39,8 +40,10 @@ const GenerateSinglePdf = ({ cardId, page }) => {
   };
 
   return (
-    <div>
-      <button onClick={generatePDF}>Generate PDF</button>
+    <div className="generate-single-pdf">
+      <button onClick={generatePDF}>
+        <i class="bx bxs-printer"></i>
+      </button>
     </div>
   );
 };

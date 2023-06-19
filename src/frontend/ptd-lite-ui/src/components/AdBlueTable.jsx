@@ -13,6 +13,7 @@ import FuelForm from '../features/fuel/FuelForm';
 import blueInputs from '../features/fuel/blueInputs';
 import { adBlueSchema } from '../features/fuel/yupSchema';
 import { useState } from 'react';
+import GenerateSinglePdf from '../features/pdf/GenerateSinglePdf';
 
 const AdBlueTable = ({ cardId }) => {
   const dispatch = useDispatch();
@@ -90,7 +91,10 @@ const AdBlueTable = ({ cardId }) => {
 
   return (
     <div style={{ width: '100%' }} className="adblue-table">
-      <h5>AdBlue</h5>
+      <div className="pdf-button">
+        <GenerateSinglePdf cardId={cardId} page={'first'} />
+        <h5>AdBlue</h5>
+      </div>
       {fuelFormStatus && component === 'blue' && (
         <FuelForm inputs={blueInputs} schema={adBlueSchema} cardId={cardId} />
       )}

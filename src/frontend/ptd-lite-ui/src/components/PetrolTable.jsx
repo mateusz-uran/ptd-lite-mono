@@ -97,8 +97,10 @@ const PetrolTable = ({ cardId }) => {
 
   return (
     <div style={{ width: '100%' }} className="petrol-table">
-      <GenerateSinglePdf cardId={cardId} page={'first'} />
-      <h5>Petrol</h5>
+      <div className="pdf-button">
+        <GenerateSinglePdf cardId={cardId} page={'first'} />
+        <h5>Petrol</h5>
+      </div>
       {fuelFormStatus && component === 'petrol' && (
         <FuelForm inputs={petrolInputs} schema={petrolSchema} cardId={cardId} />
       )}
