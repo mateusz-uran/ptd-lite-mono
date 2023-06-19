@@ -2,12 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   fuelInitialState: '',
-  fuelPetrolSum: '',
   fuelEndState: '',
   aggregateInitialState: '',
   aggregateAdBlue: '',
   aggregateEndState: '',
-  tripSum: '',
   avgFuelConsumption: '',
   totalFuelConsumption: '',
   avgSpeed: '',
@@ -25,7 +23,6 @@ const additionalInfoSlice = createSlice({
         ...action.payload,
       };
     },
-
     clearAdditionalData: () => initialState,
   },
 });
@@ -34,7 +31,11 @@ export const getAdditionalInfo = (state) => state.additionalInfo;
 export const getPetrolSum = (state) => state.fuelPetrolSum;
 export const getTripSum = (state) => state.tripSum;
 
-export const { saveAdditionalData, clearAdditionalData } =
-  additionalInfoSlice.actions;
+export const {
+  saveAdditionalData,
+  clearAdditionalData,
+  updatePetrolSum,
+  updateTripSum,
+} = additionalInfoSlice.actions;
 
 export default additionalInfoSlice.reducer;

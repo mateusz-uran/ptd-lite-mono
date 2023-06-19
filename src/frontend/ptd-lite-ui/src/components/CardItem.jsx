@@ -6,11 +6,14 @@ import AdBlueTable from './AdBlueTable';
 import CardForm from '../features/card/CardForm';
 import { useAuth0 } from '@auth0/auth0-react';
 import AdditionalInfo from '../features/additional/AdditionalInfo';
+import { useState } from 'react';
 
 const CardItem = () => {
   const { user } = useAuth0();
   const { cardNumber } = useParams();
   const selectedCard = localStorage.getItem('selected_card');
+
+  const [visible, setVisible] = useState(false);
 
   let section = (
     <section className="success-section">
@@ -38,7 +41,12 @@ const CardItem = () => {
           </div>
         </div>
         <div className="final-content">
-          <AdditionalInfo />
+          {visible && <AdditionalInfo />}
+          <div className={`button-wrapper ${visible ? 'visible' : undefined}`}>
+            <button onClick={() => setVisible((prevState) => !prevState)}>
+              <i className="bx bxs-chevron-down"></i>
+            </button>
+          </div>
         </div>
       </div>
     </section>

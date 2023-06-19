@@ -236,6 +236,39 @@
   padding-bottom: 40px;
 }
 
+.card-item .success-section .tables-wrapper .final-content .button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.card-item
+  .success-section
+  .tables-wrapper
+  .final-content
+  .button-wrapper
+  button {
+  background: transparent;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin: 5px 0;
+  border-radius: 10px;
+  font-size: 30px;
+  outline: 0;
+  border: 0;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  transition: var(--tran-03);
+}
+
+.card-item
+  .success-section
+  .tables-wrapper
+  .final-content
+  .button-wrapper.visible
+  button {
+  transform: rotate(180deg);
+}
+
 @media only screen and (max-width: 1024px) {
   .card-item .success-section .tables-wrapper .fuel {
     flex-direction: column;

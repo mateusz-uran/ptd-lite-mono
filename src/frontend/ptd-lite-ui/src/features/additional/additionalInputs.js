@@ -5,12 +5,6 @@ const formInputs = [
     label: 'Initial state',
   },
   {
-    name: 'fuelPetrolSum',
-    placeholder: 'Petrol',
-    label: 'Petrol',
-    disabled: true,
-  },
-  {
     name: 'fuelEndState',
     placeholder: 'End state',
     label: 'End state',
@@ -29,12 +23,6 @@ const formInputs = [
     name: 'aggregateEndState',
     placeholder: 'End state',
     label: 'End state',
-  },
-  {
-    name: 'tripSum',
-    placeholder: 'Kilometers summary',
-    label: 'Kilometers summary',
-    disabled: true,
   },
   {
     name: 'avgFuelConsumption',

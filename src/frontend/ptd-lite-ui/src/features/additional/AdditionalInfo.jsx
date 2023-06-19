@@ -1,7 +1,11 @@
 import { useForm } from 'react-hook-form';
 import '../../css/additional_info.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdditionalInfo, saveAdditionalData } from './additionalSlice';
+import {
+  clearAdditionalData,
+  getAdditionalInfo,
+  saveAdditionalData,
+} from './additionalSlice';
 import { useEffect } from 'react';
 import formInputs from './additionalInputs';
 
@@ -19,8 +23,7 @@ const AdditionalInfo = () => {
   }, [additionalInfo]);
 
   const onSubmit = (data) => {
-    console.log(data);
-    // dispatch(saveAdditionalData(data));
+    dispatch(saveAdditionalData(data));
   };
 
   return (
@@ -29,7 +32,7 @@ const AdditionalInfo = () => {
         <div className="truck-aggregate">
           <div className="petrol-truck">
             <h5>Petrol - Truck</h5>
-            {formInputs.slice(0, 3).map((input) => (
+            {formInputs.slice(0, 2).map((input) => (
               <div className="input-wrapper" key={input.name}>
                 <input
                   type="text"
@@ -43,7 +46,7 @@ const AdditionalInfo = () => {
           </div>
           <div className="petrol-aggregate">
             <h5>Petrol - Aggregate</h5>
-            {formInputs.slice(3, 6).map((input) => (
+            {formInputs.slice(2, 5).map((input) => (
               <div className="input-wrapper" key={input.name}>
                 <input
                   type="text"
@@ -59,7 +62,7 @@ const AdditionalInfo = () => {
           <div className="trip-details">
             <h5>Trips summary</h5>
             <div className="trip-line">
-              {formInputs.slice(6, 9).map((input) => (
+              {formInputs.slice(5, 8).map((input) => (
                 <div className="input-wrapper" key={input.name}>
                   <input
                     type="text"
@@ -88,7 +91,7 @@ const AdditionalInfo = () => {
         </div>
         <div className="buttons-wrapper">
           <button>submit</button>
-          <button>
+          <button onClick={() => dispatch(clearAdditionalData())}>
             <i className="bx bx-reset"></i>
           </button>
         </div>

@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useGetLastCardsQuery } from '../features/card/cardSlice';
 import { useDispatch } from 'react-redux';
 import { updateCardStatus } from '../features/card/updateCardSlice';
+import { clearAdditionalData } from '../features/additional/additionalSlice';
 
 const CardsMini = () => {
   const { user } = useAuth0();
@@ -18,6 +19,7 @@ const CardsMini = () => {
 
   function storeSelectedCard(cardId) {
     localStorage.setItem('selected_card', Number(cardId));
+    dispatch(clearAdditionalData());
   }
 
   const handleSingleCard = (id, number) => {

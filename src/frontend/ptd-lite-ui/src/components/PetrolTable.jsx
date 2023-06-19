@@ -17,11 +17,13 @@ import { useState } from 'react';
 const PetrolTable = ({ cardId }) => {
   const dispatch = useDispatch();
   const { isLoading, isSuccess, isError } = useGetPetrolByCardIdQuery(cardId);
+  const [deletePetrol] = useDeletePetrolMutation();
+
   const { selectAll: selectAllPetrolFromCard } = getPetrolSelectors(cardId);
   const petrolEntities = useSelector(selectAllPetrolFromCard);
   const fuelFormStatus = useSelector(isFormOpen);
   const component = useSelector(componentName);
-  const [deletePetrol] = useDeletePetrolMutation();
+
   const [interactiveVisible, setInteractiveVisible] = useState(
     new Array(petrolEntities.length).fill(false)
   );
