@@ -111,6 +111,6 @@ public class CardService {
         List<AdBlueResponse> blue = card.getAdBlue().stream()
                 .map(fuelMapper::mapToAdBlueResponse)
                 .toList();
-        return new CardDetailsResponse(card.getNumber() ,trips, fuels, blue);
+        return new CardDetailsResponse(card.getNumber(), trips, fuels, blue);
     }
 }

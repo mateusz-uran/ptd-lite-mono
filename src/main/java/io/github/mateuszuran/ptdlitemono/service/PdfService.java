@@ -11,6 +11,7 @@ import io.github.mateuszuran.ptdlitemono.exception.CsvFileException;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
 import io.github.mateuszuran.ptdlitemono.pdf.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PdfService {
@@ -57,20 +59,20 @@ public class PdfService {
     }
 
     public Counters calculateCounters(CardDetailsResponse response) {
-        var firstCounterFromCard = response.getTrips().stream().mapToInt(TripResponse::getCounterStart).min()
-                .orElseThrow(CardEmptyValuesException::new);
-        var lastCounterFromCard = response.getTrips().stream().mapToInt(TripResponse::getCounterEnd).max()
-                .orElseThrow(CardEmptyValuesException::new);
+        var firstTrip = response.getTrips().stream().mapToInt(TripResponse::getCounterStart).min();
+        var lastTrip = response.getTrips().stream().mapToInt(TripResponse::getCounterEnd).max();
+        var tripsMileage = response.getTrips().stream().mapToInt(TripResponse::getCarMileage).sum();
+        var petrolSum = response.getFuels().stream().mapToInt(FuelResponse::getRefuelingAmount).sum();
 
-        var sumMileage = response.getTrips().stream().mapToInt(TripResponse::getCarMileage).sum();
-
-        var cardRefuelingAmount = response.getFuels().stream().mapToInt(FuelResponse::getRefuelingAmount).sum();
+        //when trips are empty
+        int firstCounter = firstTrip.orElse(0);
+        int lastCounter = lastTrip.orElse(0);
 
         return Counters.builder()
-                .firstCounter(firstCounterFromCard)
-                .lastCounter(lastCounterFromCard)
-                .mileage(sumMileage)
-                .refuelingSum(cardRefuelingAmount)
+                .firstCounter(firstCounter)
+                .lastCounter(lastCounter)
+                .mileage(tripsMileage)
+                .refuelingSum(petrolSum)
                 .build();
     }
 

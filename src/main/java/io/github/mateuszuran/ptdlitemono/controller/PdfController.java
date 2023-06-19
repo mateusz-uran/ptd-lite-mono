@@ -2,7 +2,9 @@ package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import io.github.mateuszuran.ptdlitemono.pdf.PdfSource;
 import io.github.mateuszuran.ptdlitemono.service.PdfService;
+import io.github.mateuszuran.ptdlitemono.service.logic.PdfParser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ import java.io.ByteArrayOutputStream;
 public class PdfController {
     private final PdfService service;
     private final TemplateEngine template;
+    private final PdfParser pdfParser;
 
     @GetMapping("/generate-doc")
     public ResponseEntity<?> generatePdfFromApi(
@@ -34,8 +37,9 @@ public class PdfController {
             HttpServletRequest request,
             HttpServletResponse response
     ) {
-        var pdf = service.retrieveInformation(username, cardId);
-        var webContext = createContext(request, response);
+        PdfSource pdf = service.retrieveInformation(username, cardId);
+
+        WebContext webContext = createContext(request, response);
         webContext.setVariable("pdf", pdf);
 
         String orderHtml = template.process("pdf-front", webContext);
@@ -57,5 +61,19 @@ public class PdfController {
         var application = JakartaServletWebApplication.buildApplication(req.getServletContext());
         var exchange = application.buildExchange(req, res);
         return new WebContext(exchange);
+    }
+
+    @GetMapping("/generate")
+    public ResponseEntity<?> generatePdfFromParser(
+            @RequestParam String username,
+            @RequestParam Long cardId,
+            @RequestParam String page,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        var result = pdfParser.generatePdf(request, response, username, cardId, page);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(result);
     }
 }

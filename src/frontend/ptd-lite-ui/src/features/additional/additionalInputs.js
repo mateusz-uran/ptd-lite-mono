@@ -5,6 +5,12 @@ const formInputs = [
     label: 'Initial state',
   },
   {
+    name: 'fuelPetrolSum',
+    placeholder: 'Petrol',
+    label: 'Petrol',
+    disabled: true,
+  },
+  {
     name: 'fuelEndState',
     placeholder: 'End state',
     label: 'End state',
@@ -15,9 +21,9 @@ const formInputs = [
     label: 'Initial state',
   },
   {
-    name: 'aggregateAmount',
-    placeholder: 'Amount',
-    label: 'Amount',
+    name: 'aggregateAdBlue',
+    placeholder: 'AdBlue',
+    label: 'AdBlue',
   },
   {
     name: 'aggregateEndState',
@@ -25,19 +31,20 @@ const formInputs = [
     label: 'End state',
   },
   {
-    name: 'tripStageKm',
-    placeholder: 'Kilometers',
-    label: 'Kilometers',
+    name: 'tripSum',
+    placeholder: 'Kilometers summary',
+    label: 'Kilometers summary',
+    disabled: true,
   },
   {
-    name: 'avgPetrol',
-    placeholder: 'Avg petrol',
-    label: 'Avg petrol',
+    name: 'avgFuelConsumption',
+    placeholder: 'Avg consumption',
+    label: 'Avg consumption',
   },
   {
-    name: 'totalPetrol',
-    placeholder: 'Total petrol',
-    label: 'Total petrol',
+    name: 'totalFuelConsumption',
+    placeholder: 'Total consumption',
+    label: 'Total consumption',
   },
   {
     name: 'avgSpeed',
@@ -45,14 +52,14 @@ const formInputs = [
     label: 'Avg speed',
   },
   {
-    name: 'idingConsump',
-    placeholder: 'Idling consumption',
-    label: 'Idling consumption',
+    name: 'fuelConsumptionIdle',
+    placeholder: 'Idle consumption',
+    label: 'Idle consumption',
   },
   {
-    name: 'uneconoConcump',
-    placeholder: 'Uneconomic speed',
-    label: 'Uneconomic speed',
+    name: 'fuelConsumptionUneconomical',
+    placeholder: 'Uneconomical consumption',
+    label: 'Uneconomical consumption',
   },
 ];
 
