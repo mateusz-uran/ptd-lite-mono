@@ -14,6 +14,7 @@ const auth0Slice = createSlice({
     },
   },
 });
+export const getAccessToken = (state) => state.auth0.accessToken;
 
 export const { setAuthContext } = auth0Slice.actions;
 

@@ -4,12 +4,11 @@ import TripTable from './TripTable';
 import PetrolTable from './PetrolTable';
 import AdBlueTable from './AdBlueTable';
 import CardForm from '../features/card/CardForm';
-import { useAuth0 } from '@auth0/auth0-react';
 import AdditionalInfo from '../features/additional/AdditionalInfo';
 import { useState } from 'react';
+import GenerateSinglePdf from '../features/pdf/GenerateSinglePdf';
 
 const CardItem = () => {
-  const { user } = useAuth0();
   const { cardNumber } = useParams();
   const selectedCard = localStorage.getItem('selected_card');
 
@@ -29,6 +28,7 @@ const CardItem = () => {
       </header>
       <div className="tables-wrapper">
         <div className="trip">
+          <GenerateSinglePdf cardId={selectedCard} page={'second'} />
           <h5>Trips</h5>
           <TripTable cardId={selectedCard} />
         </div>

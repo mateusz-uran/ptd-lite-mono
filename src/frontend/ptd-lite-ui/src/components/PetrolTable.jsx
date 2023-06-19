@@ -13,6 +13,7 @@ import {
   openFuelForm,
 } from '../features/fuel/fuelFormSlice';
 import { useState } from 'react';
+import GenerateSinglePdf from '../features/pdf/GenerateSinglePdf';
 
 const PetrolTable = ({ cardId }) => {
   const dispatch = useDispatch();
@@ -96,6 +97,7 @@ const PetrolTable = ({ cardId }) => {
 
   return (
     <div style={{ width: '100%' }} className="petrol-table">
+      <GenerateSinglePdf cardId={cardId} page={'first'} />
       <h5>Petrol</h5>
       {fuelFormStatus && component === 'petrol' && (
         <FuelForm inputs={petrolInputs} schema={petrolSchema} cardId={cardId} />
