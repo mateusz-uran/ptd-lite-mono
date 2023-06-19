@@ -3,18 +3,20 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { getAccessToken } from '../auth/auth0Slice';
 import '../../css/misc.css';
+import { getAdditionalInfo } from '../additional/additionalSlice';
 
 const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
-const GenerateSinglePdf = ({ cardId, page }) => {
+const GenerateSinglePdf = ({ cardId, page, fullPage }) => {
   const { user } = useAuth0();
   const accessToken = useSelector(getAccessToken);
+  const additionalInfo = useSelector(getAdditionalInfo);
 
   const generatePDF = async () => {
     const username = user.nickname;
     const url = `${API_URL}/pdf/generate`;
     try {
-      const response = await axios.get(url, {
+      const response = await axios.post(url, additionalInfo, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -39,10 +41,19 @@ const GenerateSinglePdf = ({ cardId, page }) => {
     }
   };
 
+  if (fullPage) {
+    return (
+      <button className="pdf-button" onClick={generatePDF}>
+        <i className="bx bxs-cloud-download icon"></i>
+        <span className="text">Download PDF</span>
+      </button>
+    );
+  }
+
   return (
     <div className="generate-single-pdf">
       <button onClick={generatePDF}>
-        <i class="bx bxs-printer"></i>
+        <i className="bx bxs-printer"></i>
       </button>
     </div>
   );

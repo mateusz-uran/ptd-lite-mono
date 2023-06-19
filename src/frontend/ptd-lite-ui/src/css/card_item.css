@@ -305,6 +305,16 @@
   .success-section
   .tables-wrapper
   .final-content
+  .button-wrapper
+  button:hover {
+  background: var(--toggle-color);
+  cursor: pointer;
+}
+
+.card-item
+  .success-section
+  .tables-wrapper
+  .final-content
   .button-wrapper.visible
   button {
   transform: rotate(180deg);

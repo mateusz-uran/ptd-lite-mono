@@ -2,6 +2,7 @@ package io.github.mateuszuran.ptdlitemono.service.logic;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import io.github.mateuszuran.ptdlitemono.pdf.CardAdditionalInfo;
 import io.github.mateuszuran.ptdlitemono.pdf.PdfSource;
 import io.github.mateuszuran.ptdlitemono.service.PdfService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,8 +28,9 @@ public class PdfParser {
         return new WebContext(exchange);
     }
 
-    private WebContext generateContext(HttpServletRequest request, HttpServletResponse response, String username, Long cardId) {
+    private WebContext generateContext(HttpServletRequest request, HttpServletResponse response, String username, Long cardId, CardAdditionalInfo info) {
         PdfSource pdf = pdfService.retrieveInformation(username, cardId);
+        pdf.setInfo(info);
         WebContext webContext = createContext(request, response);
         webContext.setVariable("pdf", pdf);
         return webContext;
@@ -53,16 +55,18 @@ public class PdfParser {
     }
 
     public String validateTemplate(String template) {
-        if (template.equals("first")) {
-            return "pdf-front";
-        } else if (template.equals("second")) {
-            return "pdf-back";
+        if (template != null) {
+            if (template.equals("first")) {
+                return "pdf-front";
+            } else if (template.equals("second")) {
+                return "pdf-back";
+            }
         }
-        return "pdf";
+        return "pdf-all";
     }
 
-    public byte[] generatePdf(HttpServletRequest request, HttpServletResponse response, String username, Long cardId, String templateName) {
-        var context = generateContext(request, response, username, cardId);
+    public byte[] generatePdf(HttpServletRequest request, HttpServletResponse response, String username, Long cardId, String templateName, CardAdditionalInfo info) {
+        var context = generateContext(request, response, username, cardId, info);
         var templateNameValidated = validateTemplate(templateName);
         var template = processToTemplateEngine(context, templateNameValidated);
         return convertHtmlToPdf(template);

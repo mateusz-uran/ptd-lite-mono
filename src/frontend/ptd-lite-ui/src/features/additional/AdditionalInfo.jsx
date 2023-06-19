@@ -1,11 +1,7 @@
 import { useForm } from 'react-hook-form';
 import '../../css/additional_info.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  clearAdditionalData,
-  getAdditionalInfo,
-  saveAdditionalData,
-} from './additionalSlice';
+import { getAdditionalInfo, saveAdditionalData } from './additionalSlice';
 import { useEffect } from 'react';
 import formInputs from './additionalInputs';
 
@@ -75,7 +71,7 @@ const AdditionalInfo = () => {
               ))}
             </div>
             <div className="trip-line">
-              {formInputs.slice(9).map((input) => (
+              {formInputs.slice(8, 10).map((input) => (
                 <div className="input-wrapper" key={input.name}>
                   <input
                     type="text"
@@ -91,7 +87,7 @@ const AdditionalInfo = () => {
         </div>
         <div className="buttons-wrapper">
           <button>submit</button>
-          <button onClick={() => dispatch(clearAdditionalData())}>
+          <button onClick={() => reset()}>
             <i className="bx bx-reset"></i>
           </button>
         </div>

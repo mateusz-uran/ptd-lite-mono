@@ -21,10 +21,7 @@ const CardItem = () => {
           <h4>Card</h4>
           <CardForm />
         </div>
-        <button className="pdf-button">
-          <i className="bx bxs-cloud-download icon"></i>
-          <span className="text">Download PDF</span>
-        </button>
+        <GenerateSinglePdf cardId={selectedCard} fullPage={true} />
       </header>
       <div className="tables-wrapper">
         <div className="trip">

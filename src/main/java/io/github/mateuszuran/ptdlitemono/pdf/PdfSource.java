@@ -17,4 +17,5 @@ public class PdfSource {
     private List<FuelResponse> cardFuelsList;
     private List<AdBlueResponse> cardAdBlueList;
     private Counters counters;
+    private CardAdditionalInfo info;
 }

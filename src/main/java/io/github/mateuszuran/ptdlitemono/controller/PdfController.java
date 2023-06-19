@@ -2,6 +2,7 @@ package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import io.github.mateuszuran.ptdlitemono.pdf.CardAdditionalInfo;
 import io.github.mateuszuran.ptdlitemono.pdf.PdfSource;
 import io.github.mateuszuran.ptdlitemono.service.PdfService;
 import io.github.mateuszuran.ptdlitemono.service.logic.PdfParser;
@@ -11,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
@@ -63,15 +61,16 @@ public class PdfController {
         return new WebContext(exchange);
     }
 
-    @GetMapping("/generate")
+    @PostMapping("/generate")
     public ResponseEntity<?> generatePdfFromParser(
             @RequestParam String username,
             @RequestParam Long cardId,
-            @RequestParam String page,
+            @RequestParam(required = false) String page,
+            @RequestBody CardAdditionalInfo info,
             HttpServletRequest request,
             HttpServletResponse response
     ) {
-        var result = pdfParser.generatePdf(request, response, username, cardId, page);
+        var result = pdfParser.generatePdf(request, response, username, cardId, page, info);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(result);

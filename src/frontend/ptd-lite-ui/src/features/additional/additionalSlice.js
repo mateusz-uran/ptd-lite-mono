@@ -28,14 +28,8 @@ const additionalInfoSlice = createSlice({
 });
 
 export const getAdditionalInfo = (state) => state.additionalInfo;
-export const getPetrolSum = (state) => state.fuelPetrolSum;
-export const getTripSum = (state) => state.tripSum;
 
-export const {
-  saveAdditionalData,
-  clearAdditionalData,
-  updatePetrolSum,
-  updateTripSum,
-} = additionalInfoSlice.actions;
+export const { saveAdditionalData, clearAdditionalData } =
+  additionalInfoSlice.actions;
 
 export default additionalInfoSlice.reducer;
