@@ -38,26 +38,6 @@ class AdBlueServiceTest {
     }
 
     @Test
-    void givenCardAndBlueId_whenDelete_thenUpdateCard() {
-        //given
-        AdBlue blue = AdBlue.builder()
-                .id(55L)
-                .adBlueDate("1.01")
-                .adBlueLocalization("Warsaw")
-                .adBlueAmount(5)
-                .build();
-        List<AdBlue> blueList = new ArrayList<>();
-        blueList.add(blue);
-        Card card = Card.builder().id(123L).number("ABC").adBlue(blueList).build();
-        when(cardService.checkIfCardExists(123L)).thenReturn(card);
-        //when
-        service.deleteAdBlue(card.getId(), 55L);
-        //then
-        var updatedCard = cardService.checkIfCardExists(card.getId());
-        assertThat(updatedCard.getAdBlue()).isEmpty();
-    }
-
-    @Test
     void givenBlueId_whenDelete_thenDoNothing() {
         //given
         AdBlue blue = AdBlue.builder()

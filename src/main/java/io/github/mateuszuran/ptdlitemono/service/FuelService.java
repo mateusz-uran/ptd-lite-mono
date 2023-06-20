@@ -26,24 +26,6 @@ public class FuelService {
         service.updateCard(card);
     }
 
-    public void delete(Long id) {
-        repository.findById(id)
-                .ifPresent(fuel -> repository.deleteById(fuel.getId()));
-    }
-
-    public void addPetrol(FuelRequest fuelDto, Long id) {
-        var card = service.checkIfCardExists(id);
-        Fuel fuelToSave = Fuel.builder()
-                .refuelingDate(fuelDto.getRefuelingDate())
-                .refuelingLocation(fuelDto.getRefuelingLocation())
-                .vehicleCounter(fuelDto.getVehicleCounter())
-                .refuelingAmount(fuelDto.getRefuelingAmount())
-                .paymentMethod(fuelDto.getPaymentMethod())
-                .build();
-        card.addFuel(fuelToSave);
-        repository.save(fuelToSave);
-    }
-
     public void deleteFuel(Long fuelId) {
         var fuelToDelete = repository.findById(fuelId).orElseThrow(PetrolEmptyException::new);
         repository.delete(fuelToDelete);

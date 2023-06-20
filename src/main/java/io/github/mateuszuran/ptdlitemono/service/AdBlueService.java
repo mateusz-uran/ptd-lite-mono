@@ -18,12 +18,6 @@ public class AdBlueService {
     private final AdBlueRepository repository;
     private final FuelMapper fuelMapper;
 
-    public void deleteAdBlue(Long cardId, Long blueId) {
-        var card = service.checkIfCardExists(cardId);
-        card.getAdBlue().removeIf(blue -> blueId.equals(blue.getId()));
-        service.updateCard(card);
-    }
-
     public void addNewAdBlue(AdBlueRequest request, Long cardId) {
         var card = service.checkIfCardExists(cardId);
         AdBlue adblue = AdBlue.builder()

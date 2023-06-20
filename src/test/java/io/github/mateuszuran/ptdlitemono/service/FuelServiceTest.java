@@ -55,17 +55,6 @@ class FuelServiceTest {
     }
 
     @Test
-    void givenFuelId_whenDelete_thenDoNothing() {
-        //given
-        Fuel fuel = Fuel.builder().refuelingAmount(300).build();
-        when(repository.findById(anyLong())).thenReturn(Optional.of(fuel));
-        //when
-        service.delete(anyLong());
-        //then
-        verify(repository, times(1)).deleteById(fuel.getId());
-    }
-
-    @Test
     void givenFuelId_whenNotFound_thenThrowException() {
         //given
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
