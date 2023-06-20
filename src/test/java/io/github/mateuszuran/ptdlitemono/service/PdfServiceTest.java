@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -22,11 +23,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @ExtendWith(MockitoExtension.class)
 class PdfServiceTest {
     private PdfService service;
+    @Mock
+    private CardService cardService;
 
     @BeforeEach
     void setUp() {
         String testFilePath = getClass().getResource("/test.csv").getPath();
-        service = new PdfService();
+        service = new PdfService(cardService);
         service.setCsvLink("file:" + testFilePath);
     }
 
