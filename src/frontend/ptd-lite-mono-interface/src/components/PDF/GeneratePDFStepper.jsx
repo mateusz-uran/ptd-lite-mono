@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import usePdfService from '../../api/PdfService/PdfServiceHook';
-import PrintIcon from '@mui/icons-material/Print';
 
 function GeneratePDFStepper({
   user,
@@ -116,7 +115,7 @@ function GeneratePDFStepper({
       >
         {t('pdf.genratePdfButton')}
       </Button>
-      <div className={`py-2 ${visible ? 'hidden' : undefined}`}>
+      <div className={`py-2 ${!visible ? 'hidden' : undefined}`}>
         <form onSubmit={formik.handleSubmit} className="text-center">
           <div className="flex">
             <div className="flex flex-col w-1/3">
@@ -192,7 +191,7 @@ function GeneratePDFStepper({
               disabled={!formik.isValid || !formik.dirty}
               sx={{ marginRight: 1, fontWeight: 'bold' }}
             >
-              {t('addFuel.submit')}
+              {t('additional.printButton')}
             </Button>
           </div>
         </form>

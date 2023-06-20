@@ -82,6 +82,7 @@
     "fuelConsumptionUneconomical": "Uneconomical fuel consumption",
     "petrolHeader": "Petrol - truck",
     "aggregateHeader": "Petrol - aggregate",
-    "tripHeader": "Trips additional information"
+    "tripHeader": "Trips additional information",
+    "printButton": "Download"
   }
 }

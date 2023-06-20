@@ -82,6 +82,7 @@
     "fuelConsumptionUneconomical": "Zużycie na nieekonomicznych obrotach",
     "petrolHeader": "Paliwo - pojazd",
     "aggregateHeader": "Paliwo - agregat",
-    "tripHeader": "Informacje końcowe"
+    "tripHeader": "Informacje końcowe",
+    "printButton": "Pobierz"
   }
 }
