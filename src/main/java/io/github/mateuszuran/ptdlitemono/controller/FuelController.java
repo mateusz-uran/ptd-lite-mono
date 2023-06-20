@@ -24,7 +24,7 @@ public class FuelController {
 
     @PostMapping("/adblue")
     public ResponseEntity<?> addAdBlue(@RequestBody AdBlueRequest request, @RequestParam Long cardId) {
-        adBlueService.addAdBlue(request, cardId);
+        adBlueService.addNewAdBlue(request, cardId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

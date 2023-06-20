@@ -46,8 +46,18 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return createErrorResponse(exception, HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler({GroupNotFoundException.class})
-    public ResponseEntity<ErrorMessage> handleGroupNotFound(GroupNotFoundException exception) {
+    @ExceptionHandler({TripsEmptyException.class})
+    public ResponseEntity<ErrorMessage> handleTripEmpty(TripsEmptyException exception) {
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({PetrolEmptyException.class})
+    public ResponseEntity<ErrorMessage> handlePetrolEmpty(PetrolEmptyException exception) {
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({AdBlueEmptyException.class})
+    public ResponseEntity<ErrorMessage> handleBlueEmpty(AdBlueEmptyException exception) {
         return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
