@@ -145,7 +145,9 @@ class PdfServiceTest {
                 "lop321",
                 "100",
                 "link",
-                "test1/test2");
+                "test1/test2",
+                "ceoLink1",
+                "doe");
         PdfCsvReader pdfCsvReader2 = new PdfCsvReader(
                 "will",
                 "test2",
@@ -159,7 +161,9 @@ class PdfServiceTest {
                 "lop789",
                 "200",
                 "link2",
-                "test3/test4");
+                "test3/test4",
+                "ceoLink2",
+                "smith");
         return List.of(pdfCsvReader1, pdfCsvReader2);
     }
 }

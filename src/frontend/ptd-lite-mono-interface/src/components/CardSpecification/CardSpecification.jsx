@@ -89,23 +89,6 @@ function CardSpecification(props) {
               </Button>
             </Link>
           </div>
-
-          <div className="py-1">
-            {cardTrips &&
-              cardTrips.length > 1 &&
-              cardFuels &&
-              cardFuels.length > 0 && (
-                <GeneratePDF
-                  user={user}
-                  cardNumber={cardNumber}
-                  cardTrips={cardTrips}
-                  cardFuels={cardFuels}
-                  cardAdBlue={cardAdBlue}
-                  setProgress={setProgress}
-                  setSnackbarInformation={setSnackbarInformation}
-                />
-              )}
-          </div>
         </div>
         <div>
           <LinearProgressWithLabel value={progress} />
