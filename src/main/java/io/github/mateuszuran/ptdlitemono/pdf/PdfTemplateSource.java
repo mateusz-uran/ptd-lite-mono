@@ -15,4 +15,5 @@ public class PdfTemplateSource {
     private List<CardFuels> cardFuelsList;
     private List<CardAdBlue> cardAdBlueList;
     private Counters counters;
+    private CardAdditionalInfo info;
 }

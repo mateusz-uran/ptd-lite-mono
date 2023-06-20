@@ -2,6 +2,7 @@ package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import io.github.mateuszuran.ptdlitemono.pdf.CardAdditionalInfo;
 import io.github.mateuszuran.ptdlitemono.pdf.PdfRequest;
 import io.github.mateuszuran.ptdlitemono.service.PdfService;
 import jakarta.servlet.http.HttpServletRequest;
