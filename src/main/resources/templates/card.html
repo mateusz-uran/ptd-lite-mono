@@ -304,6 +304,7 @@
           border-bottom: 1px solid rgba(0,0,0,0.25);
           border-top: 1px solid rgba(0, 0, 0, 0.25);
           page-break-before: auto;
+          page-break-inside: avoid;
       }
 
     #end_table p {
@@ -319,6 +320,7 @@
     #fuel_final_table tr:last-child {
         display: visible;
     }
+
 
     </style>
 </head>
@@ -385,7 +387,8 @@
                 <tr>
                     <td>Samochód</td>
                     <td>
-                        <p style="text-transform: uppercase; font-weight: 600;" class="car_info registration" th:text="${pdf.pdfCsvReader.truckLicencePlate}">LLL 111</p>
+                        <p style="text-transform: uppercase; font-weight: 600;" class="car_info registration"
+                           th:text="${pdf.pdfCsvReader.truckLicencePlate}">LLL 111</p>
                         <p class="car_info" style="font-size: 10px;">Nr rejestracyjny</p>
                     </td>
                     <td>
@@ -400,7 +403,8 @@
                 <tr>
                     <td>Naczepa</td>
                     <td>
-                        <p style="text-transform: uppercase; font-weight: 600;" class="car_info registration" th:text="${pdf.pdfCsvReader.trailerLicensePlate}">LLL 111</p>
+                        <p style="text-transform: uppercase; font-weight: 600;" class="car_info registration"
+                           th:text="${pdf.pdfCsvReader.trailerLicensePlate}">LLL 111</p>
                         <p class="car_info" style="font-size: 10px;">Nr rejestracyjny</p>
                     </td>
                     <td>
@@ -414,7 +418,9 @@
                 </tr>
                 <tr>
                     <td>Kierowca</td>
-                    <td style="text-transform: uppercase;" th:text="${pdf.pdfCsvReader.driverSurname}">......................</td>
+                    <td style="text-transform: uppercase;" th:text="${pdf.pdfCsvReader.driverSurname}">
+                        ......................
+                    </td>
                     <td style="text-align: right;">Zmiennik</td>
                     <td>...................</td>
                 </tr>
@@ -577,12 +583,16 @@
                 <tr>
                     <td class="hide_border">Tankow.</td>
                     <td th:text="${pdf.counters.refuelingSum}">....................</td>
-                    <td style="text-align: center;"  colspan="2" th:text="${pdf.info.aggregateAdBlue}">.......................................</td>
+                    <td style="text-align: center;" colspan="2" th:text="${pdf.info.aggregateAdBlue}">
+                        .......................................
+                    </td>
                 </tr>
                 <tr>
                     <td class="hide_border">Stan konc.</td>
                     <td th:text="${pdf.info.fuelEndState}">....................</td>
-                    <td style="text-align: center;"  colspan="2" th:text="${pdf.info.aggregateEndState}">.......................................</td>
+                    <td style="text-align: center;" colspan="2" th:text="${pdf.info.aggregateEndState}">
+                        .......................................
+                    </td>
                 </tr>
                 <tr>
                     <td class="hide_border">Zuzycie.</td>
@@ -600,8 +610,9 @@
                     <td>Ilosc / litry</td>
                 </tr>
                 <tr th:each="blue,iterator : ${pdf.cardAdBlueList}">
-                    <td colspan="3" th:text="${iterator.index+1 + '. ' + blue.localization + ' ' + blue.date}"></td>
-                    <td th:text="${blue.amount}">&nbsp;</td>
+                    <td colspan="3"
+                        th:text="${iterator.index+1 + '. ' + blue.adBlueLocalization + ' ' + blue.adBlueDate}"></td>
+                    <td th:text="${blue.adBlueAmount}">&nbsp;</td>
                 </tr>
                 <tr>
                     <td colspan="3">&nbsp;</td>
@@ -720,7 +731,7 @@
     <tr>
         <td>
           <span>
-            <p>Srendia predkosc na etapie:</p>
+            <p>Srednie predkosc na etapie:</p>
             <p style="text-decoration: underline;" th:text="${pdf.info.avgSpeed}">..........................</p>
             <p>Zuzycie paliwa na biegu jalowym na etapie:</p>
             <p style="text-decoration: underline;"

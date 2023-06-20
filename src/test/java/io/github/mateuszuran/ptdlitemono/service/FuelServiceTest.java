@@ -20,6 +20,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -46,12 +47,14 @@ class FuelServiceTest {
         when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
         FuelRequest request = FuelRequest.builder().refuelingAmount(300).build();
         Fuel fuel = Fuel.builder().refuelingAmount(300).build();
-        when(mapper.mapToFuelRequest(request)).thenReturn(fuel);
         //when
         service.addRefuelling(request, anyLong());
         //then
         var updatedCard = cardService.checkIfCardExists(card.getId());
-        assertThat(updatedCard.getFuels()).isEqualTo(List.of(fuel));
+        assertThat(updatedCard.getFuels())
+                .hasSize(1)
+                .extracting(Fuel::getRefuelingAmount)
+                .contains(fuel.getRefuelingAmount());
     }
 
     @Test

@@ -21,9 +21,15 @@ public class FuelService {
 
     public void addRefuelling(FuelRequest fuelDto, Long id) {
         var card = service.checkIfCardExists(id);
-        var fuel = fuelMapper.mapToFuelRequest(fuelDto);
-        card.getFuels().add(fuel);
-        service.updateCard(card);
+        Fuel fuelToSave = Fuel.builder()
+                .refuelingDate(fuelDto.getRefuelingDate())
+                .refuelingLocation(fuelDto.getRefuelingLocation())
+                .vehicleCounter(fuelDto.getVehicleCounter())
+                .refuelingAmount(fuelDto.getRefuelingAmount())
+                .paymentMethod(fuelDto.getPaymentMethod())
+                .build();
+        card.addFuel(fuelToSave);
+        repository.save(fuelToSave);
     }
 
     public void deleteFuel(Long fuelId) {
