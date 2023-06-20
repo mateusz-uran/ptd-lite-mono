@@ -13,9 +13,9 @@ public class AdBlueService {
     public void addAdBlue(AdBlueRequest request, Long cardId) {
         var card = service.checkIfCardExists(cardId);
         AdBlue adblue = AdBlue.builder()
-                .date(request.getDate())
-                .localization(request.getLocalization())
-                .amount(request.getAmount())
+                .adBlueDate(request.getDate())
+                .adBlueLocalization(request.getLocalization())
+                .adBlueAmount(request.getAmount())
                 .build();
         card.getAdBlue().add(adblue);
         service.updateCard(card);

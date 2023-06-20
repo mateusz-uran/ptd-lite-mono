@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,9 +37,9 @@ class AdBlueServiceTest {
                 .amount(5)
                 .build();
         AdBlue blue = AdBlue.builder()
-                .date("1.01")
-                .localization("Warsaw")
-                .amount(5)
+                .adBlueDate("1.01")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(5)
                 .build();
         when(cardService.checkIfCardExists(123L)).thenReturn(card);
         //when
@@ -55,9 +54,9 @@ class AdBlueServiceTest {
         //given
         AdBlue blue = AdBlue.builder()
                 .id(55L)
-                .date("1.01")
-                .localization("Warsaw")
-                .amount(5)
+                .adBlueDate("1.01")
+                .adBlueLocalization("Warsaw")
+                .adBlueAmount(5)
                 .build();
         List<AdBlue> blueList = new ArrayList<>();
         blueList.add(blue);
