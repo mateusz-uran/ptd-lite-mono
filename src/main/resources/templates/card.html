@@ -385,7 +385,7 @@
                 <tr>
                     <td>Samochód</td>
                     <td>
-                        <p class="car_info registration" th:text="${pdf.pdfCsvReader.truckLicencePlate}">LLL 111</p>
+                        <p style="text-transform: uppercase; font-weight: 600;" class="car_info registration" th:text="${pdf.pdfCsvReader.truckLicencePlate}">LLL 111</p>
                         <p class="car_info" style="font-size: 10px;">Nr rejestracyjny</p>
                     </td>
                     <td>
@@ -400,7 +400,7 @@
                 <tr>
                     <td>Naczepa</td>
                     <td>
-                        <p class="car_info registration" th:text="${pdf.pdfCsvReader.trailerLicensePlate}">LLL 111</p>
+                        <p style="text-transform: uppercase; font-weight: 600;" class="car_info registration" th:text="${pdf.pdfCsvReader.trailerLicensePlate}">LLL 111</p>
                         <p class="car_info" style="font-size: 10px;">Nr rejestracyjny</p>
                     </td>
                     <td>
@@ -414,7 +414,7 @@
                 </tr>
                 <tr>
                     <td>Kierowca</td>
-                    <td>......................</td>
+                    <td style="text-transform: uppercase;" th:text="${pdf.pdfCsvReader.driverSurname}">......................</td>
                     <td style="text-align: right;">Zmiennik</td>
                     <td>...................</td>
                 </tr>
@@ -570,19 +570,19 @@
                 <tr>
                     <td class="hide_border">Stan pocz.</td>
                     <td th:text="${pdf.info.fuelInitialState}">....................</td>
-                    <td colspan="2" th:text="${pdf.info.aggregateInitialState}">
+                    <td style="text-align: center;" colspan="2" th:text="${pdf.info.aggregateInitialState}">
                         .......................................
                     </td>
                 </tr>
                 <tr>
                     <td class="hide_border">Tankow.</td>
                     <td th:text="${pdf.counters.refuelingSum}">....................</td>
-                    <td colspan="2" th:text="${pdf.info.aggregateAdBlue}">.......................................</td>
+                    <td style="text-align: center;"  colspan="2" th:text="${pdf.info.aggregateAdBlue}">.......................................</td>
                 </tr>
                 <tr>
                     <td class="hide_border">Stan konc.</td>
                     <td th:text="${pdf.info.fuelEndState}">....................</td>
-                    <td colspan="2" th:text="${pdf.info.aggregateEndState}">.......................................</td>
+                    <td style="text-align: center;"  colspan="2" th:text="${pdf.info.aggregateEndState}">.......................................</td>
                 </tr>
                 <tr>
                     <td class="hide_border">Zuzycie.</td>
