@@ -296,14 +296,20 @@
     }
 
     #end_table {
-        width: 100%;
-        border-collapse: collapse;
-        border-style: hidden;
-        border-left: 1px solid rgba(0,0,0,0.25);
-        border-right: 1px solid rgba(0,0,0,0.25);
-        border-bottom: 1px solid rgba(0,0,0,0.25);
-        page-break-before: auto;
-        break-before: auto;
+          width: 100%;
+          border-collapse: collapse;
+          border-style: hidden;
+          border-left: 1px solid rgba(0,0,0,0.25);
+          border-right: 1px solid rgba(0,0,0,0.25);
+          border-bottom: 1px solid rgba(0,0,0,0.25);
+          border-top: 1px solid rgba(0, 0, 0, 0.25);
+          page-break-before: auto;
+      }
+
+    #end_table p {
+      display: inline-block;
+      margin: 0 auto;
+      padding: 8px 5px;
     }
 
     #fuel_final_table tr:nth-child(+n+11) {
@@ -313,6 +319,7 @@
     #fuel_final_table tr:last-child {
         display: visible;
     }
+
     </style>
 </head>
 
@@ -325,7 +332,7 @@
                 <tr>
                     <td>
                         <img th:src="@{${pdf.pdfCsvReader.truckImageLink}}" alt="volvo"
-                             style="width: 226px;height: 115px;"/>
+                             style="height: 120px;"/>
                     </td>
                 </tr>
                 <tr>
@@ -346,7 +353,8 @@
                 <tr th:if="${not #lists.isEmpty(pdf.cardTripsList)}">
                     <td class="card_info"
                         th:text="'Data od: ' + ${pdf.cardTripsList[0].dayStart} + '&nbsp;&nbsp; godz. ' + ${pdf.cardTripsList[0].hourStart} +
-                        '&nbsp;&nbsp; do ' + ${pdf.cardTripsList[pdf.cardTripsList.size() - 1].dayEnd} + '&nbsp;&nbsp; godz ' + ${pdf.cardTripsList[pdf.cardTripsList.size() - 1].hourEnd}">Data od....................godz............
+                        '&nbsp;&nbsp; do ' + ${pdf.cardTripsList[pdf.cardTripsList.size() - 1].dayEnd} + '&nbsp;&nbsp; godz ' + ${pdf.cardTripsList[pdf.cardTripsList.size() - 1].hourEnd}">
+                        Data od....................godz............
                         do..................godz................
                     </td>
                 </tr>
@@ -361,25 +369,10 @@
         <td>
             <table id="address_table">
                 <tr>
-                    <td class="address">Transport Ciezarowy i Handel</td>
-                </tr>
-                <tr>
-                    <td class="address">John Snow</td>
-                </tr>
-                <tr>
-                    <td class="address">13-200 New York, st. Walker 16</td>
-                </tr>
-                <tr>
-                    <td class="address">NIP EN257-174-17-33. Regon 452039739</td>
-                </tr>
-                <tr>
-                    <td class="address">email.: <span style="color: #dc2300">jsnow@op.pl</span></td>
-                </tr>
-                <tr>
-                    <td class="address">0048-31-523-12-72</td>
-                </tr>
-                <tr>
-                    <td class="address">tel.532-632-2123, 606-663-182</td>
+                    <td>
+                        <img th:src="@{${pdf.pdfCsvReader.ceoDetailsLink}}" alt="volvo"
+                             style="height: 150px;"/>
+                    </td>
                 </tr>
             </table>
         </td>
@@ -576,18 +569,20 @@
                 </tr>
                 <tr>
                     <td class="hide_border">Stan pocz.</td>
-                    <td>....................</td>
-                    <td colspan="2">.......................................</td>
+                    <td th:text="${pdf.info.fuelInitialState}">....................</td>
+                    <td colspan="2" th:text="${pdf.info.aggregateInitialState}">
+                        .......................................
+                    </td>
                 </tr>
                 <tr>
                     <td class="hide_border">Tankow.</td>
-                    <td>....................</td>
-                    <td colspan="2">.......................................</td>
+                    <td th:text="${pdf.counters.refuelingSum}">....................</td>
+                    <td colspan="2" th:text="${pdf.info.aggregateAdBlue}">.......................................</td>
                 </tr>
                 <tr>
                     <td class="hide_border">Stan konc.</td>
-                    <td>....................</td>
-                    <td colspan="2">.......................................</td>
+                    <td th:text="${pdf.info.fuelEndState}">....................</td>
+                    <td colspan="2" th:text="${pdf.info.aggregateEndState}">.......................................</td>
                 </tr>
                 <tr>
                     <td class="hide_border">Zuzycie.</td>
@@ -696,30 +691,63 @@
     </tr>
     </tfoot>
 </table>
-<table id="end_table" style="font-size: 14px; page-break-before: auto; break-before: auto; page-break-inside: avoid;">
-    <tr>
-        <td>Dane etapowe z przejazdu z wg. wskazan komputera:</td>
-    </tr>
+<table id="end_table">
     <tr>
         <td>
-            Km przejechane na etapie: ..........................
-            Srednie zużycie paliwa na etapie: ..........................
-            Calkowite zuzycie paliwa na etapie: ..........................
+          <span>
+            <p>Dane etapowe z przejazdu z wg. wskazan komputera:</p>
+          </span>
         </td>
     </tr>
     <tr>
         <td>
-            Srendia predkosc na etapie: ..........................
-            Zużycie paliwa na biegu jalowym na etapie: ..........................
+          <span>
+            <p>
+              Km przejechane na etapie:
+            </p>
+            <p style="text-decoration: underline;" th:text="${pdf.counters.mileage}">................</p>
+            <p>
+              Srednie zuzycie paliwa na etapie:
+            </p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.avgFuelConsumption}">...............</p>
+            <p>
+              Calkowite zuzycie paliwa na etapie:
+            </p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.totalFuelConsumption}">................</p>
+          </span>
         </td>
     </tr>
     <tr>
-        <td>Zuzycie paliwa na nieekonomicznych obrotach: ..........................</td>
-        <td>....................................................</td>
+        <td>
+          <span>
+            <p>Srendia predkosc na etapie:</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.avgSpeed}">..........................</p>
+            <p>Zuzycie paliwa na biegu jalowym na etapie:</p>
+            <p style="text-decoration: underline;"
+               th:text="${pdf.info.fuelConsumptionIdle}">..........................</p>
+          </span>
+        </td>
     </tr>
-    <tr style="text-align: center;">
-        <td>&nbsp;</td>
-        <td>podpis kierowcy</td>
+    <tr>
+        <td>
+          <span>
+            <p>Zuzycie paliwa na nieekonomicznych obrotach:</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.fuelConsumptionUneconomical}">..........................</p>
+          </span>
+        </td>
+        <td>
+          <span>
+            <p>............................................</p>
+          </span>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="text-align: center">
+          <span>
+            <p style="padding: 0">podpis kierowcy</p>
+          </span>
+        </td>
     </tr>
 </table>
 </body>

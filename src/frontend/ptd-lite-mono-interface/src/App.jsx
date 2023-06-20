@@ -6,12 +6,12 @@ import Navbar from './components/Navbar/Navbar';
 import CardSpecification from './components/CardSpecification/CardSpecification';
 import ErrorPage from './components/misc/ErrorPage';
 import AddTrip from './components/Trip/AddTrip';
-import AddFuel from './components/Fuel/AddFuel';
 import { createTheme, Switch, ThemeProvider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import AddAdBlue from './components/Fuel/AddAdBlue';
+import AddFuel from './components/Fuel/forms/AddFuel';
+import AddAdBlue from './components/Fuel/forms/AddAdBlue';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);

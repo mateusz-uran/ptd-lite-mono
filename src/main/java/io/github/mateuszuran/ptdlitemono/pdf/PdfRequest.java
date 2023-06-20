@@ -16,4 +16,5 @@ public class PdfRequest {
     private List<CardTrips> cardTripsList;
     private List<CardFuels> cardFuelsList;
     private List<CardAdBlue> cardAdBlueList;
+    private CardAdditionalInfo info;
 }

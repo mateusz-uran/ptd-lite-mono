@@ -23,7 +23,8 @@
     "tableCellDate": "Data",
     "tableCellLocation": "Lokalizacja",
     "tableCellCounter": "Licznik",
-    "tableCellAmount": "Ilość"
+    "tableCellAmount": "Ilość",
+    "tableCellPayment": "Płatność"
   },
   "addFuel": {
     "goBackButton": "Wróć",
@@ -67,5 +68,21 @@
     "end": "PRZYJAZD",
     "alertDialogButtonYes": "Tak",
     "alertDialogButtonNo": "Nie"
+  },
+  "additional": {
+    "fuelInitialState": "Stan początkowy",
+    "fuelEndState": "Stan końcowy",
+    "aggregateInitialState": "Stan początkowy",
+    "aggregateAdBlue": "Tankowania",
+    "aggregateEndState": "Stan końcowy",
+    "avgFuelConsumption": "Średnie zużycie paliwa",
+    "totalFuelConsumption": "Całkowite zużycie paliwa",
+    "avgSpeed": "Średnia prędkość",
+    "fuelConsumptionIdle": "Zużycie na biegu jałowym",
+    "fuelConsumptionUneconomical": "Zużycie na nieekonomicznych obrotach",
+    "petrolHeader": "Paliwo - pojazd",
+    "aggregateHeader": "Paliwo - agregat",
+    "tripHeader": "Informacje końcowe",
+    "printButton": "Pobierz"
   }
 }
