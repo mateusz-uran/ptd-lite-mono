@@ -22,7 +22,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar-wrapper">
-      <nav className={`sidebar ${showSidebar ? 'close' : ''}`}>
+      <nav className={`sidebar ${showSidebar ? '' : 'close'}`}>
         <header>
           <div className="logo">
             <span className="image">

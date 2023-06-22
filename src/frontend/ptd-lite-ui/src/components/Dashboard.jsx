@@ -1,4 +1,17 @@
+import Header from './Header';
+
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <Header
+        compArray={[
+          {
+            compName: 'Dashboard',
+          },
+        ]}
+      />
+      <section>dashboard</section>
+    </div>
+  );
 };
 export default Dashboard;

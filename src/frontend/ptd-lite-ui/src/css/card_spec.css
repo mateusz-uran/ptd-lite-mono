@@ -1,0 +1,70 @@
+.card-spec-section .card-manage {
+  background: #fff;
+  padding: 0.5em 0.2em;
+  border-radius: 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.card-spec-section .card-manage h5 {
+  margin-bottom: 10px;
+  color: var(--text-color);
+  padding: 0 0.4em;
+}
+
+.card-spec-section .card-manage .buttons-wrapper {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button {
+  box-shadow: var(--big-btn-shadow);
+  margin-bottom: 15px;
+  margin-right: 5px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 0.4em;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: var(--tran-03);
+  cursor: pointer;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button.pdf-button {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button.pdf-button:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+    rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+    rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button:last-child {
+  margin-left: auto;
+  background: red;
+  color: #fff;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button:hover:not(.pdf-button) {
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+    rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
+    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button.edit-button:active {
+  background: #f2f2f2;
+  transform: scale(0.95);
+}
+
+.card-spec-section .card-manage .buttons-wrapper button:active {
+  transform: scale(0.95);
+}
+
+@media only screen and (max-width: 384px) {
+  .card-spec-section .card-manage {
+    overflow-x: scroll;
+  }
+}

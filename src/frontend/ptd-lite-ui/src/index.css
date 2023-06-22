@@ -18,6 +18,13 @@
   --tran-03: all 0.2s ease;
   --tran-04: all 0.4s ease;
   --tran-05: all 0.5s ease;
+
+  /* ====== Box shadows ====== */
+  --big-btn-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  --small-btn-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+  margin-right: 5px;
 }
 
 body {
@@ -53,4 +60,31 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.comp-header {
+  padding: 10px 0;
+  font-size: 14px;
+  display: flex;
+  opacity: 0.8;
+  color: var(--text-color);
+  font-weight: 600;
+  align-items: center;
+}
+
+.comp-header .icon {
+  margin-right: 5px;
+}
+
+.comp-header .arr-wrapper {
+  display: flex;
+}
+
+.comp-header .arr-wrapper .icon-right {
+  font-size: 16px;
+  opacity: 0.5;
+}
+
+.comp-header span {
+  padding: 0 10px;
 }

@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Cards from './components/Cards';
 import Statistics from './components/Statistics';
 import Archives from './components/Archives';
+import CardSpecification from './features/cards/CardSpecification';
 
 function App() {
   const router = createBrowserRouter([
@@ -19,6 +20,7 @@ function App() {
         { path: '/home/cards', element: <Cards /> },
         { path: '/home/stats', element: <Statistics /> },
         { path: '/home/archive', element: <Archives /> },
+        { path: '/home/cards/:cardNumber', element: <CardSpecification /> },
       ],
     },
   ]);
