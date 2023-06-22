@@ -1,16 +1,8 @@
 import { Link, useOutlet } from 'react-router-dom';
 import logo from '../assets/logo-bg.png';
-import { IoMdArrowDropleftCircle } from 'react-icons/io';
-import {
-  MdLogout,
-  MdDashboard,
-  MdOutlineQueryStats,
-  MdOutlineKeyboardDoubleArrowUp,
-  MdOutlineKeyboardArrowDown,
-} from 'react-icons/md';
+import { MdLogout, MdDashboard, MdOutlineQueryStats } from 'react-icons/md';
 import { BsBook, BsArchiveFill } from 'react-icons/bs';
 import { RiArrowDropLeftLine, RiArrowDropDownLine } from 'react-icons/ri';
-import { RxDoubleArrowUp } from 'react-icons/rx';
 import '../css/sidebar.css';
 import { useState } from 'react';
 import CardsMini from '../features/cards/CardsMini';

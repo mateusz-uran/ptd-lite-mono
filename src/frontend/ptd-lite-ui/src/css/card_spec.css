@@ -8,7 +8,6 @@
 .card-spec-section .card-manage h5 {
   margin-bottom: 10px;
   color: var(--text-color);
-  padding: 0 0.4em;
 }
 
 .card-spec-section .card-manage .buttons-wrapper {
@@ -19,7 +18,7 @@
 
 .card-spec-section .card-manage .buttons-wrapper button {
   box-shadow: var(--big-btn-shadow);
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   margin-right: 5px;
   border: 0;
   outline: 0;

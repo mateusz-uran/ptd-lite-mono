@@ -16,7 +16,7 @@ export const cardApiSlice = apiSlice.injectEndpoints({
     }),
     addNewCard: builder.mutation({
       query: (card) => ({
-        url: `/card/add`,
+        url: `/card/addcard`,
         method: 'POST',
         body: card,
       }),
@@ -30,6 +30,13 @@ export const cardApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['miniList'],
     }),
+    deletecard: builder.mutation({
+      query: (cardId) => ({
+        url: `/card/delete?cardId=${cardId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['miniList'],
+    }),
   }),
 });
 
@@ -38,4 +45,5 @@ export const {
   useGetCardsDetailsQuery,
   useAddNewCardMutation,
   useUpdateCardMutation,
+  useDeletecardMutation,
 } = cardApiSlice;

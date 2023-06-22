@@ -1,19 +1,19 @@
 import '../../css/card_spec.css';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
-import CardForm from './CardForm';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { isCardEditing, updateCardStatus } from './updateCardSlice';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../modal/modalSlice';
 
 const CardSpecification = () => {
   const dispatch = useDispatch();
   const { cardNumber } = useParams();
-  const selectedCard = localStorage.getItem('selected_card');
 
-  const handleSingleCard = () => {
-    var result = { selectedCard, cardNumber };
-    dispatch(updateCardStatus(result));
+  const handleDeleteCard = () => {
+    let cardDeletePayload = {
+      cardId: cardNumber,
+      message: 'Are you sure? All data will be erased.',
+    };
+    dispatch(openModal(cardDeletePayload));
   };
 
   return (
@@ -32,14 +32,8 @@ const CardSpecification = () => {
         <div className="card-manage">
           <h5>Manage</h5>
           <div className="buttons-wrapper">
-            <button className="edit-button" onClick={handleSingleCard}>
-              Edit number
-            </button>
             <button className="pdf-button">Download pdf</button>
-            <button>Delete</button>
-          </div>
-          <div className="form-wrapper">
-            <CardForm />
+            <button onClick={handleDeleteCard}>Delete</button>
           </div>
         </div>
         <div>trip table</div>

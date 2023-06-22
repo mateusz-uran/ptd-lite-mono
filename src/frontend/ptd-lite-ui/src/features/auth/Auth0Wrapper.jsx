@@ -8,13 +8,11 @@ const Auth0Wrapper = ({ children }) => {
   const auth0 = useAuth0();
 
   useEffect(() => {
-    if (auth0.isAuthenticated) {
-      const fetchAccessToken = async () => {
-        const token = await auth0.getAccessTokenSilently();
-        dispatch(setAuthContext(token));
-      };
-      fetchAccessToken();
-    }
+    const fetchAccessToken = async () => {
+      const token = await auth0.getAccessTokenSilently();
+      dispatch(setAuthContext(token));
+    };
+    fetchAccessToken();
   }, [auth0]);
 
   return children;

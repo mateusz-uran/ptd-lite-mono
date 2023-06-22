@@ -53,10 +53,4 @@ public class CardController {
     public ResponseEntity<?> editCardNumber(@RequestParam Long cardId, @RequestBody String number) {
         return ResponseEntity.ok().body(service.editCard(cardId, number));
     }
-
-    @DeleteMapping("/deletecard")
-    public ResponseEntity<?> deleteCard(@RequestParam Long cardId) {
-        service.deleteCard(cardId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }

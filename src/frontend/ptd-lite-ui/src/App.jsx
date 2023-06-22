@@ -8,8 +8,12 @@ import Cards from './components/Cards';
 import Statistics from './components/Statistics';
 import Archives from './components/Archives';
 import CardSpecification from './features/cards/CardSpecification';
+import { useSelector } from 'react-redux';
+import { isModalOpen } from './features/modal/modalSlice';
+import Modal from './features/modal/Modal';
 
 function App() {
+  const isOpen = useSelector(isModalOpen);
   const router = createBrowserRouter([
     { path: '/', element: <WelcomePage /> },
     {
@@ -27,6 +31,7 @@ function App() {
 
   return (
     <>
+      {isOpen && <Modal />}
       <RouterProvider router={router} />
     </>
   );

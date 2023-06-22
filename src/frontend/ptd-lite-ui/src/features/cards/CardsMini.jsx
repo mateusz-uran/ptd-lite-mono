@@ -6,25 +6,17 @@ import { useGetLastCardsQuery } from '../../api/card/cardApiSlice';
 
 const CardsMini = () => {
   const { user } = useAuth0();
-  const dispatch = useDispatch();
 
   const {
     data: lastCards,
     isSuccess,
     isError,
     isLoading,
-    error,
   } = useGetLastCardsQuery(user.nickname);
 
   function storeSelectedCard(cardId) {
     localStorage.setItem('selected_card', Number(cardId));
   }
-
-  const cards = [
-    { id: 1, number: 'abc123' },
-    { id: 2, number: 'abc123' },
-    { id: 3, number: 'abc123' },
-  ];
 
   let cardsMiniList;
 

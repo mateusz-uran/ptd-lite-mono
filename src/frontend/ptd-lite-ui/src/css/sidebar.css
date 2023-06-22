@@ -11,7 +11,7 @@
   background: var(--sidebar-color);
   padding: 10px 14px;
   transition: var(--tran-05);
-  z-index: 1000;
+  z-index: 999;
 }
 
 .sidebar header {

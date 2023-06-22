@@ -12,6 +12,10 @@ import {
 import { useEffect } from 'react';
 import '../../css/card_form.css';
 import { MdSettingsBackupRestore } from 'react-icons/md';
+import {
+  useAddNewCardMutation,
+  useUpdateCardMutation,
+} from '../../api/card/cardApiSlice';
 
 export const cardSchema = yup.object({
   number: yup
@@ -21,14 +25,14 @@ export const cardSchema = yup.object({
 });
 
 const CardForm = () => {
-  let isLoading = false;
-
   const { user } = useAuth0();
   const dispatch = useDispatch();
 
   const editStatus = useSelector(isCardEditing);
   const cardId = useSelector(cardIdToUpdate);
   const cardNumber = useSelector(cardNumberToUpdate);
+  const [addNewCard, { isLoading }] = useAddNewCardMutation();
+  const [updateCard] = useUpdateCardMutation();
 
   const {
     register,
@@ -40,19 +44,21 @@ const CardForm = () => {
   } = useForm({ resolver: yupResolver(cardSchema) });
 
   const onSubmit = async (data) => {
+    console.log(data);
+    console.log(user.nickname);
     try {
       if (!editStatus) {
         let card = {
           number: data.number,
           username: user.nickname,
         };
-        console.log(card);
+        await addNewCard(card).unwrap();
       } else {
         let card = {
           id: cardId,
           number: data.number,
         };
-        console.log(card);
+        await updateCard(card).unwrap();
         dispatch(stopEditing(false));
       }
       reset();
