@@ -71,11 +71,14 @@
 /*loading animation*/
 .cards-mini.loading {
   display: flex;
-  justify-content: center;
-  align-items: center;
   background: transparent;
   height: 30px;
 }
+.cards-mini.loading .mini-loader::before {
+  content: '';
+  min-width: 60px;
+}
+
 .cards-mini.loading .mini-loader {
   display: flex;
   justify-content: center;
@@ -97,4 +100,10 @@
 
 .sidebar ul li:hover .cards-mini.loading .mini-spinner {
   border-color: #fff transparent #fff transparent;
+}
+
+/*no respons*/
+.cards-mini ul li span.empty {
+  font-size: 12px;
+  font-weight: 600;
 }

@@ -53,6 +53,12 @@
     transform: rotate(360deg);
   }
 }
+/*no respond*/
+.cards-section .card-wrapper .single-card.error {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-color);
+}
 /**/
 
 .cards-section .card-wrapper .single-card .details-wrapper {

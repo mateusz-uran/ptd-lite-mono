@@ -44,8 +44,6 @@ const CardForm = () => {
   } = useForm({ resolver: yupResolver(cardSchema) });
 
   const onSubmit = async (data) => {
-    console.log(data);
-    console.log(user.nickname);
     try {
       if (!editStatus) {
         let card = {

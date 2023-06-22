@@ -9,14 +9,14 @@ import {
   isCardEditing,
   updateCardStatus,
 } from '../features/cards/updateCardSlice';
-import { isModalOpen, openModal } from '../features/modal/modalSlice';
-import Modal from '../features/modal/Modal';
+import { openModal } from '../features/modal/modalSlice';
 
 const Cards = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useAuth0();
-
+  let cards;
+  const isEditing = useSelector(isCardEditing);
   const {
     data: lastCards,
     isSuccess,
@@ -24,13 +24,29 @@ const Cards = () => {
     isLoading,
   } = useGetLastCardsQuery(user.nickname);
 
-  let cards;
+  const handleSingleCard = (cardId, cardNumber) => {
+    var payload = {
+      selectedCard: cardId,
+      cardNumber: cardNumber,
+    };
+    dispatch(updateCardStatus(payload));
+  };
 
   if (isLoading) {
     cards = (
       <div className="card-wrapper">
         <div className="single-card loading">
           <span className="loader"></span>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    cards = (
+      <div className="card-wrapper">
+        <div className="single-card error">
+          <span>Server is not available at the moment. Try again later.</span>
         </div>
       </div>
     );
@@ -83,16 +99,6 @@ const Cards = () => {
       </div>
     ));
   }
-
-  const isEditing = useSelector(isCardEditing);
-
-  const handleSingleCard = (cardId, cardNumber) => {
-    var payload = {
-      selectedCard: cardId,
-      cardNumber: cardNumber,
-    };
-    dispatch(updateCardStatus(payload));
-  };
 
   return (
     <div>

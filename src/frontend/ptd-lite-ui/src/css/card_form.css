@@ -13,6 +13,11 @@
   border: 1px solid transparent;
   transition: var(--tran-03);
   height: 25px;
+  font-weight: 600;
+}
+
+.card-form form .input-wrapper input::placeholder {
+  font-weight: 400;
 }
 
 .card-form form .input-wrapper input:focus {

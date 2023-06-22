@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../../css/cards_mini.css';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useDispatch } from 'react-redux';
 import { useGetLastCardsQuery } from '../../api/card/cardApiSlice';
 
 const CardsMini = () => {
@@ -30,7 +29,19 @@ const CardsMini = () => {
     );
   }
 
-  if (!isLoading && isSuccess) {
+  if (isError) {
+    cardsMiniList = (
+      <section className="cards-mini">
+        <ul>
+          <li>
+            <span className="empty">Error</span>
+          </li>
+        </ul>
+      </section>
+    );
+  }
+
+  if (isSuccess) {
     cardsMiniList = (
       <section className="cards-mini">
         {
@@ -50,24 +61,12 @@ const CardsMini = () => {
     );
   }
 
-  if (!isLoading && isSuccess && lastCards?.length <= 0) {
+  if (isSuccess && lastCards?.length <= 0) {
     cardsMiniList = (
       <section className="cards-mini">
         <ul>
           <li>
             <span className="empty">No data</span>
-          </li>
-        </ul>
-      </section>
-    );
-  }
-
-  if (isError) {
-    cardsMiniList = (
-      <section className="cards-mini">
-        <ul>
-          <li>
-            <span className="empty">Error</span>
           </li>
         </ul>
       </section>
