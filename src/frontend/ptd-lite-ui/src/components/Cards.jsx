@@ -10,6 +10,7 @@ import {
   updateCardStatus,
 } from '../features/cards/updateCardSlice';
 import { openModal } from '../features/modal/modalSlice';
+import LoadingDots from './LoadingDots';
 
 const Cards = () => {
   const navigate = useNavigate();
@@ -35,8 +36,8 @@ const Cards = () => {
   if (isLoading) {
     cards = (
       <div className="card-wrapper">
-        <div className="single-card loading">
-          <span className="loader"></span>
+        <div className="single-card">
+          <LoadingDots />
         </div>
       </div>
     );

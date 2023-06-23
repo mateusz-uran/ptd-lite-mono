@@ -3,10 +3,6 @@
   width: 100%;
 }
 
-.trip-table .row-wrapper {
-  width: 100%;
-}
-
 .trip-table table {
   width: 100%;
   text-align: center;
@@ -107,3 +103,10 @@
   background: #fff;
   color: var(--primary-color);
 }
+/*no response style*/
+.trip-table table tr td .empty-response {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+/**/

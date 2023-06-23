@@ -27,33 +27,6 @@
   border-radius: 5px;
 }
 
-/*spinner*/
-.cards-section .card-wrapper .single-card.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60px;
-}
-
-.cards-section .card-wrapper .single-card.loading .loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid var(--primary-color);
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 /*no respond*/
 .cards-section .card-wrapper .single-card.error {
   text-align: center;

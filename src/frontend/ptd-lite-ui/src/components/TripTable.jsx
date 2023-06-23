@@ -9,9 +9,10 @@ import {
   useGetTripsByCardIdQuery,
 } from '../api/trips/tripsApiSlice';
 import { useSelector } from 'react-redux';
-import EditForm from '../features/trips/EditForm';
+import LoadingDots from './LoadingDots';
 const TripTable = ({ cardId }) => {
-  const { isLoading, isSuccess, isError } = useGetTripsByCardIdQuery(cardId);
+  const { isLoading, isSuccess, isError, error } =
+    useGetTripsByCardIdQuery(cardId);
   const [deleteTrips] = useDeleteTripsMutation();
   const { selectAll: selectAllTripsFromCard } = getTripSelectors(cardId);
   const tripEntities = useSelector(selectAllTripsFromCard);
@@ -35,11 +36,12 @@ const TripTable = ({ cardId }) => {
     }
   };
 
-  const [editFormVisible, setEditFormVisible] = useState(false);
-  const [selectedTrip, setSelectedTrip] = useState(null);
-  const handleEdit = (trip) => {
-    setSelectedTrip(trip);
-    setEditFormVisible(true);
+  const toggleInteractiveVisible = (index) => {
+    setInteractiveVisible((prevState) => {
+      const updatedState = [...prevState];
+      updatedState[index] = !prevState[index];
+      return updatedState;
+    });
   };
 
   const handleDelete = () => {
@@ -47,10 +49,20 @@ const TripTable = ({ cardId }) => {
     setSelectedTripIds([]);
   };
 
+  if (isLoading) {
+    tableContent = (
+      <tr>
+        <td colSpan={12}>
+          <LoadingDots />
+        </td>
+      </tr>
+    );
+  }
+
   if (isSuccess && tripEntities?.length) {
     tableContent = tripEntities?.map((trip, index) => (
-      <Fragment>
-        <tr key={index}>
+      <Fragment key={index}>
+        <tr>
           <td>
             <input
               type="checkbox"
@@ -86,13 +98,31 @@ const TripTable = ({ cardId }) => {
             </button>
           </td>
         </tr>
-        {editFormVisible && selectedTrip?.id === trip.id && (
-          <EditForm trip={selectedTrip} />
-        )}
       </Fragment>
     ));
   }
 
+  if (isError && error.data?.statusCode === 404) {
+    tableContent = (
+      <tr>
+        <td colSpan={12}>
+          <span className="empty-response">{error.data?.description}</span>
+        </td>
+      </tr>
+    );
+  }
+
+  if (isError && error.data === undefined) {
+    tableContent = (
+      <tr>
+        <td colSpan={12}>
+          <span className="empty-response">
+            Server is not available at the moment, try again later.
+          </span>
+        </td>
+      </tr>
+    );
+  }
   return (
     <div className="trip-table">
       <table>
