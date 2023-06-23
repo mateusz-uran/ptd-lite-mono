@@ -3,16 +3,18 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../modal/modalSlice';
+import TripTable from '../../components/TripTable';
 
 const CardSpecification = () => {
   const dispatch = useDispatch();
-  const { cardNumber } = useParams();
+  const { cardNumber, cardId } = useParams();
 
   const handleDeleteCard = () => {
     let cardDeletePayload = {
-      cardId: cardNumber,
+      cardId: Number(cardId),
       message: 'Are you sure? All data will be erased.',
     };
+    console.log(cardDeletePayload);
     dispatch(openModal(cardDeletePayload));
   };
 
@@ -36,7 +38,9 @@ const CardSpecification = () => {
             <button onClick={handleDeleteCard}>Delete</button>
           </div>
         </div>
-        <div>trip table</div>
+        <div className="card-spec-trip-table">
+          <TripTable cardId={cardId} />
+        </div>
         <div>petrol table</div>
         <div>ad blue table</div>
         <div>additional information</div>

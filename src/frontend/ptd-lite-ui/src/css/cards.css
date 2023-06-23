@@ -4,6 +4,7 @@
   color: var(--text-color);
   font-weight: 600;
   display: flex;
+  margin-bottom: 5px;
 }
 
 .cards-section .h-section p {

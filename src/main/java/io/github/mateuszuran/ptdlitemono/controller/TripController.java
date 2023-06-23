@@ -22,6 +22,12 @@ public class TripController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<?> addTrips(@RequestBody List<TripRequest> trips, @RequestParam Long cardId) {
+        service.addTips(trips, cardId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @DeleteMapping
     public ResponseEntity<?> deleteAll(@RequestBody List<Long> selectedTripId) {
         service.deleteSelected(selectedTripId);
@@ -31,5 +37,10 @@ public class TripController {
     @GetMapping
     public ResponseEntity<List<TripResponse>> getTrips(@RequestParam Long cardId) {
         return ResponseEntity.ok().body(service.retrieveTripsFromCard(cardId));
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<TripResponse> updateTrip(@RequestParam Long tripId, @RequestBody TripRequest request) {
+        return ResponseEntity.ok().body(service.editTrip(tripId, request));
     }
 }

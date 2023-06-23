@@ -19,4 +19,8 @@ public class TripMapper {
     public Trip mapToTripValuesWithModelMapper(TripRequest tripValues) {
         return mapper.modelMapper().map(tripValues, Trip.class);
     }
+
+    public <T, V> void updateTrip(T source, V target) {
+        mapper.modelMapper().map(source, target);
+    }
 }

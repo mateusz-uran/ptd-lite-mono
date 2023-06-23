@@ -2,6 +2,8 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
+import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
+import io.github.mateuszuran.ptdlitemono.exception.TripsEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -102,5 +105,43 @@ class TripServiceTest {
 
         //then
         assertEquals(response, result);
+    }
+
+    @Test
+    void givenTripAndId_whenUpdate_thenReturnUpdatedObject() {
+        //given
+        Long tripId = 1L;
+        Trip tripToUpdate = Trip.builder().counterStart(200).counterEnd(500).carMileage(300).build();
+        TripRequest request = TripRequest.builder().counterStart(150).build();
+        Trip updatedTrip = Trip.builder().counterStart(150).counterEnd(500).carMileage(350).build();
+        TripResponse expectedResponse = TripResponse.builder().counterStart(150).counterEnd(500).carMileage(350).build();
+
+        when(repository.findById(tripId)).thenReturn(Optional.of(tripToUpdate));
+        when(repository.save(any(Trip.class))).thenReturn(updatedTrip);
+
+        doNothing().when(mapper).updateTrip(request, tripToUpdate);
+        when(mapper.mapToTripResponseWithModelMapper(updatedTrip)).thenReturn(expectedResponse);
+
+        //when
+        TripResponse actualResponse = service.editTrip(tripId, request);
+
+        //then
+        assertEquals(expectedResponse, actualResponse);
+        verify(repository).findById(tripId);
+        verify(repository).save(tripToUpdate);
+        verify(mapper).updateTrip(request, tripToUpdate);
+        verify(mapper).mapToTripResponseWithModelMapper(updatedTrip);
+    }
+
+    @Test
+    void givenTripId_whenUpdate_thenThrowException() {
+        //given
+        TripRequest request = TripRequest.builder().counterStart(150).build();
+        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+        //when + then
+        assertThatThrownBy(() -> service.editTrip(anyLong(), request))
+                .isInstanceOf(TripsEmptyException.class)
+                .hasMessageContaining("Trips data is empty");
+
     }
 }

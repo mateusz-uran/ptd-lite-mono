@@ -24,7 +24,10 @@ function App() {
         { path: '/home/cards', element: <Cards /> },
         { path: '/home/stats', element: <Statistics /> },
         { path: '/home/archive', element: <Archives /> },
-        { path: '/home/cards/:cardNumber', element: <CardSpecification /> },
+        {
+          path: '/home/cards/:cardNumber/:cardId',
+          element: <CardSpecification />,
+        },
       ],
     },
   ]);

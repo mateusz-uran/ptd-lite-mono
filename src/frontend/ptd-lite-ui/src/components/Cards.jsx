@@ -52,7 +52,7 @@ const Cards = () => {
     );
   }
 
-  if (isSuccess) {
+  if (isSuccess && lastCards?.length >= 1) {
     const formattedCards = lastCards.map((card) => {
       const creationTime = card.creationTime;
       const formattedDate = new Date(creationTime).toISOString().split('T')[0];
@@ -84,7 +84,9 @@ const Cards = () => {
             </span>
           </div>
           <div className="buttons-wrapper">
-            <button onClick={() => navigate(`${card.number}`)}>Browse</button>
+            <button onClick={() => navigate(`${card.number}/${card.id}`)}>
+              Browse
+            </button>
             <button>Add trip</button>
             <button>Add petrol</button>
             <button>Add adBlue</button>
@@ -98,6 +100,16 @@ const Cards = () => {
         </div>
       </div>
     ));
+  }
+
+  if (isSuccess && lastCards?.length <= 0) {
+    cards = (
+      <div className="card-wrapper">
+        <div className="single-card error">
+          <span>No data, add new card.</span>
+        </div>
+      </div>
+    );
   }
 
   return (

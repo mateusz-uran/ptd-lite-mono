@@ -1,6 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
@@ -100,6 +102,43 @@ class TripControllerTest {
         mockMvc.perform(get("/api/trip")
                         .param("cardId", String.valueOf(card.getId()))
                         .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Trips data is empty"));
+    }
+
+    @Test
+    void givenTripIdAndObject_whenUpdate_thenReturnMappedObject() throws Exception {
+        //given
+        Trip tripToUpdate = Trip.builder()
+                .counterStart(455)
+                .counterEnd(999)
+                .build();
+        repository.saveAndFlush(tripToUpdate);
+        TripRequest request = TripRequest.builder()
+                .counterStart(300)
+                .build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/update")
+                        .param("tripId", String.valueOf(tripToUpdate.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.counterStart").value(300));
+    }
+
+    @Test
+    void givenTripIdAndObject_whenTripNotFound_thenReturnErrorMessage() throws Exception {
+        //given
+        TripRequest request = TripRequest.builder()
+                .counterStart(300)
+                .build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/update")
+                        .param("tripId", String.valueOf(123L))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Trips data is empty"));

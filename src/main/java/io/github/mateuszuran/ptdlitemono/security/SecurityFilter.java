@@ -30,7 +30,7 @@ public class SecurityFilter {
         http.csrf().disable()
                 .cors().and()
                 .authorizeHttpRequests()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .oauth2ResourceServer()
                 .jwt();
