@@ -41,6 +41,16 @@ export const tripApiSlice = apiSlice.injectEndpoints({
         return [{ type: 'Trips', id: 'LIST' }];
       },
     }),
+    editTrip: builder.mutation({
+      query: (tripPayload) => ({
+        url: `/trip/update?tripId=${tripPayload.tripId}`,
+        method: 'PATCH',
+        body: tripPayload.updatedTrip,
+      }),
+      invalidatesTags: (result, error, arg) => {
+        return [{ type: 'Trips', id: 'LIST' }];
+      },
+    }),
   }),
 });
 
@@ -48,6 +58,7 @@ export const {
   useGetTripsByCardIdQuery,
   useSaveTripsMutation,
   useDeleteTripsMutation,
+  useEditTripMutation,
 } = tripApiSlice;
 
 export const getTripSelectors = (query) => {

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../modal/modalSlice';
-import TripTable from '../../components/TripTable';
+import TripTable from '../../components/trip-table/TripTable';
 
 const CardSpecification = () => {
   const dispatch = useDispatch();

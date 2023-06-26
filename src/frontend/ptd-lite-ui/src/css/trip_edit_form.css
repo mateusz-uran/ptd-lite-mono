@@ -1,0 +1,175 @@
+.edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-modal .modal-wrapper {
+  min-height: 40vh;
+  background: var(--body-color);
+  border-radius: 5px;
+  width: 80vw;
+}
+
+.edit-modal .modal-wrapper .modal-header {
+  display: flex;
+  position: relative;
+  padding: 1rem 1.5rem;
+}
+
+.edit-modal .modal-wrapper .modal-header h5 {
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.edit-modal .modal-wrapper .modal-header button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  border: 0;
+  outline: 0;
+  background: var(--primary-color);
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-modal .modal-wrapper .form-wrapper {
+  padding: 0.5rem 1rem;
+}
+
+.edit-modal form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.edit-modal .modal-wrapper .form-wrapper form .start,
+.edit-modal .modal-wrapper .form-wrapper form .end,
+.edit-modal .modal-wrapper .form-wrapper form .button-wrapper {
+  display: flex;
+  flex: 1 0 33.33%;
+  margin: 5px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .start,
+.edit-modal .modal-wrapper .form-wrapper .end {
+  flex-grow: 1;
+  background: #fff;
+  padding: 1rem 0.5rem;
+  border-radius: 5px;
+  flex-direction: column;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .start:focus-within,
+.edit-modal .modal-wrapper .form-wrapper .end:focus-within {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .start h5,
+.edit-modal .modal-wrapper .form-wrapper .end h5 {
+  text-align: center;
+  color: var(--text-color);
+}
+
+.edit-modal .modal-wrapper .form-wrapper .single-input {
+  margin-right: 3px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .single-input input {
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+  border: 1px solid transparent;
+  outline: 0;
+  transition: var(--tran-03);
+}
+
+.edit-modal .modal-wrapper .form-wrapper .single-input input:focus {
+  border: 1px solid var(--primary-color);
+}
+
+.edit-modal .modal-wrapper .form-wrapper .single-input input,
+.edit-modal .modal-wrapper .form-wrapper .single-input label {
+  padding: 0.3rem;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .single-input label {
+  font-size: 13px;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button {
+  outline: 0;
+  border: 0;
+  padding: 0.4rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--small-btn-shadow);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--tran-03);
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button:first-child {
+  margin-right: auto;
+}
+
+.edit-modal
+  .modal-wrapper
+  .form-wrapper
+  .button-wrapper
+  button:first-child
+  .icon {
+  margin-right: 2px;
+  font-size: 12px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button:nth-child(2) {
+  margin-right: 10px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.submit-button {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.edit-modal
+  .modal-wrapper
+  .form-wrapper
+  .button-wrapper
+  button:hover:not(.submit-button) {
+  background: var(--toggle-color);
+}
+
+.edit-modal
+  .modal-wrapper
+  .form-wrapper
+  .button-wrapper
+  button.submit-button:hover {
+  box-shadow: var(--big-btn-shadow);
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button:active {
+  transform: scale(0.95);
+}
