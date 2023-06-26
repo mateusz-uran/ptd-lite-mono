@@ -73,6 +73,7 @@ const TripTable = ({ cardId }) => {
           <tr>
             <th className="icon-wrapper">
               <button
+                className={`${selectedTripIds.length === 0 ? '' : 'active'}`}
                 onClick={handleDelete}
                 disabled={selectedTripIds.length === 0}
               >

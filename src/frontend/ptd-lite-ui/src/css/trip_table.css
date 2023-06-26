@@ -49,15 +49,15 @@
   display: flex;
   align-items: center;
   transition: var(--tran-03);
+}
+
+.trip-table table tr th.icon-wrapper button.active:hover {
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   cursor: pointer;
 }
 
-.trip-table table tr th.icon-wrapper button:hover {
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
-    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-}
-
-.trip-table table tr th.icon-wrapper button:active {
+.trip-table table tr th.icon-wrapper button.active:active {
   transform: scale(1.15);
 }
 
@@ -74,6 +74,7 @@
   border-radius: 5px;
   padding: 2px 5px;
   cursor: pointer;
+  box-shadow: var(--small-btn-shadow);
 }
 
 .trip-table table .last-cell button:hover {

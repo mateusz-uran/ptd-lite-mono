@@ -62,7 +62,7 @@
   transform: scale(0.95);
 }
 
-.card-spec-trip-table {
+.card-spec-table {
   overflow-x: auto;
   background: #fff;
   margin-top: 15px;

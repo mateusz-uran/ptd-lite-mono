@@ -1,37 +1,37 @@
 import '../../css/fuel_tables.css';
 import { useSelector } from 'react-redux';
-import {
-  getPetrolSelectors,
-  useGetPetrolByCardIdQuery,
-} from '../../api/petrol/petrolApiSlice';
 import LoadingDots from '../LoadingDots';
-import PetrolTableRow from './PetrolTableRow';
+import {
+  getAdBlueSelectors,
+  useGetBlueByCardIdQuery,
+} from '../../api/adblue/adBlueApiSlice';
+import AdBlueTableRow from './AdBlueTableRow';
 
-const PetrolTable = ({ cardId }) => {
+const AdBlueTable = ({ cardId }) => {
   const { isLoading, isSuccess, isError, error } =
-    useGetPetrolByCardIdQuery(cardId);
-  const { selectAll: selectAllPetrolFromCard } = getPetrolSelectors(cardId);
-  const petrolEntities = useSelector(selectAllPetrolFromCard);
+    useGetBlueByCardIdQuery(cardId);
+  const { selectAll: selectAllBlueFromCard } = getAdBlueSelectors(cardId);
+  const blueEntities = useSelector(selectAllBlueFromCard);
   let tableContent;
 
   if (isLoading) {
     tableContent = (
       <tr>
-        <td colSpan={6}>
+        <td colSpan={4}>
           <LoadingDots />
         </td>
       </tr>
     );
   }
 
-  if (isSuccess && petrolEntities?.length) {
-    tableContent = <PetrolTableRow petrolEntities={petrolEntities} />;
+  if (isSuccess && blueEntities?.length) {
+    tableContent = <AdBlueTableRow blueEntities={blueEntities} />;
   }
 
   if (isError && error.data?.statusCode === 404) {
     tableContent = (
       <tr>
-        <td colSpan={6}>
+        <td colSpan={4}>
           <span className="empty-response">{error.data?.description}</span>
         </td>
       </tr>
@@ -41,7 +41,7 @@ const PetrolTable = ({ cardId }) => {
   if (isError && error.data === undefined) {
     tableContent = (
       <tr>
-        <td colSpan={6}>
+        <td colSpan={4}>
           <span className="empty-response">
             Server is not available at the moment, try again later.
           </span>
@@ -57,9 +57,7 @@ const PetrolTable = ({ cardId }) => {
           <tr>
             <th>Date</th>
             <th>Location</th>
-            <th>Counter</th>
             <th>Amount</th>
-            <th>Payment</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -68,4 +66,4 @@ const PetrolTable = ({ cardId }) => {
     </div>
   );
 };
-export default PetrolTable;
+export default AdBlueTable;

@@ -4,6 +4,8 @@ import Header from '../../components/Header';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../modal/modalSlice';
 import TripTable from '../../components/trip-table/TripTable';
+import PetrolTable from '../../components/petrol-table/PetrolTable';
+import AdBlueTable from '../../components/adblue/AdBlueTable';
 
 const CardSpecification = () => {
   const dispatch = useDispatch();
@@ -38,11 +40,15 @@ const CardSpecification = () => {
             <button onClick={handleDeleteCard}>Delete</button>
           </div>
         </div>
-        <div className="card-spec-trip-table">
+        <div className="card-spec-table">
           <TripTable cardId={cardId} />
         </div>
-        <div>petrol table</div>
-        <div>ad blue table</div>
+        <div className="card-spec-table">
+          <PetrolTable cardId={cardId} />
+        </div>
+        <div className="card-spec-table">
+          <AdBlueTable cardId={cardId} />
+        </div>
         <div>additional information</div>
       </section>
     </div>
