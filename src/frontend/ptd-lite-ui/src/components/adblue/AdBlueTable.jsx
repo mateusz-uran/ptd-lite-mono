@@ -52,6 +52,7 @@ const AdBlueTable = ({ cardId }) => {
 
   return (
     <div className="fuel-table">
+      <h3>AdBlue</h3>
       <table>
         <thead>
           <tr>

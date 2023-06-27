@@ -52,6 +52,7 @@ const PetrolTable = ({ cardId }) => {
 
   return (
     <div className="fuel-table">
+      <h3>Petrol</h3>
       <table>
         <thead>
           <tr>

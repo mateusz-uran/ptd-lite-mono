@@ -68,6 +68,7 @@ const TripTable = ({ cardId }) => {
 
   return (
     <div className="trip-table">
+      <h3>Trips</h3>
       <table>
         <thead>
           <tr>

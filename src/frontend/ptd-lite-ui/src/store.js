@@ -3,6 +3,7 @@ import auht0Reducer from './features/auth/auth0Slice';
 import updateCardReducer from './features/cards/updateCardSlice';
 import tripUpdateReducer from './features/trips/tripUpdateSlice';
 import fuelEditReducer from './features/fuel/fuelEditSlice';
+import additionalInfoReducer from './features/additionalInfo/additionalInfoSlice';
 import { apiSlice } from './api/apiSlice';
 import modalReducer from './features/modal/modalSlice';
 
@@ -14,6 +15,7 @@ export const store = configureStore({
     updateTrip: tripUpdateReducer,
     fuelEdit: fuelEditReducer,
     modal: modalReducer,
+    additionalInfo: additionalInfoReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

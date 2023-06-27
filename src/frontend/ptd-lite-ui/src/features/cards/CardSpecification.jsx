@@ -6,6 +6,7 @@ import { openModal } from '../modal/modalSlice';
 import TripTable from '../../components/trip-table/TripTable';
 import PetrolTable from '../../components/petrol-table/PetrolTable';
 import AdBlueTable from '../../components/adblue/AdBlueTable';
+import AdditionalInformation from '../additionalInfo/AdditionalInformation';
 
 const CardSpecification = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,9 @@ const CardSpecification = () => {
         <div className="card-spec-table">
           <AdBlueTable cardId={cardId} />
         </div>
-        <div>additional information</div>
+        <div className="card-spec-table">
+          <AdditionalInformation />
+        </div>
       </section>
     </div>
   );
