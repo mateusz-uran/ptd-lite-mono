@@ -7,6 +7,7 @@ import TripTable from '../../components/trip-table/TripTable';
 import PetrolTable from '../../components/petrol-table/PetrolTable';
 import AdBlueTable from '../../components/adblue/AdBlueTable';
 import AdditionalInformation from '../additionalInfo/AdditionalInformation';
+import GeneratePDF from '../../components/GeneratePDF';
 
 const CardSpecification = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const CardSpecification = () => {
         <div className="card-manage">
           <h5>Manage</h5>
           <div className="buttons-wrapper">
-            <button className="primary-btn pdf-button">Download pdf</button>
+            <GeneratePDF />
             <Link to={`/home/cards/${cardNumber}/${cardId}/add/trip`}>
               <button className="primary-btn">Add trips</button>
             </Link>
