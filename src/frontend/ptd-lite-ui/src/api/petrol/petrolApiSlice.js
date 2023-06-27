@@ -25,7 +25,7 @@ export const petrolApiSlice = apiSlice.injectEndpoints({
     }),
     savePetrol: builder.mutation({
       query: (fuelPayload) => ({
-        url: `/fuel/petrol/add?cardId=${fuelPayload.cardId}`,
+        url: `/fuel/petrol/addmultiple?cardId=${fuelPayload.cardId}`,
         method: 'POST',
         body: fuelPayload.petrol,
       }),

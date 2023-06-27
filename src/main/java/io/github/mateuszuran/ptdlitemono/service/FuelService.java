@@ -9,6 +9,7 @@ import io.github.mateuszuran.ptdlitemono.repository.FuelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -30,6 +31,17 @@ public class FuelService {
                 .build();
         card.addFuel(fuelToSave);
         repository.save(fuelToSave);
+    }
+
+    public void addMultipleFuels(List<FuelRequest> fuels, Long cardId) {
+        var card = service.checkIfCardExists(cardId);
+        List<Fuel> fuelsToSave = new ArrayList<>();
+        fuels.forEach(fuel -> {
+            var mappedFuel = fuelMapper.mapToFuelRequest(fuel);
+            fuelsToSave.add(mappedFuel);
+            card.addFuel(mappedFuel);
+        });
+        repository.saveAll(fuelsToSave);
     }
 
     public void deleteFuel(Long fuelId) {

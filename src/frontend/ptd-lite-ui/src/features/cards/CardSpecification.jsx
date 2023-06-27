@@ -1,5 +1,5 @@
 import '../../css/card_spec.css';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../modal/modalSlice';
@@ -16,7 +16,6 @@ const CardSpecification = () => {
       cardId: Number(cardId),
       message: 'Are you sure? All data will be erased.',
     };
-    console.log(cardDeletePayload);
     dispatch(openModal(cardDeletePayload));
   };
 
@@ -36,8 +35,17 @@ const CardSpecification = () => {
         <div className="card-manage">
           <h5>Manage</h5>
           <div className="buttons-wrapper">
-            <button className="pdf-button">Download pdf</button>
-            <button onClick={handleDeleteCard}>Delete</button>
+            <button className="primary-btn pdf-button">Download pdf</button>
+            <button className="primary-btn">Add trips</button>
+            <Link to={`/home/cards/${cardNumber}/${cardId}/add/${'petrol'}`}>
+              <button className="primary-btn">Add petrol</button>
+            </Link>
+            <Link to={`/home/cards/${cardNumber}/${cardId}/add/${'blue'}`}>
+              <button className="primary-btn">Add adBlue</button>
+            </Link>
+            <button onClick={handleDeleteCard} className="primary-btn delete">
+              Delete
+            </button>
           </div>
         </div>
         <div className="card-spec-table">

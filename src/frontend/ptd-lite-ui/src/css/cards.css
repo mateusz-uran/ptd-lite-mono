@@ -62,55 +62,35 @@
 
 .cards-section .card-wrapper .single-card .buttons-wrapper {
   display: flex;
+  white-space: nowrap;
+  flex-wrap: wrap;
 }
 
-.cards-section .card-wrapper .single-card .buttons-wrapper button {
-  padding: 0.4rem;
-  box-shadow: var(--big-btn-shadow);
-  margin-right: 5px;
-  border: 0;
-  outline: 0;
-  background: transparent;
+.cards-section .card-wrapper .single-card .buttons-wrapper a {
   border-radius: 5px;
-  font-weight: 600;
-  transition: var(--tran-03);
-  cursor: pointer;
 }
 
-.cards-section
-  .card-wrapper
-  .single-card
-  .buttons-wrapper
-  button:nth-child(odd) {
+.cards-section .card-wrapper .single-card .buttons-wrapper a:nth-child(odd) {
   background: #f2f2f2;
 }
 
-.cards-section .card-wrapper .single-card .buttons-wrapper button:last-child {
+.cards-section .card-wrapper .single-card .buttons-wrapper button.edit {
+  background: #ddd;
+}
+
+.cards-section .card-wrapper .single-card .buttons-wrapper button.edit:hover {
+  background: var(--primary-color);
+}
+
+.cards-section .card-wrapper .single-card .buttons-wrapper button.delete {
   background: rgba(255, 0, 0, 0.6);
   color: #fff;
   transition: var(--tran-03);
   margin-left: auto;
 }
 
-.cards-section
-  .card-wrapper
-  .single-card
-  .buttons-wrapper
-  button:hover:not(:last-child) {
-  background: var(--primary-color);
-  color: #fff;
-}
-
-.cards-section
-  .card-wrapper
-  .single-card
-  .buttons-wrapper
-  button:hover:last-child {
+.cards-section .card-wrapper .single-card .buttons-wrapper button.delete:hover {
   background: rgba(255, 0, 0, 1);
-}
-
-.cards-section .card-wrapper .single-card .buttons-wrapper button:active {
-  transform: scale(0.95);
 }
 
 @media screen and (max-width: 486px) {
@@ -129,6 +109,7 @@
   .cards-section .card-wrapper .single-card .buttons-wrapper button {
     margin: 0;
     margin-bottom: 5px;
+    width: 100%;
   }
 
   .cards-section .card-wrapper .single-card .buttons-wrapper button:last-child {

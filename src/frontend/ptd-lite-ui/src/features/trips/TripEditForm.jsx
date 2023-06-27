@@ -49,13 +49,18 @@ const TripEditForm = ({ tripToEdit }) => {
           <h5>Start</h5>
           {tripInputs.slice(0, 5).map((input, index) => (
             <div key={index} className="single-input">
-              <label htmlFor={input.name}>{input.label}</label>
+              <label className="primary-label" htmlFor={input.name}>
+                {input.label}
+              </label>
               <input
                 type={input.type}
                 id={input.name}
                 {...register(input.name)}
+                className="primary-input"
               />
-              {errors[input.name] && <p>{errors[input.name].message}</p>}
+              {errors[input.name] && (
+                <p className="error-input">{errors[input.name].message}</p>
+              )}
             </div>
           ))}
         </div>
@@ -63,24 +68,37 @@ const TripEditForm = ({ tripToEdit }) => {
           <h5>End</h5>
           {tripInputs.slice(5).map((input, index) => (
             <div key={index} className="single-input">
-              <label htmlFor={input.name}>{input.label}</label>
+              <label className="primary-label" htmlFor={input.name}>
+                {input.label}
+              </label>
               <input
                 type={input.type}
                 id={input.name}
                 {...register(input.name)}
+                className="primary-input"
               />
-              {errors[input.name] && <p>{errors[input.name].message}</p>}
+              {errors[input.name] && (
+                <p className="error-input">{errors[input.name].message}</p>
+              )}
             </div>
           ))}
         </div>
         <div className="button-wrapper">
-          <button type="button" onClick={() => reset()}>
+          <button
+            type="button"
+            onClick={() => reset()}
+            className="small-btn clear"
+          >
             <MdSettingsBackupRestore className="icon" /> Clear
           </button>
-          <button type="button" onClick={() => dispatch(stopEditing())}>
+          <button
+            type="button"
+            onClick={() => dispatch(stopEditing())}
+            className="small-btn close"
+          >
             Close
           </button>
-          <button className="submit-button">Submit</button>
+          <button className="primary-btn save">Submit</button>
         </div>
       </form>
     </div>
@@ -91,7 +109,11 @@ const TripEditForm = ({ tripToEdit }) => {
       <div className="modal-wrapper">
         <div className="modal-header">
           <h5>Edit trip</h5>
-          <button type="button" onClick={() => dispatch(stopEditing())}>
+          <button
+            type="button"
+            onClick={() => dispatch(stopEditing())}
+            className="small-btn close-modal"
+          >
             <RiCloseFill />
           </button>
         </div>

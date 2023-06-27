@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.mapper;
 
 import io.github.mateuszuran.ptdlitemono.config.ModelMapperConfig;
+import io.github.mateuszuran.ptdlitemono.dto.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.dto.AdBlueResponse;
 import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
@@ -22,10 +23,14 @@ public class FuelMapper {
         return mapper.modelMapper().map(fuelRequest, Fuel.class);
     }
 
+
     public AdBlueResponse mapToAdBlueResponse(AdBlue adBlue) {
         return mapper.modelMapper().map(adBlue, AdBlueResponse.class);
     }
 
+    public AdBlue mapToAdBlue(AdBlueRequest request) {
+        return mapper.modelMapper().map(request, AdBlue.class);
+    }
     public <T, V> void merge(T source, V target) {
         mapper.modelMapper().map(source, target);
     }

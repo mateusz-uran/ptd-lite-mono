@@ -11,6 +11,7 @@ import CardSpecification from './features/cards/CardSpecification';
 import { useSelector } from 'react-redux';
 import { isModalOpen } from './features/modal/modalSlice';
 import Modal from './features/modal/Modal';
+import FuelAddForm from './features/fuel/FuelAddForm';
 
 function App() {
   const isOpen = useSelector(isModalOpen);
@@ -27,6 +28,10 @@ function App() {
         {
           path: '/home/cards/:cardNumber/:cardId',
           element: <CardSpecification />,
+        },
+        {
+          path: '/home/cards/:cardNumber/:cardId/add/:type',
+          element: <FuelAddForm />,
         },
       ],
     },

@@ -17,17 +17,7 @@
 }
 
 .card-spec-section .card-manage .buttons-wrapper button {
-  box-shadow: var(--big-btn-shadow);
   margin-bottom: 5px;
-  margin-right: 5px;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  padding: 0.4em;
-  border-radius: 5px;
-  font-weight: 600;
-  transition: var(--tran-03);
-  cursor: pointer;
 }
 
 .card-spec-section .card-manage .buttons-wrapper button.pdf-button {
@@ -41,25 +31,14 @@
     rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 }
 
-.card-spec-section .card-manage .buttons-wrapper button:last-child {
+.card-spec-section .card-manage .buttons-wrapper button.delete {
   margin-left: auto;
-  background: red;
+  background: rgba(255, 0, 0, 0.6);
   color: #fff;
 }
 
-.card-spec-section .card-manage .buttons-wrapper button:hover:not(.pdf-button) {
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
-    rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
-    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-}
-
-.card-spec-section .card-manage .buttons-wrapper button.edit-button:active {
-  background: #f2f2f2;
-  transform: scale(0.95);
-}
-
-.card-spec-section .card-manage .buttons-wrapper button:active {
-  transform: scale(0.95);
+.card-spec-section .card-manage .buttons-wrapper button.delete:hover {
+  background: rgba(255, 0, 0, 1);
 }
 
 .card-spec-table {

@@ -34,10 +34,16 @@ const PetrolTableRow = ({ petrolEntities }) => {
           <td>{fuel.refuelingAmount}</td>
           <td>{fuel.paymentMethod}</td>
           <td className="last-cell">
-            <button onClick={() => handleEditPetrol(fuel)}>
+            <button
+              onClick={() => handleEditPetrol(fuel)}
+              className="small-btn"
+            >
               <AiOutlineEdit className="edit" />
             </button>
-            <button onClick={() => handleDeletePetrol(fuel.id)}>
+            <button
+              onClick={() => handleDeletePetrol(fuel.id)}
+              className="small-btn"
+            >
               <MdDeleteOutline />
             </button>
           </td>

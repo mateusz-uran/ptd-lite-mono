@@ -1,7 +1,7 @@
 import CardForm from '../features/cards/CardForm';
 import Header from './Header';
 import '../css/cards.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGetLastCardsQuery } from '../api/card/cardApiSlice';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -85,16 +85,28 @@ const Cards = () => {
             </span>
           </div>
           <div className="buttons-wrapper">
-            <button onClick={() => navigate(`${card.number}/${card.id}`)}>
-              Browse
-            </button>
-            <button>Add trip</button>
-            <button>Add petrol</button>
-            <button>Add adBlue</button>
-            <button onClick={() => handleSingleCard(card.id, card.number)}>
+            <Link to={`${card.number}/${card.id}`}>
+              <button className="primary-btn">Browse</button>
+            </Link>
+            <Link>
+              <button className="primary-btn">Add trip</button>
+            </Link>
+            <Link to={`${card.number}/${card.id}/add/${'petrol'}`}>
+              <button className="primary-btn">Add petrol</button>
+            </Link>
+            <Link to={`${card.number}/${card.id}/add/${'blue'}`}>
+              <button className="primary-btn">Add adBlue</button>
+            </Link>
+            <button
+              onClick={() => handleSingleCard(card.id, card.number)}
+              className="primary-btn edit"
+            >
               Edit number
             </button>
-            <button onClick={() => handleDeleteCard(card.id)}>
+            <button
+              onClick={() => handleDeleteCard(card.id)}
+              className="primary-btn delete"
+            >
               Delete card
             </button>
           </div>

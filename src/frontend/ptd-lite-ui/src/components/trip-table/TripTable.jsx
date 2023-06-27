@@ -1,4 +1,4 @@
-import '../../css/trip_table.css';
+import '../../css/tables.css';
 import { MdDeleteOutline } from 'react-icons/md';
 import { useState } from 'react';
 import {
@@ -73,7 +73,7 @@ const TripTable = ({ cardId }) => {
           <tr>
             <th className="icon-wrapper">
               <button
-                className={`${selectedTripIds.length === 0 ? '' : 'active'}`}
+                className="small-btn delete-trip"
                 onClick={handleDelete}
                 disabled={selectedTripIds.length === 0}
               >

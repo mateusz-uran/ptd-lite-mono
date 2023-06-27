@@ -2,10 +2,12 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.dto.AdBlueResponse;
+import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.exception.AdBlueEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
+import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -115,5 +117,51 @@ class AdBlueServiceTest {
         verify(mapper).mapToAdBlueResponse(updatedBlue);
 
         assertEquals(expectedResponse, result);
+    }
+
+    @Test
+    void givenFuelList_whenSave_thenDoNothing() {
+        //given
+        List<AdBlue> emptyBlueList = new ArrayList<>();
+        Card card = Card.builder().id(anyLong()).number("XYZ").adBlue(emptyBlueList).build();
+        when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
+        var request = createBlueRequests();
+        var response = createBlues();
+        when(mapper.mapToAdBlue(request.get(0))).thenReturn(response.get(0));
+        when(mapper.mapToAdBlue(request.get(1))).thenReturn(response.get(1));
+        when(mapper.mapToAdBlue(request.get(2))).thenReturn(response.get(2));
+        when(mapper.mapToAdBlue(request.get(3))).thenReturn(response.get(3));
+        //when
+        service.addMultipleBlue(request, card.getId());
+        //then
+        var updatedCard = cardService.checkIfCardExists(card.getId());
+        assertThat(updatedCard.getAdBlue()).isEqualTo(response);
+    }
+
+    private List<AdBlueRequest> createBlueRequests() {
+        List<AdBlueRequest> blues = new ArrayList<>();
+        AdBlueRequest blue1 = AdBlueRequest.builder().adBlueDate("1.01").build();
+        AdBlueRequest blue2 = AdBlueRequest.builder().adBlueDate("2.01").build();
+        AdBlueRequest blue3 = AdBlueRequest.builder().adBlueDate("3.01").build();
+        AdBlueRequest blue4 = AdBlueRequest.builder().adBlueDate("4.01").build();
+        blues.add(blue1);
+        blues.add(blue2);
+        blues.add(blue3);
+        blues.add(blue4);
+        return blues;
+    }
+
+    private List<AdBlue> createBlues() {
+        List<AdBlue> blues = new ArrayList<>();
+        AdBlue blue1 = AdBlue.builder().adBlueDate("1.01").build();
+        AdBlue blue2 = AdBlue.builder().adBlueDate("2.01").build();
+        AdBlue blue3 = AdBlue.builder().adBlueDate("3.01").build();
+        AdBlue blue4 = AdBlue.builder().adBlueDate("4.01").build();
+        // Add fuel objects to the list
+        blues.add(blue1);
+        blues.add(blue2);
+        blues.add(blue3);
+        blues.add(blue4);
+        return blues;
     }
 }

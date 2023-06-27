@@ -1,4 +1,4 @@
-import '../../css/fuel_tables.css';
+import '../../css/tables.css';
 import { useSelector } from 'react-redux';
 import {
   getPetrolSelectors,

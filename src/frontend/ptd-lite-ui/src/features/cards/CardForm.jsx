@@ -93,17 +93,20 @@ const CardForm = () => {
             name="cardNumber"
             placeholder="number"
             {...register('number', { required: true, minLength: 3 })}
+            className="primary-input"
           />
-          {errors.number?.message && <p>{errors.number?.message}</p>}
+          {errors.number?.message && (
+            <p className="error-input">{errors.number?.message}</p>
+          )}
         </div>
         <div className="button-wrapper">
           <div className="buttons">
-            <button type="submit" disabled={isLoading}>
+            <button type="submit" disabled={isLoading} className="small-btn">
               {editStatus ? <span>Save</span> : <span>Add</span>}
             </button>
             <button
               type="button"
-              className="revert-button"
+              className="small-btn revert-button"
               onClick={() => handleClearInput()}
             >
               <MdSettingsBackupRestore className="revert" />

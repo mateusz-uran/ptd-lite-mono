@@ -32,18 +32,10 @@
   color: var(--text-color);
 }
 
-.edit-modal .modal-wrapper .modal-header button {
+.edit-modal .modal-wrapper .modal-header button.close-modal {
   position: absolute;
   right: 5px;
   top: 5px;
-  border: 0;
-  outline: 0;
-  background: var(--primary-color);
-  color: #fff;
-  border-radius: 50%;
-  padding: 0.2rem;
-  display: flex;
-  cursor: pointer;
 }
 
 .edit-modal .modal-wrapper .form-wrapper {
@@ -91,31 +83,7 @@
 
 .edit-modal .modal-wrapper .form-wrapper .single-input {
   margin-right: 3px;
-}
-
-.edit-modal .modal-wrapper .form-wrapper .single-input input {
-  width: 100%;
-  border-radius: 5px;
-  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
-    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
-  border: 1px solid transparent;
-  outline: 0;
-  transition: var(--tran-03);
-}
-
-.edit-modal .modal-wrapper .form-wrapper .single-input input:focus {
-  border: 1px solid var(--primary-color);
-}
-
-.edit-modal .modal-wrapper .form-wrapper .single-input input,
-.edit-modal .modal-wrapper .form-wrapper .single-input label {
-  padding: 0.3rem;
-}
-
-.edit-modal .modal-wrapper .form-wrapper .single-input label {
-  font-size: 13px;
-  color: var(--text-color);
-  opacity: 0.6;
+  margin-bottom: 5px;
 }
 
 .edit-modal .modal-wrapper .form-wrapper .button-wrapper {
@@ -125,61 +93,28 @@
   align-self: flex-end;
 }
 
-.edit-modal .modal-wrapper .form-wrapper .button-wrapper button {
-  outline: 0;
-  border: 0;
-  padding: 0.4rem;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: var(--small-btn-shadow);
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.clear {
   font-weight: 600;
-  cursor: pointer;
-  transition: var(--tran-03);
-}
-
-.edit-modal .modal-wrapper .form-wrapper .button-wrapper button:first-child {
   margin-right: auto;
 }
 
-.edit-modal
-  .modal-wrapper
-  .form-wrapper
-  .button-wrapper
-  button:first-child
-  .icon {
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.clear .icon {
   margin-right: 2px;
   font-size: 12px;
 }
 
-.edit-modal .modal-wrapper .form-wrapper .button-wrapper button:nth-child(2) {
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.close {
   margin-right: 10px;
 }
 
-.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.submit-button {
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.save {
   background: var(--primary-color);
   color: #fff;
+  transition: var(--tran-03);
 }
 
-.edit-modal
-  .modal-wrapper
-  .form-wrapper
-  .button-wrapper
-  button:hover:not(.submit-button) {
-  background: var(--toggle-color);
-}
-
-.edit-modal
-  .modal-wrapper
-  .form-wrapper
-  .button-wrapper
-  button.submit-button:hover {
-  box-shadow: var(--big-btn-shadow);
-}
-
-.edit-modal .modal-wrapper .form-wrapper .button-wrapper button:active {
-  transform: scale(0.95);
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.save:hover {
+  background: rgba(61, 127, 58, 0.9);
 }
 
 /*fuel form*/

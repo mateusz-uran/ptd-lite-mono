@@ -72,24 +72,37 @@ const FuelEditForm = () => {
         <div className="input-wrapper">
           {inputs.map((input, index) => (
             <div key={index} className="single-input">
-              <label htmlFor={input.name}>{input.label}</label>
+              <label className="primary-label" htmlFor={input.name}>
+                {input.label}
+              </label>
               <input
                 type={input.type}
                 id={input.name}
                 {...register(input.name)}
+                className="primary-input"
               />
-              {errors[input.name] && <p>{errors[input.name].message}</p>}
+              {errors[input.name] && (
+                <p className="error-input">{errors[input.name].message}</p>
+              )}
             </div>
           ))}
         </div>
         <div className="button-wrapper fuel-button">
-          <button type="button" onClick={() => reset()}>
+          <button
+            type="button"
+            onClick={() => reset()}
+            className="small-btn clear"
+          >
             <MdSettingsBackupRestore className="icon" /> Clear
           </button>
-          <button type="button" onClick={() => dispatch(stopEditingFuel())}>
+          <button
+            type="button"
+            onClick={() => dispatch(stopEditingFuel())}
+            className="small-btn close"
+          >
             Close
           </button>
-          <button className="submit-button">Submit</button>
+          <button className="primary-btn save">Submit</button>
         </div>
       </form>
     </div>
@@ -100,7 +113,11 @@ const FuelEditForm = () => {
       <div className="modal-wrapper fuel-modal">
         <div className="modal-header">
           <h5>Edit {modalType}</h5>
-          <button type="button" onClick={() => dispatch(stopEditingFuel())}>
+          <button
+            type="button"
+            onClick={() => dispatch(stopEditingFuel())}
+            className="small-btn close-modal"
+          >
             <RiCloseFill />
           </button>
         </div>

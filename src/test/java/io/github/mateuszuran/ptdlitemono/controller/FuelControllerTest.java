@@ -21,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -222,5 +223,58 @@ class FuelControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("AdBlue data is empty"));
 
+    }
+
+    @Test
+    void givenFuelList_whenSave_thenReturnStatusCreated() throws Exception {
+        //given
+        var fuels = createFuelRequests();
+        //when + then
+        mockMvc.perform(post("/api/fuel/petrol/addmultiple")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(fuels)))
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    void givenAdBlueList_whenSave_thenReturnStatusCreated() throws Exception {
+        //given
+        var blues = createBlueRequests();
+        //when + then
+        mockMvc.perform(post("/api/fuel/blue/addmultiple")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(blues)))
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    private List<FuelRequest> createFuelRequests() {
+        List<FuelRequest> fuels = new ArrayList<>();
+        FuelRequest fuel1 = FuelRequest.builder().refuelingAmount(300).build();
+        FuelRequest fuel2 = FuelRequest.builder().refuelingAmount(400).build();
+        FuelRequest fuel3 = FuelRequest.builder().refuelingAmount(500).build();
+        FuelRequest fuel4 = FuelRequest.builder().refuelingAmount(600).build();
+        fuels.add(fuel1);
+        fuels.add(fuel2);
+        fuels.add(fuel3);
+        fuels.add(fuel4);
+        // Add fuel request objects to the list
+        return fuels;
+    }
+
+    private List<AdBlueRequest> createBlueRequests() {
+        List<AdBlueRequest> blues = new ArrayList<>();
+        AdBlueRequest blue1 = AdBlueRequest.builder().adBlueDate("1.01").build();
+        AdBlueRequest blue2 = AdBlueRequest.builder().adBlueDate("2.01").build();
+        AdBlueRequest blue3 = AdBlueRequest.builder().adBlueDate("3.01").build();
+        AdBlueRequest blue4 = AdBlueRequest.builder().adBlueDate("4.01").build();
+        blues.add(blue1);
+        blues.add(blue2);
+        blues.add(blue3);
+        blues.add(blue4);
+        return blues;
     }
 }

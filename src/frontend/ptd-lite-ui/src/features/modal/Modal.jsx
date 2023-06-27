@@ -20,14 +20,14 @@ const Modal = () => {
         <div className="btn-container">
           <button
             type="button"
-            className="btn confirm-btn"
+            className="primary-btn confirm-btn"
             onClick={handleConfirmModal}
           >
             confirm
           </button>
           <button
             type="button"
-            className="btn clear-btn"
+            className="primary-btn clear-btn"
             onClick={() => {
               dispatch(closeModal());
             }}

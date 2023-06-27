@@ -26,9 +26,21 @@ public class FuelController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PostMapping("/petrol/addmultiple")
+    public ResponseEntity<?> addMultipleFuels(@RequestBody List<FuelRequest> fuelDto, @RequestParam Long cardId) {
+        fuelService.addMultipleFuels(fuelDto, cardId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @PostMapping("/blue/add")
     public ResponseEntity<?> addAdBlue(@RequestBody AdBlueRequest request, @RequestParam Long cardId) {
         adBlueService.addNewAdBlue(request, cardId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/blue/addmultiple")
+    public ResponseEntity<?> addMultipleAdBlue(@RequestBody List<AdBlueRequest> request, @RequestParam Long cardId) {
+        adBlueService.addMultipleBlue(request, cardId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

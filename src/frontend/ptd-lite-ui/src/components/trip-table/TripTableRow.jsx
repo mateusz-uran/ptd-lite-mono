@@ -49,7 +49,11 @@ const TripTableRow = ({
         <td>{trip.counterEnd}</td>
         <td className="last-cell">
           <div>
-            <button type="button" onClick={() => handleEditTrip(trip)}>
+            <button
+              type="button"
+              onClick={() => handleEditTrip(trip)}
+              className="small-btn"
+            >
               <AiOutlineEdit className="edit" />
             </button>
           </div>

@@ -131,4 +131,53 @@ class FuelServiceTest {
 
         assertEquals(expectedResponse, result);
     }
+
+    @Test
+    void givenFuelList_whenSave_thenDoNothing() {
+        //given
+        List<Fuel> emptyFuelList = new ArrayList<>();
+        Card card = Card.builder().id(anyLong()).number("XYZ").fuels(emptyFuelList).build();
+        when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
+        var request = createFuelRequests();
+        var response = createFuels();
+        when(mapper.mapToFuelRequest(request.get(0))).thenReturn(response.get(0));
+        when(mapper.mapToFuelRequest(request.get(1))).thenReturn(response.get(1));
+        when(mapper.mapToFuelRequest(request.get(2))).thenReturn(response.get(2));
+        when(mapper.mapToFuelRequest(request.get(3))).thenReturn(response.get(3));
+        //when
+        service.addMultipleFuels(request, card.getId());
+        //then
+        var updatedCard = cardService.checkIfCardExists(card.getId());
+        assertThat(updatedCard.getFuels()).isEqualTo(response);
+    }
+
+    private List<FuelRequest> createFuelRequests() {
+        // Create and return a list of FuelRequest objects for testing
+        List<FuelRequest> fuels = new ArrayList<>();
+        FuelRequest fuel1 = FuelRequest.builder().refuelingAmount(300).build();
+        FuelRequest fuel2 = FuelRequest.builder().refuelingAmount(400).build();
+        FuelRequest fuel3 = FuelRequest.builder().refuelingAmount(500).build();
+        FuelRequest fuel4 = FuelRequest.builder().refuelingAmount(600).build();
+        fuels.add(fuel1);
+        fuels.add(fuel2);
+        fuels.add(fuel3);
+        fuels.add(fuel4);
+        // Add fuel request objects to the list
+        return fuels;
+    }
+
+    private List<Fuel> createFuels() {
+        // Create and return a list of Fuel objects for testing
+        List<Fuel> fuels = new ArrayList<>();
+        Fuel fuel1 = Fuel.builder().refuelingAmount(300).build();
+        Fuel fuel2 = Fuel.builder().refuelingAmount(400).build();
+        Fuel fuel3 = Fuel.builder().refuelingAmount(500).build();
+        Fuel fuel4 = Fuel.builder().refuelingAmount(600).build();
+        // Add fuel objects to the list
+        fuels.add(fuel1);
+        fuels.add(fuel2);
+        fuels.add(fuel3);
+        fuels.add(fuel4);
+        return fuels;
+    }
 }
