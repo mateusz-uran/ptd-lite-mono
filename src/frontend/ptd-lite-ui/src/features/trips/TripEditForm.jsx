@@ -1,13 +1,13 @@
-import '../../css/trip_edit_form.css';
+import '../../css/edit_modal.css';
 import { RiCloseFill } from 'react-icons/ri';
 import { MdSettingsBackupRestore } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import { tripSchemaSingle } from './tripValidations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import tripInputs from './tripInputs';
-import { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { stopEditing, tripToEdit } from './tripUpdateSlice';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { stopEditing } from './tripUpdateSlice';
 import { createPortal } from 'react-dom';
 import { useEditTripMutation } from '../../api/trips/tripsApiSlice';
 
@@ -91,7 +91,7 @@ const TripEditForm = ({ tripToEdit }) => {
       <div className="modal-wrapper">
         <div className="modal-header">
           <h5>Edit trip</h5>
-          <button>
+          <button type="button" onClick={() => dispatch(stopEditing())}>
             <RiCloseFill />
           </button>
         </div>

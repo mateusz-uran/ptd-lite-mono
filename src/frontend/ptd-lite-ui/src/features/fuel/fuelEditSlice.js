@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   isOpen: false,
   fuelName: '',
-  fuelIdObject: null,
+  fuelObject: null,
 };
 
 const fuelEditSlice = createSlice({
@@ -13,7 +13,7 @@ const fuelEditSlice = createSlice({
     startEditingFuel: (state, action) => {
       state.isOpen = true;
       state.fuelName = action.payload.name;
-      state.fuelIdObject = action.payload.objectId;
+      state.fuelObject = action.payload.object;
     },
     stopEditingFuel: () => initialState,
   },
@@ -21,7 +21,7 @@ const fuelEditSlice = createSlice({
 
 export const isModalOpen = (state) => state.fuelEdit.isOpen;
 export const editType = (state) => state.fuelEdit.fuelName;
-export const fuelToEdit = (state) => state.fuelEdit.fuelIdObject;
+export const fuelToEdit = (state) => state.fuelEdit.fuelObject;
 
 export const { startEditingFuel, stopEditingFuel } = fuelEditSlice.actions;
 

@@ -37,9 +37,7 @@ export const tripApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
         body: trips,
       }),
-      invalidatesTags: (result, error, arg) => {
-        return [{ type: 'Trips', id: 'LIST' }];
-      },
+      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
     }),
     editTrip: builder.mutation({
       query: (tripPayload) => ({
@@ -47,9 +45,9 @@ export const tripApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: tripPayload.updatedTrip,
       }),
-      invalidatesTags: (result, error, arg) => {
-        return [{ type: 'Trips', id: 'LIST' }];
-      },
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Trips', id: arg.tripId },
+      ],
     }),
   }),
 });

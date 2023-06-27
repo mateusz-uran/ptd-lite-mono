@@ -1,9 +1,21 @@
 import { AiOutlineEdit } from 'react-icons/ai';
 import { MdDeleteOutline } from 'react-icons/md';
 import { Fragment } from 'react';
+import FuelEditForm from '../../features/fuel/FuelEditForm';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  editType,
+  isModalOpen,
+  startEditingFuel,
+} from '../../features/fuel/fuelEditSlice';
 
 const AdBlueTableRow = ({ blueEntities }) => {
-  const handleEditBlue = (blueId) => {};
+  const dispatch = useDispatch();
+  const modalStatus = useSelector(isModalOpen);
+  const modalType = useSelector(editType);
+  const handleEditBlue = (blue) => {
+    dispatch(startEditingFuel({ name: 'blue', object: blue }));
+  };
 
   const handleDeleteAdBlue = async (blueId) => {};
 
@@ -15,7 +27,7 @@ const AdBlueTableRow = ({ blueEntities }) => {
           <td>{blue.adBlueLocalization}</td>
           <td>{blue.adBlueAmount}</td>
           <td className="last-cell">
-            <button onClick={() => handleEditBlue(blue.id)}>
+            <button onClick={() => handleEditBlue(blue)}>
               <AiOutlineEdit className="edit" />
             </button>
             <button onClick={() => handleDeleteAdBlue(blue.id)}>
@@ -24,6 +36,7 @@ const AdBlueTableRow = ({ blueEntities }) => {
           </td>
         </tr>
       ))}
+      {modalStatus && modalType === 'blue' && <FuelEditForm />}
     </Fragment>
   );
 };

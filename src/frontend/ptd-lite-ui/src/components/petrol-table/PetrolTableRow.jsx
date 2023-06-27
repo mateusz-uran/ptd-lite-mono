@@ -1,18 +1,23 @@
 import { AiOutlineEdit } from 'react-icons/ai';
-import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdDeleteOutline } from 'react-icons/md';
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { useDeletePetrolMutation } from '../../api/petrol/petrolApiSlice';
-import { useDispatch } from 'react-redux';
-import { startEditing } from '../../features/trips/tripUpdateSlice';
-import { startEditingFuel } from '../../features/fuel/fuelEditSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  editType,
+  isModalOpen,
+  startEditingFuel,
+} from '../../features/fuel/fuelEditSlice';
+import FuelEditForm from '../../features/fuel/FuelEditForm';
 
 const PetrolTableRow = ({ petrolEntities }) => {
   const dispatch = useDispatch();
   const [deletePetrol] = useDeletePetrolMutation();
-  const handleEditPetrol = (petrolId) => {
-    console.log('edit');
-    dispatch(startEditingFuel({ name: 'petrol', objectId: petrolId }));
+  const modalStatus = useSelector(isModalOpen);
+  const modalType = useSelector(editType);
+
+  const handleEditPetrol = (petrol) => {
+    dispatch(startEditingFuel({ name: 'petrol', object: petrol }));
   };
 
   const handleDeletePetrol = async (petrolId) => {
@@ -29,7 +34,7 @@ const PetrolTableRow = ({ petrolEntities }) => {
           <td>{fuel.refuelingAmount}</td>
           <td>{fuel.paymentMethod}</td>
           <td className="last-cell">
-            <button onClick={() => handleEditPetrol(fuel.id)}>
+            <button onClick={() => handleEditPetrol(fuel)}>
               <AiOutlineEdit className="edit" />
             </button>
             <button onClick={() => handleDeletePetrol(fuel.id)}>
@@ -38,6 +43,7 @@ const PetrolTableRow = ({ petrolEntities }) => {
           </td>
         </tr>
       ))}
+      {modalStatus && modalType === 'petrol' && <FuelEditForm />}
     </Fragment>
   );
 };
