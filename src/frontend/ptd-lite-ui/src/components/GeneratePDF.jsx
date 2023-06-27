@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { getAdditionalInfo } from '../features/additionalInfo/additionalInfoSlice';
 import { getAccessToken } from '../features/auth/auth0Slice';
 import { useParams } from 'react-router-dom';
+import { Fragment, useState } from 'react';
+import ProgressModal from '../features/pdf/ProgressModal';
 
 const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -12,8 +14,10 @@ const GeneratePDF = () => {
   const { cardId } = useParams();
   const accessToken = useSelector(getAccessToken);
   const additionalInfo = useSelector(getAdditionalInfo);
+  const [showProgressModal, setShowProgressModal] = useState(false);
 
   const generatePDF = async (page) => {
+    setShowProgressModal(true);
     const username = user.nickname;
     const url = `${API_URL}/pdf/generate-doc`;
     try {
@@ -32,13 +36,13 @@ const GeneratePDF = () => {
       const blob = new Blob([response.data], { type: 'application/pdf' });
       const objectURL = URL.createObjectURL(blob);
 
-      // Open a new window/tab with the PDF
       window.open(objectURL, '_blank');
 
-      // Clean up the object URL
       URL.revokeObjectURL(objectURL);
+      setShowProgressModal(false);
     } catch (error) {
       console.error('Error generating PDF:', error);
+      setShowProgressModal(false);
     }
   };
 
@@ -65,6 +69,7 @@ const GeneratePDF = () => {
           </button>
         </li>
       </ul>
+      {showProgressModal && <ProgressModal />}
     </div>
   );
 };
