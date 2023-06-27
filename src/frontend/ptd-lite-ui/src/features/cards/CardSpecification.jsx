@@ -36,7 +36,9 @@ const CardSpecification = () => {
           <h5>Manage</h5>
           <div className="buttons-wrapper">
             <button className="primary-btn pdf-button">Download pdf</button>
-            <button className="primary-btn">Add trips</button>
+            <Link to={`/home/cards/${cardNumber}/${cardId}/add/trip`}>
+              <button className="primary-btn">Add trips</button>
+            </Link>
             <Link to={`/home/cards/${cardNumber}/${cardId}/add/${'petrol'}`}>
               <button className="primary-btn">Add petrol</button>
             </Link>

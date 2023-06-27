@@ -187,3 +187,199 @@ body {
   padding: 0.3em;
   font-weight: 600;
 }
+
+/* ====== Add forms for trips and fuels ====== */
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.form-wrapper .fields-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  padding: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.form-wrapper .fields-wrapper .inputs-wrapper {
+  display: flex;
+}
+
+.form-wrapper .fields-wrapper .inputs-wrapper .single-input {
+  margin-right: 10px;
+}
+
+.form-wrapper .fields-wrapper button.remove {
+  font-size: 17px;
+  box-shadow: var(--small-btn-shadow);
+}
+
+.form-wrapper .buttons-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem 0;
+}
+
+.form-wrapper .buttons-wrapper button.add {
+  margin-right: 10px;
+  font-size: 17px;
+  box-shadow: var(--small-btn-shadow);
+}
+
+.form-wrapper .buttons-wrapper button.submit {
+  box-shadow: var(--big-btn-shadow);
+}
+
+.form-wrapper .buttons-wrapper button.submit:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.form-wrapper.trips {
+  padding: 0.4rem;
+}
+
+.form-wrapper.trips .fields-wrapper {
+  align-items: center;
+  padding: 0;
+  box-shadow: none;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.form-wrapper.trips .fields-wrapper .inputs-wrapper {
+  padding: 0.5rem 0;
+}
+
+.form-wrapper.trips .fields-wrapper .inputs-wrapper .start,
+.form-wrapper.trips .fields-wrapper .inputs-wrapper .end {
+  text-align: center;
+  margin: 0 5px;
+  flex-wrap: wrap;
+  padding: 0.4rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.form-wrapper.trips .fields-wrapper .inputs-wrapper h5 {
+  margin-bottom: 5px;
+  opacity: 0.5;
+}
+
+.form-wrapper.trips .fields-wrapper .inputs-wrapper .inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-wrapper
+  .fields-wrapper
+  .inputs-wrapper
+  .inputs
+  .single-input
+  p.trip-error {
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.form-wrapper.trips
+  .fields-wrapper
+  .inputs-wrapper
+  .inputs
+  input::-webkit-outer-spin-button,
+.form-wrapper.trips
+  .fields-wrapper
+  .inputs-wrapper
+  .inputs
+  input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.form-wrapper.trips
+  .fields-wrapper
+  .inputs-wrapper
+  .inputs
+  input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.form-wrapper.trips .fields-wrapper .inputs-wrapper .start:focus-within,
+.form-wrapper.trips .fields-wrapper .inputs-wrapper .end:focus-within {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.3) 0px 0px 1px 0px;
+}
+
+.form-wrapper.trips .fields-wrapper .inputs-wrapper .start:focus-within h5,
+.form-wrapper.trips .fields-wrapper .inputs-wrapper .end:focus-within h5 {
+  opacity: 1;
+}
+/**/
+
+@media screen and (max-width: 810px) {
+  .form-wrapper.trips .fields-wrapper .inputs-wrapper .inputs {
+    flex-direction: column;
+  }
+
+  .form-wrapper.trips .fields-wrapper .inputs-wrapper .single-input {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .form-wrapper .fields-wrapper .inputs-wrapper {
+    flex-direction: column;
+  }
+
+  .form-wrapper .fields-wrapper .inputs-wrapper .single-input {
+    margin-top: 10px;
+  }
+
+  .form-wrapper.trips .fields-wrapper .inputs-wrapper {
+    flex-direction: row;
+  }
+
+  .form-wrapper.trips .fields-wrapper button.remove {
+    margin-right: 5px;
+  }
+}
+
+@media screen and (max-width: 397px) {
+  .form-wrapper .fields-wrapper {
+    flex-direction: column;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  }
+
+  .form-wrapper.trips .fields-wrapper {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  }
+
+  .form-wrapper.trips .fields-wrapper .inputs-wrapper {
+    flex-direction: column;
+  }
+
+  .form-wrapper.trips .fields-wrapper .inputs-wrapper .start,
+  .form-wrapper.trips .fields-wrapper .inputs-wrapper .end {
+    margin-top: 10px;
+  }
+
+  .form-wrapper .fields-wrapper button.remove {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}

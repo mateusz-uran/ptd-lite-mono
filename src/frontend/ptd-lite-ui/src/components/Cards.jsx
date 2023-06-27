@@ -88,7 +88,7 @@ const Cards = () => {
             <Link to={`${card.number}/${card.id}`}>
               <button className="primary-btn">Browse</button>
             </Link>
-            <Link>
+            <Link to={`${card.number}/${card.id}/add/trip`}>
               <button className="primary-btn">Add trip</button>
             </Link>
             <Link to={`${card.number}/${card.id}/add/${'petrol'}`}>

@@ -1,4 +1,3 @@
-import '../../css/fuel_form.css';
 import { IoIosRemove } from 'react-icons/io';
 import { GrFormAdd } from 'react-icons/gr';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -61,7 +60,7 @@ const FuelAddForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="fuel-form">
+    <form onSubmit={handleSubmit(onSubmit)} className="form-wrapper">
       {fields.map((field, index) => (
         <div key={field.id} className="fields-wrapper">
           <div className="inputs-wrapper">
