@@ -9,6 +9,7 @@ import ProgressModal from '../features/pdf/ProgressModal';
 import { useTranslation } from 'react-i18next';
 
 const API_URL = import.meta.env.VITE_BACKEND_API_URL;
+const FRONTEND_URL = import.meta.env.VITE_FRONT_URL;
 
 const GeneratePDF = () => {
   const { t } = useTranslation();
@@ -25,6 +26,7 @@ const GeneratePDF = () => {
     try {
       const response = await axios.post(url, additionalInfo, {
         headers: {
+          'Access-Control-Allow-Origin': FRONTEND_URL,
           Authorization: `Bearer ${accessToken}`,
         },
         params: {
