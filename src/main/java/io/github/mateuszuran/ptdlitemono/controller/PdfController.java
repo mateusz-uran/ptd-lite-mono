@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,9 @@ public class PdfController {
     private final TemplateEngine template;
     private final PdfParser parser;
 
+    @Value("${backend.url}")
+    private String backendUrl;
+
     @PostMapping("/generate")
     public ResponseEntity<?> generatePdf(
             @RequestBody PdfRequest pdfRequest,
@@ -42,7 +46,7 @@ public class PdfController {
         ByteArrayOutputStream target = new ByteArrayOutputStream();
 
         ConverterProperties converterProperties = new ConverterProperties();
-        converterProperties.setBaseUri("http://localhost:8181");
+        converterProperties.setBaseUri(backendUrl);
 
         HtmlConverter.convertToPdf(orderHtml, target, converterProperties);
 
