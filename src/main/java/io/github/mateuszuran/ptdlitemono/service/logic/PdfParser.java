@@ -8,6 +8,7 @@ import io.github.mateuszuran.ptdlitemono.service.PdfService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -21,6 +22,9 @@ import java.io.IOException;
 public class PdfParser {
     private final PdfService pdfService;
     private final TemplateEngine template;
+
+    @Value("${backend.url}")
+    private String backendUrl;
 
     private WebContext createContext(HttpServletRequest req, HttpServletResponse res) {
         var application = JakartaServletWebApplication.buildApplication(req.getServletContext());
@@ -43,7 +47,7 @@ public class PdfParser {
     private byte[] convertHtmlToPdf(String orderHtml) {
         try (ByteArrayOutputStream target = new ByteArrayOutputStream()) {
             ConverterProperties converterProperties = new ConverterProperties();
-            converterProperties.setBaseUri("http://localhost:8080");
+            converterProperties.setBaseUri(backendUrl);
 
             HtmlConverter.convertToPdf(orderHtml, target, converterProperties);
 
