@@ -5,8 +5,8 @@ pdf:
   csv:
     link: ${CSV_LINK}
 frontend:
-  url: ${FRONTEND_API_URI}
-  urls: ${FRONTEND_API_URI1},${FRONTEND_API_URI2}
+  url1: ${FRONTEND_API_URI1}
+  url2: ${FRONTEND_API_URI2}
 backend:
   url: ${BACKEND_API_URL}
 

@@ -22,11 +22,10 @@ public class SecurityFilter {
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private String issuer;
 
-    @Value("${frontend.url}")
-    private String frontendUrl;
-
-    @Value("#{'${frontend.urls}'.split(',')}")
-    private List<String> frontendUrls;
+    @Value("${frontend.url1}")
+    private String frontendUrl1;
+    @Value("${frontend.url2}")
+    private String frontendUrl2;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -57,7 +56,7 @@ public class SecurityFilter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(frontendUrls);
+        corsConfig.setAllowedOrigins(List.of(frontendUrl1, frontendUrl2));
         corsConfig.setMaxAge(8000L);
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");
