@@ -2,7 +2,10 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import io.github.mateuszuran.ptdlitemono.dto.CardDetailsResponse;
+import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.dto.PdfCsvReader;
+import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyValuesException;
 import io.github.mateuszuran.ptdlitemono.exception.CsvFileException;
@@ -23,7 +26,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PdfService {
+    private final CardService cardService;
 
     @Value("${pdf.csv.link}")
     private String csvLink;
@@ -56,20 +61,38 @@ public class PdfService {
     }
 
     public Counters calculateCounters(PdfRequest pdfRequest) {
-        var firstCounterFromCard = pdfRequest.getCardTripsList().stream().mapToInt(CardTrips::getCounterStart).min()
-                .orElseThrow(CardEmptyValuesException::new);
-        var lastCounterFromCard = pdfRequest.getCardTripsList().stream().mapToInt(CardTrips::getCounterEnd).max()
-                .orElseThrow(CardEmptyValuesException::new);
-
+        var firstCounterFromCard = pdfRequest.getCardTripsList().stream().mapToInt(CardTrips::getCounterStart).min();
+        var lastCounterFromCard = pdfRequest.getCardTripsList().stream().mapToInt(CardTrips::getCounterEnd).max();
         var sumMileage = pdfRequest.getCardTripsList().stream().mapToInt(CardTrips::getCarMileage).sum();
-
         var cardRefuelingAmount = pdfRequest.getCardFuelsList().stream().mapToInt(CardFuels::getRefuelingAmount).sum();
 
+        //when trips are empty
+        int firstCounter = firstCounterFromCard.orElse(0);
+        int lastCounter = lastCounterFromCard.orElse(0);
+
         return Counters.builder()
-                .firstCounter(firstCounterFromCard)
-                .lastCounter(lastCounterFromCard)
+                .firstCounter(firstCounter)
+                .lastCounter(lastCounter)
                 .mileage(sumMileage)
                 .refuelingSum(cardRefuelingAmount)
+                .build();
+    }
+
+    public Counters calculateCountersV2(CardDetailsResponse response) {
+        var firstTrip = response.getTrips().stream().mapToInt(TripResponse::getCounterStart).min();
+        var lastTrip = response.getTrips().stream().mapToInt(TripResponse::getCounterEnd).max();
+        var tripsMileage = response.getTrips().stream().mapToInt(TripResponse::getCarMileage).sum();
+        var petrolSum = response.getFuels().stream().mapToInt(FuelResponse::getRefuelingAmount).sum();
+
+        //when trips are empty
+        int firstCounter = firstTrip.orElse(0);
+        int lastCounter = lastTrip.orElse(0);
+
+        return Counters.builder()
+                .firstCounter(firstCounter)
+                .lastCounter(lastCounter)
+                .mileage(tripsMileage)
+                .refuelingSum(petrolSum)
                 .build();
     }
 
@@ -84,6 +107,20 @@ public class PdfService {
                 .cardFuelsList(pdfRequest.getCardFuelsList())
                 .cardAdBlueList(pdfRequest.getCardAdBlueList())
                 .info(pdfRequest.getInfo())
+                .build();
+    }
+
+    public PdfSource retrieveInformation(String username, Long cardId) {
+        var userInfo = getUserInformation(username);
+        var cardInfo = cardService.getCardDetails(cardId);
+        var counters = calculateCountersV2(cardInfo);
+        return PdfSource.builder()
+                .pdfCsvReader(userInfo)
+                .counters(counters)
+                .cardNumber(cardInfo.getCardNumber())
+                .cardTripsList(cardInfo.getTrips())
+                .cardFuelsList(cardInfo.getFuels())
+                .cardAdBlueList(cardInfo.getBlue())
                 .build();
     }
 }

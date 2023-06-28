@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
     Optional<List<Trip>> findAllByIdIn(List<Long> tripIds);
+
+    Optional<List<Trip>> findAllTripsByCardId(Long cardId);
 }

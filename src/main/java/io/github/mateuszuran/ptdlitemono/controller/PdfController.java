@@ -5,6 +5,7 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import io.github.mateuszuran.ptdlitemono.pdf.CardAdditionalInfo;
 import io.github.mateuszuran.ptdlitemono.pdf.PdfRequest;
 import io.github.mateuszuran.ptdlitemono.service.PdfService;
+import io.github.mateuszuran.ptdlitemono.service.logic.PdfParser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 public class PdfController {
     private final PdfService service;
     private final TemplateEngine template;
+    private final PdfParser parser;
 
     @PostMapping("/generate")
     public ResponseEntity<?> generatePdf(
@@ -55,5 +57,20 @@ public class PdfController {
         var application = JakartaServletWebApplication.buildApplication(req.getServletContext());
         var exchange = application.buildExchange(req, res);
         return new WebContext(exchange);
+    }
+
+    @PostMapping("/generate-doc")
+    public ResponseEntity<?> generatePdfFromParser(
+            @RequestParam String username,
+            @RequestParam Long cardId,
+            @RequestParam(required = false) String page,
+            @RequestBody CardAdditionalInfo info,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        var result = parser.generatePdf(request, response, username, cardId, page, info);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(result);
     }
 }

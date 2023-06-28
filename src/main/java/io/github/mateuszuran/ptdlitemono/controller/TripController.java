@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
+import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
 import io.github.mateuszuran.ptdlitemono.service.TripService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,25 @@ public class TripController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<?> addTrips(@RequestBody List<TripRequest> trips, @RequestParam Long cardId) {
+        service.addTips(trips, cardId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @DeleteMapping
     public ResponseEntity<?> deleteAll(@RequestBody List<Long> selectedTripId) {
         service.deleteSelected(selectedTripId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TripResponse>> getTrips(@RequestParam Long cardId) {
+        return ResponseEntity.ok().body(service.retrieveTripsFromCard(cardId));
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<TripResponse> updateTrip(@RequestParam Long tripId, @RequestBody TripRequest request) {
+        return ResponseEntity.ok().body(service.editTrip(tripId, request));
     }
 }

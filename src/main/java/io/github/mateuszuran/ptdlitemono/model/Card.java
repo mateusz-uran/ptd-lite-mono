@@ -1,11 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,7 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "cards")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -26,15 +23,27 @@ public class Card {
     @Column(name = "creation_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime creationTime;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "card_id")
-    private List<Fuel> fuels = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "card_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "card")
     private List<Trip> trips = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "card_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "card")
+    private List<Fuel> fuels = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "card")
     private List<AdBlue> adBlue = new ArrayList<>();
+
+    public void addTrip(Trip trip) {
+        this.trips.add(trip);
+        trip.setCard(this);
+    }
+
+    public void addFuel(Fuel fuel) {
+        this.fuels.add(fuel);
+        fuel.setCard(this);
+    }
+
+    public void addBlue(AdBlue blue) {
+        this.adBlue.add(blue);
+        blue.setCard(this);
+    }
 }

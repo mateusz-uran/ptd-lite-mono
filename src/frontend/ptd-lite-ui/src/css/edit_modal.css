@@ -1,0 +1,145 @@
+.edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-modal .modal-wrapper {
+  min-height: 40vh;
+  background: var(--body-color);
+  border-radius: 5px;
+  max-width: 60vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.edit-modal .modal-wrapper .modal-header {
+  display: flex;
+  position: relative;
+  padding: 1rem 1.5rem;
+}
+
+.edit-modal .modal-wrapper .modal-header h5 {
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.edit-modal .modal-wrapper .modal-header button.close-modal {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper {
+  padding: 0.5rem 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-modal form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.edit-modal .modal-wrapper .form-wrapper form .start,
+.edit-modal .modal-wrapper .form-wrapper form .end,
+.edit-modal .modal-wrapper .form-wrapper form .button-wrapper {
+  display: flex;
+  flex: 1 0 33.33%;
+  margin: 5px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .start,
+.edit-modal .modal-wrapper .form-wrapper .end {
+  flex-grow: 1;
+  background: #fff;
+  padding: 1rem 0.5rem;
+  border-radius: 5px;
+  flex-direction: column;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .start:focus-within,
+.edit-modal .modal-wrapper .form-wrapper .end:focus-within {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .start h5,
+.edit-modal .modal-wrapper .form-wrapper .end h5 {
+  text-align: center;
+  color: var(--text-color);
+}
+
+.edit-modal .modal-wrapper .form-wrapper .single-input {
+  margin-right: 3px;
+  margin-bottom: 5px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-end;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.clear {
+  font-weight: 600;
+  margin-right: auto;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.clear .icon {
+  margin-right: 2px;
+  font-size: 12px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.close {
+  margin-right: 10px;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.save {
+  background: var(--primary-color);
+  color: #fff;
+  transition: var(--tran-03);
+}
+
+.edit-modal .modal-wrapper .form-wrapper .button-wrapper button.save:hover {
+  background: rgba(61, 127, 58, 0.9);
+}
+
+/*fuel form*/
+
+.edit-modal .modal-wrapper.fuel-modal {
+  width: 50vw;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .fuel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-modal .modal-wrapper .form-wrapper .fuel .button-wrapper.fuel-button {
+  display: flex;
+  flex: 0;
+  width: 100%;
+}
+
+.edit-modal
+  .modal-wrapper
+  .form-wrapper
+  .button-wrapper.fuel-button
+  .left-button {
+  margin-right: auto;
+}

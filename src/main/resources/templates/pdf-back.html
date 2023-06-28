@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        name="viewport">
+  <meta content="ie=edge" http-equiv="X-UA-Compatible">
+  <title>Title</title>
+  <style>
+      @page {
+          size: A4 landscape;
+      }
+      #trip_table {
+          width: 100%;
+          border-collapse: collapse;
+          text-align: center;
+          border-style: hidden;
+          border-left: 1px solid rgba(0,0,0,0.25);
+          border-right: 1px solid rgba(0,0,0,0.25);
+          border-top: 1px solid rgba(0,0,0,0.25);
+          font-size: smaller;
+          page-break-inside: auto
+      }
+
+      #trip_table tr {
+          page-break-inside: avoid;
+          page-break-after: auto;
+      }
+
+      #trip_table td {
+          page-break-inside: avoid;
+          page-break-after: auto;
+      }
+
+      #trip_table thead {
+          display: table-header-group;
+      }
+
+      #trip_table tfoot {
+          display: table-footer-group;
+      }
+
+      #trip_table td {
+          padding: 5px;
+      }
+
+      #trip_table tr th {
+          border: 1px solid rgba(0,0,0,0.25);
+      }
+
+      #trip_table tr td {
+          border: 1px solid rgba(0,0,0,0.25);
+      }
+
+      #trip_table .start {
+          color: #2323DC;
+          padding: 0;
+      }
+
+      #trip_table .end {
+          color: #DC2300;
+          padding: 0;
+      }
+
+      #trip_table .misc {
+          color: #008000;
+          padding: 0;
+      }
+
+      #trip_table .middle {
+          border-right: 1px double rgba(0,0,0, 1);
+      }
+
+      #end_table {
+          width: 100%;
+          border-collapse: collapse;
+          border-style: hidden;
+          border-left: 1px solid rgba(0,0,0,0.25);
+          border-right: 1px solid rgba(0,0,0,0.25);
+          border-bottom: 1px solid rgba(0,0,0,0.25);
+          border-top: 1px solid rgba(0, 0, 0, 0.25);
+          page-break-before: auto;
+      }
+
+      #end_table p {
+        display: inline-block;
+        margin: 0 auto;
+        padding: 8px 5px;
+      }
+    </style>
+</head>
+<body>
+<table id="trip_table">
+  <thead>
+  <tr>
+    <th colspan="5" class="start middle">WYJAZD</th>
+    <th colspan="5" class="end middle">PRZYJAZD</th>
+    <th rowspan="2" class="misc">Przebieg</th>
+    <th rowspan="2" class="misc">Nazwa ładunku</th>
+    <th rowspan="2" class="misc">Tonaż (kg)</th>
+  </tr>
+  <tr>
+    <td class="start">Data</td>
+    <td class="start">Godzina</td>
+    <td class="start">Miejscowość</td>
+    <td class="start">Państwo</td>
+    <td class="start middle">Licznik</td>
+    <td class="end">Data</td>
+    <td class="end">Godzina</td>
+    <td class="end">Miejscowość</td>
+    <td class="end">Państwo</td>
+    <td class="end middle">Licznik</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="trip, index : ${pdf.cardTripsList}">
+    <td th:text="${trip.dayStart}"></td>
+    <td th:text="${trip.hourStart}"></td>
+    <td th:text="${trip.locationStart}"></td>
+    <td th:text="${trip.countryStart}"></td>
+    <td th:text="${trip.counterStart}" class="middle"></td>
+    <td th:text="${trip.dayEnd}"></td>
+    <td th:text="${trip.hourEnd}"></td>
+    <td th:text="${trip.locationEnd}"></td>
+    <td th:text="${trip.countryEnd}"></td>
+    <td th:text="${trip.counterEnd}" class="middle"></td>
+    <td th:text="${trip.carMileage}">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="10" style="border: 0;"></td>
+    <td style="border: 0">
+            <span>
+              <p
+                      style="margin: 0; font-weight: bold"
+                      th:text="'Razem ' + ${pdf.counters.mileage} + ' km'"
+              >
+                Razem 12345 km
+              </p>
+            </span>
+    </td>
+    <td colspan="4" style="border: 0;"></td>
+  </tr>
+  </tfoot>
+</table>
+<table id="end_table">
+  <tr>
+    <td>
+          <span>
+            <p>Dane etapowe z przejazdu z wg. wskazan komputera:</p>
+          </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+          <span>
+            <p>
+              Km przejechane na etapie:
+            </p>
+            <p style="text-decoration: underline;" th:text="${pdf.counters.mileage}">................</p>
+            <p>
+              Srednie zuzycie paliwa na etapie:
+            </p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.avgFuelConsumption}">...............</p>
+            <p>
+              Calkowite zuzycie paliwa na etapie:
+            </p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.totalFuelConsumption}">................</p>
+          </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+          <span>
+            <p>Srendia predkosc na etapie:</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.avgSpeed}">..........................</p>
+            <p>Zuzycie paliwa na biegu jalowym na etapie:</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.fuelConsumptionIdle}">..........................</p>
+          </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+          <span>
+            <p>Zuzycie paliwa na nieekonomicznych obrotach:</p>
+            <p style="text-decoration: underline;" th:text="${pdf.info.fuelConsumptionUneconomical}">..........................</p>
+          </span>
+    </td>
+    <td>
+          <span>
+            <p>............................................</p>
+          </span>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td style="text-align: center">
+          <span>
+            <p style="padding: 0">podpis kierowcy</p>
+          </span>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
