@@ -7,6 +7,8 @@ pdf:
 frontend:
   url: ${FRONTEND_API_URI}
   urls: ${FRONTEND_API_URI1},${FRONTEND_API_URI2}
+backend:
+  url: ${BACKEND_API_URL}
 
 spring:
   jpa:
