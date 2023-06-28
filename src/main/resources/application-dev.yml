@@ -4,6 +4,7 @@ pdf:
 
 frontend:
   url: http://localhost:5173
+  urls: http://localhost:5173, http://localhost:5173/home
 
 spring:
   jpa:

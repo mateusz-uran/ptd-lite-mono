@@ -25,6 +25,9 @@ public class SecurityFilter {
     @Value("${frontend.url}")
     private String frontendUrl;
 
+    @Value("#{'${frontend.urls}'.split(',')}")
+    private List<String> frontendUrls;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -54,7 +57,7 @@ public class SecurityFilter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of(frontendUrl));
+        corsConfig.setAllowedOrigins(frontendUrls);
         corsConfig.setMaxAge(8000L);
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");
