@@ -7,12 +7,22 @@ import '../css/sidebar.css';
 import { useState } from 'react';
 import CardsMini from '../features/cards/CardsMini';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { clearAuthContext } from '../features/auth/auth0Slice';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Sidebar = () => {
   const { t } = useTranslation();
+  const { logout } = useAuth0();
+  const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
   const outlet = useOutlet();
+
+  const handleLogout = () => {
+    logout();
+    dispatch(clearAuthContext());
+  };
 
   return (
     <div className="sidebar-wrapper">
@@ -77,7 +87,7 @@ const Sidebar = () => {
           </ul>
 
           <footer className="logout-button">
-            <button>
+            <button onClick={handleLogout}>
               <MdLogout className="icon" />
               <span>{t('buttons.logout')}</span>
             </button>
