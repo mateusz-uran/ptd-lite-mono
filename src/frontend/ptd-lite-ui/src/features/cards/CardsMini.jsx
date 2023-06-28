@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import '../../css/cards_mini.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useGetLastCardsQuery } from '../../api/card/cardApiSlice';
+import { useTranslation } from 'react-i18next';
 
 const CardsMini = () => {
+  const { t } = useTranslation();
   const { user } = useAuth0();
 
   const {
@@ -34,7 +36,7 @@ const CardsMini = () => {
       <section className="cards-mini">
         <ul>
           <li>
-            <span className="empty">Error</span>
+            <span className="empty">{t('misc.cardsMiniError')}</span>
           </li>
         </ul>
       </section>
@@ -66,7 +68,7 @@ const CardsMini = () => {
       <section className="cards-mini">
         <ul>
           <li>
-            <span className="empty">No data</span>
+            <span className="empty">{t('misc.cardsMiniNoData')}</span>
           </li>
         </ul>
       </section>

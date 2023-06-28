@@ -1,12 +1,14 @@
+import { useTranslation } from 'react-i18next';
 import Header from './Header';
 
 const Statistics = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <Header
         compArray={[
           {
-            compName: 'Statistics',
+            compName: t('misc.stats'),
           },
         ]}
       />

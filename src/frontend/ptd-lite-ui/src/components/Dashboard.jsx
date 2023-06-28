@@ -1,12 +1,14 @@
+import { useTranslation } from 'react-i18next';
 import Header from './Header';
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <Header
         compArray={[
           {
-            compName: 'Dashboard',
+            compName: t('misc.dashboard'),
           },
         ]}
       />

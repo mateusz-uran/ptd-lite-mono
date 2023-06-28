@@ -9,7 +9,9 @@ import {
 import { useSelector } from 'react-redux';
 import LoadingDots from '../LoadingDots';
 import TripTableRow from './TripTableRow';
+import { useTranslation } from 'react-i18next';
 const TripTable = ({ cardId }) => {
+  const { t } = useTranslation();
   const { isLoading, isSuccess, isError, error } =
     useGetTripsByCardIdQuery(cardId);
   const [deleteTrips] = useDeleteTripsMutation();
@@ -48,7 +50,7 @@ const TripTable = ({ cardId }) => {
     tableContent = (
       <tr>
         <td colSpan={12}>
-          <span className="empty-response">{error.data?.description}</span>
+          <span className="empty-response">{t('misc.tripTableEmpty')}</span>
         </td>
       </tr>
     );
@@ -58,9 +60,7 @@ const TripTable = ({ cardId }) => {
     tableContent = (
       <tr>
         <td colSpan={12}>
-          <span className="empty-response">
-            Server is not available at the moment, try again later.
-          </span>
+          <span className="empty-response">{t('misc.errorMessage')}.</span>
         </td>
       </tr>
     );
@@ -68,7 +68,7 @@ const TripTable = ({ cardId }) => {
 
   return (
     <div className="trip-table">
-      <h3>Trips</h3>
+      <h3>{t('misc.tripHead')}</h3>
       <table>
         <thead>
           <tr>
@@ -81,22 +81,22 @@ const TripTable = ({ cardId }) => {
                 <MdDeleteOutline className="icon" />
               </button>
             </th>
-            <th colSpan={5}>Start</th>
-            <th colSpan={5}>End</th>
+            <th colSpan={5}>{t('misc.tripStart')}</th>
+            <th colSpan={5}>{t('misc.tripEnd')}</th>
             <th></th>
           </tr>
           <tr>
             <th></th>
-            <th>Day</th>
-            <th>Hour</th>
-            <th>Location</th>
-            <th>Country</th>
-            <th>Counter</th>
-            <th>Day</th>
-            <th>Hour</th>
-            <th>Location</th>
-            <th>Country</th>
-            <th>Counter</th>
+            <th>{t('tripInputs.day')}</th>
+            <th>{t('tripInputs.hour')}</th>
+            <th>{t('tripInputs.location')}</th>
+            <th>{t('tripInputs.country')}</th>
+            <th>{t('tripInputs.counter')}</th>
+            <th>{t('tripInputs.day')}</th>
+            <th>{t('tripInputs.hour')}</th>
+            <th>{t('tripInputs.location')}</th>
+            <th>{t('tripInputs.country')}</th>
+            <th>{t('tripInputs.counter')}</th>
             <th></th>
           </tr>
         </thead>

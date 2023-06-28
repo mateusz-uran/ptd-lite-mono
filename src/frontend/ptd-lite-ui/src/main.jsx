@@ -6,6 +6,7 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import { store } from './store.js';
 import { Provider } from 'react-redux';
 import Auth0Wrapper from './features/auth/Auth0Wrapper.jsx';
+import './i18n.js';
 
 const providerConfig = {
   domain: import.meta.env.VITE_AUTH0_DOMAIN,

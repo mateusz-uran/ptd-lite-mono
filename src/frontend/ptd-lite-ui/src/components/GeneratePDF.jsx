@@ -4,12 +4,14 @@ import { useSelector } from 'react-redux';
 import { getAdditionalInfo } from '../features/additionalInfo/additionalInfoSlice';
 import { getAccessToken } from '../features/auth/auth0Slice';
 import { useParams } from 'react-router-dom';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import ProgressModal from '../features/pdf/ProgressModal';
+import { useTranslation } from 'react-i18next';
 
 const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
 const GeneratePDF = () => {
+  const { t } = useTranslation();
   const { user } = useAuth0();
   const { cardId } = useParams();
   const accessToken = useSelector(getAccessToken);
@@ -49,7 +51,7 @@ const GeneratePDF = () => {
   return (
     <div className="pdf-button-wrapper">
       <button className="primary-btn pdf-button" onClick={() => generatePDF()}>
-        Download pdf
+        {t('buttons.downloadPdf')}
       </button>
       <ul>
         <li>
@@ -57,7 +59,7 @@ const GeneratePDF = () => {
             className="small-btn list-btn"
             onClick={() => generatePDF('first')}
           >
-            First page
+            {t('buttons.downloadPdfFirst')}
           </button>
         </li>
         <li>
@@ -65,7 +67,7 @@ const GeneratePDF = () => {
             className="small-btn list-btn"
             onClick={() => generatePDF('second')}
           >
-            Second page
+            {t('buttons.downloadPdfSecond')}
           </button>
         </li>
       </ul>

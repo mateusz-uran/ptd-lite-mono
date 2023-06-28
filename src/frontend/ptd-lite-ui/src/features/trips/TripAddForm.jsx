@@ -4,13 +4,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { tripSchemaArray } from './tripValidations';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import tripInputs from './tripInputs';
 import { useSaveTripsMutation } from '../../api/trips/tripsApiSlice';
+import { translateTripInputs } from './tripInputs';
+import { useTranslation } from 'react-i18next';
 
 const TripAddForm = () => {
+  const { t } = useTranslation();
   const { cardId } = useParams();
   const navigate = useNavigate();
   const [saveTrips] = useSaveTripsMutation();
+  const tripInputs = translateTripInputs();
 
   const {
     register,
@@ -64,7 +67,7 @@ const TripAddForm = () => {
         <div key={field.id} className="fields-wrapper">
           <div className="inputs-wrapper">
             <div className="start">
-              <h5>Start</h5>
+              <h5>{t('misc.tripStart')}</h5>
               <div className="inputs">
                 {tripInputs.slice(0, 5).map((input) => (
                   <div key={input.name} className="single-input">
@@ -85,7 +88,7 @@ const TripAddForm = () => {
               </div>
             </div>
             <div className="end">
-              <h5>End</h5>
+              <h5>{t('misc.tripEnd')}</h5>
               <div className="inputs">
                 {tripInputs.slice(5).map((input) => (
                   <div key={input.name} className="single-input">
@@ -124,7 +127,7 @@ const TripAddForm = () => {
         </button>
 
         <button type="submit" className="primary-btn submit">
-          Submit
+          {t('buttons.submit')}
         </button>
       </div>
     </form>

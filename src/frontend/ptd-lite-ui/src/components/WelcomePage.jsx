@@ -4,8 +4,10 @@ import { MdLogin, MdDashboard, MdOutlineQueryStats } from 'react-icons/md';
 import { BsBook, BsArchiveFill } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
 
 const WelcomePage = () => {
+  const { t } = useTranslation();
   const { logout, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ const WelcomePage = () => {
     navbar = (
       <nav>
         <button onClick={() => navigate('/home')}>
-          <span>Login</span>
+          <span>{t('buttons.login')}</span>
           <MdLogin />
         </button>
       </nav>
@@ -38,7 +40,7 @@ const WelcomePage = () => {
     navbar = (
       <nav>
         <button onClick={handleLogout}>
-          <span>Logout</span>
+          <span>{t('buttons.logout')}</span>
           <MdLogin />
         </button>
       </nav>
@@ -66,25 +68,25 @@ const WelcomePage = () => {
         <div className="link">
           <Link to={'/home/dashboard'}>
             <MdDashboard className="icon" />
-            <span>Dashboard</span>
+            <span>{t('misc.dashboard')}</span>
           </Link>
         </div>
         <div className="link">
           <Link to={'/home/cards'}>
             <BsBook className="icon" />
-            <span>Cards</span>
+            <span>{t('misc.cards')}</span>
           </Link>
         </div>
         <div className="link">
           <Link to={'/home/stats'}>
             <MdOutlineQueryStats className="icon" />
-            <span>Statistics</span>
+            <span>{t('misc.stats')}</span>
           </Link>
         </div>
         <div className="link">
           <Link to={'/home/archive'}>
             <BsArchiveFill className="icon" />
-            <span>Archives</span>
+            <span>{t('misc.arch')}</span>
           </Link>
         </div>
       </div>

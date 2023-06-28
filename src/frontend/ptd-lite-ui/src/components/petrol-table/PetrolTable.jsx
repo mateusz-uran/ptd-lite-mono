@@ -6,8 +6,10 @@ import {
 } from '../../api/petrol/petrolApiSlice';
 import LoadingDots from '../LoadingDots';
 import PetrolTableRow from './PetrolTableRow';
+import { useTranslation } from 'react-i18next';
 
 const PetrolTable = ({ cardId }) => {
+  const { t } = useTranslation();
   const { isLoading, isSuccess, isError, error } =
     useGetPetrolByCardIdQuery(cardId);
   const { selectAll: selectAllPetrolFromCard } = getPetrolSelectors(cardId);
@@ -32,7 +34,7 @@ const PetrolTable = ({ cardId }) => {
     tableContent = (
       <tr>
         <td colSpan={6}>
-          <span className="empty-response">{error.data?.description}</span>
+          <span className="empty-response">{t('misc.petrolTableEmpty')}</span>
         </td>
       </tr>
     );
@@ -42,9 +44,7 @@ const PetrolTable = ({ cardId }) => {
     tableContent = (
       <tr>
         <td colSpan={6}>
-          <span className="empty-response">
-            Server is not available at the moment, try again later.
-          </span>
+          <span className="empty-response">{t('misc.errorMessage')}.</span>
         </td>
       </tr>
     );
@@ -52,15 +52,15 @@ const PetrolTable = ({ cardId }) => {
 
   return (
     <div className="fuel-table">
-      <h3>Petrol</h3>
+      <h3>{t('misc.petrolHead')}</h3>
       <table>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Counter</th>
-            <th>Amount</th>
-            <th>Payment</th>
+            <th>{t('petrolInputs.date')}</th>
+            <th>{t('petrolInputs.location')}</th>
+            <th>{t('petrolInputs.counter')}</th>
+            <th>{t('petrolInputs.amount')}</th>
+            <th>{t('petrolInputs.payment')}</th>
             <th>&nbsp;</th>
           </tr>
         </thead>

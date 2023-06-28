@@ -11,8 +11,10 @@ import {
 } from '../features/cards/updateCardSlice';
 import { openModal } from '../features/modal/modalSlice';
 import LoadingDots from './LoadingDots';
+import { useTranslation } from 'react-i18next';
 
 const Cards = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useAuth0();
@@ -47,7 +49,7 @@ const Cards = () => {
     cards = (
       <div className="card-wrapper">
         <div className="single-card error">
-          <span>Server is not available at the moment. Try again later.</span>
+          <span>{t('misc.errorMessage')}</span>
         </div>
       </div>
     );
@@ -67,7 +69,7 @@ const Cards = () => {
     const handleDeleteCard = (cardId) => {
       let cardDeletePayload = {
         cardId: cardId,
-        message: 'Are you sure? All data will be erased.',
+        message: t('misc.modalMessage'),
       };
       dispatch(openModal(cardDeletePayload));
     };
@@ -77,37 +79,38 @@ const Cards = () => {
         <div className="single-card">
           <div className="details-wrapper">
             <span>
-              <p>Number:</p> <p className="content">{card.number}</p>
+              <p>{t('misc.number')}:</p>{' '}
+              <p className="content">{card.number}</p>
             </span>
             <span>
-              Creation time:&nbsp;
+              {t('misc.creationTime')}:&nbsp;
               <p className="content">{card.creationTime}</p>
             </span>
           </div>
           <div className="buttons-wrapper">
             <Link to={`${card.number}/${card.id}`}>
-              <button className="primary-btn">Browse</button>
+              <button className="primary-btn">{t('buttons.browse')}</button>
             </Link>
             <Link to={`${card.number}/${card.id}/add/trip`}>
-              <button className="primary-btn">Add trip</button>
+              <button className="primary-btn">{t('buttons.addTrip')}</button>
             </Link>
             <Link to={`${card.number}/${card.id}/add/${'petrol'}`}>
-              <button className="primary-btn">Add petrol</button>
+              <button className="primary-btn">{t('buttons.addPetrol')}</button>
             </Link>
             <Link to={`${card.number}/${card.id}/add/${'blue'}`}>
-              <button className="primary-btn">Add adBlue</button>
+              <button className="primary-btn">{t('buttons.addBlue')}</button>
             </Link>
             <button
               onClick={() => handleSingleCard(card.id, card.number)}
               className="primary-btn edit"
             >
-              Edit number
+              {t('buttons.editNumber')}
             </button>
             <button
               onClick={() => handleDeleteCard(card.id)}
               className="primary-btn delete"
             >
-              Delete card
+              {t('buttons.deleteCard')}
             </button>
           </div>
         </div>
@@ -119,7 +122,7 @@ const Cards = () => {
     cards = (
       <div className="card-wrapper">
         <div className="single-card error">
-          <span>No data, add new card.</span>
+          <span>{t('misc.noCards')}.</span>
         </div>
       </div>
     );
@@ -130,16 +133,20 @@ const Cards = () => {
       <Header
         compArray={[
           {
-            compName: 'Cards',
+            compName: t('misc.cards'),
           },
         ]}
       />
       <section className="cards-section">
         <span className="h-section">
-          <p className={`${!isEditing ? 'edit' : ''}`}>Add</p>
+          <p className={`${!isEditing ? 'edit' : ''}`}>
+            {t('buttons.smallAdd')}
+          </p>
           <span>&nbsp;/&nbsp;</span>
-          <p className={`${isEditing ? 'edit' : ''}`}>Edit</p>
-          <span>card</span>
+          <p className={`${isEditing ? 'edit' : ''}`}>
+            {t('buttons.smallEdit')}
+          </p>
+          <span>{t('misc.card')}</span>
         </span>
         <CardForm />
         {cards}

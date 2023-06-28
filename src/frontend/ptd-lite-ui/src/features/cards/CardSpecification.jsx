@@ -8,15 +8,17 @@ import PetrolTable from '../../components/petrol-table/PetrolTable';
 import AdBlueTable from '../../components/adblue/AdBlueTable';
 import AdditionalInformation from '../additionalInfo/AdditionalInformation';
 import GeneratePDF from '../../components/GeneratePDF';
+import { useTranslation } from 'react-i18next';
 
 const CardSpecification = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { cardNumber, cardId } = useParams();
 
   const handleDeleteCard = () => {
     let cardDeletePayload = {
       cardId: Number(cardId),
-      message: 'Are you sure? All data will be erased.',
+      message: t('misc.modalMessage'),
     };
     dispatch(openModal(cardDeletePayload));
   };
@@ -26,7 +28,7 @@ const CardSpecification = () => {
       <Header
         compArray={[
           {
-            compName: 'Cards',
+            compName: t('misc.cards'),
           },
           {
             compName: cardNumber,
@@ -35,20 +37,20 @@ const CardSpecification = () => {
       />
       <section className="card-spec-section">
         <div className="card-manage">
-          <h5>Manage</h5>
+          <h5>{t('misc.manage')}</h5>
           <div className="buttons-wrapper">
             <GeneratePDF />
             <Link to={`/home/cards/${cardNumber}/${cardId}/add/trip`}>
-              <button className="primary-btn">Add trips</button>
+              <button className="primary-btn">{t('buttons.addTrip')}</button>
             </Link>
             <Link to={`/home/cards/${cardNumber}/${cardId}/add/${'petrol'}`}>
-              <button className="primary-btn">Add petrol</button>
+              <button className="primary-btn">{t('buttons.addPetrol')}</button>
             </Link>
             <Link to={`/home/cards/${cardNumber}/${cardId}/add/${'blue'}`}>
-              <button className="primary-btn">Add adBlue</button>
+              <button className="primary-btn">{t('buttons.addBlue')}</button>
             </Link>
             <button onClick={handleDeleteCard} className="primary-btn delete">
-              Delete
+              {t('buttons.deleteCard')}
             </button>
           </div>
         </div>

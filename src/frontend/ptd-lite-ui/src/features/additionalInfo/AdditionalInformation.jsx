@@ -1,12 +1,15 @@
 import '../../css/additional_info.css';
 import { MdSettingsBackupRestore } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
-import formInputs from './additionalInputs';
+import { translateAdditionalInputs } from './additionalInputs';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdditionalInfo, saveAdditionalData } from './additionalInfoSlice';
+import { useTranslation } from 'react-i18next';
 
 const AdditionalInformation = () => {
+  const { t } = useTranslation();
+  const formInputs = translateAdditionalInputs();
   const dispatch = useDispatch();
   const { register, handleSubmit, setValue, reset } = useForm();
   const additionalInfo = useSelector(getAdditionalInfo);
@@ -21,14 +24,13 @@ const AdditionalInformation = () => {
 
   const onSubmit = (data) => {
     dispatch(saveAdditionalData(data));
-    console.log(additionalInfo);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="additional-info">
       <div className="window-wrapper">
         <div className="sector">
-          <h5>Petrol - Truck</h5>
+          <h5>{t('misc.petrolTruck')}</h5>
           {formInputs.slice(0, 2).map((input) => (
             <div key={input.name} className="petrol-part">
               <input
@@ -45,7 +47,7 @@ const AdditionalInformation = () => {
           ))}
         </div>
         <div className="sector">
-          <h5>Petrol - Aggregate</h5>
+          <h5>{t('misc.petrolAgg')}</h5>
           {formInputs.slice(2, 5).map((input) => (
             <div key={input.name} className="petrol-part">
               <input
@@ -63,7 +65,7 @@ const AdditionalInformation = () => {
       </div>
       <div className="window-wrapper">
         <div className="sector">
-          <h5>Trips summary</h5>
+          <h5>{t('misc.tripsSumm')}</h5>
           <div className="trip-part">
             {formInputs.slice(5, 7).map((input) => (
               <div key={input.name} className="input-wrapper">
@@ -99,9 +101,9 @@ const AdditionalInformation = () => {
       <div className="buttons-wrapper">
         <div className="buttons">
           <button onClick={() => reset()} className="small-btn">
-            <MdSettingsBackupRestore className="revert" /> Clear
+            <MdSettingsBackupRestore className="revert" /> {t('buttons.clear')}
           </button>
-          <button className="primary-btn">Submit</button>
+          <button className="primary-btn">{t('buttons.submit')}</button>
         </div>
       </div>
     </form>

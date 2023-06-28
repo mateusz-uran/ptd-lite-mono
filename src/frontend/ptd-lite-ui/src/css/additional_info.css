@@ -31,6 +31,10 @@
   margin-right: 10px;
 }
 
+.additional-info .window-wrapper .sector .trip-part .input-wrapper {
+  width: 100%;
+}
+
 .additional-info .window-wrapper .sector .petrol-part,
 .additional-info .window-wrapper .sector .trip-part .input-wrapper {
   position: relative;

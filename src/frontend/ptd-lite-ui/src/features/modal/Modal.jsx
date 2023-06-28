@@ -2,7 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cardIdToDelete, closeModal, modalMessage } from './modalSlice';
 import '../../css/modal.css';
 import { useDeletecardMutation } from '../../api/card/cardApiSlice';
+import { useTranslation } from 'react-i18next';
 const Modal = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const cardId = useSelector(cardIdToDelete);
   const message = useSelector(modalMessage);
@@ -23,7 +25,7 @@ const Modal = () => {
             className="primary-btn confirm-btn"
             onClick={handleConfirmModal}
           >
-            confirm
+            {t('buttons.confirm')}
           </button>
           <button
             type="button"
@@ -32,7 +34,7 @@ const Modal = () => {
               dispatch(closeModal());
             }}
           >
-            cancel
+            {t('buttons.cancel')}
           </button>
         </div>
       </div>

@@ -6,8 +6,10 @@ import { RiArrowDropLeftLine, RiArrowDropDownLine } from 'react-icons/ri';
 import '../css/sidebar.css';
 import { useState } from 'react';
 import CardsMini from '../features/cards/CardsMini';
+import { useTranslation } from 'react-i18next';
 
 const Sidebar = () => {
+  const { t } = useTranslation();
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
   const outlet = useOutlet();
@@ -36,7 +38,7 @@ const Sidebar = () => {
                 <div className="icon-wrapper">
                   <MdDashboard className="icon" />
                 </div>
-                <div className="text-wrapper">Dashboard</div>
+                <div className="text-wrapper">{t('misc.dashboard')}</div>
               </Link>
             </li>
             <li className={`sub-link-wrapper ${showSubMenu ? 'showMenu' : ''}`}>
@@ -45,7 +47,7 @@ const Sidebar = () => {
                   <div className="icon-wrapper">
                     <BsBook className="icon" />
                   </div>
-                  <div className="text-wrapper">Cards</div>
+                  <div className="text-wrapper">{t('misc.cards')}</div>
                 </Link>
                 <RiArrowDropDownLine
                   onClick={() => setShowSubMenu((prevState) => !prevState)}
@@ -61,7 +63,7 @@ const Sidebar = () => {
                 <div className="icon-wrapper">
                   <MdOutlineQueryStats className="icon" />
                 </div>
-                <div className="text-wrapper">Statistics</div>
+                <div className="text-wrapper">{t('misc.stats')}</div>
               </Link>
             </li>
             <li>
@@ -69,7 +71,7 @@ const Sidebar = () => {
                 <div className="icon-wrapper">
                   <BsArchiveFill className="icon" />
                 </div>
-                <div className="text-wrapper">Archives</div>
+                <div className="text-wrapper">{t('misc.arch')}</div>
               </Link>
             </li>
           </ul>
@@ -77,7 +79,7 @@ const Sidebar = () => {
           <footer className="logout-button">
             <button>
               <MdLogout className="icon" />
-              <span>Logout</span>
+              <span>{t('buttons.logout')}</span>
             </button>
           </footer>
         </div>

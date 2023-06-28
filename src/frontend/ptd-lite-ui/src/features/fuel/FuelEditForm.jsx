@@ -8,11 +8,17 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { editType, fuelToEdit, stopEditingFuel } from './fuelEditSlice';
 import { adBlueSchema, petrolSchema } from './fuelValidations';
-import { blueInputs, petrolInputs } from './fuelInputs';
+import {
+  petrolInputs,
+  translateAdBlueInputs,
+  translatePetrolInputs,
+} from './fuelInputs';
 import { useUpdatePetrolMutation } from '../../api/petrol/petrolApiSlice';
 import { useUpdateAdBlueMutation } from '../../api/adblue/adBlueApiSlice';
+import { useTranslation } from 'react-i18next';
 
 const FuelEditForm = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const modalType = useSelector(editType);
   const objectToEdit = useSelector(fuelToEdit);
@@ -21,13 +27,16 @@ const FuelEditForm = () => {
 
   let schema;
   let inputs;
+  let translatedModalType;
 
   if (modalType === 'petrol') {
     schema = petrolSchema;
-    inputs = petrolInputs;
+    inputs = translatePetrolInputs();
+    translatedModalType = t('misc.editPetrolHeader');
   } else if (modalType === 'blue') {
     schema = adBlueSchema;
-    inputs = blueInputs;
+    inputs = translateAdBlueInputs();
+    translatedModalType = t('misc.editAdBlueHeader');
   }
 
   const {
@@ -93,16 +102,16 @@ const FuelEditForm = () => {
             onClick={() => reset()}
             className="small-btn clear"
           >
-            <MdSettingsBackupRestore className="icon" /> Clear
+            <MdSettingsBackupRestore className="icon" /> {t('buttons.clear')}
           </button>
           <button
             type="button"
             onClick={() => dispatch(stopEditingFuel())}
             className="small-btn close"
           >
-            Close
+            {t('buttons.close')}
           </button>
-          <button className="primary-btn save">Submit</button>
+          <button className="primary-btn save">{t('buttons.submit')}</button>
         </div>
       </form>
     </div>
@@ -112,7 +121,7 @@ const FuelEditForm = () => {
     <div className="edit-modal">
       <div className="modal-wrapper fuel-modal">
         <div className="modal-header">
-          <h5>Edit {modalType}</h5>
+          <h5>{translatedModalType}</h5>
           <button
             type="button"
             onClick={() => dispatch(stopEditingFuel())}

@@ -16,6 +16,7 @@ import {
   useAddNewCardMutation,
   useUpdateCardMutation,
 } from '../../api/card/cardApiSlice';
+import { useTranslation } from 'react-i18next';
 
 export const cardSchema = yup.object({
   number: yup
@@ -25,6 +26,7 @@ export const cardSchema = yup.object({
 });
 
 const CardForm = () => {
+  const { t } = useTranslation();
   const { user } = useAuth0();
   const dispatch = useDispatch();
 
@@ -102,7 +104,11 @@ const CardForm = () => {
         <div className="button-wrapper">
           <div className="buttons">
             <button type="submit" disabled={isLoading} className="small-btn">
-              {editStatus ? <span>Save</span> : <span>Add</span>}
+              {editStatus ? (
+                <span>{t('buttons.save')}</span>
+              ) : (
+                <span>{t('buttons.add')}</span>
+              )}
             </button>
             <button
               type="button"

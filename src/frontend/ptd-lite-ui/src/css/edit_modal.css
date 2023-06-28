@@ -15,7 +15,7 @@
   min-height: 40vh;
   background: var(--body-color);
   border-radius: 5px;
-  width: 80vw;
+  max-width: 60vw;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -4,16 +4,19 @@ import { MdSettingsBackupRestore } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import { tripSchemaSingle } from './tripValidations';
 import { yupResolver } from '@hookform/resolvers/yup';
-import tripInputs from './tripInputs';
+import { translateTripInputs } from './tripInputs';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { stopEditing } from './tripUpdateSlice';
 import { createPortal } from 'react-dom';
 import { useEditTripMutation } from '../../api/trips/tripsApiSlice';
+import { useTranslation } from 'react-i18next';
 
 const TripEditForm = ({ tripToEdit }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [editTrip] = useEditTripMutation();
+  const tripInputs = translateTripInputs();
 
   const {
     handleSubmit,
@@ -46,7 +49,7 @@ const TripEditForm = ({ tripToEdit }) => {
     <div className="form-wrapper">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="start">
-          <h5>Start</h5>
+          <h5>{t('misc.tripStart')}</h5>
           {tripInputs.slice(0, 5).map((input, index) => (
             <div key={index} className="single-input">
               <label className="primary-label" htmlFor={input.name}>
@@ -65,7 +68,7 @@ const TripEditForm = ({ tripToEdit }) => {
           ))}
         </div>
         <div className="end">
-          <h5>End</h5>
+          <h5>{t('misc.tripEnd')}</h5>
           {tripInputs.slice(5).map((input, index) => (
             <div key={index} className="single-input">
               <label className="primary-label" htmlFor={input.name}>
@@ -89,16 +92,16 @@ const TripEditForm = ({ tripToEdit }) => {
             onClick={() => reset()}
             className="small-btn clear"
           >
-            <MdSettingsBackupRestore className="icon" /> Clear
+            <MdSettingsBackupRestore className="icon" /> {t('buttons.clear')}
           </button>
           <button
             type="button"
             onClick={() => dispatch(stopEditing())}
             className="small-btn close"
           >
-            Close
+            {t('buttons.close')}
           </button>
-          <button className="primary-btn save">Submit</button>
+          <button className="primary-btn save">{t('buttons.submit')}</button>
         </div>
       </form>
     </div>
@@ -108,7 +111,7 @@ const TripEditForm = ({ tripToEdit }) => {
     <div className="edit-modal">
       <div className="modal-wrapper">
         <div className="modal-header">
-          <h5>Edit trip</h5>
+          <h5>{t('misc.editTripHeader')}</h5>
           <button
             type="button"
             onClick={() => dispatch(stopEditing())}

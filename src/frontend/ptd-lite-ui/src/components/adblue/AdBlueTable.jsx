@@ -6,8 +6,10 @@ import {
   useGetBlueByCardIdQuery,
 } from '../../api/adblue/adBlueApiSlice';
 import AdBlueTableRow from './AdBlueTableRow';
+import { useTranslation } from 'react-i18next';
 
 const AdBlueTable = ({ cardId }) => {
+  const { t } = useTranslation();
   const { isLoading, isSuccess, isError, error } =
     useGetBlueByCardIdQuery(cardId);
   const { selectAll: selectAllBlueFromCard } = getAdBlueSelectors(cardId);
@@ -32,7 +34,7 @@ const AdBlueTable = ({ cardId }) => {
     tableContent = (
       <tr>
         <td colSpan={4}>
-          <span className="empty-response">{error.data?.description}</span>
+          <span className="empty-response">{t('misc.blueTableEmpty')}</span>
         </td>
       </tr>
     );
@@ -42,9 +44,7 @@ const AdBlueTable = ({ cardId }) => {
     tableContent = (
       <tr>
         <td colSpan={4}>
-          <span className="empty-response">
-            Server is not available at the moment, try again later.
-          </span>
+          <span className="empty-response">{t('misc.errorMessage')}.</span>
         </td>
       </tr>
     );
@@ -52,13 +52,13 @@ const AdBlueTable = ({ cardId }) => {
 
   return (
     <div className="fuel-table">
-      <h3>AdBlue</h3>
+      <h3>{t('misc.blueHead')}</h3>
       <table>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Amount</th>
+            <th>{t('adBlueInputs.date')}</th>
+            <th>{t('adBlueInputs.location')}</th>
+            <th>{t('adBlueInputs.amount')}</th>
             <th>&nbsp;</th>
           </tr>
         </thead>

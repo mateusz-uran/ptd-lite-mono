@@ -1,24 +1,31 @@
 import { IoIosRemove } from 'react-icons/io';
 import { GrFormAdd } from 'react-icons/gr';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { blueInputs, petrolInputs } from './fuelInputs';
+import {
+  blueInputs,
+  translateAdBlueInputs,
+  petrolInputs,
+  translatePetrolInputs,
+} from './fuelInputs';
 import { adBlueArraySchema, petrolArraySchema } from './fuelValidations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSavePetrolMutation } from '../../api/petrol/petrolApiSlice';
 import { useSaveAdBlueMutation } from '../../api/adblue/adBlueApiSlice';
+import { useTranslation } from 'react-i18next';
 
 const FuelAddForm = () => {
+  const { t } = useTranslation();
   const { cardId, type } = useParams();
   const navigate = useNavigate();
   let inputs;
   let fieldSchema;
 
   if (type === 'petrol') {
-    inputs = petrolInputs;
+    inputs = translatePetrolInputs();
     fieldSchema = petrolArraySchema;
   } else if (type === 'blue') {
-    inputs = blueInputs;
+    inputs = translateAdBlueInputs();
     fieldSchema = adBlueArraySchema;
   }
 
@@ -103,7 +110,7 @@ const FuelAddForm = () => {
         </button>
 
         <button type="submit" className="primary-btn submit">
-          Submit
+          {t('buttons.submit')}
         </button>
       </div>
     </form>
