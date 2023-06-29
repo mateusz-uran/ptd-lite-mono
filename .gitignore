@@ -36,3 +36,4 @@ build/
 /src/frontend/ptd-lite-mono-interface/.env.production
 /card-db-v2/
 /src/frontend/ptd-lite-ui/.env
+/src/frontend/ptd-lite-ui/.env.production
