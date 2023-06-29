@@ -1,5 +1,10 @@
 import './App.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  Route,
+  RouterProvider,
+  Routes,
+  createBrowserRouter,
+} from 'react-router-dom';
 import WelcomePage from './components/WelcomePage';
 import Sidebar from './components/Sidebar';
 import { AuthRouteGuard } from './features/auth/AuthRouteGuard';
@@ -14,11 +19,13 @@ import Modal from './features/modal/Modal';
 import FuelAddForm from './features/fuel/FuelAddForm';
 import TripAddForm from './features/trips/TripAddForm';
 import ErrorPage from './components/ErrorPage';
+import CallbackPage from './features/auth/CallbackPage';
 
 function App() {
   const isOpen = useSelector(isModalOpen);
   const router = createBrowserRouter([
     { path: '/', element: <WelcomePage />, errorElement: <ErrorPage /> },
+    { path: '/callback', element: <CallbackPage /> },
     {
       path: '/home',
       element: <Sidebar />,
@@ -46,7 +53,29 @@ function App() {
   return (
     <>
       {isOpen && <Modal />}
-      <RouterProvider router={router} />
+      <Routes>
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/callback" element={<CallbackPage />} />
+        <Route path="/home" element={<AuthRouteGuard component={Sidebar} />}>
+          <Route path="/home/dashboard" element={<Dashboard />} />
+          <Route path="/home/cards" element={<Cards />} />
+          <Route path="/home/stats" element={<Statistics />} />
+          <Route path="/home/archive" element={<Archives />} />
+          <Route
+            path="/home/cards/:cardNumber/:cardId"
+            element={<CardSpecification />}
+          />
+          <Route
+            path="/home/cards/:cardNumber/:cardId/add/:type"
+            element={<FuelAddForm />}
+          />
+          <Route
+            path="/home/cards/:cardNumber/:cardId/add/trip"
+            element={<TripAddForm />}
+          />
+        </Route>
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
     </>
   );
 }
