@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Yup from 'yup';
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import FuelForm from './FuelForm';
@@ -21,7 +22,9 @@ function AddFuel(props) {
   const validation = Yup.object({
     refuelingDate: Yup.string().required(t('yup.empty')),
     refuelingLocation: Yup.string().required(t('yup.empty')),
-    vehicleCounter: Yup.string().required(t('yup.empty')),
+    vehicleCounter: Yup.number()
+      .typeError(t('yup.number'))
+      .required(t('yup.empty')),
     refuelingAmount: Yup.number()
       .typeError(t('yup.number'))
       .required(t('yup.empty')),
