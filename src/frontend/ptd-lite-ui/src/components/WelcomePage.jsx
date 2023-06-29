@@ -103,7 +103,32 @@ const WelcomePage = () => {
           <span className="dot"></span>
         </div>
       </div>
-      {links}
+      <div className="link-wrapper">
+        <div className="link">
+          <Link to={'/home/dashboard'}>
+            <MdDashboard className="icon" />
+            <span>{t('misc.dashboard')}</span>
+          </Link>
+        </div>
+        <div className="link">
+          <Link to={'/home/cards'}>
+            <BsBook className="icon" />
+            <span>{t('misc.cards')}</span>
+          </Link>
+        </div>
+        <div className="link">
+          <Link to={'/home/stats'}>
+            <MdOutlineQueryStats className="icon" />
+            <span>{t('misc.stats')}</span>
+          </Link>
+        </div>
+        <div className="link">
+          <Link to={'/home/archive'}>
+            <BsArchiveFill className="icon" />
+            <span>{t('misc.arch')}</span>
+          </Link>
+        </div>
+      </div>
     </section>
   );
 };
