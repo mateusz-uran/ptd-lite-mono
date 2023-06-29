@@ -1,0 +1,19 @@
+.card-form form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-form form .button-wrapper {
+  display: flex;
+  align-items: baseline;
+}
+
+.card-form form .button-wrapper .buttons {
+  display: flex;
+  margin-left: 5px;
+  align-items: center;
+}
+
+.card-form form .button-wrapper .buttons .revert-button {
+  margin-left: 7px;
+}

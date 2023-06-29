@@ -1,0 +1,128 @@
+.additional-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.additional-info .window-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 80vw;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.additional-info .window-wrapper .sector {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+  padding: 1rem;
+  width: 100%;
+  margin: 0 5px;
+}
+.additional-info .window-wrapper .sector h5 {
+  color: var(--text-color);
+  opacity: 0.5;
+  margin-bottom: 15px;
+}
+
+.additional-info .window-wrapper .sector .trip-part {
+  display: flex;
+}
+
+.additional-info .window-wrapper .sector .trip-part > div {
+  margin-right: 10px;
+}
+
+.additional-info .window-wrapper .sector .trip-part .input-wrapper {
+  width: 100%;
+}
+
+.additional-info .window-wrapper .sector .petrol-part,
+.additional-info .window-wrapper .sector .trip-part .input-wrapper {
+  position: relative;
+}
+
+.additional-info .window-wrapper .sector input {
+  margin: 10px 0;
+}
+
+.additional-info .window-wrapper .sector label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--tran-03);
+}
+
+.additional-info .window-wrapper .sector input:focus ~ label,
+.additional-info .window-wrapper .sector input:not(:placeholder-shown) ~ label {
+  top: -10px;
+  opacity: 1;
+  font-size: 0.7rem;
+}
+
+/*style when input focus*/
+.additional-info .window-wrapper .sector:focus-within h5 {
+  opacity: 1;
+}
+
+.additional-info .window-wrapper .sector:focus-within {
+  box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.3) 0px 0px 1px 0px;
+}
+
+/**/
+.additional-info .buttons-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 80vw;
+  padding: 0.5rem;
+}
+
+.additional-info .buttons-wrapper .buttons {
+  width: 100%;
+  padding: 1rem;
+  margin: 0 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.additional-info .buttons-wrapper .buttons button:first-child {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.additional-info .buttons-wrapper .buttons button:first-child .revert {
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 576px) {
+  .additional-info .window-wrapper {
+    flex-direction: column;
+  }
+  .additional-info .window-wrapper .sector:first-child {
+    margin-bottom: 15px;
+  }
+
+  .additional-info .window-wrapper .sector .trip-part {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .additional-info .window-wrapper .sector .trip-part .input-wrapper {
+    width: 100%;
+  }
+
+  .additional-info .window-wrapper .sector input {
+    margin-top: 15px;
+  }
+
+  .additional-info .window-wrapper .sector input:focus ~ label,
+  .additional-info
+    .window-wrapper
+    .sector
+    input:not(:placeholder-shown)
+    ~ label {
+    top: -5px;
+  }
+}

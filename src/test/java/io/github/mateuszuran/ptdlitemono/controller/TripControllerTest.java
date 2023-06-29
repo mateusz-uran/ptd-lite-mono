@@ -1,6 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
@@ -19,9 +21,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.core.Is.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WithMockUser(value = "user123")
@@ -77,5 +80,67 @@ class TripControllerTest {
                         .content(mapper.writeValueAsString(List.of(trip1.getId(), trip2.getId()))))
                 .andExpect(status().isNoContent())
                 .andDo(print());
+    }
+
+    @Test
+    void givenCardId_whenGet_thenReturnMappedList() throws Exception {
+        //given
+        Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).card(card).build();
+        Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).card(card).build();
+        repository.saveAll(List.of(trip1, trip2));
+        //when
+        mockMvc.perform(get("/api/trip")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()", is(2)));
+    }
+
+    @Test
+    void givenCardId_whenNoData_thenThrowException() throws Exception {
+        mockMvc.perform(get("/api/trip")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Trips data is empty"));
+    }
+
+    @Test
+    void givenTripIdAndObject_whenUpdate_thenReturnMappedObject() throws Exception {
+        //given
+        Trip tripToUpdate = Trip.builder()
+                .counterStart(455)
+                .counterEnd(999)
+                .build();
+        repository.saveAndFlush(tripToUpdate);
+        TripRequest request = TripRequest.builder()
+                .counterStart(300)
+                .build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/update")
+                        .param("tripId", String.valueOf(tripToUpdate.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.counterStart").value(300));
+    }
+
+    @Test
+    void givenTripIdAndObject_whenTripNotFound_thenReturnErrorMessage() throws Exception {
+        //given
+        TripRequest request = TripRequest.builder()
+                .counterStart(300)
+                .build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/update")
+                        .param("tripId", String.valueOf(123L))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Trips data is empty"));
     }
 }

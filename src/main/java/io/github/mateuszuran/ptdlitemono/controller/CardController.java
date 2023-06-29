@@ -37,4 +37,20 @@ public class CardController {
         return ResponseEntity.ok()
                 .body(service.getCardDetails(id));
     }
+
+    @GetMapping
+    public ResponseEntity<List<CardResponse>> getLastThreeCardsByMonth(@RequestParam String username) {
+        return ResponseEntity.ok().body(service.getLastThreeCardsSortedDescByTime(username));
+    }
+
+    @PostMapping("/addcard")
+    public ResponseEntity<?> saveNewCard(@RequestBody CardRequest cardRequest) {
+        service.saveNewCard(cardRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> editCardNumber(@RequestParam Long cardId, @RequestBody String number) {
+        return ResponseEntity.ok().body(service.editCard(cardId, number));
+    }
 }

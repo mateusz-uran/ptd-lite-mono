@@ -5,7 +5,9 @@ pdf:
   csv:
     link: ${CSV_LINK}
 frontend:
-  url: ${FRONTEND_API_URI}
+  urls: ${FRONTEND_API_URI}
+backend:
+  url: ${BACKEND_API_URL}
 
 spring:
   jpa:

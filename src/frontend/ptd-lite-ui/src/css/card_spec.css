@@ -1,0 +1,51 @@
+.card-spec-section .card-manage {
+  background: #fff;
+  padding: 0.5em 0.2em;
+  border-radius: 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.card-spec-section .card-manage h5 {
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.card-spec-section .card-manage .buttons-wrapper {
+  display: flex;
+  width: 100%;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button:not(.pdf-button) {
+  margin-bottom: 5px;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button.pdf-button {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button.delete {
+  margin-left: auto;
+  background: rgba(255, 0, 0, 0.6);
+  color: #fff;
+}
+
+.card-spec-section .card-manage .buttons-wrapper button.delete:hover {
+  background: rgba(255, 0, 0, 1);
+}
+
+.card-spec-table {
+  overflow-x: auto;
+  background: #fff;
+  margin-top: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 384px) {
+  .card-spec-section .card-manage {
+    overflow-x: scroll;
+  }
+}

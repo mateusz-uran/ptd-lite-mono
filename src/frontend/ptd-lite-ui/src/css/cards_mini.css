@@ -1,0 +1,109 @@
+.cards-mini {
+  width: 100%;
+  background: var(--primary-color);
+  text-align: center;
+}
+
+.cards-mini ul li {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em 0;
+}
+
+.cards-mini ul li.empty-list {
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.cards-mini ul li.empty-list span {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  opacity: 0.6;
+}
+
+.cards-mini ul li a::before {
+  content: '';
+  min-width: 60px;
+}
+
+.cards-mini ul li .empty::before {
+  content: '';
+  width: 60px;
+  display: inline-block;
+}
+
+.cards-mini ul li .empty {
+  color: #fff;
+}
+
+.cards-mini ul li a {
+  color: #fff;
+  opacity: 0.6;
+  font-size: 12px;
+}
+
+.cards-mini ul li a:hover {
+  opacity: 1;
+}
+
+.cards-mini ul li .edit-button {
+  background: transparent;
+  outline: 0;
+  margin-right: 15px;
+  border: 0;
+}
+
+.cards-mini ul li .edit {
+  color: #fff;
+  opacity: 0.6;
+  display: flex;
+}
+
+.cards-mini ul li .edit-button :hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+/*loading animation*/
+.cards-mini.loading {
+  display: flex;
+  background: transparent;
+  height: 30px;
+}
+.cards-mini.loading .mini-loader::before {
+  content: '';
+  min-width: 60px;
+}
+
+.cards-mini.loading .mini-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background: transparent;
+  z-index: 1;
+}
+
+.cards-mini.loading .mini-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid;
+  border-color: var(--primary-color) transparent var(--primary-color)
+    transparent;
+  border-radius: 50%;
+  animation: spin-anim 1.2s linear infinite;
+}
+
+.sidebar ul li:hover .cards-mini.loading .mini-spinner {
+  border-color: #fff transparent #fff transparent;
+}
+
+/*no respons*/
+.cards-mini ul li span.empty {
+  font-size: 12px;
+  font-weight: 600;
+}

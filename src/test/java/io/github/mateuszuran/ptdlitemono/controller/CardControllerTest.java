@@ -95,6 +95,27 @@ class CardControllerTest {
     }
 
     @Test
+    void givenCardObjectAndDate_whenSave_thenStatus() throws Exception {
+        mockMvc.perform(post("/api/card/addcard")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(card)))
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    void givenCardNumberAndId_whenUpdate_thenReturnUpdatedObject() throws Exception {
+        //given
+        repository.save(card);
+        // when + then
+        mockMvc.perform(patch("/api/card")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("\"test\"")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.number").value("\"test\""));
+    }
+
+    @Test
     void givenCardObjectAndDate_whenAlreadyExists_thenThrowException() throws Exception {
         //given
         repository.saveAndFlush(card);

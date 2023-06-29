@@ -1,5 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+@Slf4j
 @Configuration
 public class SecurityFilter {
     @Value("${spring.security.oauth2.resourceserver.jwt.audience}")
@@ -22,8 +24,8 @@ public class SecurityFilter {
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private String issuer;
 
-    @Value("${frontend.url}")
-    private String frontendUrl;
+    @Value("#{'${frontend.urls}'.split(',')}")
+    private List<String> frontendUrls;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -54,7 +56,8 @@ public class SecurityFilter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of(frontendUrl));
+        log.info(frontendUrls.toString());
+        corsConfig.setAllowedOrigins(frontendUrls);
         corsConfig.setMaxAge(8000L);
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");

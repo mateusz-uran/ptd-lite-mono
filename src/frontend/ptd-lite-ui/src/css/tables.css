@@ -1,0 +1,74 @@
+.trip-table,
+.fuel-table {
+  padding: 0.8rem 0;
+  padding-top: 0;
+  width: 100%;
+}
+
+.trip-table h3,
+.fuel-table h3 {
+  font-size: 15px;
+  color: var(--text-color);
+  padding-left: 10px;
+  padding-bottom: 3px;
+}
+
+table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+table tr {
+  transition: var(--tran-03);
+}
+
+table tr th {
+  background-color: #f2f2f2;
+  position: sticky;
+  top: 0;
+}
+
+table tr th,
+table tr td {
+  padding: 5px 10px;
+  color: var(--text-color);
+  font-size: 12px;
+}
+
+.trip-table table tr th:first-child,
+.trip-table table tr td:first-child {
+  width: 5px;
+}
+
+.trip-table table tr td:first-child input[type='checkbox'] {
+  cursor: pointer;
+}
+
+table tr:hover {
+  background: var(--primary-color-light);
+}
+
+table tr th.icon-wrapper button.delete-trip {
+  padding: 0;
+  font-size: 20px;
+}
+
+/*manage trip row style*/
+table .last-cell {
+  display: flex;
+}
+.fuel-table table .last-cell {
+  justify-content: flex-end;
+}
+
+.fuel-table table .last-cell button {
+  margin-left: 10px;
+}
+
+/*no response style*/
+table tr td .empty-response {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color);
+}

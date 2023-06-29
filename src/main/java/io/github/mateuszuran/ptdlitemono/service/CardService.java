@@ -8,8 +8,6 @@ import io.github.mateuszuran.ptdlitemono.mapper.CardMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
-import io.github.mateuszuran.ptdlitemono.model.Trip;
-import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,9 +51,9 @@ public class CardService {
                 .username(cardRequest.getUsername())
                 .creationTime(date)
                 .build();
-        repository.save(card);
+        var result = repository.save(card);
 
-        return cardMapper.mapToCardResponseWithFormattedCreationTime(card);
+        return cardMapper.mapToCardResponseWithFormattedCreationTime(result);
     }
 
     public List<Card> getAllCardsByUserAndDate(String username, int year, int month) {
@@ -85,7 +83,7 @@ public class CardService {
         Card card = repository.findById(id).orElseThrow(CardNotFoundException::new);
 
         List<FuelResponse> fuels = card.getFuels().stream()
-                .map(fuelMapper::mapToFuelResponseWithModelMapper)
+                .map(fuelMapper::mapToFuelResponse)
                 .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
                 .collect(Collectors.toList());
 
@@ -97,10 +95,61 @@ public class CardService {
         List<AdBlueResponse> blue = card.getAdBlue().stream()
                 .map(fuelMapper::mapToAdBlueResponse)
                 .toList();
-        return new CardDetailsResponse(trips, fuels, blue);
+        return new CardDetailsResponse(null, trips, fuels, blue);
     }
 
     public void updateCard(Card card) {
         repository.save(card);
+    }
+
+    public void saveNewCard(CardRequest cardRequest) {
+        if (repository.existsByNumberIgnoreCaseAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
+            throw new CardExistsException(cardRequest.getNumber());
+        }
+
+        if (cardRequest.getNumber().isEmpty() || cardRequest.getNumber().trim().isEmpty()) {
+            throw new CardEmptyException();
+        }
+
+        var now = LocalDateTime.now();
+        var card = Card.builder()
+                .number(cardRequest.getNumber().toUpperCase())
+                .username(cardRequest.getUsername())
+                .creationTime(now)
+                .build();
+        repository.save(card);
+    }
+
+    public CardResponse editCard(Long cardId, String number) {
+        var cardToBeEdited = checkIfCardExists(cardId);
+        cardToBeEdited.setNumber(number);
+        var editedCard = repository.save(cardToBeEdited);
+        return cardMapper.mapToCardResponseWithFormattedCreationTime(editedCard);
+    }
+
+    public List<CardResponse> getLastThreeCardsSortedDescByTime(String username) {
+        return repository.findLastThreeEntitiesByUsernameAndOrderByCreationTime(username)
+                .stream()
+                .map(cardMapper::mapToCardResponseWithFormattedCreationTime)
+                .toList();
+    }
+
+    public CardDetailsResponse getCardData(Long cardId) {
+        Card card = repository.findById(cardId).orElseThrow(CardNotFoundException::new);
+
+        List<FuelResponse> fuels = card.getFuels().stream()
+                .map(fuelMapper::mapToFuelResponse)
+                .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
+                .collect(Collectors.toList());
+
+        List<TripResponse> trips = card.getTrips().stream()
+                .map(tripMapper::mapToTripResponseWithModelMapper)
+                .sorted(Comparator.comparing(TripResponse::getCounterEnd))
+                .collect(Collectors.toList());
+
+        List<AdBlueResponse> blue = card.getAdBlue().stream()
+                .map(fuelMapper::mapToAdBlueResponse)
+                .toList();
+        return new CardDetailsResponse(card.getNumber(), trips, fuels, blue);
     }
 }

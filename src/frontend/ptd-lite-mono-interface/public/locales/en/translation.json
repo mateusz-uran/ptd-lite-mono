@@ -23,7 +23,8 @@
     "tableCellDate": "Date",
     "tableCellLocation": "Localization",
     "tableCellCounter": "Counter",
-    "tableCellAmount": "Amount"
+    "tableCellAmount": "Amount",
+    "tableCellPayment": "Payment"
   },
   "addFuel": {
     "goBackButton": "Back",
@@ -67,5 +68,21 @@
     "end": "End",
     "alertDialogButtonYes": "Yes",
     "alertDialogButtonNo": "No"
+  },
+  "additional": {
+    "fuelInitialState": "Inital state",
+    "fuelEndState": "End state",
+    "aggregateInitialState": "Inital state",
+    "aggregateAdBlue": "Summary",
+    "aggregateEndState": "End state",
+    "avgFuelConsumption": "Avg fuel consumption",
+    "totalFuelConsumption": "Total fuel consumption",
+    "avgSpeed": "Avg speed",
+    "fuelConsumptionIdle": "Idle fuel consumption",
+    "fuelConsumptionUneconomical": "Uneconomical fuel consumption",
+    "petrolHeader": "Petrol - truck",
+    "aggregateHeader": "Petrol - aggregate",
+    "tripHeader": "Trips additional information",
+    "printButton": "Download"
   }
 }
