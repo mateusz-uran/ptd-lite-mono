@@ -21,7 +21,7 @@ function App() {
     { path: '/', element: <WelcomePage />, errorElement: <ErrorPage /> },
     {
       path: '/home',
-      element: <AuthRouteGuard component={Sidebar} />,
+      element: <Sidebar />,
       children: [
         { path: '/home/dashboard', element: <Dashboard /> },
         { path: '/home/cards', element: <Cards /> },

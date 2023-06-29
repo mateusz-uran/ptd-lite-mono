@@ -13,7 +13,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const Sidebar = () => {
   const { t } = useTranslation();
-  const { logout } = useAuth0();
+  const { logout, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
@@ -64,9 +64,7 @@ const Sidebar = () => {
                   className="arrow"
                 />
               </div>
-              <div className="sub-menu">
-                <CardsMini />
-              </div>
+              <div className="sub-menu">{isAuthenticated && <CardsMini />}</div>
             </li>
             <li>
               <Link to={'stats'}>
@@ -95,7 +93,7 @@ const Sidebar = () => {
         </div>
       </nav>
 
-      <div className="outlet-wrapper">{outlet}</div>
+      <div className="outlet-wrapper">{isAuthenticated && outlet}</div>
     </div>
   );
 };
