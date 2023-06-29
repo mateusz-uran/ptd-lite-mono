@@ -18,7 +18,6 @@ export const generatePdf = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
           },
           params: {
             username: arg.username,
