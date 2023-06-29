@@ -146,8 +146,8 @@ body {
 
 /* ====== Forms ====== */
 .primary-input {
+  -webkit-appearance: none;
   outline: 0;
-  border: 0;
   padding: 0.3em;
   border-radius: 5px;
   box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
