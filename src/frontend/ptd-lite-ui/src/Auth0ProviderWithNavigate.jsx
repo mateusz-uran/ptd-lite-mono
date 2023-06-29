@@ -25,7 +25,7 @@ const Auth0ProviderWithNavigate = ({ children }) => {
         redirect_uri: redirectUri,
         audience: audience,
         useRefreshTokens: true,
-        cacheLocation: 'memory',
+        cacheLocation: 'localstorage',
       }}
       onRedirectCallback={onRedirectCallback}
     >
