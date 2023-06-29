@@ -15,7 +15,7 @@
   min-height: 40vh;
   background: var(--body-color);
   border-radius: 5px;
-  max-width: 60vw;
+  max-width: 80vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -118,9 +118,8 @@
 }
 
 /*fuel form*/
-
 .edit-modal .modal-wrapper.fuel-modal {
-  width: 50vw;
+  max-width: 80vw;
 }
 
 .edit-modal .modal-wrapper .form-wrapper .fuel {

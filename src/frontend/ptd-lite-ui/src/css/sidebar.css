@@ -27,18 +27,19 @@
 }
 
 .sidebar header .logo .image {
-  min-width: 60px;
+  min-width: 30px;
   display: flex;
   justify-content: center;
 }
 
 .sidebar header .logo .image img {
-  border-radius: 10px;
-  width: 40px;
+  border-radius: 5px;
+  width: 30px;
 }
 
 .sidebar header .logo .text {
-  font-size: 18px;
+  font-size: 16px;
+  margin-left: 5px;
   font-weight: 800;
   color: var(--text-color);
   opacity: 1;
@@ -47,7 +48,7 @@
 
 .sidebar header .toggle-icon {
   position: absolute;
-  right: -25px;
+  right: -20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,8 +59,8 @@
   top: 50%;
   right: -10%;
   transform: translateY(-50%) rotate(180deg);
-  height: 25px;
-  width: 25px;
+  height: 15px;
+  width: 15px;
   font-size: 25px;
   cursor: pointer;
   background-color: var(--primary-color);
@@ -79,7 +80,7 @@
 
 /* ==== toggled navbar ==== */
 .sidebar.close {
-  width: 88px;
+  width: 58px;
 }
 
 .sidebar.close header .logo .text {
@@ -92,9 +93,9 @@
 }
 
 .sidebar.close ~ .outlet-wrapper {
-  left: 88px;
+  left: 58px;
   height: 100vh;
-  width: calc(100% - 88px);
+  width: calc(100% - 58px);
 }
 
 .sidebar.close ul li .text-wrapper {
@@ -118,8 +119,8 @@
 
 .sidebar ul li {
   list-style: none;
-  margin-top: 15px;
-  border-radius: 10px;
+  margin-top: 1rem;
+  border-radius: 5px;
   transition: var(--tran-03);
 }
 
@@ -130,7 +131,7 @@
   color: var(--text-color);
   font-size: 14px;
   font-weight: 400;
-  padding: 10px 0;
+  padding: 0.4rem 0;
   margin: 0;
 }
 
@@ -143,7 +144,7 @@
 }
 
 .sidebar ul li a .icon-wrapper {
-  min-width: 60px;
+  min-width: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -164,8 +165,8 @@
 }
 
 .sidebar ul .sub-link-wrapper .arrow {
-  width: 20px;
-  height: 20px;
+  height: 15px;
+  width: 15px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -235,7 +236,7 @@
 }
 
 .logout-button button .icon {
-  min-width: 60px;
+  min-width: 30px;
 }
 
 .logout-button button span {

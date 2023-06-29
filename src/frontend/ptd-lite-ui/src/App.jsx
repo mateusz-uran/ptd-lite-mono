@@ -13,11 +13,12 @@ import { isModalOpen } from './features/modal/modalSlice';
 import Modal from './features/modal/Modal';
 import FuelAddForm from './features/fuel/FuelAddForm';
 import TripAddForm from './features/trips/TripAddForm';
+import ErrorPage from './components/ErrorPage';
 
 function App() {
   const isOpen = useSelector(isModalOpen);
   const router = createBrowserRouter([
-    { path: '/', element: <WelcomePage /> },
+    { path: '/', element: <WelcomePage />, errorElement: <ErrorPage /> },
     {
       path: '/home',
       element: <AuthRouteGuard component={Sidebar} />,
