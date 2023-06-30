@@ -6,15 +6,10 @@ import io.github.mateuszuran.ptdlitemono.dto.CardDetailsResponse;
 import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.dto.PdfCsvReader;
 import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
-import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
-import io.github.mateuszuran.ptdlitemono.exception.CardEmptyValuesException;
 import io.github.mateuszuran.ptdlitemono.exception.CsvFileException;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
 import io.github.mateuszuran.ptdlitemono.pdf.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -112,7 +107,7 @@ public class PdfService {
 
     public PdfSource retrieveInformation(String username, Long cardId) {
         var userInfo = getUserInformation(username);
-        var cardInfo = cardService.getCardDetails(cardId);
+        var cardInfo = cardService.getCardData(cardId);
         var counters = calculateCountersV2(cardInfo);
         return PdfSource.builder()
                 .pdfCsvReader(userInfo)
