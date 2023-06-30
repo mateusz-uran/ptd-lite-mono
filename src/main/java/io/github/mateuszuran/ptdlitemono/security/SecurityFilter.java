@@ -15,7 +15,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-@Slf4j
 @Configuration
 public class SecurityFilter {
     @Value("${spring.security.oauth2.resourceserver.jwt.audience}")
@@ -56,7 +55,6 @@ public class SecurityFilter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        log.info(frontendUrls.toString());
         corsConfig.setAllowedOrigins(frontendUrls);
         corsConfig.setMaxAge(8000L);
         corsConfig.addAllowedMethod("*");
