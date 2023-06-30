@@ -1,13 +1,11 @@
 import { IoIosRemove } from 'react-icons/io';
 import { GrFormAdd } from 'react-icons/gr';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { translateAdBlueInputs, translatePetrolInputs } from './fuelInputs';
 import {
-  blueInputs,
-  translateAdBlueInputs,
-  petrolInputs,
-  translatePetrolInputs,
-} from './fuelInputs';
-import { adBlueArraySchema, petrolArraySchema } from './fuelValidations';
+  translatedBlueArraySchema,
+  translatedPetrolArraySchema,
+} from './fuelValidations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSavePetrolMutation } from '../../api/petrol/petrolApiSlice';
@@ -23,10 +21,10 @@ const FuelAddForm = () => {
 
   if (type === 'petrol') {
     inputs = translatePetrolInputs();
-    fieldSchema = petrolArraySchema;
+    fieldSchema = translatedPetrolArraySchema();
   } else if (type === 'blue') {
     inputs = translateAdBlueInputs();
-    fieldSchema = adBlueArraySchema;
+    fieldSchema = translatedBlueArraySchema();
   }
 
   const {

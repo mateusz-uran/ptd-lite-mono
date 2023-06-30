@@ -74,6 +74,10 @@ const Cards = () => {
       dispatch(openModal(cardDeletePayload));
     };
 
+    function storeSelectedCard(cardId) {
+      localStorage.setItem('selected_card', Number(cardId));
+    }
+
     cards = formattedCards.map((card, index) => (
       <div key={index} className="card-wrapper">
         <div className="single-card">
@@ -89,7 +93,12 @@ const Cards = () => {
           </div>
           <div className="buttons-wrapper">
             <Link to={`${card.number}/${card.id}`}>
-              <button className="primary-btn">{t('buttons.browse')}</button>
+              <button
+                onClick={() => storeSelectedCard(card.id)}
+                className="primary-btn"
+              >
+                {t('buttons.browse')}
+              </button>
             </Link>
             <Link to={`${card.number}/${card.id}/add/trip`}>
               <button className="primary-btn">{t('buttons.addTrip')}</button>

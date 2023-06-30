@@ -1,31 +1,48 @@
 import * as yup from 'yup';
+import { t } from 'i18next';
 
-export const tripSchemaArray = yup.object().shape({
-  inputs: yup.array().of(
-    yup.object().shape({
-      dayStart: yup.string().required('Required'),
-      hourStart: yup.string().required('Required'),
-      locationStart: yup.string().required('Required'),
-      countryStart: yup.string().required('Required'),
-      counterStart: yup.number().typeError('Only number').required('Required'),
-      dayEnd: yup.string().required('Required'),
-      hourEnd: yup.string().required('Required'),
-      locationEnd: yup.string().required('Rrequired'),
-      countryEnd: yup.string().required('Required'),
-      counterEnd: yup.number().typeError('Only number').required('Required'),
-    })
-  ),
-});
+export const translatedTripArraySchema = () => {
+  return yup.object().shape({
+    inputs: yup.array().of(
+      yup.object().shape({
+        dayStart: yup.string().required(t('yupValidations.empty')),
+        hourStart: yup.string().required(t('yupValidations.empty')),
+        locationStart: yup.string().required(t('yupValidations.empty')),
+        countryStart: yup.string().required(t('yupValidations.empty')),
+        counterStart: yup
+          .number()
+          .typeError(t('yupValidations.number'))
+          .required(t('yupValidations.empty')),
+        dayEnd: yup.string().required(t('yupValidations.empty')),
+        hourEnd: yup.string().required(t('yupValidations.empty')),
+        locationEnd: yup.string().required(t('yupValidations.empty')),
+        countryEnd: yup.string().required(t('yupValidations.empty')),
+        counterEnd: yup
+          .number()
+          .typeError(t('yupValidations.number'))
+          .required(t('yupValidations.empty')),
+      })
+    ),
+  });
+};
 
-export const tripSchemaSingle = yup.object({
-  dayStart: yup.string().required('Required'),
-  hourStart: yup.string().required('Required'),
-  locationStart: yup.string().required('Required'),
-  countryStart: yup.string().required('Required'),
-  counterStart: yup.number().typeError('Only number').required('Required'),
-  dayEnd: yup.string().required('Required'),
-  hourEnd: yup.string().required('Required'),
-  locationEnd: yup.string().required('Rrequired'),
-  countryEnd: yup.string().required('Required'),
-  counterEnd: yup.number().typeError('Only number').required('Required'),
-});
+export const translatedTripSingleSchema = () => {
+  return yup.object({
+    dayStart: yup.string().required(t('yupValidations.empty')),
+    hourStart: yup.string().required(t('yupValidations.empty')),
+    locationStart: yup.string().required(t('yupValidations.empty')),
+    countryStart: yup.string().required(t('yupValidations.empty')),
+    counterStart: yup
+      .number()
+      .typeError(t('yupValidations.number'))
+      .required(t('yupValidations.empty')),
+    dayEnd: yup.string().required(t('yupValidations.empty')),
+    hourEnd: yup.string().required(t('yupValidations.empty')),
+    locationEnd: yup.string().required(t('yupValidations.empty')),
+    countryEnd: yup.string().required(t('yupValidations.empty')),
+    counterEnd: yup
+      .number()
+      .typeError(t('yupValidations.number'))
+      .required(t('yupValidations.empty')),
+  });
+};

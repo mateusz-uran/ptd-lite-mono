@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 210px;
+  width: 140px;
   background: var(--sidebar-color);
   padding: 10px 14px;
   transition: var(--tran-05);
@@ -203,9 +203,9 @@
   position: absolute;
   top: 0;
   top: 0;
-  left: 210px;
+  left: 140px;
   height: 100vh;
-  width: calc(100% - 210px);
+  width: calc(100% - 140px);
   background-color: var(--body-color);
   transition: var(--tran-05);
   padding-top: 12px;

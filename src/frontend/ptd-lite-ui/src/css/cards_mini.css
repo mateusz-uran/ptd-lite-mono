@@ -27,7 +27,7 @@
 
 .cards-mini ul li a::before {
   content: '';
-  min-width: 60px;
+  min-width: 30px;
 }
 
 .cards-mini ul li .empty::before {

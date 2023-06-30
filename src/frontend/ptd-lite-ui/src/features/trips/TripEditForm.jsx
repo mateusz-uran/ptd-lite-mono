@@ -2,7 +2,7 @@ import '../../css/edit_modal.css';
 import { RiCloseFill } from 'react-icons/ri';
 import { MdSettingsBackupRestore } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
-import { tripSchemaSingle } from './tripValidations';
+import { translatedTripSingleSchema } from './tripValidations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { translateTripInputs } from './tripInputs';
 import { useEffect } from 'react';
@@ -17,6 +17,7 @@ const TripEditForm = ({ tripToEdit }) => {
   const dispatch = useDispatch();
   const [editTrip] = useEditTripMutation();
   const tripInputs = translateTripInputs();
+  const tripSchemaSingle = translatedTripSingleSchema();
 
   const {
     handleSubmit,
