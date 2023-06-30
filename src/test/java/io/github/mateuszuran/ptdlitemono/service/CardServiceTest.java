@@ -12,6 +12,7 @@ import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
+@Slf4j
 @ExtendWith(MockitoExtension.class)
 class CardServiceTest {
 
@@ -244,6 +246,51 @@ class CardServiceTest {
 
     }
 
+    @Test
+    void givenDateString_whenPassString_thenReturnLocaleDateTime() {
+        //given
+        String dateString = "2023-06-30 15:30:00";
+        LocalDateTime expectedDateTime = LocalDateTime.of(2023, 6, 30, 15, 30, 0);
+        //when
+        var result = service.parseDate(dateString);
+        //then
+        assertEquals(expectedDateTime, result);
+    }
+
+    @Test
+    void givenUsernameAndDate_whenRetrieve_thenReturnListOfCards() {
+        //given
+        String username = "admin";
+        LocalDateTime firstDate = LocalDateTime.of(2023, 5, 1, 12, 0, 0);
+        LocalDateTime secondDate = LocalDateTime.of(2023, 5, 5, 15, 30, 0);
+        var expectedCards = dummySortedDescModelData();
+        when(repository.findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(username, firstDate, secondDate)).thenReturn(expectedCards);
+        //when
+        var result = service.retrieveCardsDateBetween(username, firstDate, secondDate);
+        //then
+        assertEquals(expectedCards, result);
+        assertEquals(expectedCards.get(0), result.get(0));
+    }
+
+    @Test
+    void givenUsernameAndDates_whenRetrieve_thenReturnMappedCards() {
+        String username = "admin";
+        String firstDatePlainString = "2023-05-01 12:00:00";
+        String secondDatePlainString = "2023-05-05 15:30:00";
+        LocalDateTime firstDate = LocalDateTime.of(2023, 5, 1, 12, 0, 0);
+        LocalDateTime secondDate = LocalDateTime.of(2023, 5, 5, 15, 30, 0);
+        var repoResult = dummyModelData();
+        var expectedResponse = dummyDtoData();
+        when(repository.findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(username, firstDate, secondDate)).thenReturn(repoResult);
+        when(mapper.mapToCardResponseWithModelMapper(repoResult.get(0))).thenReturn(expectedResponse.get(0));
+        when(mapper.mapToCardResponseWithModelMapper(repoResult.get(1))).thenReturn(expectedResponse.get(1));
+        when(mapper.mapToCardResponseWithModelMapper(repoResult.get(2))).thenReturn(expectedResponse.get(2));
+        when(mapper.mapToCardResponseWithModelMapper(repoResult.get(3))).thenReturn(expectedResponse.get(3));
+        //when
+        var result = service.retrieveCards(username, firstDatePlainString, secondDatePlainString);
+        assertEquals(expectedResponse, result);
+    }
+
     private List<Card> dummyModelData() {
         var cardOne = Card.builder().username("admin").number("ABC")
                 .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
@@ -254,6 +301,18 @@ class CardServiceTest {
         var cardFour = Card.builder().username("admin").number("JKL")
                 .creationTime(LocalDateTime.of(2023, 5, 4, 15, 0)).build();
         return List.of(cardOne, cardTwo, cardThree, cardFour);
+    }
+
+    private List<Card> dummySortedDescModelData() {
+        var cardOne = Card.builder().username("admin").number("ABC")
+                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
+        var cardTwo = Card.builder().username("admin").number("DEF")
+                .creationTime(LocalDateTime.of(2023, 5, 2, 13, 0)).build();
+        var cardThree = Card.builder().username("admin").number("GHI")
+                .creationTime(LocalDateTime.of(2023, 5, 3, 14, 0)).build();
+        var cardFour = Card.builder().username("admin").number("JKL")
+                .creationTime(LocalDateTime.of(2023, 5, 4, 15, 0)).build();
+        return List.of(cardFour, cardThree, cardTwo, cardOne);
     }
 
     private List<CardResponse> dummyDtoData() {

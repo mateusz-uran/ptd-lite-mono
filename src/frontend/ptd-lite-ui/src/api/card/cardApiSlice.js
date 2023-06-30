@@ -14,6 +14,10 @@ export const cardApiSlice = apiSlice.injectEndpoints({
       query: (cardId) => `/card/details?id=${cardId}`,
       providesTags: (result, error, arg) => [{ type: 'Card', id: arg }],
     }),
+    getCardsFromArchive: builder.query({
+      query: (payload) =>
+        `/card/archive?username=${payload.username}&firstDate=${payload.firstDate}&secondDate=${payload.secondDate}`,
+    }),
     addNewCard: builder.mutation({
       query: (card) => ({
         url: `/card/addcard`,
@@ -43,6 +47,7 @@ export const cardApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetLastCardsQuery,
   useGetCardsDetailsQuery,
+  useGetCardsFromArchiveQuery,
   useAddNewCardMutation,
   useUpdateCardMutation,
   useDeletecardMutation,

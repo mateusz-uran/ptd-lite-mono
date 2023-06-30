@@ -23,32 +23,6 @@ import CallbackPage from './features/auth/CallbackPage';
 
 function App() {
   const isOpen = useSelector(isModalOpen);
-  const router = createBrowserRouter([
-    { path: '/', element: <WelcomePage />, errorElement: <ErrorPage /> },
-    { path: '/callback', element: <CallbackPage /> },
-    {
-      path: '/home',
-      element: <AuthRouteGuard component={Sidebar} />,
-      children: [
-        { path: '/home/dashboard', element: <Dashboard /> },
-        { path: '/home/cards', element: <Cards /> },
-        { path: '/home/stats', element: <Statistics /> },
-        { path: '/home/archive', element: <Archives /> },
-        {
-          path: '/home/cards/:cardNumber/:cardId',
-          element: <CardSpecification />,
-        },
-        {
-          path: '/home/cards/:cardNumber/:cardId/add/:type',
-          element: <FuelAddForm />,
-        },
-        {
-          path: '/home/cards/:cardNumber/:cardId/add/trip',
-          element: <TripAddForm />,
-        },
-      ],
-    },
-  ]);
 
   return (
     <>

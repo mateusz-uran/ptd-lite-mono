@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { openModal } from '../modal/modalSlice';
 import TripTable from '../../components/trip-table/TripTable';
 import PetrolTable from '../../components/petrol-table/PetrolTable';
-import AdBlueTable from '../../components/adblue/AdBlueTable';
+import AdBlueTable from '../../components/adblue-table/AdBlueTable';
 import AdditionalInformation from '../additionalInfo/AdditionalInformation';
 import GeneratePDF from '../../components/GeneratePDF';
 import { useTranslation } from 'react-i18next';
