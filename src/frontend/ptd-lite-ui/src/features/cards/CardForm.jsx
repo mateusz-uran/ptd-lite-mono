@@ -17,18 +17,16 @@ import {
   useUpdateCardMutation,
 } from '../../api/card/cardApiSlice';
 import { useTranslation } from 'react-i18next';
-
-export const cardSchema = yup.object({
-  number: yup
-    .string()
-    .min(3, 'Minimum 3 characters')
-    .required('Cannot be empty'),
-});
+import { translateCardInputs } from './cardInputs';
+import { translateCardValidations } from './cardsValidations';
 
 const CardForm = () => {
   const { t } = useTranslation();
   const { user } = useAuth0();
   const dispatch = useDispatch();
+
+  const inputs = translateCardInputs();
+  const cardSchema = translateCardValidations();
 
   const editStatus = useSelector(isCardEditing);
   const cardId = useSelector(cardIdToUpdate);
@@ -49,14 +47,14 @@ const CardForm = () => {
     try {
       if (!editStatus) {
         let card = {
-          number: data.number,
+          number: data.cardNumber,
           username: user.nickname,
         };
         await addNewCard(card).unwrap();
       } else {
         let card = {
           id: cardId,
-          number: data.number,
+          number: data.cardNumber,
         };
         await updateCard(card).unwrap();
         dispatch(stopEditing(false));
@@ -82,7 +80,7 @@ const CardForm = () => {
 
   useEffect(() => {
     if (editStatus) {
-      setValue('number', cardNumber);
+      setValue(inputs.name, cardNumber);
     }
   }, [editStatus, cardNumber]);
 
@@ -91,14 +89,14 @@ const CardForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-wrapper">
           <input
-            type="text"
-            name="cardNumber"
-            placeholder="number"
-            {...register('number', { required: true, minLength: 3 })}
+            type={inputs.type}
+            name={inputs.name}
+            placeholder={inputs.placeholder}
+            {...register(inputs.name)}
             className="primary-input"
           />
-          {errors.number?.message && (
-            <p className="error-input">{errors.number?.message}</p>
+          {errors[inputs.name]?.message && (
+            <p className="error-input">{errors[inputs.name].message}</p>
           )}
         </div>
         <div className="button-wrapper">

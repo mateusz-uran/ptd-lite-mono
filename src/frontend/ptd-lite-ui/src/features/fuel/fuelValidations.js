@@ -1,43 +1,64 @@
 import * as yup from 'yup';
+import { t } from 'i18next';
 
-export const petrolSchema = yup.object({
-  refuelingDate: yup.string().required('Required'),
-  refuelingLocation: yup.string().required('Required'),
-  vehicleCounter: yup.number().typeError('Only number').required('Required'),
-  refuelingAmount: yup.number().typeError('Only number').required('Required'),
-  paymentMethod: yup.string().required('Required'),
-});
+export const translatedPetrolSingleSchema = () => {
+  return yup.object({
+    refuelingDate: yup.string().required(t('yupValidations.empty')),
+    refuelingLocation: yup.string().required(t('yupValidations.empty')),
+    vehicleCounter: yup
+      .number()
+      .typeError(t('yupValidations.number'))
+      .required(t('yupValidations.empty')),
+    refuelingAmount: yup
+      .number()
+      .typeError(t('yupValidations.number'))
+      .required(t('yupValidations.empty')),
+    paymentMethod: yup.string().required(t('yupValidations.empty')),
+  });
+};
 
-export const adBlueSchema = yup.object({
-  adBlueDate: yup.string().required('Required'),
-  adBlueLocalization: yup.string().required('Required'),
-  adBlueAmount: yup.number().typeError('Only number').required('Required'),
-});
+export const translatedAdBlueSingleSchema = () => {
+  return yup.object({
+    adBlueDate: yup.string().required(t('yupValidations.empty')),
+    adBlueLocalization: yup.string().required(t('yupValidations.empty')),
+    adBlueAmount: yup
+      .number()
+      .typeError(t('yupValidations.number'))
+      .required(t('yupValidations.empty')),
+  });
+};
 
-export const petrolArraySchema = yup.object().shape({
-  inputs: yup.array().of(
-    yup.object().shape({
-      refuelingDate: yup.string().required('Required'),
-      refuelingLocation: yup.string().required('Required'),
-      vehicleCounter: yup
-        .number()
-        .typeError('Only number')
-        .required('Required'),
-      refuelingAmount: yup
-        .number()
-        .typeError('Only number')
-        .required('Required'),
-      paymentMethod: yup.string().required('Required'),
-    })
-  ),
-});
+export const translatedPetrolArraySchema = () => {
+  return yup.object().shape({
+    inputs: yup.array().of(
+      yup.object().shape({
+        refuelingDate: yup.string().required(t('yupValidations.empty')),
+        refuelingLocation: yup.string().required(t('yupValidations.empty')),
+        vehicleCounter: yup
+          .number()
+          .typeError(t('yupValidations.number'))
+          .required(t('yupValidations.empty')),
+        refuelingAmount: yup
+          .number()
+          .typeError(t('yupValidations.number'))
+          .required(t('yupValidations.empty')),
+        paymentMethod: yup.string().required(t('yupValidations.empty')),
+      })
+    ),
+  });
+};
 
-export const adBlueArraySchema = yup.object().shape({
-  inputs: yup.array().of(
-    yup.object().shape({
-      adBlueDate: yup.string().required('Required'),
-      adBlueLocalization: yup.string().required('Required'),
-      adBlueAmount: yup.number().typeError('Only number').required('Required'),
-    })
-  ),
-});
+export const translatedBlueArraySchema = () => {
+  return yup.object().shape({
+    inputs: yup.array().of(
+      yup.object().shape({
+        adBlueDate: yup.string().required(t('yupValidations.empty')),
+        adBlueLocalization: yup.string().required(t('yupValidations.empty')),
+        adBlueAmount: yup
+          .number()
+          .typeError(t('yupValidations.number'))
+          .required(t('yupValidations.empty')),
+      })
+    ),
+  });
+};

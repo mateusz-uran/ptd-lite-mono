@@ -7,12 +7,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { editType, fuelToEdit, stopEditingFuel } from './fuelEditSlice';
-import { adBlueSchema, petrolSchema } from './fuelValidations';
 import {
-  petrolInputs,
-  translateAdBlueInputs,
-  translatePetrolInputs,
-} from './fuelInputs';
+  translatedAdBlueSingleSchema,
+  translatedPetrolSingleSchema,
+} from './fuelValidations';
+import { translateAdBlueInputs, translatePetrolInputs } from './fuelInputs';
 import { useUpdatePetrolMutation } from '../../api/petrol/petrolApiSlice';
 import { useUpdateAdBlueMutation } from '../../api/adblue/adBlueApiSlice';
 import { useTranslation } from 'react-i18next';
@@ -30,11 +29,11 @@ const FuelEditForm = () => {
   let translatedModalType;
 
   if (modalType === 'petrol') {
-    schema = petrolSchema;
+    schema = translatedPetrolSingleSchema();
     inputs = translatePetrolInputs();
     translatedModalType = t('misc.editPetrolHeader');
   } else if (modalType === 'blue') {
-    schema = adBlueSchema;
+    schema = translatedAdBlueSingleSchema();
     inputs = translateAdBlueInputs();
     translatedModalType = t('misc.editAdBlueHeader');
   }

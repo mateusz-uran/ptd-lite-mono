@@ -30,6 +30,15 @@
     "fuelConsumptionIdle": "Idle consumption",
     "fuelConsumptionUneconomical": "Uneconomical consumption"
   },
+  "cardFormInput": {
+    "number": "Number"
+  },
+  "yupValidations": {
+    "requeired": "Required",
+    "number": "Only number",
+    "minimum": "Minimum 3 characters",
+    "empty": "Cannot be empty"
+  },
   "misc": {
     "dashboard": "Dashboard",
     "cards": "Cards",

@@ -30,6 +30,14 @@
     "fuelConsumptionIdle": "Zużycie na biegu jałowym",
     "fuelConsumptionUneconomical": "Zużycie na nieekonomicznych obrotach"
   },
+  "cardFormInput": {
+    "number": "Numer"
+  },
+  "yupValidations": {
+    "number": "Tylko numer",
+    "minimum": "Minimum 3 znaki",
+    "empty": "Wymagane"
+  },
   "misc": {
     "dashboard": "Panel",
     "cards": "Karty",
@@ -46,7 +54,7 @@
     "tripsSumm": "Podsumowanie tras",
     "cardsMiniError": "Błąd",
     "cardsMiniNoData": "Brak danych",
-    "manage": "Zarządzja",
+    "manage": "Zarządzaj",
     "generatingPdf": "Generowanie PDF, proszę czekać",
     "tripStart": "Wyjazd",
     "tripEnd": "Przyjazd",

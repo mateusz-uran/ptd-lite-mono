@@ -1,7 +1,7 @@
 import { IoIosRemove } from 'react-icons/io';
 import { GrFormAdd } from 'react-icons/gr';
 import { useNavigate, useParams } from 'react-router-dom';
-import { tripSchemaArray } from './tripValidations';
+import { translatedTripArraySchema } from './tripValidations';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSaveTripsMutation } from '../../api/trips/tripsApiSlice';
@@ -14,6 +14,8 @@ const TripAddForm = () => {
   const navigate = useNavigate();
   const [saveTrips] = useSaveTripsMutation();
   const tripInputs = translateTripInputs();
+
+  const tripSchemaArray = translatedTripArraySchema();
 
   const {
     register,
