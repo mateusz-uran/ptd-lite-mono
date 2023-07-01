@@ -1,0 +1,46 @@
+.pickers {
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.pickers .date-pickers {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.pickers .date-pickers .date-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.pickers .date-pickers span {
+  color: var(--text-color);
+  font-weight: 600;
+  padding-right: 0.3rem;
+  font-size: 13px;
+}
+
+.pickers .date-pickers .react-datepicker__input-container {
+  padding: 0.5rem;
+  padding-left: 0;
+  max-width: 130px;
+}
+
+.pickers .date-pickers .react-datepicker-popper {
+  z-index: 1001;
+}
+
+@media screen and (max-width: 567px) {
+  .pickers .date-pickers {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .pickers {
+    flex-direction: column;
+  }
+}

@@ -68,7 +68,10 @@
     "blueTableEmpty": "No adBlue data",
     "tripHead": "Trips",
     "petrolHead": "Petrol",
-    "blueHead": "AdBlue"
+    "blueHead": "AdBlue",
+    "datePicker": "Pick dates",
+    "dateFrom": "From",
+    "dateTo": "To"
   },
   "buttons": {
     "browse": "Browse",
@@ -90,6 +93,7 @@
     "add": "Add",
     "close": "Close",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "search": "Search"
   }
 }

@@ -1,26 +1,34 @@
+import '../css/archives.css';
 import { useTranslation } from 'react-i18next';
 import Header from './Header';
-import { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import { format } from 'date-fns';
-
 import 'react-datepicker/dist/react-datepicker.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useGetCardsFromArchiveQuery } from '../api/card/cardApiSlice';
+import CardItem from '../features/cards/CardItem';
+import LoadingDots from './LoadingDots';
+import CardForm from '../features/cards/CardForm';
+
+import DatePickers from '../features/archive/DatePickers';
+import { useSelector } from 'react-redux';
+import {
+  endDateFromRange,
+  isFetchingByDatesRange,
+  startDateFromRange,
+} from '../features/archive/datesRangeSlice';
 
 const Archives = () => {
-  const [skip, setSkip] = useState(true);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
   const { t } = useTranslation();
   const { user } = useAuth0();
+  let archiveBody;
 
-  const formattedDateStart = format(startDate, 'yyyy-MM-dd HH:mm:ss');
-  const formattedDateEnd = format(endDate, 'yyyy-MM-dd HH:mm:ss');
+  const skipStatus = useSelector(isFetchingByDatesRange);
+  const startDateRange = useSelector(startDateFromRange);
+  const endDateRange = useSelector(endDateFromRange);
+
   let payload = {
     username: user.nickname,
-    firstDate: String(formattedDateStart),
-    secondDate: String(formattedDateEnd),
+    firstDate: String(startDateRange),
+    secondDate: String(endDateRange),
   };
   const {
     data: allCards,
@@ -28,14 +36,51 @@ const Archives = () => {
     isError,
     isLoading,
     refetch,
-  } = useGetCardsFromArchiveQuery(payload, { skip });
+  } = useGetCardsFromArchiveQuery(payload, {
+    skip: !skipStatus,
+  });
 
-  const handleFormatting = () => {
-    setSkip(false);
-    if (!skip) {
-      refetch();
-    }
-  };
+  archiveBody = (
+    <div className="card-wrapper">
+      <div className="single-card error">
+        <span>{t('misc.datePicker')}</span>
+      </div>
+    </div>
+  );
+
+  if (isLoading) {
+    archiveBody = (
+      <div className="card-wrapper">
+        <div className="single-card">
+          <LoadingDots />
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    archiveBody = (
+      <div className="card-wrapper">
+        <div className="single-card error">
+          <span>{t('misc.errorMessage')}</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (isSuccess && allCards?.length >= 1) {
+    archiveBody = <CardItem cards={allCards} compName={'archive'} />;
+  }
+
+  if (isSuccess && allCards?.length <= 0) {
+    archiveBody = (
+      <div className="card-wrapper">
+        <div className="single-card error">
+          <span>{t('misc.noCards')}.</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -46,14 +91,13 @@ const Archives = () => {
           },
         ]}
       />
-      <section>
-        <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-        />
-        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
+      <section className="pickers">
+        <DatePickers refetchCards={refetch} />
       </section>
-      <button onClick={handleFormatting}>test</button>
+      <div>
+        <CardForm />
+      </div>
+      <div>{archiveBody}</div>
     </div>
   );
 };
