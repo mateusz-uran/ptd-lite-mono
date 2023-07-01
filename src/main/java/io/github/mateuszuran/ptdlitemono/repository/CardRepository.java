@@ -15,6 +15,10 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     List<Card> findAllByUsernameAndCreationTimeBetween(String username, LocalDateTime start, LocalDateTime end);
 
+    @Query(value = "SELECT * FROM Cards WHERE username=:username AND creation_time BETWEEN :start AND :end ORDER BY creation_time DESC", nativeQuery = true)
+    List<Card> findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(String username, LocalDateTime start, LocalDateTime end);
+
     @Query(value = "SELECT * FROM Cards WHERE username=:username ORDER BY creation_time DESC LIMIT 3", nativeQuery = true)
     List<Card> findLastThreeEntitiesByUsernameAndOrderByCreationTime(String username);
+
 }

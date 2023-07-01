@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
@@ -188,5 +189,47 @@ class CardControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
+    }
+
+    @Test
+    void givenUsernameAndDates_whenRetrieve_thenReturnMappedCardsList() throws Exception {
+        //given
+        String username = "admin";
+        String firstDatePlainString = "2023-05-01 12:00:00";
+        String secondDatePlainString = "2023-05-05 15:30:00";
+        repository.saveAll(dummyModelData());
+        //when + then
+        mockMvc.perform(get("/api/card/archive")
+                        .param("username", username)
+                        .param("firstDate", firstDatePlainString)
+                        .param("secondDate", secondDatePlainString)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()", is(4)));
+    }
+
+    private List<Card> dummyModelData() {
+        var cardOne = Card.builder().username("admin").number("ABC")
+                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
+        var cardTwo = Card.builder().username("admin").number("DEF")
+                .creationTime(LocalDateTime.of(2023, 5, 2, 13, 0)).build();
+        var cardThree = Card.builder().username("admin").number("GHI")
+                .creationTime(LocalDateTime.of(2023, 5, 3, 14, 0)).build();
+        var cardFour = Card.builder().username("admin").number("JKL")
+                .creationTime(LocalDateTime.of(2023, 5, 4, 15, 0)).build();
+        return List.of(cardOne, cardTwo, cardThree, cardFour);
+    }
+
+    private List<CardResponse> dummyDtoData() {
+        CardResponse response1 = CardResponse.builder()
+                .creationTime("2023-05-1 12:00:00").build();
+        CardResponse response2 = CardResponse.builder()
+                .creationTime("2023-05-2 13:00:00").build();
+        CardResponse response3 = CardResponse.builder()
+                .creationTime("2023-05-3 14:00:00").build();
+        CardResponse response4 = CardResponse.builder()
+                .creationTime("2023-05-4 15:00:00").build();
+        return List.of(response4, response3, response2, response1);
     }
 }

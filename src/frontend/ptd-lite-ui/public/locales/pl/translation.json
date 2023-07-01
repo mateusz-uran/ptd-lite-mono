@@ -67,7 +67,10 @@
     "blueTableEmpty": "Brak adlbue w karcie",
     "tripHead": "Trasy",
     "petrolHead": "Paliwo",
-    "blueHead": "AdBlue"
+    "blueHead": "AdBlue",
+    "datePicker": "Wybierz daty",
+    "dateFrom": "Od",
+    "dateTo": "Do"
   },
   "buttons": {
     "browse": "Przeglądaj",
@@ -89,6 +92,7 @@
     "add": "Dodaj",
     "close": "Zamknij",
     "confirm": "Potwierdź",
-    "cancel": "Anuluj"
+    "cancel": "Anuluj",
+    "search": "Szukaj"
   }
 }

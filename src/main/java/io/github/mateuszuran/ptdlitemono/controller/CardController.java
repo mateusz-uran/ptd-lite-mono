@@ -53,4 +53,9 @@ public class CardController {
     public ResponseEntity<?> editCardNumber(@RequestParam Long cardId, @RequestBody String number) {
         return ResponseEntity.ok().body(service.editCard(cardId, number));
     }
+
+    @GetMapping("/archive")
+    public ResponseEntity<List<CardResponse>> retrieveCardsByDate(@RequestParam String username, @RequestParam String firstDate, @RequestParam String secondDate) {
+        return ResponseEntity.ok().body(service.retrieveCards(username, firstDate, secondDate));
+    }
 }

@@ -23,32 +23,6 @@ import CallbackPage from './features/auth/CallbackPage';
 
 function App() {
   const isOpen = useSelector(isModalOpen);
-  const router = createBrowserRouter([
-    { path: '/', element: <WelcomePage />, errorElement: <ErrorPage /> },
-    { path: '/callback', element: <CallbackPage /> },
-    {
-      path: '/home',
-      element: <Sidebar />,
-      children: [
-        { path: '/home/dashboard', element: <Dashboard /> },
-        { path: '/home/cards', element: <Cards /> },
-        { path: '/home/stats', element: <Statistics /> },
-        { path: '/home/archive', element: <Archives /> },
-        {
-          path: '/home/cards/:cardNumber/:cardId',
-          element: <CardSpecification />,
-        },
-        {
-          path: '/home/cards/:cardNumber/:cardId/add/:type',
-          element: <FuelAddForm />,
-        },
-        {
-          path: '/home/cards/:cardNumber/:cardId/add/trip',
-          element: <TripAddForm />,
-        },
-      ],
-    },
-  ]);
 
   return (
     <>
@@ -62,15 +36,15 @@ function App() {
           <Route path="/home/stats" element={<Statistics />} />
           <Route path="/home/archive" element={<Archives />} />
           <Route
-            path="/home/cards/:cardNumber/:cardId"
+            path="/home/:compName/:cardNumber/:cardId"
             element={<CardSpecification />}
           />
           <Route
-            path="/home/cards/:cardNumber/:cardId/add/:type"
+            path="/home/:compName/:cardNumber/:cardId/add/:type"
             element={<FuelAddForm />}
           />
           <Route
-            path="/home/cards/:cardNumber/:cardId/add/trip"
+            path="/home/:compName/:cardNumber/:cardId/add/trip"
             element={<TripAddForm />}
           />
         </Route>

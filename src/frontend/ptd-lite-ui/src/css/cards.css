@@ -20,7 +20,7 @@
   opacity: 0.4;
 }
 
-.cards-section .card-wrapper .single-card {
+.card-wrapper .single-card {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 0.8rem 0.4rem;
   margin: 5px 0;
@@ -28,19 +28,19 @@
 }
 
 /*no respond*/
-.cards-section .card-wrapper .single-card.error {
+.card-wrapper .single-card.error {
   text-align: center;
   font-weight: 600;
   color: var(--text-color);
 }
 /**/
 
-.cards-section .card-wrapper .single-card .details-wrapper {
+.card-wrapper .single-card .details-wrapper {
   padding: 1rem 0;
   display: flex;
 }
 
-.cards-section .card-wrapper .single-card .details-wrapper span {
+.card-wrapper .single-card .details-wrapper span {
   display: flex;
   font-size: 15px;
   margin-right: 8px;
@@ -52,67 +52,67 @@
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
-.cards-section .card-wrapper .single-card .details-wrapper span p {
+.card-wrapper .single-card .details-wrapper span p {
   margin-right: 5px;
 }
 
-.cards-section .card-wrapper .single-card .details-wrapper span p.content {
+.card-wrapper .single-card .details-wrapper span p.content {
   font-weight: 600;
 }
 
-.cards-section .card-wrapper .single-card .buttons-wrapper {
+.card-wrapper .single-card .buttons-wrapper {
   display: flex;
   white-space: nowrap;
   flex-wrap: wrap;
 }
 
-.cards-section .card-wrapper .single-card .buttons-wrapper a {
+.card-wrapper .single-card .buttons-wrapper a {
   border-radius: 5px;
 }
 
-.cards-section .card-wrapper .single-card .buttons-wrapper a:nth-child(odd) {
+.card-wrapper .single-card .buttons-wrapper a:nth-child(odd) {
   background: #f2f2f2;
 }
 
-.cards-section .card-wrapper .single-card .buttons-wrapper button.edit {
+.card-wrapper .single-card .buttons-wrapper button.edit {
   background: #ddd;
 }
 
-.cards-section .card-wrapper .single-card .buttons-wrapper button.edit:hover {
+.card-wrapper .single-card .buttons-wrapper button.edit:hover {
   background: var(--primary-color);
 }
 
-.cards-section .card-wrapper .single-card .buttons-wrapper button.delete {
+.card-wrapper .single-card .buttons-wrapper button.delete {
   background: rgba(255, 0, 0, 0.6);
   color: #fff;
   transition: var(--tran-03);
   margin-left: auto;
 }
 
-.cards-section .card-wrapper .single-card .buttons-wrapper button.delete:hover {
+.card-wrapper .single-card .buttons-wrapper button.delete:hover {
   background: rgba(255, 0, 0, 1);
 }
 
 @media screen and (max-width: 486px) {
-  .cards-section .card-wrapper .single-card .details-wrapper {
+  .card-wrapper .single-card .details-wrapper {
     flex-direction: column;
   }
-  .cards-section .card-wrapper .single-card .details-wrapper span {
+  .card-wrapper .single-card .details-wrapper span {
     margin-bottom: 8px;
   }
 
-  .cards-section .card-wrapper .single-card .buttons-wrapper {
+  .card-wrapper .single-card .buttons-wrapper {
     display: flex;
     flex-direction: column;
   }
 
-  .cards-section .card-wrapper .single-card .buttons-wrapper button {
+  .card-wrapper .single-card .buttons-wrapper button {
     margin: 0;
     margin-bottom: 5px;
     width: 100%;
   }
 
-  .cards-section .card-wrapper .single-card .buttons-wrapper button:last-child {
+  .card-wrapper .single-card .buttons-wrapper button:last-child {
     margin-left: 0;
   }
 }

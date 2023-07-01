@@ -10,11 +10,11 @@ import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CardService {
@@ -151,5 +150,23 @@ public class CardService {
                 .map(fuelMapper::mapToAdBlueResponse)
                 .toList();
         return new CardDetailsResponse(card.getNumber(), trips, fuels, blue);
+    }
+
+    public LocalDateTime parseDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(dateString, formatter);
+    }
+
+    public List<Card> retrieveCardsDateBetween(String username, LocalDateTime startDate, LocalDateTime endDate) {
+        return repository.findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(username, startDate, endDate);
+    }
+
+    public List<CardResponse> retrieveCards(String username, String startDate, String endDate) {
+        var start = parseDate(startDate);
+        var end = parseDate(endDate);
+        var result = retrieveCardsDateBetween(username, start, end);
+        return result.stream()
+                .map(cardMapper::mapToCardResponseWithModelMapper)
+                .toList();
     }
 }
