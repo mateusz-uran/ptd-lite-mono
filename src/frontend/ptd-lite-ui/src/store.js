@@ -7,6 +7,7 @@ import additionalInfoReducer from './features/additionalInfo/additionalInfoSlice
 import { apiSlice } from './api/apiSlice';
 import modalReducer from './features/modal/modalSlice';
 import pdfApiReducer from './api/pdf/pdfApiSlice';
+import datesRangeReducer from './features/archive/datesRangeSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     modal: modalReducer,
     additionalInfo: additionalInfoReducer,
     pdfApi: pdfApiReducer,
+    datesRange: datesRangeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

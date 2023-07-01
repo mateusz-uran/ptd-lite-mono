@@ -6,7 +6,7 @@ export const cardApiSlice = apiSlice.injectEndpoints({
       query: (username) => `/card?username=${username}`,
       providesTags: (result = [], error, arg) => [
         'Card',
-        'miniList',
+        'cardsMiniList',
         ...result.map((id) => ({ type: 'Card', id })),
       ],
     }),
@@ -14,13 +14,22 @@ export const cardApiSlice = apiSlice.injectEndpoints({
       query: (cardId) => `/card/details?id=${cardId}`,
       providesTags: (result, error, arg) => [{ type: 'Card', id: arg }],
     }),
+    getCardsFromArchive: builder.query({
+      query: (payload) =>
+        `/card/archive?username=${payload.username}&firstDate=${payload.firstDate}&secondDate=${payload.secondDate}`,
+      providesTags: (result = [], error, arg) => [
+        'Card',
+        'cardsBigList',
+        ...result.map((id) => ({ type: 'Card', id })),
+      ],
+    }),
     addNewCard: builder.mutation({
       query: (card) => ({
         url: `/card/addcard`,
         method: 'POST',
         body: card,
       }),
-      invalidatesTags: ['miniList'],
+      invalidatesTags: ['Card'],
     }),
     updateCard: builder.mutation({
       query: (card) => ({
@@ -28,14 +37,16 @@ export const cardApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: card.number,
       }),
-      invalidatesTags: ['miniList'],
+      invalidatesTags: ['cardsMiniList', 'cardsBigList'],
     }),
     deletecard: builder.mutation({
       query: (cardId) => ({
         url: `/card/delete?cardId=${cardId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['miniList'],
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Card', id: arg.cardId },
+      ],
     }),
   }),
 });
@@ -43,6 +54,7 @@ export const cardApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetLastCardsQuery,
   useGetCardsDetailsQuery,
+  useGetCardsFromArchiveQuery,
   useAddNewCardMutation,
   useUpdateCardMutation,
   useDeletecardMutation,

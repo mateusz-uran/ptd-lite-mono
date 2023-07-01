@@ -1,11 +1,11 @@
 import '../../css/card_spec.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../modal/modalSlice';
 import TripTable from '../../components/trip-table/TripTable';
 import PetrolTable from '../../components/petrol-table/PetrolTable';
-import AdBlueTable from '../../components/adblue/AdBlueTable';
+import AdBlueTable from '../../components/adblue-table/AdBlueTable';
 import AdditionalInformation from '../additionalInfo/AdditionalInformation';
 import GeneratePDF from '../../components/GeneratePDF';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ const CardSpecification = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { cardNumber, cardId } = useParams();
+  const navigate = useNavigate();
 
   const handleDeleteCard = () => {
     let cardDeletePayload = {
@@ -21,6 +22,7 @@ const CardSpecification = () => {
       message: t('misc.modalMessage'),
     };
     dispatch(openModal(cardDeletePayload));
+    navigate(-1);
   };
 
   return (
@@ -41,13 +43,15 @@ const CardSpecification = () => {
           <div className="buttons-wrapper">
             <GeneratePDF />
             <Link to={`/home/cards/${cardNumber}/${cardId}/add/trip`}>
-              <button className="primary-btn">{t('buttons.addTrip')}</button>
+              <button className="secondary-btn">{t('buttons.addTrip')}</button>
             </Link>
             <Link to={`/home/cards/${cardNumber}/${cardId}/add/${'petrol'}`}>
-              <button className="primary-btn">{t('buttons.addPetrol')}</button>
+              <button className="secondary-btn">
+                {t('buttons.addPetrol')}
+              </button>
             </Link>
             <Link to={`/home/cards/${cardNumber}/${cardId}/add/${'blue'}`}>
-              <button className="primary-btn">{t('buttons.addBlue')}</button>
+              <button className="secondary-btn">{t('buttons.addBlue')}</button>
             </Link>
             <button onClick={handleDeleteCard} className="primary-btn delete">
               {t('buttons.deleteCard')}
