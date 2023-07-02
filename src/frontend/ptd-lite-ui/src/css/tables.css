@@ -23,6 +23,10 @@ table tr {
   transition: var(--tran-03);
 }
 
+table tbody tr td {
+  border: 1px solid var(--primary-color-light);
+}
+
 table tr th {
   background-color: #f2f2f2;
   position: sticky;
@@ -45,8 +49,7 @@ table tr td {
   cursor: pointer;
 }
 
-table tr:hover,
-table tr:hover td {
+table tr:hover td:not(.row-span-cell) {
   background: var(--primary-color-light);
 }
 
@@ -72,8 +75,4 @@ table tr td .empty-response {
   font-size: 13px;
   font-weight: 600;
   color: var(--text-color);
-}
-
-.rowspan-group:hover td {
-  background-color: lightblue;
 }

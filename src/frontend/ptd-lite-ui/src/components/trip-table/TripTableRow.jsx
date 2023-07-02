@@ -9,9 +9,10 @@ import {
   stopEditing,
   tripToEdit,
 } from '../../features/trips/tripUpdateSlice';
+import { fakeTrips } from '../../features/trips/tripDummyData';
 
 const TripTableRow = ({
-  tripEntities,
+  // tripEntities,
   selectedTripIds,
   setSelectedTripIds,
 }) => {
@@ -27,7 +28,21 @@ const TripTableRow = ({
     }
   };
 
-  return tripEntities?.map((trip, index) => (
+  let tripDummyEntities = fakeTrips;
+
+  const getRowSpan = (index) => {
+    let rowspan = 1;
+    const currentGroup = tripDummyEntities[index]?.group?.id;
+    const nextGroup = tripDummyEntities[index + 1]?.group?.id;
+
+    if (currentGroup && currentGroup === nextGroup) {
+      rowspan = getRowSpan(index + 1) + 1;
+    }
+
+    return rowspan;
+  };
+
+  return tripDummyEntities?.map((trip, index) => (
     <Fragment key={index}>
       <tr>
         <td>
@@ -58,6 +73,12 @@ const TripTableRow = ({
             </button>
           </div>
         </td>
+        {index === 0 ||
+        trip.group?.id !== tripDummyEntities[index - 1]?.group?.id ? (
+          <td rowSpan={getRowSpan(index)} className="row-span-cell">
+            {trip.group?.cargoName}
+          </td>
+        ) : null}
       </tr>
       {isEditing && selectTripToEdit.id === trip.id && (
         <TripEditForm tripToEdit={selectTripToEdit} />

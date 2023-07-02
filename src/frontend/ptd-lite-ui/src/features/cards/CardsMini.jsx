@@ -50,7 +50,11 @@ const CardsMini = () => {
           (cardsMiniList = lastCards.map((card, index) => (
             <ul key={index}>
               <li>
-                <Link to={`/home/cards/${card.number}/${card.id}`}>
+                <Link
+                  to={`/home/cards/${encodeURIComponent(card.number)}/${
+                    card.id
+                  }`}
+                >
                   <span onClick={() => storeSelectedCard(card.id)}>
                     {card.number}
                   </span>

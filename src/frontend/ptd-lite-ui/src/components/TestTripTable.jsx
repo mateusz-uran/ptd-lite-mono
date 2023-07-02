@@ -1,8 +1,10 @@
+import { useState } from 'react';
+
 const TestTripTable = ({ tripDummyEntities }) => {
   const getRowSpan = (index) => {
     let rowspan = 1;
-    const currentGroup = tripDummyEntities[index]?.group?.cargoName;
-    const nextGroup = tripDummyEntities[index + 1]?.group?.cargoName;
+    const currentGroup = tripDummyEntities[index]?.group?.id;
+    const nextGroup = tripDummyEntities[index + 1]?.group?.id;
 
     if (currentGroup && currentGroup === nextGroup) {
       rowspan = getRowSpan(index + 1) + 1;
@@ -27,37 +29,30 @@ const TestTripTable = ({ tripDummyEntities }) => {
           <th>Start Counter</th>
           <th>End Counter</th>
           <th>Group</th>
-          <th>Cargo Name</th>
         </tr>
       </thead>
       <tbody>
-        {tripDummyEntities.map((trip, index) => {
-          const rowspan = getRowSpan(index);
-          const groupCargoName = trip.group?.cargoName;
-          const isRowspanGroup = rowspan > 1 && index === 0;
-
-          return (
-            <tr key={trip.id} className={rowspan > 1 ? 'rowspan-group' : ''}>
-              <td>{trip.id}</td>
-              <td>{trip.dayStart}</td>
-              <td>{trip.hourStart}</td>
-              <td>{trip.locationStart}</td>
-              <td>{trip.dayEnd}</td>
-              <td>{trip.hourEnd}</td>
-              <td>{trip.locationEnd}</td>
-              <td>{trip.countryStart}</td>
-              <td>{trip.countryEnd}</td>
-              <td>{trip.counterStart}</td>
-              <td>{trip.counterEnd}</td>
-              {index === 0 ||
-              groupCargoName !==
-                tripDummyEntities[index - 1]?.group?.cargoName ? (
-                <td rowSpan={rowspan}>{groupCargoName}</td>
-              ) : null}
-              <td>{trip.group?.id}</td>
-            </tr>
-          );
-        })}
+        {tripDummyEntities.map((trip, index) => (
+          <tr key={trip.id}>
+            <td>{trip.id}</td>
+            <td>{trip.dayStart}</td>
+            <td>{trip.hourStart}</td>
+            <td>{trip.locationStart}</td>
+            <td>{trip.dayEnd}</td>
+            <td>{trip.hourEnd}</td>
+            <td>{trip.locationEnd}</td>
+            <td>{trip.countryStart}</td>
+            <td>{trip.countryEnd}</td>
+            <td>{trip.counterStart}</td>
+            <td>{trip.counterEnd}</td>
+            {index === 0 ||
+            trip.group?.id !== tripDummyEntities[index - 1]?.group?.id ? (
+              <td rowSpan={getRowSpan(index)} className="row-span-cell">
+                {trip.group?.cargoName}
+              </td>
+            ) : null}
+          </tr>
+        ))}
       </tbody>
     </table>
   );

@@ -1,4 +1,4 @@
-export const tripDummyEntities = [
+export const fakeTrips = [
   {
     id: 1,
     dayStart: '3.01',
