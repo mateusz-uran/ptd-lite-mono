@@ -1,8 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import Header from './Header';
+import TestTripTable from './TestTripTable';
+import { tripDummyEntities } from '../features/trips/tripDummyData';
 
 const Dashboard = () => {
   const { t } = useTranslation();
+
   return (
     <div>
       <Header
@@ -13,6 +16,9 @@ const Dashboard = () => {
         ]}
       />
       <section>dashboard</section>
+      <div>
+        <TestTripTable tripDummyEntities={tripDummyEntities} />
+      </div>
     </div>
   );
 };

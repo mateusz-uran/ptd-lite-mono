@@ -29,4 +29,8 @@ public class Trip {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private Card card;
+
+    /*@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trip_group_id")
+    private TripGroup tripGroup;*/
 }

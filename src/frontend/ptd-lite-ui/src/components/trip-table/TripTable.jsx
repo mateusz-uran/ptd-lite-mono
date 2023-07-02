@@ -21,6 +21,8 @@ const TripTable = ({ cardId }) => {
   const [selectedTripIds, setSelectedTripIds] = useState([]);
   let tableContent;
 
+  const numRows = tripEntities?.length;
+
   const handleDelete = () => {
     deleteTrips(selectedTripIds).unwrap();
     setSelectedTripIds([]);
@@ -42,6 +44,7 @@ const TripTable = ({ cardId }) => {
         tripEntities={tripEntities}
         selectedTripIds={selectedTripIds}
         setSelectedTripIds={setSelectedTripIds}
+        numRows={numRows}
       />
     );
   }

@@ -45,7 +45,8 @@ table tr td {
   cursor: pointer;
 }
 
-table tr:hover {
+table tr:hover,
+table tr:hover td {
   background: var(--primary-color-light);
 }
 
@@ -71,4 +72,8 @@ table tr td .empty-response {
   font-size: 13px;
   font-weight: 600;
   color: var(--text-color);
+}
+
+.rowspan-group:hover td {
+  background-color: lightblue;
 }

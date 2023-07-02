@@ -1,4 +1,4 @@
-export const tripEntities = [
+export const tripDummyEntities = [
   {
     id: 1,
     dayStart: '3.01',
@@ -11,6 +11,10 @@ export const tripEntities = [
     countryEnd: 'DE',
     counterStart: 101458,
     counterEnd: 102010,
+    group: {
+      id: 1,
+      cargoName: 'Food',
+    },
   },
   {
     id: 2,
@@ -24,6 +28,10 @@ export const tripEntities = [
     countryEnd: 'DE',
     counterStart: 101458,
     counterEnd: 102010,
+    group: {
+      id: 1,
+      cargoName: 'Food',
+    },
   },
   {
     id: 3,
@@ -37,6 +45,10 @@ export const tripEntities = [
     countryEnd: 'DE',
     counterStart: 101458,
     counterEnd: 102010,
+    group: {
+      id: 1,
+      cargoName: 'Food',
+    },
   },
   {
     id: 4,
@@ -50,5 +62,56 @@ export const tripEntities = [
     countryEnd: 'DE',
     counterStart: 101458,
     counterEnd: 102010,
+  },
+  {
+    id: 5,
+    dayStart: '3.01',
+    hourStart: '21:00',
+    locationStart: 'Szczecin',
+    dayEnd: '4.01',
+    hourEnd: '10:30',
+    locationEnd: 'Berlin',
+    countryStart: 'PL',
+    countryEnd: 'DE',
+    counterStart: 101458,
+    counterEnd: 102010,
+    group: {
+      id: 2,
+      cargoName: 'Chicken',
+    },
+  },
+  {
+    id: 6,
+    dayStart: '3.01',
+    hourStart: '21:00',
+    locationStart: 'Szczecin',
+    dayEnd: '4.01',
+    hourEnd: '10:30',
+    locationEnd: 'Berlin',
+    countryStart: 'PL',
+    countryEnd: 'DE',
+    counterStart: 101458,
+    counterEnd: 102010,
+    group: {
+      id: 2,
+      cargoName: 'Chicken',
+    },
+  },
+  {
+    id: 7,
+    dayStart: '3.01',
+    hourStart: '21:00',
+    locationStart: 'Szczecin',
+    dayEnd: '4.01',
+    hourEnd: '10:30',
+    locationEnd: 'Berlin',
+    countryStart: 'PL',
+    countryEnd: 'DE',
+    counterStart: 101458,
+    counterEnd: 102010,
+    group: {
+      id: 3,
+      cargoName: 'Fruit',
+    },
   },
 ];
