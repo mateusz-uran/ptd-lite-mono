@@ -50,7 +50,11 @@ const CardItem = ({ cards, compName }) => {
           </span>
         </div>
         <div className="buttons-wrapper">
-          <Link to={`/home/${compName}/${card.number}/${card.id}`}>
+          <Link
+            to={`/home/${compName}/${encodeURIComponent(card.number)}/${
+              card.id
+            }`}
+          >
             <button
               onClick={() => storeSelectedCard(card.id)}
               className="primary-btn"
@@ -58,16 +62,24 @@ const CardItem = ({ cards, compName }) => {
               {t('buttons.browse')}
             </button>
           </Link>
-          <Link to={`/home/${compName}/${card.number}/${card.id}/add/trip`}>
+          <Link
+            to={`/home/${compName}/${encodeURIComponent(card.number)}/${
+              card.id
+            }/add/trip`}
+          >
             <button className="secondary-btn">{t('buttons.addTrip')}</button>
           </Link>
           <Link
-            to={`/home/${compName}/${card.number}/${card.id}/add/${'petrol'}`}
+            to={`/home/${compName}/${encodeURIComponent(card.number)}/${
+              card.id
+            }/add/${'petrol'}`}
           >
             <button className="secondary-btn">{t('buttons.addPetrol')}</button>
           </Link>
           <Link
-            to={`/home/${compName}/${card.number}/${card.id}/add/${'blue'}`}
+            to={`/home/${compName}/${encodeURIComponent(card.number)}/${
+              card.id
+            }/add/${'blue'}`}
           >
             <button className="secondary-btn">{t('buttons.addBlue')}</button>
           </Link>
