@@ -42,15 +42,27 @@ const CardSpecification = () => {
           <h5>{t('misc.manage')}</h5>
           <div className="buttons-wrapper">
             <GeneratePDF />
-            <Link to={`/home/cards/${cardNumber}/${cardId}/add/trip`}>
+            <Link
+              to={`/home/cards/${encodeURIComponent(
+                cardNumber
+              )}/${cardId}/add/trip`}
+            >
               <button className="secondary-btn">{t('buttons.addTrip')}</button>
             </Link>
-            <Link to={`/home/cards/${cardNumber}/${cardId}/add/${'petrol'}`}>
+            <Link
+              to={`/home/cards/${encodeURIComponent(
+                cardNumber
+              )}/${cardId}/add/${'petrol'}`}
+            >
               <button className="secondary-btn">
                 {t('buttons.addPetrol')}
               </button>
             </Link>
-            <Link to={`/home/cards/${cardNumber}/${cardId}/add/${'blue'}`}>
+            <Link
+              to={`/home/cards/${encodeURIComponent(
+                cardNumber
+              )}/${cardId}/add/${'blue'}`}
+            >
               <button className="secondary-btn">{t('buttons.addBlue')}</button>
             </Link>
             <button onClick={handleDeleteCard} className="primary-btn delete">
