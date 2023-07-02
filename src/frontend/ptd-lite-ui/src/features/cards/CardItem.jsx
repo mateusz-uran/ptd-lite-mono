@@ -50,7 +50,11 @@ const CardItem = ({ cards, compName }) => {
           </span>
         </div>
         <div className="buttons-wrapper">
-          <Link to={`/home/${compName}/${card.number}/${card.id}`}>
+          <Link
+            to={`/home/${compName}/${encodeURIComponent(card.number)}/${
+              card.id
+            }`}
+          >
             <button
               onClick={() => storeSelectedCard(card.id)}
               className="primary-btn"
