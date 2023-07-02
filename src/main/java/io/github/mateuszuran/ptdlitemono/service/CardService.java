@@ -10,7 +10,6 @@ import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CardService {
