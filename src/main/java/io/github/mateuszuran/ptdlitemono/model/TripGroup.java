@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -26,8 +27,13 @@ public class TripGroup {
     @JsonManagedReference
     private List<Trip> trips = new ArrayList<>();
 
-    public void addTripsToGroup(Trip trip){
+    public void addTripsToGroup(Trip trip) {
         trips.add(trip);
         trip.setTripGroup(this);
+    }
+
+    public void removeTripsFromGroup(Trip trip) {
+        trips.remove(trip);
+        trip.setTripGroup(null);
     }
 }

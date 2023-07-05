@@ -54,19 +54,15 @@ public class TripController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/getgroup")
-    public ResponseEntity<TripGroup> getGroup(@RequestParam Long groupId) {
-        return ResponseEntity.ok().body(groupService.getGroup(groupId));
-    }
-
-    @GetMapping("/singletrip")
-    public ResponseEntity<?> getSingleTrip(@RequestParam Long tripId) {
-        return ResponseEntity.ok().body(service.getSingleTrip(tripId));
-    }
-
-    @PatchMapping("/addtogrup")
-    public ResponseEntity<?> updateGroup(@RequestParam Long groupId, @RequestBody TripGroupRequest request) {
+    @PatchMapping("/addtogroup")
+    public ResponseEntity<?> updateGroupWithNewTrips(@RequestParam Long groupId, @RequestBody TripGroupRequest request) {
         groupService.addTripToGroup(request, groupId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/removefromgroup")
+    public ResponseEntity<?> updateGroupRemoveTrips(@RequestParam Long groupId, @RequestBody TripGroupRequest request) {
+        groupService.removeTripFromGroup(request, groupId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

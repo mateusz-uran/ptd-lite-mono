@@ -2,10 +2,13 @@ package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
+import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
+import io.github.mateuszuran.ptdlitemono.repository.TripGroupRepository;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +22,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -40,6 +45,8 @@ class TripControllerTest {
     private TripRepository repository;
     @Autowired
     private CardRepository cardRepository;
+    @Autowired
+    private TripGroupRepository groupRepository;
     private Card card;
 
     @AfterEach
@@ -142,5 +149,97 @@ class TripControllerTest {
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Trips data is empty"));
+    }
+
+    @Test
+    void givenTripIds_whenCreateGroup_thenReturnStatusCreated() throws Exception {
+        //given
+        TripGroupRequest request = TripGroupRequest.builder().tripIds(Arrays.asList(1L, 2L)).build();
+        //when + then
+        mockMvc.perform(post("/api/trip/addgroup")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    void givenTripsIds_whenAddTripsToGroup_thenReturnStatusIsOk() throws Exception {
+        //given
+        Trip trip1 = Trip.builder().id(1L).build();
+        Trip trip2 = Trip.builder().id(2L).build();
+        repository.saveAll(List.of(trip1, trip2));
+        Long groupId = 1L;
+        TripGroup existingGroup = TripGroup.builder()
+                .id(groupId)
+                .trips(new ArrayList<>(Arrays.asList(trip1, trip2)))
+                .build();
+        groupRepository.save(existingGroup);
+        TripGroupRequest request = TripGroupRequest.builder().tripIds(Arrays.asList(1L, 2L)).build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/addtogroup")
+                        .param("groupId", String.valueOf(groupId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    void givenTripsIds_whenAddTripsToNotExistingGroup_thenReturnErrorMessage() throws Exception {
+        //given
+        Trip trip1 = Trip.builder().id(1L).build();
+        Trip trip2 = Trip.builder().id(2L).build();
+        repository.saveAll(List.of(trip1, trip2));
+        Long groupId = 1L;
+        TripGroupRequest request = TripGroupRequest.builder().tripIds(Arrays.asList(1L, 2L)).build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/addtogroup")
+                        .param("groupId", String.valueOf(groupId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Group not found"));
+    }
+
+    @Test
+    void givenTripsIds_whenRemoveTripsFromGroup_thenReturnStatusIsOk() throws Exception {
+        //given
+        Trip trip1 = Trip.builder().id(1L).build();
+        Trip trip2 = Trip.builder().id(2L).build();
+        repository.saveAll(List.of(trip1, trip2));
+        Long groupId = 1L;
+        TripGroup existingGroup = TripGroup.builder()
+                .id(groupId)
+                .trips(new ArrayList<>(Arrays.asList(trip1, trip2)))
+                .build();
+        groupRepository.save(existingGroup);
+        TripGroupRequest request = TripGroupRequest.builder().tripIds(Arrays.asList(1L, 2L)).build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/removefromgroup")
+                        .param("groupId", String.valueOf(groupId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    void givenTripsIds_whenRemoveTripsFromNotExistingGroup_thenReturnErrorMessage() throws Exception {
+        //given
+        Trip trip1 = Trip.builder().id(1L).build();
+        Trip trip2 = Trip.builder().id(2L).build();
+        repository.saveAll(List.of(trip1, trip2));
+        Long groupId = 1L;
+        TripGroupRequest request = TripGroupRequest.builder().tripIds(Arrays.asList(1L, 2L)).build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/removefromgroup")
+                        .param("groupId", String.valueOf(groupId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Group not found"));
     }
 }
