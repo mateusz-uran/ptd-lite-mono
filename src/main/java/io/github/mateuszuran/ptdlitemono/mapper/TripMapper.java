@@ -7,13 +7,23 @@ import io.github.mateuszuran.ptdlitemono.model.Trip;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class TripMapper {
     private final ModelMapperConfig mapper;
 
     public TripResponse mapToTripResponseWithModelMapper(Trip trip) {
-        return mapper.modelMapper().map(trip, TripResponse.class);
+        TripResponse tripResponse = mapper.modelMapper().map(trip, TripResponse.class);
+        if (trip.getTripGroup() != null) {
+            List<Long> tripIds = trip.getTripGroup().getTrips().stream()
+                    .map(Trip::getId)
+                    .collect(Collectors.toList());
+            tripResponse.getGroup().setTripIds(tripIds);
+        }
+        return tripResponse;
     }
 
     public Trip mapToTripValuesWithModelMapper(TripRequest tripValues) {

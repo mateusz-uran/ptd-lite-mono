@@ -1,22 +1,33 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
-/*@Entity
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 @Table(name = "trip_group")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor*/
+@NoArgsConstructor
 public class TripGroup {
-    /*@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cargoName;
+
     @OneToMany(mappedBy = "tripGroup", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Trip> trips = new ArrayList<>();
 
-    public void addTrip(Trip trip) {
-        this.trips.add(trip);
+    public void addTripsToGroup(Trip trip){
+        trips.add(trip);
         trip.setTripGroup(this);
-    }*/
+    }
 }

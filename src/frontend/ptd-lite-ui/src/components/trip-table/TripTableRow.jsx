@@ -12,7 +12,7 @@ import {
 import { fakeTrips } from '../../features/trips/tripDummyData';
 
 const TripTableRow = ({
-  // tripEntities,
+  tripEntities,
   selectedTripIds,
   setSelectedTripIds,
 }) => {
@@ -28,15 +28,28 @@ const TripTableRow = ({
     }
   };
 
-  let tripDummyEntities = fakeTrips;
+  let tripDummyEntities = tripEntities;
 
   const getRowSpan = (index) => {
     let rowspan = 1;
     const currentGroup = tripDummyEntities[index]?.group?.id;
-    const nextGroup = tripDummyEntities[index + 1]?.group?.id;
 
-    if (currentGroup && currentGroup === nextGroup) {
-      rowspan = getRowSpan(index + 1) + 1;
+    for (let i = index - 1; i >= 0; i--) {
+      const prevGroup = tripDummyEntities[i]?.group?.id;
+      if (currentGroup && currentGroup === prevGroup) {
+        rowspan++;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = index + 1; i < tripDummyEntities.length; i++) {
+      const nextGroup = tripDummyEntities[i]?.group?.id;
+      if (currentGroup && currentGroup === nextGroup) {
+        rowspan++;
+      } else {
+        break;
+      }
     }
 
     return rowspan;
@@ -74,7 +87,8 @@ const TripTableRow = ({
           </div>
         </td>
         {index === 0 ||
-        trip.group?.id !== tripDummyEntities[index - 1]?.group?.id ? (
+        trip.group?.id !== tripDummyEntities[index - 1]?.group?.id ||
+        trip.group === null ? (
           <td rowSpan={getRowSpan(index)} className="row-span-cell">
             {trip.group?.cargoName}
           </td>

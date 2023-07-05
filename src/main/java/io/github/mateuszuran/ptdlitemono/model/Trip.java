@@ -1,5 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,9 +29,11 @@ public class Trip {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
+    @JsonBackReference
     private Card card;
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trip_group_id")
-    private TripGroup tripGroup;*/
+    @JsonBackReference
+    private TripGroup tripGroup;
 }

@@ -87,4 +87,8 @@ public class TripService {
         var updatedTrip = repository.save(tripToEdit);
         return tripMapper.mapToTripResponseWithModelMapper(updatedTrip);
     }
+
+    public Trip getSingleTrip(Long tripId) {
+        return repository.findById(tripId).orElseThrow();
+    }
 }

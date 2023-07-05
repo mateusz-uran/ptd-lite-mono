@@ -1,6 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
-import io.github.mateuszuran.ptdlitemono.dto.*;
+import io.github.mateuszuran.ptdlitemono.dto.CardDetailsResponse;
+import io.github.mateuszuran.ptdlitemono.dto.CardRequest;
+import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
 import io.github.mateuszuran.ptdlitemono.service.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

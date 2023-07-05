@@ -24,7 +24,7 @@ table tr {
 }
 
 table tbody tr td {
-  border: 1px solid var(--primary-color-light);
+  border: 1px solid red;
 }
 
 table tr th {

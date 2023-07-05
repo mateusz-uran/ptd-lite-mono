@@ -1,5 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,12 +25,15 @@ public class Card {
     private LocalDateTime creationTime;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "card")
+    @JsonManagedReference
     private List<Trip> trips = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "card")
+    @JsonManagedReference
     private List<Fuel> fuels = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "card")
+    @JsonManagedReference
     private List<AdBlue> adBlue = new ArrayList<>();
 
     public void addTrip(Trip trip) {
