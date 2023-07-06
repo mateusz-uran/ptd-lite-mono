@@ -31,16 +31,21 @@ const AdBlueTableRow = ({ blueEntities }) => {
           <td>{blue.adBlueDate}</td>
           <td>{blue.adBlueLocalization}</td>
           <td>{blue.adBlueAmount}</td>
-          <td className="last-cell">
-            <button onClick={() => handleEditBlue(blue)} className="small-btn">
-              <AiOutlineEdit className="edit" />
-            </button>
-            <button
-              onClick={() => handleDeleteAdBlue(blue.id)}
-              className="small-btn"
-            >
-              <MdDeleteOutline />
-            </button>
+          <td className="manage-cell-wrapper">
+            <div className="manage-cell">
+              <button
+                onClick={() => handleEditBlue(blue)}
+                className="small-btn"
+              >
+                <AiOutlineEdit className="edit" />
+              </button>
+              <button
+                onClick={() => handleDeleteAdBlue(blue.id)}
+                className="small-btn"
+              >
+                <MdDeleteOutline />
+              </button>
+            </div>
           </td>
         </tr>
       ))}

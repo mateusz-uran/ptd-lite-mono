@@ -8,6 +8,7 @@ import { apiSlice } from './api/apiSlice';
 import modalReducer from './features/modal/modalSlice';
 import pdfApiReducer from './api/pdf/pdfApiSlice';
 import datesRangeReducer from './features/archive/datesRangeSlice';
+import tripSelectedReducer from './features/trips/tripSelectedSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     additionalInfo: additionalInfoReducer,
     pdfApi: pdfApiReducer,
     datesRange: datesRangeReducer,
+    tripSelected: tripSelectedReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

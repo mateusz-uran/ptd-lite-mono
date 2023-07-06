@@ -1,9 +1,11 @@
 package io.github.mateuszuran.ptdlitemono.mapper;
 
 import io.github.mateuszuran.ptdlitemono.config.ModelMapperConfig;
+import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
+import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -32,5 +34,9 @@ public class TripMapper {
 
     public <T, V> void updateTrip(T source, V target) {
         mapper.modelMapper().map(source, target);
+    }
+
+    public TripGroup mapToTripGroup(TripGroupRequest request) {
+        return mapper.modelMapper().map(request, TripGroup.class);
     }
 }

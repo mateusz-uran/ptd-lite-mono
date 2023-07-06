@@ -33,19 +33,21 @@ const PetrolTableRow = ({ petrolEntities }) => {
           <td>{fuel.vehicleCounter}</td>
           <td>{fuel.refuelingAmount}</td>
           <td>{fuel.paymentMethod}</td>
-          <td className="last-cell">
-            <button
-              onClick={() => handleEditPetrol(fuel)}
-              className="small-btn"
-            >
-              <AiOutlineEdit className="edit" />
-            </button>
-            <button
-              onClick={() => handleDeletePetrol(fuel.id)}
-              className="small-btn"
-            >
-              <MdDeleteOutline />
-            </button>
+          <td className="manage-cell-wrapper">
+            <div className="manage-cell">
+              <button
+                onClick={() => handleEditPetrol(fuel)}
+                className="small-btn"
+              >
+                <AiOutlineEdit className="edit" />
+              </button>
+              <button
+                onClick={() => handleDeletePetrol(fuel.id)}
+                className="small-btn"
+              >
+                <MdDeleteOutline />
+              </button>
+            </div>
           </td>
         </tr>
       ))}

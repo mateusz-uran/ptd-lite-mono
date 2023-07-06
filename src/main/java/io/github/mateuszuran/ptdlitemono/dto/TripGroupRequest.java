@@ -12,6 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TripGroupRequest {
-    List<Long> tripIds;
-    String cargoName;
+    private String cargoName;
+    private Integer weight;
+    private Integer temperature;
+    private String notes;
+    private List<Long> tripIds;
 }

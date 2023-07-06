@@ -1,26 +1,31 @@
-const TripSingleSelect = ({ tripId, selectedTripIds, setSelectedTripIds }) => {
-  const handleCheckboxChange = (event) => {
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  removeSelectedTrip,
+  selectedTripArray,
+  storeSelectedTrips,
+} from './tripSelectedSlice';
+
+const TripSingleSelect = ({ tripObject }) => {
+  const dispatch = useDispatch();
+  const selectedTrip = useSelector(selectedTripArray);
+
+  const handleCheckboxChangeRedux = (event) => {
     const isChecked = event.target.checked;
     if (isChecked) {
-      setSelectedTripIds((prevSelectedTripIds) => [
-        ...prevSelectedTripIds,
-        tripId,
-      ]);
+      dispatch(storeSelectedTrips(tripObject));
     } else {
-      setSelectedTripIds((prevSelectedTripIds) =>
-        prevSelectedTripIds.filter((id) => id !== tripId)
-      );
+      dispatch(removeSelectedTrip(tripObject));
     }
   };
 
-  const isChecked = selectedTripIds.includes(tripId);
+  const isChecked = selectedTrip.includes(tripObject);
 
   return (
     <input
       type="checkbox"
-      value={tripId}
+      value={tripObject.id}
       checked={isChecked}
-      onChange={(event) => handleCheckboxChange(event)}
+      onChange={(event) => handleCheckboxChangeRedux(event)}
     />
   );
 };

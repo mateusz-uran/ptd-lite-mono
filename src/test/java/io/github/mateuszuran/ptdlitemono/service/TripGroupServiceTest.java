@@ -3,6 +3,7 @@ package io.github.mateuszuran.ptdlitemono.service;
 import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
+import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import io.github.mateuszuran.ptdlitemono.repository.TripGroupRepository;
@@ -30,10 +31,12 @@ class TripGroupServiceTest {
     private TripGroupRepository repository;
     @Mock
     private TripRepository tripRepository;
+    @Mock
+    private TripMapper mapper;
 
     @BeforeEach
     void setUp() {
-        service = new TripGroupService(repository, tripRepository);
+        service = new TripGroupService(repository, tripRepository, mapper);
     }
 
     @Test
@@ -43,12 +46,19 @@ class TripGroupServiceTest {
         Long tripId2 = 2L;
         Long tripId3 = 3L;
         String cargoName = "food";
+        Integer cargoWeight = 50;
+        Integer cargoTemperature = 123;
         var trips = tripList();
         TripGroupRequest request = TripGroupRequest.builder()
                 .tripIds(List.of(tripId1, tripId2, tripId3))
+                .temperature(123)
+                .weight(50)
                 .cargoName(cargoName)
                 .build();
         when(tripRepository.findAllById(List.of(tripId1, tripId2, tripId3))).thenReturn(trips);
+
+        TripGroup group = TripGroup.builder().cargoName(cargoName).temperature(123).weight(50).trips(new ArrayList<>()).build();
+        when(mapper.mapToTripGroup(request)).thenReturn(group);
         //when
         service.createGroup(request);
         //then
@@ -60,6 +70,8 @@ class TripGroupServiceTest {
 
         TripGroup savedGroup = groupCaptor.getValue();
         assertEquals(cargoName, savedGroup.getCargoName());
+        assertEquals(cargoWeight, savedGroup.getWeight());
+        assertEquals(cargoTemperature, savedGroup.getTemperature());
         List<Trip> savedTrips = savedGroup.getTrips();
         assertEquals(3, savedTrips.size());
         assertEquals(trips.get(0), savedTrips.get(0));

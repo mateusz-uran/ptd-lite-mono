@@ -49,6 +49,14 @@ export const tripApiSlice = apiSlice.injectEndpoints({
         { type: 'Trips', id: arg.tripId },
       ],
     }),
+    createTripsGroup: builder.mutation({
+      query: (tripGroupPayload) => ({
+        url: '/trip/addgroup',
+        method: 'POST',
+        body: tripGroupPayload,
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
+    }),
   }),
 });
 
@@ -57,6 +65,7 @@ export const {
   useSaveTripsMutation,
   useDeleteTripsMutation,
   useEditTripMutation,
+  useCreateTripsGroupMutation,
 } = tripApiSlice;
 
 export const getTripSelectors = (query) => {

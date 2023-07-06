@@ -20,6 +20,7 @@ import FuelAddForm from './features/fuel/FuelAddForm';
 import TripAddForm from './features/trips/TripAddForm';
 import ErrorPage from './components/ErrorPage';
 import CallbackPage from './features/auth/CallbackPage';
+import CargoForm from './features/trips/CargoForm';
 
 function App() {
   const isOpen = useSelector(isModalOpen);
@@ -46,6 +47,10 @@ function App() {
           <Route
             path="/home/:compName/:cardNumber/:cardId/add/trip"
             element={<TripAddForm />}
+          />
+          <Route
+            path="/home/:compName/:cardNumber/:cardId/createcargo"
+            element={<CargoForm />}
           />
         </Route>
         <Route path="*" element={<ErrorPage />} />

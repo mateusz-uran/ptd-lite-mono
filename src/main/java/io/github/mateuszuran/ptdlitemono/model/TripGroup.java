@@ -22,6 +22,9 @@ public class TripGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cargoName;
+    private Integer weight;
+    private Integer temperature;
+    private String notes;
 
     @OneToMany(mappedBy = "tripGroup", cascade = CascadeType.ALL)
     @JsonManagedReference

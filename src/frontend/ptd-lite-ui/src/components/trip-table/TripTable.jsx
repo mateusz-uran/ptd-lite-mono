@@ -6,32 +6,37 @@ import {
   useDeleteTripsMutation,
   useGetTripsByCardIdQuery,
 } from '../../api/trips/tripsApiSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoadingDots from '../LoadingDots';
 import TripTableRow from './TripTableRow';
 import { useTranslation } from 'react-i18next';
+import {
+  clearSelectedTrips,
+  selectedTripArray,
+} from '../../features/trips/tripSelectedSlice';
 const TripTable = ({ cardId }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { isLoading, isSuccess, isError, error } =
     useGetTripsByCardIdQuery(cardId);
   const [deleteTrips] = useDeleteTripsMutation();
   const { selectAll: selectAllTripsFromCard } = getTripSelectors(cardId);
   const tripEntities = useSelector(selectAllTripsFromCard);
-
-  const [selectedTripIds, setSelectedTripIds] = useState([]);
+  const selectedTrips = useSelector(selectedTripArray);
   let tableContent;
 
   const numRows = tripEntities?.length;
 
-  const handleDelete = () => {
-    deleteTrips(selectedTripIds).unwrap();
-    setSelectedTripIds([]);
+  const handleDelete = async () => {
+    const selectedTripIds = selectedTrips.map((trip) => trip.id);
+    await deleteTrips(selectedTripIds).unwrap();
+    dispatch(clearSelectedTrips());
   };
 
   if (isLoading) {
     tableContent = (
       <tr>
-        <td colSpan={12}>
+        <td colSpan={13}>
           <LoadingDots />
         </td>
       </tr>
@@ -40,19 +45,14 @@ const TripTable = ({ cardId }) => {
 
   if (isSuccess && tripEntities?.length) {
     tableContent = (
-      <TripTableRow
-        tripEntities={tripEntities}
-        selectedTripIds={selectedTripIds}
-        setSelectedTripIds={setSelectedTripIds}
-        numRows={numRows}
-      />
+      <TripTableRow tripEntities={tripEntities} numRows={numRows} />
     );
   }
 
   if (isError && error.data?.statusCode === 404) {
     tableContent = (
       <tr>
-        <td colSpan={12}>
+        <td colSpan={13}>
           <span className="empty-response">{t('misc.tripTableEmpty')}</span>
         </td>
       </tr>
@@ -62,7 +62,7 @@ const TripTable = ({ cardId }) => {
   if (isError && error.data === undefined) {
     tableContent = (
       <tr>
-        <td colSpan={12}>
+        <td colSpan={13}>
           <span className="empty-response">{t('misc.errorMessage')}.</span>
         </td>
       </tr>
@@ -79,13 +79,14 @@ const TripTable = ({ cardId }) => {
               <button
                 className="small-btn delete-trip"
                 onClick={handleDelete}
-                disabled={selectedTripIds.length === 0}
+                disabled={selectedTrips.length === 0}
               >
                 <MdDeleteOutline className="icon" />
               </button>
             </th>
             <th colSpan={5}>{t('misc.tripStart')}</th>
             <th colSpan={5}>{t('misc.tripEnd')}</th>
+            <th className="manage-cell"></th>
             <th></th>
           </tr>
           <tr>
@@ -100,7 +101,8 @@ const TripTable = ({ cardId }) => {
             <th>{t('tripInputs.location')}</th>
             <th>{t('tripInputs.country')}</th>
             <th>{t('tripInputs.counter')}</th>
-            <th></th>
+            <th className="manage-cell">edit</th>
+            <th colSpan={2}>Cargo/Weight/Notes</th>
           </tr>
         </thead>
         <tbody>{tableContent}</tbody>

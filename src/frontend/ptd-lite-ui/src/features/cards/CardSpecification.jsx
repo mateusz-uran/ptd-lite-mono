@@ -1,7 +1,7 @@
 import '../../css/card_spec.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/Header';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../modal/modalSlice';
 import TripTable from '../../components/trip-table/TripTable';
 import PetrolTable from '../../components/petrol-table/PetrolTable';
@@ -9,12 +9,18 @@ import AdBlueTable from '../../components/adblue-table/AdBlueTable';
 import AdditionalInformation from '../additionalInfo/AdditionalInformation';
 import GeneratePDF from '../../components/GeneratePDF';
 import { useTranslation } from 'react-i18next';
+import { selectedTripArray } from '../trips/tripSelectedSlice';
 
 const CardSpecification = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { cardNumber, cardId } = useParams();
   const navigate = useNavigate();
+  const selectedTrips = useSelector(selectedTripArray);
+
+  const containsGroup = selectedTrips.some(
+    (item) => item.group && item.group !== null
+  );
 
   const handleDeleteCard = () => {
     let cardDeletePayload = {
@@ -64,6 +70,36 @@ const CardSpecification = () => {
               )}/${cardId}/add/${'blue'}`}
             >
               <button className="secondary-btn">{t('buttons.addBlue')}</button>
+            </Link>
+            <Link
+              to={`/home/cards/${encodeURIComponent(
+                cardNumber
+              )}/${cardId}/createcargo`}
+              className={`cargo-link ${
+                selectedTrips?.length > 0 || !containsGroup
+                  ? 'active'
+                  : 'inactive'
+              }`}
+            >
+              <button
+                className="secondary-btn"
+                disabled={selectedTrips?.length <= 0 || containsGroup}
+              >
+                Utwórz ładunek
+              </button>
+            </Link>
+            <Link
+              to={'/'}
+              className={`cargo-link ${
+                selectedTrips?.length > 0 ? 'active' : 'inactive'
+              }`}
+            >
+              <button
+                className="secondary-btn"
+                disabled={selectedTrips?.length <= 0}
+              >
+                Dodaj do ładunku
+              </button>
             </Link>
             <button onClick={handleDeleteCard} className="primary-btn delete">
               {t('buttons.deleteCard')}

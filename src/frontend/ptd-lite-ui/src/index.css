@@ -422,6 +422,33 @@ body {
     pointer-events: all;
   }
 }
+
+/*cargo information from trip table*/
+.cargo .cargo-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cargo-input-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.cargo-input-wrapper form {
+  display: flex;
+  flex-direction: column;
+}
+
+.cargo-form-h {
+  color: var(--text-color);
+  font-size: 15px;
+  padding: 0.3rem 0;
+}
+
+.cargo-input-wrapper form button {
+  margin-top: 0.5rem;
+}
 /**/
 
 @media screen and (max-width: 810px) {

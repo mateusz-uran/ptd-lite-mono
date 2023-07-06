@@ -15,5 +15,8 @@ import java.util.List;
 public class TripGroupResponse {
     private Long id;
     private String cargoName;
+    private Integer weight;
+    private Integer temperature;
+    private String notes;
     private List<Long> tripIds;
 }

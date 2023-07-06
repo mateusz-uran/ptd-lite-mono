@@ -58,6 +58,11 @@ const TestTripTable = ({ tripDummyEntities }) => {
             <td>{trip.countryEnd}</td>
             <td>{trip.counterStart}</td>
             <td>{trip.counterEnd}</td>
+            <td className="last-cell">
+              <div>
+                <button type="button">a</button>
+              </div>
+            </td>
             {index === 0 ||
             trip.group?.id !== tripDummyEntities[index - 1]?.group?.id ||
             trip.group === null ? (

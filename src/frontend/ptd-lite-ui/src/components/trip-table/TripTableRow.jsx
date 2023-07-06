@@ -9,13 +9,9 @@ import {
   stopEditing,
   tripToEdit,
 } from '../../features/trips/tripUpdateSlice';
-import { fakeTrips } from '../../features/trips/tripDummyData';
+import TripCargo from '../../features/trips/TripCargo';
 
-const TripTableRow = ({
-  tripEntities,
-  selectedTripIds,
-  setSelectedTripIds,
-}) => {
+const TripTableRow = ({ tripEntities }) => {
   const dispatch = useDispatch();
   const selectTripToEdit = useSelector(tripToEdit);
   const isEditing = useSelector(editFormStatus);
@@ -28,14 +24,12 @@ const TripTableRow = ({
     }
   };
 
-  let tripDummyEntities = tripEntities;
-
   const getRowSpan = (index) => {
     let rowspan = 1;
-    const currentGroup = tripDummyEntities[index]?.group?.id;
+    const currentGroup = tripEntities[index]?.group?.id;
 
     for (let i = index - 1; i >= 0; i--) {
-      const prevGroup = tripDummyEntities[i]?.group?.id;
+      const prevGroup = tripEntities[i]?.group?.id;
       if (currentGroup && currentGroup === prevGroup) {
         rowspan++;
       } else {
@@ -43,8 +37,8 @@ const TripTableRow = ({
       }
     }
 
-    for (let i = index + 1; i < tripDummyEntities.length; i++) {
-      const nextGroup = tripDummyEntities[i]?.group?.id;
+    for (let i = index + 1; i < tripEntities.length; i++) {
+      const nextGroup = tripEntities[i]?.group?.id;
       if (currentGroup && currentGroup === nextGroup) {
         rowspan++;
       } else {
@@ -55,15 +49,11 @@ const TripTableRow = ({
     return rowspan;
   };
 
-  return tripDummyEntities?.map((trip, index) => (
+  return tripEntities?.map((trip, index) => (
     <Fragment key={index}>
       <tr>
         <td>
-          <TripSingleSelect
-            tripId={trip.id}
-            selectedTripIds={selectedTripIds}
-            setSelectedTripIds={setSelectedTripIds}
-          />
+          <TripSingleSelect tripObject={trip} />
         </td>
         <td>{trip.dayStart}</td>
         <td>{trip.hourStart}</td>
@@ -75,8 +65,8 @@ const TripTableRow = ({
         <td>{trip.locationEnd}</td>
         <td>{trip.countryEnd}</td>
         <td>{trip.counterEnd}</td>
-        <td className="last-cell">
-          <div>
+        <td className="manage-cell-wrapper">
+          <div className="manage-cell">
             <button
               type="button"
               onClick={() => handleEditTrip(trip)}
@@ -87,10 +77,16 @@ const TripTableRow = ({
           </div>
         </td>
         {index === 0 ||
-        trip.group?.id !== tripDummyEntities[index - 1]?.group?.id ||
+        trip.group?.id !== tripEntities[index - 1]?.group?.id ||
         trip.group === null ? (
-          <td rowSpan={getRowSpan(index)} className="row-span-cell">
-            {trip.group?.cargoName}
+          <td rowSpan={getRowSpan(index)} className="cargo-cell-wrapper">
+            {trip.group && (
+              <TripCargo
+                group={trip.group}
+                weight={'15t'}
+                notes={'lorem ipsum'}
+              />
+            )}
           </td>
         ) : null}
       </tr>

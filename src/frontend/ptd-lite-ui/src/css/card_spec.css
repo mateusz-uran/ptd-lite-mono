@@ -36,6 +36,10 @@
   background: rgba(255, 0, 0, 1);
 }
 
+.card-spec-section .card-manage .buttons-wrapper .cargo-link.inactive {
+  pointer-events: none;
+}
+
 .card-spec-table {
   overflow-x: auto;
   background: #fff;
