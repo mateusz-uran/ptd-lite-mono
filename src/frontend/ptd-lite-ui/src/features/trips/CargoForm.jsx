@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { selectedTripArray } from './tripSelectedSlice';
-import { useSelector } from 'react-redux';
+import { clearSelectedTrips, selectedTripArray } from './tripSelectedSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { translateCargoInputs } from './cargoInputs';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { useCreateTripsGroupMutation } from '../../api/trips/tripsApiSlice';
 const CargoForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { cardNumber } = useParams();
   const selectedTrips = useSelector(selectedTripArray);
   const inputs = translateCargoInputs();
@@ -26,6 +27,7 @@ const CargoForm = () => {
         tripIds: selectedTripIds,
       };
       await createTripsGroup(tripGroupPayload).unwrap();
+      dispatch(clearSelectedTrips());
       navigate(-1);
     } catch (err) {
       console.error(err);
