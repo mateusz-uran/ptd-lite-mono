@@ -1,15 +1,18 @@
 import { IoIosRemove } from 'react-icons/io';
 import { GrFormAdd } from 'react-icons/gr';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { translateAdBlueInputs, translatePetrolInputs } from './fuelInputs';
+import {
+  translateAdBlueInputs,
+  translatePetrolInputs,
+} from '../inputs/fuelInputs';
 import {
   translatedBlueArraySchema,
   translatedPetrolArraySchema,
-} from './fuelValidations';
+} from '../inputs/fuelValidations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSavePetrolMutation } from '../../api/petrol/petrolApiSlice';
-import { useSaveAdBlueMutation } from '../../api/adblue/adBlueApiSlice';
+import { useSavePetrolMutation } from '../../../api/petrol/petrolApiSlice';
+import { useSaveAdBlueMutation } from '../../../api/adblue/adBlueApiSlice';
 import { useTranslation } from 'react-i18next';
 
 const FuelAddForm = () => {

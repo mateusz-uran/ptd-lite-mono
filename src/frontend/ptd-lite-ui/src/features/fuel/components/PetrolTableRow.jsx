@@ -1,14 +1,14 @@
 import { AiOutlineEdit } from 'react-icons/ai';
 import { MdDeleteOutline } from 'react-icons/md';
 import { Fragment } from 'react';
-import { useDeletePetrolMutation } from '../../api/petrol/petrolApiSlice';
+import { useDeletePetrolMutation } from '../../../api/petrol/petrolApiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   editType,
   isModalOpen,
   startEditingFuel,
-} from '../../features/fuel/fuelEditSlice';
-import FuelEditForm from '../../features/fuel/FuelEditForm';
+} from '../slices/fuelEditSlice';
+import FuelEditForm from '../forms/FuelEditForm';
 
 const PetrolTableRow = ({ petrolEntities }) => {
   const dispatch = useDispatch();

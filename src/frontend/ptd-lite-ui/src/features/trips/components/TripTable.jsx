@@ -1,19 +1,18 @@
-import '../../css/tables.css';
+import '../../../css/tables.css';
 import { MdDeleteOutline } from 'react-icons/md';
-import { useState } from 'react';
 import {
   getTripSelectors,
   useDeleteTripsMutation,
   useGetTripsByCardIdQuery,
-} from '../../api/trips/tripsApiSlice';
+} from '../../../api/trips/tripsApiSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingDots from '../LoadingDots';
+import LoadingDots from '../../../components/LoadingDots';
 import TripTableRow from './TripTableRow';
 import { useTranslation } from 'react-i18next';
 import {
   clearSelectedTrips,
   selectedTripArray,
-} from '../../features/trips/tripSelectedSlice';
+} from '../slices/tripSelectedSlice';
 const TripTable = ({ cardId }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -84,6 +83,7 @@ const TripTable = ({ cardId }) => {
                 <MdDeleteOutline className="icon" />
               </button>
             </th>
+            <th></th>
             <th colSpan={5}>{t('misc.tripStart')}</th>
             <th colSpan={5}>{t('misc.tripEnd')}</th>
             <th className="manage-cell"></th>
@@ -91,6 +91,7 @@ const TripTable = ({ cardId }) => {
           </tr>
           <tr>
             <th></th>
+            <th></th>
             <th>{t('tripInputs.day')}</th>
             <th>{t('tripInputs.hour')}</th>
             <th>{t('tripInputs.location')}</th>
@@ -101,7 +102,7 @@ const TripTable = ({ cardId }) => {
             <th>{t('tripInputs.location')}</th>
             <th>{t('tripInputs.country')}</th>
             <th>{t('tripInputs.counter')}</th>
-            <th className="manage-cell">edit</th>
+            <th className="manage-cell">edit trip</th>
             <th colSpan={2}>Cargo/Weight/Notes</th>
           </tr>
         </thead>

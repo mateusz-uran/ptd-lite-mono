@@ -5,7 +5,6 @@ import { BsBook, BsArchiveFill } from 'react-icons/bs';
 import { RiArrowDropLeftLine, RiArrowDropDownLine } from 'react-icons/ri';
 import '../css/sidebar.css';
 import { useState } from 'react';
-import CardsMini from '../features/cards/CardsMini';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { clearAuthContext } from '../features/auth/auth0Slice';
@@ -63,9 +62,6 @@ const Sidebar = () => {
                   onClick={() => setShowSubMenu((prevState) => !prevState)}
                   className="arrow"
                 />
-              </div>
-              <div className="sub-menu">
-                <CardsMini />
               </div>
             </li>
             <li>

@@ -1,10 +1,10 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdditionalInfo } from '../features/additionalInfo/additionalInfoSlice';
+import { getAdditionalInfo } from '../../additionalInfo/additionalInfoSlice';
 import { useParams } from 'react-router-dom';
-import ProgressModal from '../features/pdf/ProgressModal';
+import ProgressModal from './ProgressModal';
 import { useTranslation } from 'react-i18next';
-import { generatePdf, selectIsLoading } from '../api/pdf/pdfApiSlice';
+import { generatePdf, selectIsLoading } from '../../../api/pdf/pdfApiSlice';
 
 const GeneratePDF = () => {
   const { t } = useTranslation();

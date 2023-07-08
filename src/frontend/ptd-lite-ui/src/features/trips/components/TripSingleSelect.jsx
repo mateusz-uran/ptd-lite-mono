@@ -3,7 +3,7 @@ import {
   removeSelectedTrip,
   selectedTripArray,
   storeSelectedTrips,
-} from './tripSelectedSlice';
+} from '../slices/tripSelectedSlice';
 
 const TripSingleSelect = ({ tripObject }) => {
   const dispatch = useDispatch();

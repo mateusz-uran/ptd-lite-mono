@@ -55,13 +55,13 @@ public class TripController {
     }
 
     @PatchMapping("/addtogroup")
-    public ResponseEntity<?> updateGroupWithNewTrips(@RequestParam Long groupId, @RequestBody TripGroupRequest request) {
+    public ResponseEntity<?> updateGroupWithNewTrips(@RequestParam Long groupId, @RequestBody List<Long> request) {
         groupService.addTripToGroup(request, groupId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/removefromgroup")
-    public ResponseEntity<?> updateGroupRemoveTrips(@RequestParam Long groupId, @RequestBody TripGroupRequest request) {
+    public ResponseEntity<?> updateGroupRemoveTrips(@RequestParam Long groupId, @RequestBody List<Long> request) {
         groupService.removeTripFromGroup(request, groupId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

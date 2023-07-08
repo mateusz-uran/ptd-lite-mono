@@ -427,6 +427,28 @@ body {
 .cargo .cargo-info {
   display: flex;
   flex-direction: column;
+  font-weight: 600;
+  padding: 0.2rem 0;
+}
+
+.cargo .cargo-buttons {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cargo .cargo-buttons .primary-btn {
+  width: 30%;
+  margin-bottom: 0.5rem;
+}
+
+.cargo .cargo-buttons button:first-child {
+  margin-right: 10px;
+}
+
+.cargo .cargo-buttons .buttons-wrapper {
+  display: flex;
 }
 
 .cargo-input-wrapper {

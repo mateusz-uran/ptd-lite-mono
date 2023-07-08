@@ -1,13 +1,13 @@
-import CardForm from '../features/cards/CardForm';
-import Header from './Header';
-import '../css/cards.css';
-import { useGetLastCardsQuery } from '../api/card/cardApiSlice';
+import '../../../css/cards.css';
+import Header from '../../../components/Header';
+import { useGetLastCardsQuery } from '../../../api/card/cardApiSlice';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { isCardEditing } from '../features/cards/updateCardSlice';
-import LoadingDots from './LoadingDots';
+import { useSelector } from 'react-redux';
+import { isCardEditing } from '../slices/updateCardSlice';
+import LoadingDots from '../../../components/LoadingDots';
 import { useTranslation } from 'react-i18next';
-import CardItem from '../features/cards/CardItem';
+import CardItem from './CardItem';
+import CardForm from '../forms/CardForm';
 
 const Cards = () => {
   const { t } = useTranslation();
@@ -42,7 +42,7 @@ const Cards = () => {
   }
 
   if (isSuccess && lastCards?.length >= 1) {
-    cards = <CardItem cards={lastCards} compName={'cards'} />;
+    cards = <CardItem cards={lastCards} />;
   }
 
   if (isSuccess && lastCards?.length <= 0) {

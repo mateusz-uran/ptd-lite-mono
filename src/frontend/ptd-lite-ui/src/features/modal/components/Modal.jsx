@@ -1,7 +1,7 @@
+import '../../../css/modal.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { cardIdToDelete, closeModal, modalMessage } from './modalSlice';
-import '../../css/modal.css';
-import { useDeletecardMutation } from '../../api/card/cardApiSlice';
+import { cardIdToDelete, closeModal, modalMessage } from '../slices/modalSlice';
+import { useDeletecardMutation } from '../../../api/card/cardApiSlice';
 import { useTranslation } from 'react-i18next';
 const Modal = () => {
   const { t } = useTranslation();

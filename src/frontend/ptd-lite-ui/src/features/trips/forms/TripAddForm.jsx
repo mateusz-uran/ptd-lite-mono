@@ -1,11 +1,11 @@
 import { IoIosRemove } from 'react-icons/io';
 import { GrFormAdd } from 'react-icons/gr';
 import { useNavigate, useParams } from 'react-router-dom';
-import { translatedTripArraySchema } from './tripValidations';
+import { translatedTripArraySchema } from '../inputs/tripValidations';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSaveTripsMutation } from '../../api/trips/tripsApiSlice';
-import { translateTripInputs } from './tripInputs';
+import { useSaveTripsMutation } from '../../../api/trips/tripsApiSlice';
+import { translateTripInputs } from '../inputs/tripInputs';
 import { useTranslation } from 'react-i18next';
 
 const TripAddForm = () => {

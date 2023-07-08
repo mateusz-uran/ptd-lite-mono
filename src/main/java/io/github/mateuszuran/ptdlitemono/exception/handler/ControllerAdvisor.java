@@ -66,6 +66,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler({TripGroupException.class})
+    public ResponseEntity<ErrorMessage> handleTripHasGroup(TripGroupException exception) {
+        return createErrorResponse(exception, HttpStatus.CONFLICT);
+    }
+
     private ResponseEntity<ErrorMessage> createErrorResponse(Exception exception, HttpStatus httpStatus) {
         ErrorMessage message = new ErrorMessage(
                 httpStatus.value(),

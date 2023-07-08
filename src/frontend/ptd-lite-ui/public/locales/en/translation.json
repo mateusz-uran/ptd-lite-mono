@@ -22,7 +22,7 @@
     "fuelInitialState": "Initial state",
     "fuelEndState": "End state",
     "aggregateInitialState": "Initial state",
-    "aggregateAdBlue": "AdBlue",
+    "aggregateAdBlue": "ON Aggregate",
     "aggregateEndState": "End state",
     "avgFuelConsumption": "Avg consumption",
     "totalFuelConsumption": "Total consumption",

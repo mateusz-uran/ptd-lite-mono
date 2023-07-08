@@ -1,6 +1,5 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
@@ -20,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -175,12 +175,11 @@ class TripControllerTest {
                 .trips(new ArrayList<>(Arrays.asList(trip1, trip2)))
                 .build();
         groupRepository.save(existingGroup);
-        TripGroupRequest request = TripGroupRequest.builder().tripIds(Arrays.asList(1L, 2L)).build();
         //when + then
         mockMvc.perform(patch("/api/trip/addtogroup")
                         .param("groupId", String.valueOf(groupId))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(Arrays.asList(1L, 2L))))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -191,13 +190,13 @@ class TripControllerTest {
         Trip trip1 = Trip.builder().id(1L).build();
         Trip trip2 = Trip.builder().id(2L).build();
         repository.saveAll(List.of(trip1, trip2));
+        groupRepository.deleteAll();
         Long groupId = 1L;
-        TripGroupRequest request = TripGroupRequest.builder().tripIds(Arrays.asList(1L, 2L)).build();
         //when + then
         mockMvc.perform(patch("/api/trip/addtogroup")
                         .param("groupId", String.valueOf(groupId))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(Arrays.asList(1L, 2L))))
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Group not found"));
@@ -215,12 +214,11 @@ class TripControllerTest {
                 .trips(new ArrayList<>(Arrays.asList(trip1, trip2)))
                 .build();
         groupRepository.save(existingGroup);
-        TripGroupRequest request = TripGroupRequest.builder().tripIds(Arrays.asList(1L, 2L)).build();
         //when + then
         mockMvc.perform(patch("/api/trip/removefromgroup")
                         .param("groupId", String.valueOf(groupId))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(Arrays.asList(1L, 2L))))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -232,12 +230,11 @@ class TripControllerTest {
         Trip trip2 = Trip.builder().id(2L).build();
         repository.saveAll(List.of(trip1, trip2));
         Long groupId = 1L;
-        TripGroupRequest request = TripGroupRequest.builder().tripIds(Arrays.asList(1L, 2L)).build();
         //when + then
         mockMvc.perform(patch("/api/trip/removefromgroup")
                         .param("groupId", String.valueOf(groupId))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                        .content(mapper.writeValueAsString(Arrays.asList(1L, 2L))))
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Group not found"));

@@ -1,14 +1,13 @@
 import { AiOutlineEdit } from 'react-icons/ai';
 import { MdDeleteOutline } from 'react-icons/md';
 import { Fragment } from 'react';
-import FuelEditForm from '../../features/fuel/FuelEditForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   editType,
   isModalOpen,
   startEditingFuel,
-} from '../../features/fuel/fuelEditSlice';
-import { useDeleteAdBlueMutation } from '../../api/adblue/adBlueApiSlice';
+} from '../slices/fuelEditSlice';
+import { useDeleteAdBlueMutation } from '../../../api/adblue/adBlueApiSlice';
 
 const AdBlueTableRow = ({ blueEntities }) => {
   const dispatch = useDispatch();

@@ -1,50 +1,66 @@
 import { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { clearSelectedTrips, selectedTripArray } from './tripSelectedSlice';
+import {
+  clearSelectedTrips,
+  removeSelectedTrip,
+  selectedTripArray,
+} from '../slices/tripSelectedSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { translateCargoInputs } from './cargoInputs';
-import { useNavigate, useParams } from 'react-router-dom';
-import Header from '../../components/Header';
-import { useCreateTripsGroupMutation } from '../../api/trips/tripsApiSlice';
+import { translateCargoInputs } from '../inputs/cargoInputs';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import Header from '../../../components/Header';
+import {
+  useCreateTripsGroupMutation,
+  useUpdateGroupWithNewTripsMutation,
+} from '../../../api/trips/tripsApiSlice';
 
-const CargoForm = () => {
+const TripCargoForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const { cardNumber } = useParams();
   const selectedTrips = useSelector(selectedTripArray);
   const inputs = translateCargoInputs();
+
   const [createTripsGroup] = useCreateTripsGroupMutation();
+  const [updateGroupWithNewTrips] = useUpdateGroupWithNewTripsMutation();
 
   const { register, handleSubmit } = useForm();
+
+  if (location.pathname.includes('upgradecargo')) {
+  }
+
+  const handleRemoveTripFromList = (trip) => {
+    dispatch(removeSelectedTrip(trip));
+    let countTrips = selectedTrips.length;
+    countTrips--;
+    if (countTrips <= 0) {
+      navigate(-1);
+    }
+  };
 
   const onSubmit = async (data) => {
     try {
       const selectedTripIds = selectedTrips.map((trip) => trip.id);
-      let tripGroupPayload = {
-        ...data,
-        tripIds: selectedTripIds,
-      };
-      await createTripsGroup(tripGroupPayload).unwrap();
-      dispatch(clearSelectedTrips());
+      if (location.pathname.includes('upgradecargo')) {
+        //update
+      } else if (location.pathname.includes('removecargo')) {
+        //remove
+      } else {
+        let tripGroupPayload = {
+          ...data,
+          tripIds: selectedTripIds,
+        };
+        await createTripsGroup(tripGroupPayload).unwrap();
+        dispatch(clearSelectedTrips());
+      }
       navigate(-1);
     } catch (err) {
       console.error(err);
     }
   };
-
-  useEffect(() => {
-    const handleUnload = () => {
-      navigate(-1);
-    };
-
-    window.addEventListener('unload', handleUnload);
-
-    return () => {
-      window.removeEventListener('unload', handleUnload);
-    };
-  }, [navigate]);
 
   return (
     <Fragment>
@@ -64,6 +80,7 @@ const CargoForm = () => {
           <tr>
             <th colSpan={5}>{t('misc.tripStart')}</th>
             <th colSpan={5}>{t('misc.tripEnd')}</th>
+            <th></th>
           </tr>
           <tr>
             <th>{t('tripInputs.day')}</th>
@@ -76,6 +93,7 @@ const CargoForm = () => {
             <th>{t('tripInputs.location')}</th>
             <th>{t('tripInputs.country')}</th>
             <th>{t('tripInputs.counter')}</th>
+            <th>remove</th>
           </tr>
         </thead>
         <tbody>
@@ -91,6 +109,11 @@ const CargoForm = () => {
               <td>{trip.locationEnd}</td>
               <td>{trip.countryEnd}</td>
               <td>{trip.counterEnd}</td>
+              <td>
+                <button onClick={() => handleRemoveTripFromList(trip)}>
+                  x
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -116,4 +139,4 @@ const CargoForm = () => {
     </Fragment>
   );
 };
-export default CargoForm;
+export default TripCargoForm;

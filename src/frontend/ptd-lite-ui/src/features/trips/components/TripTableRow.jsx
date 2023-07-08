@@ -1,15 +1,15 @@
 import { AiOutlineEdit } from 'react-icons/ai';
 import { Fragment } from 'react';
-import TripSingleSelect from '../../features/trips/TripSingleSelect';
-import TripEditForm from '../../features/trips/TripEditForm';
+import TripSingleSelect from './TripSingleSelect';
+import TripEditForm from '../forms/TripEditForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   editFormStatus,
   startEditing,
   stopEditing,
   tripToEdit,
-} from '../../features/trips/tripUpdateSlice';
-import TripCargo from '../../features/trips/TripCargo';
+} from '../slices/tripUpdateSlice';
+import TripCargo from './TripCargo';
 
 const TripTableRow = ({ tripEntities }) => {
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ const TripTableRow = ({ tripEntities }) => {
         <td>
           <TripSingleSelect tripObject={trip} />
         </td>
+        <td>{trip.id}</td>
         <td>{trip.dayStart}</td>
         <td>{trip.hourStart}</td>
         <td>{trip.locationStart}</td>

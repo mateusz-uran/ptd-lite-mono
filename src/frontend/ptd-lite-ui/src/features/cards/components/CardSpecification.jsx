@@ -1,19 +1,20 @@
-import '../../css/card_spec.css';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import Header from '../../components/Header';
+import '../../../css/card_spec.css';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import Header from '../../../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
-import { openModal } from '../modal/modalSlice';
-import TripTable from '../../components/trip-table/TripTable';
-import PetrolTable from '../../components/petrol-table/PetrolTable';
-import AdBlueTable from '../../components/adblue-table/AdBlueTable';
-import AdditionalInformation from '../additionalInfo/AdditionalInformation';
-import GeneratePDF from '../../components/GeneratePDF';
+import TripTable from '../../trips/components/TripTable';
 import { useTranslation } from 'react-i18next';
-import { selectedTripArray } from '../trips/tripSelectedSlice';
+import { selectedTripArray } from '../../trips/slices/tripSelectedSlice';
+import { openModal } from '../../modal/slices/modalSlice';
+import PetrolTable from '../../fuel/components/PetrolTable';
+import AdBlueTable from '../../fuel/components/AdBlueTable';
+import AdditionalInformation from '../../additionalInfo/AdditionalInformation';
+import GeneratePDF from '../../pdf/components/GeneratePDF';
 
 const CardSpecification = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const location = useLocation();
   const { cardNumber, cardId } = useParams();
   const navigate = useNavigate();
   const selectedTrips = useSelector(selectedTripArray);
@@ -48,37 +49,23 @@ const CardSpecification = () => {
           <h5>{t('misc.manage')}</h5>
           <div className="buttons-wrapper">
             <GeneratePDF />
-            <Link
-              to={`/home/cards/${encodeURIComponent(
-                cardNumber
-              )}/${cardId}/add/trip`}
-            >
+            <Link to={`${location.pathname}/add/trip`}>
               <button className="secondary-btn">{t('buttons.addTrip')}</button>
             </Link>
-            <Link
-              to={`/home/cards/${encodeURIComponent(
-                cardNumber
-              )}/${cardId}/add/${'petrol'}`}
-            >
+            <Link to={`${location.pathname}/add/${'petrol'}`}>
               <button className="secondary-btn">
                 {t('buttons.addPetrol')}
               </button>
             </Link>
-            <Link
-              to={`/home/cards/${encodeURIComponent(
-                cardNumber
-              )}/${cardId}/add/${'blue'}`}
-            >
+            <Link to={`${location.pathname}/add/${'blue'}`}>
               <button className="secondary-btn">{t('buttons.addBlue')}</button>
             </Link>
             <Link
-              to={`/home/cards/${encodeURIComponent(
-                cardNumber
-              )}/${cardId}/createcargo`}
+              to={'createcargo'}
               className={`cargo-link ${
-                selectedTrips?.length > 0 || !containsGroup
-                  ? 'active'
-                  : 'inactive'
+                selectedTrips?.length <= 0 || containsGroup
+                  ? 'inactive'
+                  : undefined
               }`}
             >
               <button
@@ -89,14 +76,16 @@ const CardSpecification = () => {
               </button>
             </Link>
             <Link
-              to={'/'}
+              to={'upgradecargo'}
               className={`cargo-link ${
-                selectedTrips?.length > 0 ? 'active' : 'inactive'
+                selectedTrips?.length <= 0 || containsGroup
+                  ? 'inactive'
+                  : undefined
               }`}
             >
               <button
                 className="secondary-btn"
-                disabled={selectedTrips?.length <= 0}
+                disabled={selectedTrips?.length <= 0 || containsGroup}
               >
                 Dodaj do ładunku
               </button>

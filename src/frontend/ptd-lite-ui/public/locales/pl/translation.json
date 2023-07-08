@@ -22,7 +22,7 @@
     "fuelInitialState": "Stan początkowy",
     "fuelEndState": "Stan końcowy",
     "aggregateInitialState": "Stan początkowy",
-    "aggregateAdBlue": "AdBlue",
+    "aggregateAdBlue": "ON chłodnia",
     "aggregateEndState": "Stan końcowy",
     "avgFuelConsumption": "Średnie zużycie",
     "totalFuelConsumption": "Całkowite zużycie",

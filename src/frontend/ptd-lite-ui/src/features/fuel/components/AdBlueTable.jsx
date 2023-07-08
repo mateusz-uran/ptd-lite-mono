@@ -1,10 +1,10 @@
-import '../../css/tables.css';
+import '../../../css/tables.css';
 import { useSelector } from 'react-redux';
-import LoadingDots from '../LoadingDots';
+import LoadingDots from '../../../components/LoadingDots';
 import {
   getAdBlueSelectors,
   useGetBlueByCardIdQuery,
-} from '../../api/adblue/adBlueApiSlice';
+} from '../../../api/adblue/adBlueApiSlice';
 import AdBlueTableRow from './AdBlueTableRow';
 import { useTranslation } from 'react-i18next';
 

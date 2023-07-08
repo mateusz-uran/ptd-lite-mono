@@ -1,15 +1,15 @@
-import '../../css/edit_modal.css';
+import '../../../css/edit_modal.css';
 import { RiCloseFill } from 'react-icons/ri';
 import { MdSettingsBackupRestore } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
-import { translatedTripSingleSchema } from './tripValidations';
+import { translatedTripSingleSchema } from '../inputs/tripValidations';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { translateTripInputs } from './tripInputs';
+import { translateTripInputs } from '../inputs/tripInputs';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { stopEditing } from './tripUpdateSlice';
+import { stopEditing } from '../slices/tripUpdateSlice';
 import { createPortal } from 'react-dom';
-import { useEditTripMutation } from '../../api/trips/tripsApiSlice';
+import { useEditTripMutation } from '../../../api/trips/tripsApiSlice';
 import { useTranslation } from 'react-i18next';
 
 const TripEditForm = ({ tripToEdit }) => {

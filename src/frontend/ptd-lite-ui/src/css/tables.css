@@ -73,7 +73,7 @@ table tr th.icon-wrapper button.delete-trip {
 /*manage trip row style*/
 table tr th.manage-cell-wrapper,
 table tr td.manage-cell-wrapper {
-  width: 3rem;
+  width: 1rem;
 }
 
 table tr td .manage-cell {

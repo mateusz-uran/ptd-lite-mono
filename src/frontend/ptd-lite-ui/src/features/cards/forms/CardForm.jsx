@@ -1,3 +1,4 @@
+import '../../../css/card_form.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -7,17 +8,16 @@ import {
   cardNumberToUpdate,
   isCardEditing,
   stopEditing,
-} from './updateCardSlice';
+} from '../slices/updateCardSlice';
 import { useEffect } from 'react';
-import '../../css/card_form.css';
 import { MdSettingsBackupRestore } from 'react-icons/md';
 import {
   useAddNewCardMutation,
   useUpdateCardMutation,
-} from '../../api/card/cardApiSlice';
+} from '../../../api/card/cardApiSlice';
 import { useTranslation } from 'react-i18next';
-import { translateCardInputs } from './cardInputs';
-import { translateCardValidations } from './cardsValidations';
+import { translateCardInputs } from '../inputs/cardInputs';
+import { translateCardValidations } from '../inputs/cardsValidations';
 
 const CardForm = () => {
   const { t } = useTranslation();

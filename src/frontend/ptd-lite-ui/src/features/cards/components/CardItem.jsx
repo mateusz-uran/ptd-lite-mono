@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { openModal } from '../modal/modalSlice';
-import { Link } from 'react-router-dom';
-import { updateCardStatus } from './updateCardSlice';
+import { openModal } from '../../modal/slices/modalSlice';
+import { Link, useLocation } from 'react-router-dom';
+import { updateCardStatus } from '../slices/updateCardSlice';
 
-const CardItem = ({ cards, compName }) => {
+const CardItem = ({ cards }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const location = useLocation();
   const formattedCards = cards.map((card) => {
     const creationTime = card.creationTime;
     const formattedDate = new Date(creationTime).toISOString().split('T')[0];
@@ -51,7 +52,7 @@ const CardItem = ({ cards, compName }) => {
         </div>
         <div className="buttons-wrapper">
           <Link
-            to={`/home/${compName}/${encodeURIComponent(card.number)}/${
+            to={`${location.pathname}/${encodeURIComponent(card.number)}/${
               card.id
             }`}
           >
@@ -63,21 +64,21 @@ const CardItem = ({ cards, compName }) => {
             </button>
           </Link>
           <Link
-            to={`/home/${compName}/${encodeURIComponent(card.number)}/${
+            to={`${location.pathname}/${encodeURIComponent(card.number)}/${
               card.id
             }/add/trip`}
           >
             <button className="secondary-btn">{t('buttons.addTrip')}</button>
           </Link>
           <Link
-            to={`/home/${compName}/${encodeURIComponent(card.number)}/${
+            to={`${location.pathname}/${encodeURIComponent(card.number)}/${
               card.id
             }/add/${'petrol'}`}
           >
             <button className="secondary-btn">{t('buttons.addPetrol')}</button>
           </Link>
           <Link
-            to={`/home/${compName}/${encodeURIComponent(card.number)}/${
+            to={`${location.pathname}/${encodeURIComponent(card.number)}/${
               card.id
             }/add/${'blue'}`}
           >

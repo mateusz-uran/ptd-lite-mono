@@ -4,9 +4,9 @@ import Header from './Header';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useGetCardsFromArchiveQuery } from '../api/card/cardApiSlice';
-import CardItem from '../features/cards/CardItem';
+import CardItem from '../features/cards/components/CardItem';
 import LoadingDots from './LoadingDots';
-import CardForm from '../features/cards/CardForm';
+import CardForm from '../features/cards/forms/CardForm';
 
 import DatePickers from '../features/archive/DatePickers';
 import { useSelector } from 'react-redux';
@@ -69,7 +69,7 @@ const Archives = () => {
   }
 
   if (isSuccess && allCards?.length >= 1) {
-    archiveBody = <CardItem cards={allCards} compName={'archive'} />;
+    archiveBody = <CardItem cards={allCards} />;
   }
 
   if (isSuccess && allCards?.length <= 0) {

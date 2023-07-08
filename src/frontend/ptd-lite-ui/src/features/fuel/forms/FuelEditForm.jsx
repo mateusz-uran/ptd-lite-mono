@@ -1,4 +1,4 @@
-import '../../css/edit_modal.css';
+import '../../../css/edit_modal.css';
 import { MdSettingsBackupRestore } from 'react-icons/md';
 import { RiCloseFill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,14 +6,17 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { editType, fuelToEdit, stopEditingFuel } from './fuelEditSlice';
+import { editType, fuelToEdit, stopEditingFuel } from '../slices/fuelEditSlice';
 import {
   translatedAdBlueSingleSchema,
   translatedPetrolSingleSchema,
-} from './fuelValidations';
-import { translateAdBlueInputs, translatePetrolInputs } from './fuelInputs';
-import { useUpdatePetrolMutation } from '../../api/petrol/petrolApiSlice';
-import { useUpdateAdBlueMutation } from '../../api/adblue/adBlueApiSlice';
+} from '../inputs/fuelValidations';
+import {
+  translateAdBlueInputs,
+  translatePetrolInputs,
+} from '../inputs/fuelInputs';
+import { useUpdatePetrolMutation } from '../../../api/petrol/petrolApiSlice';
+import { useUpdateAdBlueMutation } from '../../../api/adblue/adBlueApiSlice';
 import { useTranslation } from 'react-i18next';
 
 const FuelEditForm = () => {

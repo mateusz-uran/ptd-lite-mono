@@ -1,10 +1,10 @@
-import '../../css/tables.css';
+import '../../../css/tables.css';
 import { useSelector } from 'react-redux';
 import {
   getPetrolSelectors,
   useGetPetrolByCardIdQuery,
-} from '../../api/petrol/petrolApiSlice';
-import LoadingDots from '../LoadingDots';
+} from '../../../api/petrol/petrolApiSlice';
+import LoadingDots from '../../../components/LoadingDots';
 import PetrolTableRow from './PetrolTableRow';
 import { useTranslation } from 'react-i18next';
 
