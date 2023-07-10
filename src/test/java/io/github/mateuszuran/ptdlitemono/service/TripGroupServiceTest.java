@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
+import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupException;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
@@ -266,6 +267,48 @@ class TripGroupServiceTest {
                 .hasMessageContaining("Group not found");
     }
 
+    @Test
+    void givenValidGroupIdAndRequest_whenEditTripGroupInformation_thenReturnUpdatedGroup() {
+        //given
+        Long groupId = 1L;
+        Trip trip1 = Trip.builder().counterStart(500).build();
+        Trip trip2 = Trip.builder().counterStart(600).build();
+        Trip trip3 = Trip.builder().counterStart(830).build();
+        TripGroupRequest request = TripGroupRequest.builder().cargoName("food").build();
+        TripGroup existingGroup = TripGroup.builder().id(groupId).cargoName("chicken").trips(List.of(trip1, trip2, trip3)).build();
+
+        TripGroup updatedGroup = TripGroup.builder().id(groupId).cargoName("chicken").trips(List.of(trip1, trip2, trip3)).build();
+
+        TripGroupResponse expectedResponse = TripGroupResponse.builder()
+                .id(groupId)
+                .cargoName("chicken")
+                .tripIds(Arrays.asList(trip1.getId(), trip2.getId(), trip3.getId())).build();
+
+        when(repository.findById(groupId)).thenReturn(Optional.of(existingGroup));
+        when(repository.save(any(TripGroup.class))).thenReturn(updatedGroup);
+        when(mapper.mapToTripGroupResponse(updatedGroup)).thenReturn(expectedResponse);
+
+        //when
+        TripGroupResponse response = service.editTripGroupInformation(groupId, request);
+
+        //then
+        assertEquals(groupId, response.getId());
+        assertEquals("chicken", response.getCargoName());
+        assertEquals(trip1.getId(), response.getTripIds().get(0));
+    }
+
+    @Test
+    void givenInvalidGroupIdAndRequest_whenEditTripGroupInformation_thenThrowException() {
+        // given
+        Long groupId = 1L;
+        TripGroupRequest request = TripGroupRequest.builder().build();
+        when(repository.findById(groupId)).thenReturn(Optional.empty());
+
+        // when + then
+        assertThatThrownBy(() -> service.editTripGroupInformation(groupId, request))
+                .isInstanceOf(TripGroupNotFoundException.class)
+                .hasMessageContaining("Group not found");
+    }
 
     private List<Trip> tripList() {
         Trip trip1 = Trip.builder().id(1L).counterStart(111).counterEnd(222).tripGroup(null).build();

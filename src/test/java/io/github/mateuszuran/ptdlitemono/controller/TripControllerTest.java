@@ -269,4 +269,35 @@ class TripControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Group not found"));
     }
+
+    @Test
+    void givenGroupId_whenUpdate_thenReturnUpdatedObject() throws Exception {
+        //given
+        TripGroup group = TripGroup.builder().cargoName("chicken").build();
+        groupRepository.saveAndFlush(group);
+        TripGroupRequest request = TripGroupRequest.builder().cargoName("food").build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/updategroup")
+                        .param("groupId", String.valueOf(group.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.cargoName").value("food"));
+    }
+
+    @Test
+    void givenGroupId_whenNotExists_thenThrowException() throws Exception {
+        //given
+        Long groupId = 123L;
+        TripGroupRequest request = TripGroupRequest.builder().cargoName("food").build();
+        //when + then
+        mockMvc.perform(patch("/api/trip/updategroup")
+                        .param("groupId", String.valueOf(groupId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Group not found"));
+    }
 }

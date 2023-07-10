@@ -2,6 +2,7 @@ package io.github.mateuszuran.ptdlitemono.mapper;
 
 import io.github.mateuszuran.ptdlitemono.config.ModelMapperConfig;
 import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
+import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
@@ -38,5 +39,9 @@ public class TripMapper {
 
     public TripGroup mapToTripGroup(TripGroupRequest request) {
         return mapper.modelMapper().map(request, TripGroup.class);
+    }
+
+    public TripGroupResponse mapToTripGroupResponse(TripGroup group) {
+        return mapper.modelMapper().map(group, TripGroupResponse.class);
     }
 }

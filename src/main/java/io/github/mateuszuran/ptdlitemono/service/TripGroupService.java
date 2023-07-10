@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
+import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupException;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
@@ -69,6 +70,13 @@ public class TripGroupService {
     public void deleteTripGroup(Long groupId) {
         var groupToDelete = repository.findById(groupId).orElseThrow(TripGroupNotFoundException::new);
         repository.delete(groupToDelete);
+    }
+
+    public TripGroupResponse editTripGroupInformation(Long groupId, TripGroupRequest request) {
+        var groupToEdit = repository.findById(groupId).orElseThrow(TripGroupNotFoundException::new);
+        mapper.updateTrip(request, groupToEdit);
+        var updatedGroup = repository.save(groupToEdit);
+        return mapper.mapToTripGroupResponse(updatedGroup);
     }
 
     private static boolean tripHasDifferentGroup(List<Trip> tripsToUpdate, TripGroup existingGroup) {

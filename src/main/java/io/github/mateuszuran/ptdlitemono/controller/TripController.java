@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
+import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
 import io.github.mateuszuran.ptdlitemono.model.TripGroup;
@@ -70,5 +71,10 @@ public class TripController {
     public ResponseEntity<?> deleteTripGroup(@RequestParam Long groupId) {
         groupService.deleteTripGroup(groupId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("/updategroup")
+    public ResponseEntity<TripGroupResponse> updateGroupInformation(@RequestParam Long groupId, @RequestBody TripGroupRequest request) {
+        return ResponseEntity.ok().body(groupService.editTripGroupInformation(groupId, request));
     }
 }
