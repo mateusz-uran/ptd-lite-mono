@@ -55,7 +55,6 @@ const TripTableRow = ({ tripEntities }) => {
         <td>
           <TripSingleSelect tripObject={trip} />
         </td>
-        <td>{trip.id}</td>
         <td>{trip.dayStart}</td>
         <td>{trip.hourStart}</td>
         <td>{trip.locationStart}</td>

@@ -8,29 +8,21 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { translateCargoInputs } from '../inputs/cargoInputs';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../../components/Header';
-import {
-  useCreateTripsGroupMutation,
-  useUpdateGroupWithNewTripsMutation,
-} from '../../../api/trips/tripsApiSlice';
+import { useCreateTripsGroupMutation } from '../../../api/trips/tripsApiSlice';
 
 const TripCargoForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
   const { cardNumber } = useParams();
   const selectedTrips = useSelector(selectedTripArray);
   const inputs = translateCargoInputs();
 
   const [createTripsGroup] = useCreateTripsGroupMutation();
-  const [updateGroupWithNewTrips] = useUpdateGroupWithNewTripsMutation();
 
   const { register, handleSubmit } = useForm();
-
-  if (location.pathname.includes('upgradecargo')) {
-  }
 
   const handleRemoveTripFromList = (trip) => {
     dispatch(removeSelectedTrip(trip));
@@ -44,18 +36,12 @@ const TripCargoForm = () => {
   const onSubmit = async (data) => {
     try {
       const selectedTripIds = selectedTrips.map((trip) => trip.id);
-      if (location.pathname.includes('upgradecargo')) {
-        //update
-      } else if (location.pathname.includes('removecargo')) {
-        //remove
-      } else {
-        let tripGroupPayload = {
-          ...data,
-          tripIds: selectedTripIds,
-        };
-        await createTripsGroup(tripGroupPayload).unwrap();
-        dispatch(clearSelectedTrips());
-      }
+      let tripGroupPayload = {
+        ...data,
+        tripIds: selectedTripIds,
+      };
+      await createTripsGroup(tripGroupPayload).unwrap();
+      dispatch(clearSelectedTrips());
       navigate(-1);
     } catch (err) {
       console.error(err);

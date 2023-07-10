@@ -65,4 +65,10 @@ public class TripController {
         groupService.removeTripFromGroup(request, groupId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/deletegroup")
+    public ResponseEntity<?> deleteTripGroup(@RequestParam Long groupId) {
+        groupService.deleteTripGroup(groupId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

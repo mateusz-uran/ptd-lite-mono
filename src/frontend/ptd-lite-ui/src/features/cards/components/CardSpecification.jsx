@@ -75,21 +75,6 @@ const CardSpecification = () => {
                 Utwórz ładunek
               </button>
             </Link>
-            <Link
-              to={'upgradecargo'}
-              className={`cargo-link ${
-                selectedTrips?.length <= 0 || containsGroup
-                  ? 'inactive'
-                  : undefined
-              }`}
-            >
-              <button
-                className="secondary-btn"
-                disabled={selectedTrips?.length <= 0 || containsGroup}
-              >
-                Dodaj do ładunku
-              </button>
-            </Link>
             <button onClick={handleDeleteCard} className="primary-btn delete">
               {t('buttons.deleteCard')}
             </button>

@@ -66,6 +66,11 @@ public class TripGroupService {
         repository.save(existingGroup);
     }
 
+    public void deleteTripGroup(Long groupId) {
+        var groupToDelete = repository.findById(groupId).orElseThrow(TripGroupNotFoundException::new);
+        repository.delete(groupToDelete);
+    }
+
     private static boolean tripHasDifferentGroup(List<Trip> tripsToUpdate, TripGroup existingGroup) {
         return tripsToUpdate.stream()
                 .map(Trip::getTripGroup)

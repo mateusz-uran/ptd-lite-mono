@@ -3,6 +3,7 @@ package io.github.mateuszuran.ptdlitemono.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
+import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.model.TripGroup;
@@ -27,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -235,6 +237,34 @@ class TripControllerTest {
                         .param("groupId", String.valueOf(groupId))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(Arrays.asList(1L, 2L))))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(jsonPath("$.description").value("Group not found"));
+    }
+
+    @Test
+    void givenTripId_whenDelete_thenReturnNoContent() throws Exception {
+        //given
+        TripGroup group = TripGroup.builder().build();
+        groupRepository.saveAndFlush(group);
+
+        //when + then
+        mockMvc.perform(delete("/api/trip/deletegroup")
+                        .param("groupId", String.valueOf(group.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+        assertFalse(groupRepository.existsById(group.getId()));
+    }
+
+    @Test
+    void givenTripId_whenDelete_thenThrowException() throws Exception {
+        //given
+        Long groupId = 123L;
+        //when + then
+        mockMvc.perform(delete("/api/trip/deletegroup")
+                        .param("groupId", String.valueOf(groupId))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Group not found"));

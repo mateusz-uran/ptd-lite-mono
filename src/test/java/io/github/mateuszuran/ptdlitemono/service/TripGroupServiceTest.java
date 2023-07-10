@@ -158,7 +158,7 @@ class TripGroupServiceTest {
 
     @Test
     void givenTripIds_whenRemoveFromGroup_thenVerify() {
-        // Arrange
+        //given
         List<Long> tripIds = Arrays.asList(1L, 2L, 3L);
         Long groupId = 100L;
 
@@ -178,10 +178,10 @@ class TripGroupServiceTest {
         when(tripRepository.findAllById(tripIds)).thenReturn(tripsToUpdate);
         when(repository.findById(groupId)).thenReturn(Optional.of(existingGroup));
 
-        // Act
+        //when
         service.removeTripFromGroup(tripIds, groupId);
 
-        // Assert
+        //then
         verify(repository, times(1)).findById(groupId);
         verify(tripRepository, times(1)).findAllById(tripIds);
         verify(repository, times(1)).save(existingGroup);
@@ -240,6 +240,30 @@ class TripGroupServiceTest {
         assertThatThrownBy(() -> service.removeTripFromGroup(Arrays.asList(tripId1, tripId2), anyLong()))
                 .isInstanceOf(TripGroupException.class)
                 .hasMessageContaining("Selected trip has different group.");
+    }
+
+    @Test
+    void givenGroupId_whenExists_thenDelete() {
+        //given
+        Long groupId = 123L;
+        TripGroup group = TripGroup.builder().id(groupId).build();
+        when(repository.findById(groupId)).thenReturn(Optional.of(group));
+        //when
+        service.deleteTripGroup(groupId);
+        //then
+        verify(repository, times(1)).findById(groupId);
+        verify(repository, times(1)).delete(group);
+    }
+
+    @Test
+    void givenGroupId_whenNotFound_thenThrowException() {
+        //given
+        Long groupId = 123L;
+        when(repository.findById(groupId)).thenReturn(Optional.empty());
+        //when + then
+        assertThatThrownBy(() -> service.deleteTripGroup(groupId))
+                .isInstanceOf(TripGroupNotFoundException.class)
+                .hasMessageContaining("Group not found");
     }
 
 

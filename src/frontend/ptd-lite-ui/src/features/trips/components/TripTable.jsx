@@ -83,14 +83,12 @@ const TripTable = ({ cardId }) => {
                 <MdDeleteOutline className="icon" />
               </button>
             </th>
-            <th></th>
             <th colSpan={5}>{t('misc.tripStart')}</th>
             <th colSpan={5}>{t('misc.tripEnd')}</th>
             <th className="manage-cell"></th>
             <th></th>
           </tr>
           <tr>
-            <th></th>
             <th></th>
             <th>{t('tripInputs.day')}</th>
             <th>{t('tripInputs.hour')}</th>
