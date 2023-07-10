@@ -1,8 +1,7 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   clearSelectedTrips,
-  removeSelectedTrip,
   selectedTripArray,
 } from '../slices/tripSelectedSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,15 +22,6 @@ const TripCargoForm = () => {
   const [createTripsGroup] = useCreateTripsGroupMutation();
 
   const { register, handleSubmit } = useForm();
-
-  const handleRemoveTripFromList = (trip) => {
-    dispatch(removeSelectedTrip(trip));
-    let countTrips = selectedTrips.length;
-    countTrips--;
-    if (countTrips <= 0) {
-      navigate(-1);
-    }
-  };
 
   const onSubmit = async (data) => {
     try {
@@ -66,7 +56,6 @@ const TripCargoForm = () => {
           <tr>
             <th colSpan={5}>{t('misc.tripStart')}</th>
             <th colSpan={5}>{t('misc.tripEnd')}</th>
-            <th></th>
           </tr>
           <tr>
             <th>{t('tripInputs.day')}</th>
@@ -79,7 +68,6 @@ const TripCargoForm = () => {
             <th>{t('tripInputs.location')}</th>
             <th>{t('tripInputs.country')}</th>
             <th>{t('tripInputs.counter')}</th>
-            <th>remove</th>
           </tr>
         </thead>
         <tbody>
@@ -95,11 +83,6 @@ const TripCargoForm = () => {
               <td>{trip.locationEnd}</td>
               <td>{trip.countryEnd}</td>
               <td>{trip.counterEnd}</td>
-              <td>
-                <button onClick={() => handleRemoveTripFromList(trip)}>
-                  x
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>

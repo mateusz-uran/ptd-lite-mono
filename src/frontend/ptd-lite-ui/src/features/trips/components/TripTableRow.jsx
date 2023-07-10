@@ -80,13 +80,7 @@ const TripTableRow = ({ tripEntities }) => {
         trip.group?.id !== tripEntities[index - 1]?.group?.id ||
         trip.group === null ? (
           <td rowSpan={getRowSpan(index)} className="cargo-cell-wrapper">
-            {trip.group && (
-              <TripCargo
-                group={trip.group}
-                weight={'15t'}
-                notes={'lorem ipsum'}
-              />
-            )}
+            {trip.group && <TripCargo group={trip.group} />}
           </td>
         ) : null}
       </tr>

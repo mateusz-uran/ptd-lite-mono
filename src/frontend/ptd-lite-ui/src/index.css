@@ -424,36 +424,59 @@ body {
 }
 
 /*cargo information from trip table*/
-.cargo .cargo-info {
+.cargo-cell-wrapper {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.cargo {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.cargo .cargo-wrapper {
+  width: 100%;
+}
+
+.cargo .cargo-wrapper .cargo-info {
   display: flex;
   flex-direction: column;
   font-weight: 600;
   padding: 0.5rem 0;
 }
 
-.cargo .cargo-info span {
+.cargo .cargo-wrapper .cargo-info span {
   margin: 0.2rem 0;
 }
 
-.cargo .cargo-buttons {
+.cargo .cargo-wrapper .cargo-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 0.3rem;
 }
 
-.cargo .cargo-buttons button {
+.cargo .cargo-wrapper .cargo-buttons button {
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.cargo .cargo-buttons button {
+.cargo .cargo-wrapper .cargo-buttons button {
   margin: 0 0.3rem;
 }
 
-.cargo .cargo-buttons .buttons-wrapper {
+.cargo .cargo-wrapper .cargo-buttons .buttons-wrapper {
   display: flex;
+}
+
+.cargo .group-buttons-wrapper {
+  padding-right: 0.2rem;
+}
+
+.cargo .group-buttons-wrapper button {
+  margin-bottom: 0.5rem;
 }
 
 .cargo-input-wrapper {
