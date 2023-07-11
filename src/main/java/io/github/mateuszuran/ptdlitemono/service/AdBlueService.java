@@ -5,7 +5,6 @@ import io.github.mateuszuran.ptdlitemono.dto.AdBlueResponse;
 import io.github.mateuszuran.ptdlitemono.exception.AdBlueEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
-import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

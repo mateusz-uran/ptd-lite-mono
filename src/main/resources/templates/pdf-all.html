@@ -635,7 +635,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="trip, index : ${pdf.cardTripsList}">
+    <tr th:each="trip, tripIndex : ${pdf.cardTripsList}">
         <td th:text="${trip.dayStart}"></td>
         <td th:text="${trip.hourStart}"></td>
         <td th:text="${trip.locationStart}"></td>
@@ -647,8 +647,14 @@
         <td th:text="${trip.countryEnd}"></td>
         <td th:text="${trip.counterEnd}" class="middle"></td>
         <td th:text="${trip.carMileage}">&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <td colspan="2" style="display: grid;"
+            th:if="${tripIndex.index == 0 or trip.group == null or (trip.group != null and trip.group.id != pdf.cardTripsList[tripIndex.index - 1]?.group?.id)}"
+            th:rowspan="${trip.group != null ? pdf.cardTripsList.?[group != null && group.id == #root.trip.group.id].size() : 1}">
+            <span style="display: block;" th:text="${trip.group != null && trip.group.cargoName != null ? trip.group.cargoName : ''}"></span>
+            <span style="display: block;" th:text="${trip.group != null && trip.group.weight != null ? trip.group.weight + 't' : ''}"></span>
+            <span style="display: block;" th:text="${trip.group != null && trip.group.temperature != null ? trip.group.temperature + '°C' : ''}"></span>
+            <span style="display: block;" th:text="${trip.group != null &&  trip.group.notes != null ? trip.group.notes : ''}"></span>
+        </td>
     </tr>
     </tbody>
     <tfoot>

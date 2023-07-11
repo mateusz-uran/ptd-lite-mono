@@ -16,11 +16,31 @@
 table {
   width: 100%;
   text-align: center;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0px;
 }
 
 table tr {
   transition: var(--tran-03);
+}
+
+table tr th,
+table tr td {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* required css to make rounded table (below) */
+tr:first-child th:first-child {
+  border-top-left-radius: 5px;
+}
+tr:first-child th:last-child {
+  border-top-right-radius: 5px;
+}
+tr:last-child td:first-child {
+  border-bottom-left-radius: 5px;
+}
+tr:last-child td:last-child {
+  border-bottom-right-radius: 5px;
 }
 
 table tr th {
@@ -45,24 +65,27 @@ table tr td {
   cursor: pointer;
 }
 
-table tr:hover {
-  background: var(--primary-color-light);
-}
-
 table tr th.icon-wrapper button.delete-trip {
   padding: 0;
   font-size: 20px;
 }
 
 /*manage trip row style*/
-table .last-cell {
-  display: flex;
+table tr th.manage-cell-wrapper,
+table tr td.manage-cell-wrapper {
+  width: 1rem;
 }
-.fuel-table table .last-cell {
+
+table tr td .manage-cell {
+  display: flex;
+  justify-content: center;
+}
+
+.fuel-table table tr td .manage-cell {
   justify-content: flex-end;
 }
 
-.fuel-table table .last-cell button {
+.fuel-table table tr td .manage-cell button {
   margin-left: 10px;
 }
 

@@ -3,6 +3,7 @@ import Header from './Header';
 
 const Dashboard = () => {
   const { t } = useTranslation();
+
   return (
     <div>
       <Header

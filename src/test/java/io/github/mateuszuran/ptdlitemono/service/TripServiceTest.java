@@ -2,11 +2,9 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
-import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
 import io.github.mateuszuran.ptdlitemono.exception.TripsEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
-import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -119,7 +117,7 @@ class TripServiceTest {
         when(repository.findById(tripId)).thenReturn(Optional.of(tripToUpdate));
         when(repository.save(any(Trip.class))).thenReturn(updatedTrip);
 
-        doNothing().when(mapper).updateTrip(request, tripToUpdate);
+        doNothing().when(mapper).mapToUpdate(request, tripToUpdate);
         when(mapper.mapToTripResponseWithModelMapper(updatedTrip)).thenReturn(expectedResponse);
 
         //when
@@ -129,7 +127,7 @@ class TripServiceTest {
         assertEquals(expectedResponse, actualResponse);
         verify(repository).findById(tripId);
         verify(repository).save(tripToUpdate);
-        verify(mapper).updateTrip(request, tripToUpdate);
+        verify(mapper).mapToUpdate(request, tripToUpdate);
         verify(mapper).mapToTripResponseWithModelMapper(updatedTrip);
     }
 

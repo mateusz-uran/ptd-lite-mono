@@ -22,7 +22,7 @@
     "fuelInitialState": "Stan początkowy",
     "fuelEndState": "Stan końcowy",
     "aggregateInitialState": "Stan początkowy",
-    "aggregateAdBlue": "AdBlue",
+    "aggregateAdBlue": "ON chłodnia",
     "aggregateEndState": "Stan końcowy",
     "avgFuelConsumption": "Średnie zużycie",
     "totalFuelConsumption": "Całkowite zużycie",
@@ -68,9 +68,16 @@
     "tripHead": "Trasy",
     "petrolHead": "Paliwo",
     "blueHead": "AdBlue",
+    "additonalHead": "Końcowe informacje",
     "datePicker": "Wybierz daty",
     "dateFrom": "Od",
-    "dateTo": "Do"
+    "dateTo": "Do",
+    "cargo": "Ładunek",
+    "weight": "Tonaż",
+    "temperature": "Temperatura",
+    "notes": "Notatki",
+    "cargoFormHead": "Wybrane punkty trasy",
+    "cargoEditFormHead": "Edytuj informacje o ładunku"
   },
   "buttons": {
     "browse": "Przeglądaj",
@@ -93,6 +100,10 @@
     "close": "Zamknij",
     "confirm": "Potwierdź",
     "cancel": "Anuluj",
-    "search": "Szukaj"
+    "search": "Szukaj",
+    "addCargo": "Stwórz ładunek",
+    "expand": "Rozwiń",
+    "remove": "Usuń",
+    "updateCargo": "Aktualizuj ładunek"
   }
 }

@@ -1,5 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.dto;
 
+import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,5 @@ public class TripResponse {
     private Integer counterStart;
     private Integer counterEnd;
     private Integer carMileage;
+    private TripGroupResponse group;
 }

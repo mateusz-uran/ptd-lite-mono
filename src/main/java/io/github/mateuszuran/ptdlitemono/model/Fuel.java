@@ -1,5 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,5 +23,6 @@ public class Fuel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
+    @JsonBackReference
     private Card card;
 }

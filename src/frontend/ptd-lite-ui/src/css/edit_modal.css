@@ -11,6 +11,16 @@
   align-items: center;
 }
 
+.edit-modal.cargo form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.edit-modal.cargo form .primary-btn {
+  margin-top: 0.5rem;
+}
+
 .edit-modal .modal-wrapper {
   min-height: 40vh;
   background: var(--body-color);

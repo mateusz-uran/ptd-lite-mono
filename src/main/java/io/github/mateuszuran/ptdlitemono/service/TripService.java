@@ -81,7 +81,7 @@ public class TripService {
 
     public TripResponse editTrip(Long tripId, TripRequest request) {
         var tripToEdit = repository.findById(tripId).orElseThrow(TripsEmptyException::new);
-        tripMapper.updateTrip(request, tripToEdit);
+        tripMapper.mapToUpdate(request, tripToEdit);
         var mileage = calculateCarMileage(tripToEdit.getCounterStart(), tripToEdit.getCounterEnd());
         tripToEdit.setCarMileage(mileage);
         var updatedTrip = repository.save(tripToEdit);
