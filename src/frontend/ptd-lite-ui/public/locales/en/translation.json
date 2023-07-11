@@ -69,9 +69,16 @@
     "tripHead": "Trips",
     "petrolHead": "Petrol",
     "blueHead": "AdBlue",
+    "additonalHead": "Additional info",
     "datePicker": "Pick dates",
     "dateFrom": "From",
-    "dateTo": "To"
+    "dateTo": "To",
+    "cargo": "Cargo",
+    "weight": "Weight",
+    "temperature": "Temperature",
+    "notes": "Notes",
+    "cargoFormHead": "Selected trips",
+    "cargoEditFormHead": "Edit cargo information"
   },
   "buttons": {
     "browse": "Browse",
@@ -94,6 +101,10 @@
     "close": "Close",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "search": "Search"
+    "search": "Search",
+    "addCargo": "Create cargo",
+    "expand": "Expand",
+    "remove": "Remove",
+    "updateCargo": "Update cargo"
   }
 }

@@ -7,8 +7,10 @@ import { useForm } from 'react-hook-form';
 import { translateCargoInputs } from '../inputs/cargoInputs';
 import { useEffect } from 'react';
 import { useUpdateTripGroupInformationMutation } from '../../../api/trips/tripsApiSlice';
+import { useTranslation } from 'react-i18next';
 
 const TripEditCargoModal = ({ groupToEdit }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { register, handleSubmit, setValue } = useForm();
   const inputs = translateCargoInputs();
@@ -46,7 +48,7 @@ const TripEditCargoModal = ({ groupToEdit }) => {
           />
         </div>
       ))}
-      <button className="primary-btn">Update cargo</button>
+      <button className="primary-btn">{t('buttons.updateCargo')}</button>
     </form>
   );
 
@@ -54,7 +56,7 @@ const TripEditCargoModal = ({ groupToEdit }) => {
     <div className="edit-modal cargo">
       <div className="modal-wrapper">
         <div className="modal-header">
-          <h5>Edit cargo information</h5>
+          <h5>{t('misc.cargoEditFormHead')}</h5>
           <button
             type="button"
             onClick={() => dispatch(stopEditingCargo())}

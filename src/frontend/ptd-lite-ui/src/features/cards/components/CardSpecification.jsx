@@ -1,4 +1,5 @@
 import '../../../css/card_spec.css';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +11,7 @@ import PetrolTable from '../../fuel/components/PetrolTable';
 import AdBlueTable from '../../fuel/components/AdBlueTable';
 import AdditionalInformation from '../../additionalInfo/AdditionalInformation';
 import GeneratePDF from '../../pdf/components/GeneratePDF';
+import { useState } from 'react';
 
 const CardSpecification = () => {
   const { t } = useTranslation();
@@ -18,6 +20,7 @@ const CardSpecification = () => {
   const { cardNumber, cardId } = useParams();
   const navigate = useNavigate();
   const selectedTrips = useSelector(selectedTripArray);
+  const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
 
   const containsGroup = selectedTrips.some(
     (item) => item.group && item.group !== null
@@ -72,7 +75,7 @@ const CardSpecification = () => {
                 className="secondary-btn"
                 disabled={selectedTrips?.length <= 0 || containsGroup}
               >
-                Utwórz ładunek
+                {t('buttons.addCargo')}
               </button>
             </Link>
             <button onClick={handleDeleteCard} className="primary-btn delete">
@@ -89,8 +92,22 @@ const CardSpecification = () => {
         <div className="card-spec-table">
           <AdBlueTable cardId={cardId} />
         </div>
-        <div className="card-spec-table">
-          <AdditionalInformation />
+        <div className="card-spec-table additonal">
+          <h5 className="main-h">{t('misc.additonalHead')}</h5>
+          <div
+            className={`arrow-wrapper ${
+              showAdditionalInfo ? 'visible' : undefined
+            }`}
+          >
+            <button
+              className="arrow-button"
+              onClick={() => setShowAdditionalInfo((prevState) => !prevState)}
+            >
+              {t('buttons.expand')}
+              <MdKeyboardArrowDown className="arrow" />
+            </button>
+          </div>
+          {showAdditionalInfo && <AdditionalInformation />}
         </div>
       </section>
     </div>

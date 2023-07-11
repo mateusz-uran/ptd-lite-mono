@@ -1,28 +1,30 @@
+import i18next from 'i18next';
+
 export const translateCargoInputs = () => {
   return [
     {
       name: 'cargoName',
-      label: 'Cargo',
+      label: i18next.t('misc.cargo'),
       type: 'text',
-      placeholder: 'Cargo',
+      placeholder: i18next.t('misc.cargo'),
     },
     {
       name: 'weight',
-      label: 'Weight',
+      label: i18next.t('misc.weight'),
       type: 'number',
-      placeholder: 'Weight',
+      placeholder: i18next.t('misc.weight'),
     },
     {
       name: 'temperature',
-      label: 'Temperature',
+      label: i18next.t('misc.temperature'),
       type: 'number',
-      placeholder: 'Temperature',
+      placeholder: i18next.t('misc.temperature'),
     },
     {
       name: 'notes',
-      label: 'Notes',
+      label: i18next.t('misc.notes'),
       type: 'text',
-      placeholder: 'Notes',
+      placeholder: i18next.t('misc.notes'),
     },
   ];
 };

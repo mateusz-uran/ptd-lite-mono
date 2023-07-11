@@ -17,8 +17,10 @@ import {
   startEditingCargo,
 } from '../slices/tripCargoUpdateSlice';
 import TripEditCargoModal from '../forms/TripEditCargoModal';
+import { useTranslation } from 'react-i18next';
 
 const TripCargo = ({ group }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const selectedTrips = useSelector(selectedTripArray);
   const isEditingCargo = useSelector(editCargoFormStatus);
@@ -77,7 +79,7 @@ const TripCargo = ({ group }) => {
               disabled={selectedTrips.length <= 0 || tripHasGroup}
               onClick={() => handleAddTripToGroup()}
             >
-              add
+              {t('buttons.add')}
             </button>
             <button
               className="small-btn"
@@ -88,7 +90,7 @@ const TripCargo = ({ group }) => {
               }
               onClick={() => handleRemoveTripFromGroup()}
             >
-              remove
+              {t('buttons.remove')}
             </button>
           </div>
         </div>

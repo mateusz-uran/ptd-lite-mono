@@ -15,7 +15,6 @@ const Sidebar = () => {
   const { logout } = useAuth0();
   const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(false);
-  const [showSubMenu, setShowSubMenu] = useState(false);
   const outlet = useOutlet();
 
   const handleLogout = () => {
@@ -50,19 +49,13 @@ const Sidebar = () => {
                 <div className="text-wrapper">{t('misc.dashboard')}</div>
               </Link>
             </li>
-            <li className={`sub-link-wrapper ${showSubMenu ? 'showMenu' : ''}`}>
-              <div className="sub-link">
-                <Link to={'cards'}>
-                  <div className="icon-wrapper">
-                    <BsBook className="icon" />
-                  </div>
-                  <div className="text-wrapper">{t('misc.cards')}</div>
-                </Link>
-                <RiArrowDropDownLine
-                  onClick={() => setShowSubMenu((prevState) => !prevState)}
-                  className="arrow"
-                />
-              </div>
+            <li>
+              <Link to={'cards'}>
+                <div className="icon-wrapper">
+                  <BsBook className="icon" />
+                </div>
+                <div className="text-wrapper">{t('misc.cards')}</div>
+              </Link>
             </li>
             <li>
               <Link to={'stats'}>

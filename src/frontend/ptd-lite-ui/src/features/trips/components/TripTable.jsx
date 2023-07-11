@@ -100,8 +100,10 @@ const TripTable = ({ cardId }) => {
             <th>{t('tripInputs.location')}</th>
             <th>{t('tripInputs.country')}</th>
             <th>{t('tripInputs.counter')}</th>
-            <th className="manage-cell">edit trip</th>
-            <th colSpan={2}>Cargo/Weight/Notes</th>
+            <th className="manage-cell"></th>
+            <th colSpan={2}>
+              {t('misc.cargo')}/{t('misc.weight')}/{t('misc.notes')}
+            </th>
           </tr>
         </thead>
         <tbody>{tableContent}</tbody>
