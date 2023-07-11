@@ -2,12 +2,10 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.dto.AdBlueResponse;
-import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.exception.AdBlueEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
-import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

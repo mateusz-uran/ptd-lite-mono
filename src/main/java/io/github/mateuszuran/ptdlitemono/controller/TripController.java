@@ -4,7 +4,6 @@ import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
-import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import io.github.mateuszuran.ptdlitemono.service.TripGroupService;
 import io.github.mateuszuran.ptdlitemono.service.TripService;
 import lombok.RequiredArgsConstructor;

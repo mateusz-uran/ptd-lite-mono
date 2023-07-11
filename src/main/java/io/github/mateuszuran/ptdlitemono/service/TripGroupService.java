@@ -81,7 +81,7 @@ public class TripGroupService {
 
     public TripGroupResponse editTripGroupInformation(Long groupId, TripGroupRequest request) {
         var groupToEdit = repository.findById(groupId).orElseThrow(TripGroupNotFoundException::new);
-        mapper.updateTrip(request, groupToEdit);
+        mapper.mapToUpdate(request, groupToEdit);
         var updatedGroup = repository.save(groupToEdit);
         return mapper.mapToTripGroupResponse(updatedGroup);
     }
