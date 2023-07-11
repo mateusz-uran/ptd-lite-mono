@@ -11,10 +11,18 @@ import {
   useDeleteTripGroupMutation,
   useRemoveTripFromGroupMutation,
 } from '../../../api/trips/tripsApiSlice';
+import {
+  cargoToEdit,
+  editCargoFormStatus,
+  startEditingCargo,
+} from '../slices/tripCargoUpdateSlice';
+import TripEditCargoModal from '../forms/TripEditCargoModal';
 
 const TripCargo = ({ group }) => {
   const dispatch = useDispatch();
   const selectedTrips = useSelector(selectedTripArray);
+  const isEditingCargo = useSelector(editCargoFormStatus);
+  const cargoInfoToEdit = useSelector(cargoToEdit);
   const [addTripToExistingGroup] = useAddTripToExistingGroupMutation();
   const [removeTripFromGroup] = useRemoveTripFromGroupMutation();
   const [deleteTripGroup] = useDeleteTripGroupMutation();
@@ -81,7 +89,10 @@ const TripCargo = ({ group }) => {
           </div>
         </div>
         <div className="group-buttons-wrapper">
-          <button className="small-btn">
+          <button
+            className="small-btn"
+            onClick={() => dispatch(startEditingCargo(group))}
+          >
             <AiOutlineEdit />
           </button>
           <button
@@ -92,6 +103,9 @@ const TripCargo = ({ group }) => {
           </button>
         </div>
       </div>
+      {isEditingCargo && cargoInfoToEdit.id === group.id && (
+        <TripEditCargoModal groupToEdit={group} />
+      )}
     </Fragment>
   );
 };

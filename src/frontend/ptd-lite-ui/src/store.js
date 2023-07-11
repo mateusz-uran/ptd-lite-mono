@@ -9,6 +9,7 @@ import modalReducer from './features/modal/slices/modalSlice';
 import pdfApiReducer from './api/pdf/pdfApiSlice';
 import datesRangeReducer from './features/archive/datesRangeSlice';
 import tripSelectedReducer from './features/trips/slices/tripSelectedSlice';
+import tripCargoUpdateReducer from './features/trips/slices/tripCargoUpdateSlice';
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     pdfApi: pdfApiReducer,
     datesRange: datesRangeReducer,
     tripSelected: tripSelectedReducer,
+    tripCargoUpdate: tripCargoUpdateReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

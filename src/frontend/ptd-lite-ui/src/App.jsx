@@ -48,7 +48,7 @@ function App() {
             element={<CargoForm />}
           />
           <Route
-            path="/home/:compName/:cardNumber/:cardId/upgradeCargo"
+            path="/home/:compName/:cardNumber/:cardId/upgradecargo"
             element={<CargoForm />}
           />
         </Route>

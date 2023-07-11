@@ -7,7 +7,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { translateCargoInputs } from '../inputs/cargoInputs';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../../components/Header';
 import { useCreateTripsGroupMutation } from '../../../api/trips/tripsApiSlice';
 
@@ -15,6 +15,7 @@ const TripCargoForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const { cardNumber } = useParams();
   const selectedTrips = useSelector(selectedTripArray);
   const inputs = translateCargoInputs();
@@ -22,6 +23,10 @@ const TripCargoForm = () => {
   const [createTripsGroup] = useCreateTripsGroupMutation();
 
   const { register, handleSubmit } = useForm();
+
+  if (location.pathname.includes('upgradecargo')) {
+    console.log(location);
+  }
 
   const onSubmit = async (data) => {
     try {
