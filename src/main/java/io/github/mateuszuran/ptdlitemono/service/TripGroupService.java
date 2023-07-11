@@ -12,6 +12,7 @@ import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,6 +70,12 @@ public class TripGroupService {
 
     public void deleteTripGroup(Long groupId) {
         var groupToDelete = repository.findById(groupId).orElseThrow(TripGroupNotFoundException::new);
+        Iterator<Trip> iterator = groupToDelete.getTrips().iterator();
+        while (iterator.hasNext()) {
+            Trip trip = iterator.next();
+            iterator.remove();
+            trip.setTripGroup(null);
+        }
         repository.delete(groupToDelete);
     }
 

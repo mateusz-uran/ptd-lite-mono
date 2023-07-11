@@ -54,7 +54,11 @@ const TripCargo = ({ group }) => {
   };
 
   const handleDeleteTripGroup = async (groupId) => {
-    await deleteTripGroup(groupId).unwrap();
+    try {
+      await deleteTripGroup(groupId).unwrap();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
