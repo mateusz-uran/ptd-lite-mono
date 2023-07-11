@@ -59,7 +59,7 @@ const AdBlueTable = ({ cardId }) => {
             <th>{t('adBlueInputs.date')}</th>
             <th>{t('adBlueInputs.location')}</th>
             <th>{t('adBlueInputs.amount')}</th>
-            <th className="manage-cell-wrapper">edit</th>
+            <th className="manage-cell-wrapper"></th>
           </tr>
         </thead>
         <tbody>{tableContent}</tbody>

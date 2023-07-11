@@ -61,7 +61,7 @@ const PetrolTable = ({ cardId }) => {
             <th>{t('petrolInputs.counter')}</th>
             <th>{t('petrolInputs.amount')}</th>
             <th>{t('petrolInputs.payment')}</th>
-            <th className="manage-cell-wrapper">edit</th>
+            <th className="manage-cell-wrapper"></th>
           </tr>
         </thead>
         <tbody>{tableContent}</tbody>
