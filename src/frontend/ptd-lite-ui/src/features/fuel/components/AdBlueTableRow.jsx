@@ -7,20 +7,26 @@ import {
   isModalOpen,
   startEditingFuel,
 } from '../slices/fuelEditSlice';
-import { useDeleteAdBlueMutation } from '../../../api/adblue/adBlueApiSlice';
+import { openModal } from '../../modal/slices/modalSlice';
+import { useTranslation } from 'react-i18next';
 
 const AdBlueTableRow = ({ blueEntities }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const modalStatus = useSelector(isModalOpen);
   const modalType = useSelector(editType);
-  const [deleteAdBlue] = useDeleteAdBlueMutation();
 
   const handleEditBlue = (blue) => {
     dispatch(startEditingFuel({ name: 'blue', object: blue }));
   };
 
   const handleDeleteAdBlue = async (blueId) => {
-    await deleteAdBlue(blueId).unwrap();
+    let blueDeletePayload = {
+      objectId: blueId,
+      message: t('misc.modalMessage'),
+      method: 'deleteAdBlue',
+    };
+    dispatch(openModal(blueDeletePayload));
   };
 
   return (

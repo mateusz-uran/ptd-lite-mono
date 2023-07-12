@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { format, parse } from 'date-fns';
-
 import { registerLocale } from 'react-datepicker';
 import pl from 'date-fns/locale/pl';
 import en from 'date-fns/locale/en-GB';

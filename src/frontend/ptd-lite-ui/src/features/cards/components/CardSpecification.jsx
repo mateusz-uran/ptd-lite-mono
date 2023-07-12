@@ -1,6 +1,6 @@
 import '../../../css/card_spec.css';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Header from '../../../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import TripTable from '../../trips/components/TripTable';
@@ -18,7 +18,6 @@ const CardSpecification = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { cardNumber, cardId } = useParams();
-  const navigate = useNavigate();
   const selectedTrips = useSelector(selectedTripArray);
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
 
@@ -27,12 +26,16 @@ const CardSpecification = () => {
   );
 
   const handleDeleteCard = () => {
-    let cardDeletePayload = {
-      cardId: Number(cardId),
-      message: t('misc.modalMessage'),
-    };
-    dispatch(openModal(cardDeletePayload));
-    navigate(-1);
+    try {
+      let cardDeletePayload = {
+        objectId: Number(cardId),
+        message: t('misc.modalMessage'),
+        method: 'deleteCard',
+      };
+      dispatch(openModal(cardDeletePayload));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -103,7 +106,7 @@ const CardSpecification = () => {
               className="arrow-button"
               onClick={() => setShowAdditionalInfo((prevState) => !prevState)}
             >
-              {t('buttons.expand')}
+              {showAdditionalInfo ? t('buttons.shrink') : t('buttons.expand')}
               <MdKeyboardArrowDown className="arrow" />
             </button>
           </div>
