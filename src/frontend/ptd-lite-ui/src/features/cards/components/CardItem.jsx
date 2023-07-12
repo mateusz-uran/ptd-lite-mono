@@ -28,8 +28,9 @@ const CardItem = ({ cards }) => {
 
   const handleDeleteCard = (cardId) => {
     let cardDeletePayload = {
-      cardId: cardId,
+      objectId: cardId,
       message: t('misc.modalMessage'),
+      method: 'deleteCard',
     };
     dispatch(openModal(cardDeletePayload));
   };

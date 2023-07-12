@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   isOpen: false,
   modalMessage: '',
-  cardIdToDelete: 0,
+  objectIdToDelete: 0,
+  deleteMethod: '',
 };
 
 const modalSlice = createSlice({
@@ -13,7 +14,8 @@ const modalSlice = createSlice({
     openModal: (state, action) => {
       state.isOpen = true;
       state.modalMessage = action.payload.message;
-      state.cardIdToDelete = action.payload.cardId;
+      state.objectIdToDelete = action.payload.objectId;
+      state.deleteMethod = action.payload.method;
     },
     closeModal: (state, action) => {
       return initialState;
@@ -23,7 +25,8 @@ const modalSlice = createSlice({
 
 export const isModalOpen = (state) => state.modal.isOpen;
 export const modalMessage = (state) => state.modal.modalMessage;
-export const cardIdToDelete = (state) => state.modal.cardIdToDelete;
+export const objectId = (state) => state.modal.objectIdToDelete;
+export const method = (state) => state.modal.deleteMethod;
 
 export const { openModal, closeModal } = modalSlice.actions;
 

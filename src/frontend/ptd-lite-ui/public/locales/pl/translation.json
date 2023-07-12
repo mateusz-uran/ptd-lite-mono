@@ -64,7 +64,7 @@
     "editHeader": "Edytuj",
     "tripTableEmpty": "Brak tras w karcie",
     "petrolTableEmpty": "Brak tankowań w karcie",
-    "blueTableEmpty": "Brak adlbue w karcie",
+    "blueTableEmpty": "Brak adBlue w karcie",
     "tripHead": "Trasy",
     "petrolHead": "Paliwo",
     "blueHead": "AdBlue",
@@ -103,6 +103,7 @@
     "search": "Szukaj",
     "addCargo": "Stwórz ładunek",
     "expand": "Rozwiń",
+    "shrink": "Zwiń",
     "remove": "Usuń",
     "updateCargo": "Aktualizuj ładunek"
   }

@@ -18,6 +18,7 @@ import {
 } from '../slices/tripCargoUpdateSlice';
 import TripEditCargoModal from '../forms/TripEditCargoModal';
 import { useTranslation } from 'react-i18next';
+import { openModal } from '../../modal/slices/modalSlice';
 
 const TripCargo = ({ group }) => {
   const { t } = useTranslation();
@@ -27,7 +28,6 @@ const TripCargo = ({ group }) => {
   const cargoInfoToEdit = useSelector(cargoToEdit);
   const [addTripToExistingGroup] = useAddTripToExistingGroupMutation();
   const [removeTripFromGroup] = useRemoveTripFromGroupMutation();
-  const [deleteTripGroup] = useDeleteTripGroupMutation();
 
   const tripHasGroup = selectedTrips.some((trip) => trip.group);
   const tripHasNotGroup = selectedTrips.some((trip) => !trip.group);
@@ -55,12 +55,13 @@ const TripCargo = ({ group }) => {
     dispatch(clearSelectedTrips());
   };
 
-  const handleDeleteTripGroup = async (groupId) => {
-    try {
-      await deleteTripGroup(groupId).unwrap();
-    } catch (err) {
-      console.log(err);
-    }
+  const handleDeleteTripGroup = (groupId) => {
+    let tripGroupDeletePayload = {
+      objectId: groupId,
+      message: t('misc.modalMessage'),
+      method: 'deleteTripGroup',
+    };
+    dispatch(openModal(tripGroupDeletePayload));
   };
 
   return (

@@ -1,7 +1,6 @@
 import { AiOutlineEdit } from 'react-icons/ai';
 import { MdDeleteOutline } from 'react-icons/md';
 import { Fragment } from 'react';
-import { useDeletePetrolMutation } from '../../../api/petrol/petrolApiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   editType,
@@ -9,10 +8,12 @@ import {
   startEditingFuel,
 } from '../slices/fuelEditSlice';
 import FuelEditForm from '../forms/FuelEditForm';
+import { openModal } from '../../modal/slices/modalSlice';
+import { useTranslation } from 'react-i18next';
 
 const PetrolTableRow = ({ petrolEntities }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [deletePetrol] = useDeletePetrolMutation();
   const modalStatus = useSelector(isModalOpen);
   const modalType = useSelector(editType);
 
@@ -20,8 +21,13 @@ const PetrolTableRow = ({ petrolEntities }) => {
     dispatch(startEditingFuel({ name: 'petrol', object: petrol }));
   };
 
-  const handleDeletePetrol = async (petrolId) => {
-    await deletePetrol(petrolId).unwrap();
+  const handleDeletePetrol = (petrolId) => {
+    let petrolDeletePayload = {
+      objectId: petrolId,
+      message: t('misc.modalMessage'),
+      method: 'deletePetrol',
+    };
+    dispatch(openModal(petrolDeletePayload));
   };
 
   return (
