@@ -10,6 +10,7 @@ import pdfApiReducer from './api/pdf/pdfApiSlice';
 import datesRangeReducer from './features/archive/datesRangeSlice';
 import tripSelectedReducer from './features/trips/slices/tripSelectedSlice';
 import tripCargoUpdateReducer from './features/trips/slices/tripCargoUpdateSlice';
+import currencyApiReducer from './api/currency/currencyApiSlice';
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     datesRange: datesRangeReducer,
     tripSelected: tripSelectedReducer,
     tripCargoUpdate: tripCargoUpdateReducer,
+    currency: currencyApiReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
