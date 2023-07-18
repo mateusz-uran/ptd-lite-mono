@@ -4,7 +4,6 @@ import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
-import io.github.mateuszuran.ptdlitemono.service.HourRateService;
 import io.github.mateuszuran.ptdlitemono.service.TripGroupService;
 import io.github.mateuszuran.ptdlitemono.service.TripService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,6 @@ import java.util.List;
 public class TripController {
     private final TripService service;
     private final TripGroupService groupService;
-    private final HourRateService hourRateService;
 
     @PostMapping
     public ResponseEntity<?> addTripsList(@RequestBody List<TripRequest> trips, @RequestParam Long cardId) {
@@ -77,12 +75,5 @@ public class TripController {
     @PatchMapping("/updategroup")
     public ResponseEntity<TripGroupResponse> updateGroupInformation(@RequestParam Long groupId, @RequestBody TripGroupRequest request) {
         return ResponseEntity.ok().body(groupService.editTripGroupInformation(groupId, request));
-    }
-
-    //test read csv file via generic type
-    @GetMapping("/testcsv")
-    public ResponseEntity<?> testCsv() {
-        hourRateService.readValues();
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

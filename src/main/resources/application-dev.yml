@@ -2,8 +2,8 @@ pdf:
   csv:
     link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1689679849/user_metadata_my7bzu.csv
 hour-rate:
-  csv:
-    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1689670094/driver_rate_axlefi.csv
+  json:
+    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1689688220/driver_rates_json_ovpqjb.txt
 
 frontend:
   urls: http://localhost:5173,http://localhost:5173/home

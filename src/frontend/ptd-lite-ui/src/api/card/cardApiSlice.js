@@ -48,6 +48,9 @@ export const cardApiSlice = apiSlice.injectEndpoints({
         { type: 'Card', id: arg.cardId },
       ],
     }),
+    retrieveUserRates: builder.query({
+      query: (username) => `/card/rates?username=${username}`,
+    }),
   }),
 });
 
@@ -58,4 +61,5 @@ export const {
   useAddNewCardMutation,
   useUpdateCardMutation,
   useDeletecardMutation,
+  useRetrieveUserRatesQuery,
 } = cardApiSlice;

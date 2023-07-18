@@ -1,25 +1,15 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 import io.github.mateuszuran.ptdlitemono.dto.CardDetailsResponse;
 import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.dto.PdfCsvReader;
 import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
-import io.github.mateuszuran.ptdlitemono.exception.CsvFileException;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
 import io.github.mateuszuran.ptdlitemono.pdf.*;
 import io.github.mateuszuran.ptdlitemono.service.logic.CsvReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
