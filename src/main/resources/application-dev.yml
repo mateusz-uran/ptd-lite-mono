@@ -1,6 +1,6 @@
 pdf:
   csv:
-    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1689354849/user_metadata_qgsnzo.csv
+    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1689679485/user_metadata_uo2kc5.csv
 
 frontend:
   urls: http://localhost:5173,http://localhost:5173/home
