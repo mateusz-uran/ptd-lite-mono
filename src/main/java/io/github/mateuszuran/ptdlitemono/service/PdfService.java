@@ -9,6 +9,7 @@ import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.CsvFileException;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
 import io.github.mateuszuran.ptdlitemono.pdf.*;
+import io.github.mateuszuran.ptdlitemono.service.logic.CsvReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PdfService {
     private final CardService cardService;
+    private final CsvReader csvReader;
 
     @Value("${pdf.csv.link}")
     private String csvLink;
@@ -32,24 +34,8 @@ public class PdfService {
         this.csvLink = csvLink;
     }
 
-    public List<PdfCsvReader> getCsvFileWithData() {
-        try {
-            URL url = new URL(csvLink);
-            InputStreamReader reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
-            CsvToBean<PdfCsvReader> csvToBean = new CsvToBeanBuilder<PdfCsvReader>(reader)
-                    .withType(PdfCsvReader.class)
-                    .withSeparator(';')
-                    .withSkipLines(1)
-                    .build();
-            return csvToBean.stream().collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new CsvFileException();
-        }
-    }
-
     public PdfCsvReader getUserInformation(String username) {
-        return getCsvFileWithData().stream()
+        return csvReader.readCsvFile(PdfCsvReader.class, csvLink).stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()
                 .orElseThrow(UserNotFoundException::new);
