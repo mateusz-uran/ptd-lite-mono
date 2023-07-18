@@ -309,7 +309,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-size: 15px; text-transform:uppercase; color: #336600;"
+                    <td style="font-size: 15px; text-transform:uppercase;"
                         th:text="${pdf.pdfCsvReader.truckImageDescription}">
                         volvo/krone
                     </td>
@@ -331,7 +331,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="card_info" th:text="${pdf.pdfCsvReader.truckModel} + '&nbsp;' + ${pdf.pdfCsvReader.truckType}"
+                    <td class="card_info" th:text="${pdf.pdfCsvReader.truckModel}"
                         style="font-size: 25px;text-transform:uppercase; padding: 0; font-weight: bold;">MODEL
                         AUTA
                     </td>
@@ -355,17 +355,17 @@
         <td style="width: 65%;">
             <table id="car_info_table">
                 <tr>
-                    <td>Samochód</td>
+                    <td>Samochod</td>
                     <td>
                         <p style="margin: 0; font-weight: 600; text-transform: uppercase;" th:text="${pdf.pdfCsvReader.truckLicencePlate}">LLL 111</p>
                         <sup>Nr rejestracyjny</sup>
                     </td>
                     <td>
-                        <p style="margin: 0;" th:text="${pdf.pdfCsvReader.truckType}">Ciagnik siodłowy</p>
+                        <p style="margin: 0;" th:text="${pdf.pdfCsvReader.truckType}">Ciagnik siodlowy</p>
                         <sup>Typ</sup>
                     </td>
                     <td>
-                        <p style="margin: 0;" th:text="${pdf.pdfCsvReader.truckFullTankCapacity}">1111 litrów</p>
+                        <p style="margin: 0;" th:text="${pdf.pdfCsvReader.truckFullTankCapacity}">1111 litrow</p>
                         <sup>Poj zbiornika</sup>
                     </td>
                 </tr>
@@ -376,11 +376,11 @@
                         <sup>Nr rejestracyjny</sup>
                     </td>
                     <td>
-                        <p style="margin: 0;" th:text="${pdf.pdfCsvReader.trailerType}">Naczepa chłodnia</p>
+                        <p style="margin: 0;" th:text="${pdf.pdfCsvReader.trailerType}">Naczepa chlodnia</p>
                         <sup>Typ</sup>
                     </td>
                     <td>
-                        <p style="margin: 0;" th:text="${pdf.pdfCsvReader.trailerFuelCapacity}">240 litrów</p>
+                        <p style="margin: 0;" th:text="${pdf.pdfCsvReader.trailerFuelCapacity}">240 litrow</p>
                         <sup>Poj zbiornika</sup>
                     </td>
                 </tr>
@@ -399,9 +399,9 @@
                     <th colspan="2">LICZNIK - AGREGAT</th>
                 </tr>
                 <tr>
-                    <td>Powrót:</td>
+                    <td>Powrot:</td>
                     <td style="border-right: 1px solid rgba(0,0,0,0.25);" th:text="${pdf.counters.lastCounter}">.................</td>
-                    <td>Powrót:</td>
+                    <td>Powrot:</td>
                     <td>.................mtg</td>
                 </tr>
                 <tr>
@@ -536,7 +536,7 @@
                     <td th:text="${pdf.counters.refuelingSum}" style="border-right: 1px double rgba(0, 0, 0, 1);">
                         paliwo
                     </td>
-                    <td colspan="2" style="font-size: 10px; text-align: left;">*Gotówka / Przelew</td>
+                    <td colspan="2" style="font-size: 10px; text-align: left;">*Gotowka / Przelew</td>
                 </tr>
             </table>
         </td>
@@ -628,19 +628,19 @@
         <th colspan="5" class="start middle">WYJAZD</th>
         <th colspan="5" class="end middle">PRZYJAZD</th>
         <th rowspan="2" class="misc">Przebieg</th>
-        <th rowspan="2" class="misc">Nazwa ładunku</th>
-        <th rowspan="2" class="misc">Tonaż (kg)</th>
+        <th rowspan="2" class="misc">Nazwa ladunku</th>
+        <th rowspan="2" class="misc">Tonaz (kg)</th>
     </tr>
     <tr>
         <td class="start">Data</td>
         <td class="start">Godzina</td>
-        <td class="start">Miejscowość</td>
-        <td class="start">Państwo</td>
+        <td class="start">Miejscowosc</td>
+        <td class="start">Panstwo</td>
         <td class="start middle">Licznik</td>
         <td class="end">Data</td>
         <td class="end">Godzina</td>
-        <td class="end">Miejscowość</td>
-        <td class="end">Państwo</td>
+        <td class="end">Miejscowosc</td>
+        <td class="end">Panstwo</td>
         <td class="end middle">Licznik</td>
     </tr>
     </thead>
@@ -713,7 +713,7 @@
     <tr>
         <td>
           <span>
-            <p>Srendia predkosc na etapie:</p>
+            <p>Srednia predkosc na etapie:</p>
             <p style="text-decoration: underline;" th:text="${pdf.info.avgSpeed}">..........................</p>
             <p>Zuzycie paliwa na biegu jalowym na etapie:</p>
             <p style="text-decoration: underline;" th:text="${pdf.info.fuelConsumptionIdle}">..........................</p>
