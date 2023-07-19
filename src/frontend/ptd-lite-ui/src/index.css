@@ -490,7 +490,7 @@ body {
   flex-direction: column;
 }
 
-.cargo-form-h {
+.selected-trips-h {
   color: var(--text-color);
   font-size: 15px;
   padding: 0.3rem 0;

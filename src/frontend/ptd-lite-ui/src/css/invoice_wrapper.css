@@ -1,0 +1,57 @@
+.wrapper-container {
+  display: flex;
+}
+
+.wrapper-container .currency-wrapper {
+  padding: 1rem 0.5rem;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  max-width: fit-content;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  min-width: 25%;
+}
+
+.wrapper-container .currency-wrapper .currency-card {
+  margin-top: 0.5rem;
+  max-width: fit-content;
+  color: var(--text-color);
+}
+
+.wrapper-container .currency-wrapper .currency-card .content-wrapper {
+  margin-top: 0.3rem;
+}
+
+.wrapper-container .rate-content,
+.wrapper-container .invoice-component {
+  font-size: 14px;
+}
+
+.wrapper-container .rate-content > div,
+.wrapper-container .invoice-component .invoice-values > div {
+  display: flex;
+  margin: 0.5rem 0;
+}
+
+.wrapper-container .rate-content > div > span,
+.wrapper-container .invoice-component .invoice-values > div > span {
+  font-weight: 600;
+  background: var(--primary-color-light);
+  padding: 0 0.3rem;
+  border-radius: 3px;
+}
+
+.wrapper-container .select-wrapper {
+  padding: 1rem 0.5rem;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  max-width: fit-content;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  min-width: 25%;
+}
+
+.wrapper-container .select-wrapper .primary-input {
+  max-width: fit-content;
+}

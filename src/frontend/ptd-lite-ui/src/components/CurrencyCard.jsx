@@ -8,7 +8,7 @@ import {
 import { useEffect } from 'react';
 import LoadingDots from './LoadingDots';
 
-const CurrencyCard = () => {
+const CurrencyCard = ({ date }) => {
   const dispatch = useDispatch();
   const currency = useSelector(checkCurrency);
   const currencyStatus = useSelector(checkCurrencyStatus);
@@ -16,9 +16,9 @@ const CurrencyCard = () => {
 
   useEffect(() => {
     if (currencyStatus === 'idle') {
-      dispatch(retrieveEuroRate());
+      dispatch(retrieveEuroRate(date));
     }
-  }, [currencyStatus, dispatch]);
+  }, [currencyStatus, dispatch, date]);
 
   let currencyContent;
 
@@ -38,16 +38,13 @@ const CurrencyCard = () => {
           {currency.rates.map((rate, index) => (
             <div key={index} className="rate-content">
               <div>
-                <p>Table:</p>&nbsp;
-                <p>{rate.no}</p>
+                Table:&nbsp;<span>{rate.no}</span>
               </div>
               <div>
-                <p>Effective date:</p>&nbsp;
-                <p>{rate.effectiveDate}</p>
+                Effective date:&nbsp;<span>{rate.effectiveDate}</span>
               </div>
               <div>
-                <p>Mid:</p>&nbsp;
-                <p>{rate.mid}</p>
+                Mid:&nbsp;<span>{`${rate.mid} PLN`}</span>
               </div>
             </div>
           ))}

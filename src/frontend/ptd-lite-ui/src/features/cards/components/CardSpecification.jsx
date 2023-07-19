@@ -82,7 +82,7 @@ const CardSpecification = () => {
               </button>
             </Link>
             <Link
-              to={'calculaterates'}
+              to={'invoice'}
               className={`cargo-link ${
                 selectedTrips?.length <= 0 ? 'inactive' : undefined
               }`}
