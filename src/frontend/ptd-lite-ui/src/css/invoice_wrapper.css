@@ -41,6 +41,16 @@
   border-radius: 3px;
 }
 
+.wrapper-container .select-wrapper .invoice-values.empty,
+.wrapper-container .select-wrapper .invoice-values.loading {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  height: 100%;
+  font-weight: 700;
+}
+
 .wrapper-container .select-wrapper {
   padding: 1rem 0.5rem;
   background: #fff;

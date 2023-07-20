@@ -12,12 +12,10 @@ import AdBlueTable from '../../fuel/components/AdBlueTable';
 import AdditionalInformation from '../../additionalInfo/AdditionalInformation';
 import GeneratePDF from '../../pdf/components/GeneratePDF';
 import { useState } from 'react';
-import { getPermissions } from '../../auth/auth0Slice';
 
 const CardSpecification = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const loggedInUserRole = useSelector(getPermissions);
   const location = useLocation();
   const { cardNumber, cardId } = useParams();
   const selectedTrips = useSelector(selectedTripArray);

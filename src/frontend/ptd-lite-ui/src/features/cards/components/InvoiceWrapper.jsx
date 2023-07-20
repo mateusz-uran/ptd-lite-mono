@@ -11,6 +11,8 @@ import { useTranslation } from 'react-i18next';
 import SelectedTripsTable from '../../trips/components/SelectedTripsTable';
 import { refetchCurrency } from '../../../api/currency/currencyApiSlice';
 import Invoice from './Invoice';
+import { getPermissions } from '../../auth/auth0Slice';
+import LoadingDots from '../../../components/LoadingDots';
 
 const InvoiceWrapper = () => {
   const { t } = useTranslation();
@@ -18,43 +20,81 @@ const InvoiceWrapper = () => {
   const dispatch = useDispatch();
   const { user } = useAuth0();
   const selectedTrips = useSelector(selectedTripArray);
+  const loggedInUserRole = useSelector(getPermissions);
   const [selectedCountry, setSelectedCountry] = useState('');
-
   const [startDate, setStartDate] = useState(new Date());
   const formattedStartDate = format(startDate, 'yyyy-MM-dd');
 
   const {
     data: hourRates,
     isSuccess,
-    isError,
     isLoading,
   } = useRetrieveUserRatesQuery(user.nickname);
-
-  let selectedRateCountry;
-  let mileage;
-  let selectedTripsMileageSummary = 0;
-  let defaultUserHourRate;
 
   const handleCountryChange = (event) => {
     setSelectedCountry(event.target.value);
   };
 
-  if (isSuccess) {
-    selectedRateCountry = hourRates.rates.find(
-      (rate) => Object.keys(rate)[0] === selectedCountry
-    );
-    defaultUserHourRate = hourRates.defaultRate;
-  }
-
-  mileage = selectedTrips.map((trip) => trip.carMileage);
-  mileage.forEach((num) => {
-    selectedTripsMileageSummary += num;
-  });
-
   const handleDateChange = (date) => {
     setStartDate(date);
     dispatch(refetchCurrency());
   };
+
+  const countryRate = (userRates, country) => {
+    let ratePerCountry = userRates.rates.find(
+      (rate) => Object.keys(rate)[0] === country
+    );
+    return ratePerCountry;
+  };
+
+  const defaultRate = (userRates) => {
+    return userRates.defaultRate;
+  };
+
+  const sumSelectedTripsMileage = () => {
+    let sum = 0;
+    selectedTrips
+      .map((trip) => trip.carMileage)
+      .forEach((num) => {
+        sum += num;
+      });
+    return sum;
+  };
+
+  const invoiceComponent = (
+    <div className="select-wrapper">
+      {isLoading ? (
+        <div className="invoice-values loading">
+          <LoadingDots />
+        </div>
+      ) : isSuccess && loggedInUserRole.includes('super_driver') ? (
+        <>
+          <select
+            value={selectedCountry}
+            onChange={handleCountryChange}
+            className="primary-input"
+          >
+            <option value="">Select a country</option>
+            {hourRates?.rates.map((rate, index) => {
+              const country = Object.keys(rate)[0];
+              return (
+                <option key={index} value={country}>
+                  {country}
+                </option>
+              );
+            })}
+          </select>
+          <Invoice
+            sumMileage={sumSelectedTripsMileage()}
+            defaultRate={defaultRate(hourRates)}
+            selectedRate={countryRate(hourRates, selectedCountry)}
+          />
+        </>
+      ) : (
+        <div className="invoice-values empty">No data</div>
+      )}
+    </div>
+  );
 
   useEffect(() => {}, [selectedCountry]);
 
@@ -73,28 +113,7 @@ const InvoiceWrapper = () => {
           />
           <CurrencyCard date={formattedStartDate} />
         </div>
-        <div className="select-wrapper">
-          <select
-            value={selectedCountry}
-            onChange={handleCountryChange}
-            className="primary-input"
-          >
-            <option value="">Select a country</option>
-            {hourRates?.rates.map((rate, index) => {
-              const country = Object.keys(rate)[0];
-              return (
-                <option key={index} value={country}>
-                  {country}
-                </option>
-              );
-            })}
-          </select>
-          <Invoice
-            sumMileage={selectedTripsMileageSummary}
-            defaultRate={defaultUserHourRate}
-            selectedRate={selectedRateCountry}
-          />
-        </div>
+        {invoiceComponent}
       </div>
     </div>
   );
