@@ -47,7 +47,7 @@ const Invoice = ({ sumMileage, defaultRate, selectedRate }) => {
         </div>
         <div>
           Country rate:&nbsp;
-          <span>{`${selectedRate ? selectedRateValue : 0} PLN`}</span>
+          <span>{`${selectedRate ? selectedRateValue : 0} EURO`}</span>
         </div>
         <div>
           Selected currency mid&nbsp;

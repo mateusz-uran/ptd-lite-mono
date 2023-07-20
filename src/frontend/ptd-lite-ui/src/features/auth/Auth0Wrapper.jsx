@@ -1,28 +1,47 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { setAuthContext } from './auth0Slice';
+import { useEffect } from 'react';
+import { setAuthAccessToken, setAuthUserInformation } from './auth0Slice';
 import Loading from './Loading';
+
+export const namespace = import.meta.env.VITE_AUTH0_NAMESPACE;
 
 const Auth0Wrapper = ({ children }) => {
   const dispatch = useDispatch();
-  const auth0 = useAuth0();
-  const [loading, setLoading] = useState(true);
+  const { getAccessTokenSilently, isLoading, user, isAuthenticated } =
+    useAuth0();
+
+  const fetchAccessToken = async () => {
+    try {
+      const token = await getAccessTokenSilently();
+      dispatch(setAuthAccessToken({ token: token }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchUserInformation = async () => {
+    try {
+      if (user) {
+        const userRoles = user[namespace] || [];
+        const username = user.nickname;
+        dispatch(
+          setAuthUserInformation({ permissions: userRoles, username: username })
+        );
+      }
+    } catch (err) {
+      console.log('user info: ', err);
+    }
+  };
 
   useEffect(() => {
-    const fetchAccessToken = async () => {
-      try {
-        const token = await auth0.getAccessTokenSilently();
-        dispatch(setAuthContext(token));
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-      }
-    };
-
     fetchAccessToken();
-  }, [auth0, dispatch]);
+  }, []);
 
-  return loading ? <Loading /> : children;
+  useEffect(() => {
+    fetchUserInformation();
+  }, [isAuthenticated, user]);
+
+  return isLoading ? <Loading /> : children;
 };
 export default Auth0Wrapper;

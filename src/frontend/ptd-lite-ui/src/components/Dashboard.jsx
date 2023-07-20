@@ -14,9 +14,7 @@ const Dashboard = () => {
           },
         ]}
       />
-      <section>
-        <CurrencyCard />
-      </section>
+      <section></section>
     </div>
   );
 };
