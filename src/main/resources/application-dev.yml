@@ -3,7 +3,7 @@ pdf:
     link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1689679849/user_metadata_my7bzu.csv
 hour-rate:
   json:
-    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1689688220/driver_rates_json_ovpqjb.txt
+    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1689863848/driver_rates_json_tshfmc.txt
 
 frontend:
   urls: http://localhost:5173,http://localhost:5173/home

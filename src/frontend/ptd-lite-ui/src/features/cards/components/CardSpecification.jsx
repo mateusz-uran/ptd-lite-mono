@@ -12,7 +12,6 @@ import AdBlueTable from '../../fuel/components/AdBlueTable';
 import AdditionalInformation from '../../additionalInfo/AdditionalInformation';
 import GeneratePDF from '../../pdf/components/GeneratePDF';
 import { useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { getPermissions } from '../../auth/auth0Slice';
 
 const CardSpecification = () => {
@@ -84,21 +83,19 @@ const CardSpecification = () => {
                 {t('buttons.addCargo')}
               </button>
             </Link>
-            {loggedInUserRole.includes('super_driver') && (
-              <Link
-                to={'invoice'}
-                className={`cargo-link ${
-                  selectedTrips?.length <= 0 ? 'inactive' : undefined
-                }`}
+            <Link
+              to={'invoice'}
+              className={`cargo-link ${
+                selectedTrips?.length <= 0 ? 'inactive' : undefined
+              }`}
+            >
+              <button
+                className="secondary-btn"
+                disabled={selectedTrips?.length <= 0}
               >
-                <button
-                  className="secondary-btn"
-                  disabled={selectedTrips?.length <= 0}
-                >
-                  Calculate rates
-                </button>
-              </Link>
-            )}
+                Calculate rates
+              </button>
+            </Link>
             <button onClick={handleDeleteCard} className="primary-btn delete">
               {t('buttons.deleteCard')}
             </button>
