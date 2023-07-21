@@ -31,9 +31,9 @@ const Invoice = ({ sumMileage, defaultRate, selectedRate }) => {
   }
 
   const regionNames = new Intl.DisplayNames([detectLocale], { type: 'region' });
-  var selectedRegionFullname = regionNames.of(
-    selectedRate ? selectedRateKey : ''
-  );
+  var selectedRegionFullname = selectedRate
+    ? regionNames.of(selectedRateKey)
+    : '';
 
   var selectedCountryRatePerCurrencyMid = selectedRateValue * currencyRate;
 
