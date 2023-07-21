@@ -12,15 +12,14 @@
   padding: 1rem 0.5rem;
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  /* max-width: fit-content; */
+  max-width: fit-content;
   border-radius: 5px;
   margin-top: 0.5rem;
-  min-width: 25%;
+  min-width: fit-content;
 }
 
 .wrapper-container .currency-wrapper .currency-card {
   margin-top: 0.5rem;
-  /* max-width: fit-content; */
   color: var(--text-color);
 }
 
@@ -65,11 +64,11 @@
   padding: 1rem 0.5rem;
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  /* max-width: fit-content; */
   border-radius: 5px;
   margin-top: 0.5rem;
   margin-left: 0.5rem;
-  min-width: 25%;
+
+  min-width: fit-content;
 }
 
 .wrapper-container .select-wrapper .primary-input {
@@ -96,6 +95,21 @@
 }
 
 @media screen and (max-width: 768px) {
+  .wrapper-container .rate-content > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wrapper-container .rate-content > div > span,
+  .wrapper-container .select-wrapper .invoice-values > div > span {
+    padding: 0.3rem 0;
+  }
+
+  .wrapper-container .select-wrapper .invoice-values > div {
+    display: flex;
+    flex-direction: column;
+  }
+
   .invoice-copy {
     flex-direction: column;
   }
