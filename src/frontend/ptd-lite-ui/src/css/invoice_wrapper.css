@@ -1,12 +1,18 @@
+.invoice-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .wrapper-container {
   display: flex;
+  width: 100%;
 }
 
 .wrapper-container .currency-wrapper {
   padding: 1rem 0.5rem;
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  max-width: fit-content;
+  /* max-width: fit-content; */
   border-radius: 5px;
   margin-top: 0.5rem;
   min-width: 25%;
@@ -14,7 +20,7 @@
 
 .wrapper-container .currency-wrapper .currency-card {
   margin-top: 0.5rem;
-  max-width: fit-content;
+  /* max-width: fit-content; */
   color: var(--text-color);
 }
 
@@ -31,6 +37,10 @@
 .wrapper-container .invoice-component .invoice-values > div {
   display: flex;
   margin: 0.5rem 0;
+}
+
+.wrapper-container .invoice-component .invoice-values > div {
+  padding-left: 0.2rem;
 }
 
 .wrapper-container .rate-content > div > span,
@@ -55,7 +65,7 @@
   padding: 1rem 0.5rem;
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  max-width: fit-content;
+  /* max-width: fit-content; */
   border-radius: 5px;
   margin-top: 0.5rem;
   margin-left: 0.5rem;
@@ -64,4 +74,29 @@
 
 .wrapper-container .select-wrapper .primary-input {
   max-width: fit-content;
+}
+
+.invoice-copy {
+  display: flex;
+  align-items: center;
+}
+
+.invoice-copy .copy-text {
+  white-space: pre-wrap;
+  background: var(--primary-color-light);
+  padding: 0.4rem 0.4rem 0.4rem 0.2rem;
+  border-radius: 5px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.invoice-copy .copy-button {
+  margin-left: 0.3rem;
+  min-width: 55px;
+}
+
+@media screen and (max-width: 768px) {
+  .invoice-copy {
+    flex-direction: column;
+  }
 }

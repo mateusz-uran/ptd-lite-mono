@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const InvoiceCopy = ({ copyText }) => {
+  const { t } = useTranslation();
   const [isCopied, setIsCopied] = useState(false);
 
   async function copyTextToClipboard(text) {
@@ -24,13 +26,15 @@ const InvoiceCopy = ({ copyText }) => {
       });
   };
 
-  const test = 'asdasd \n asdasdas';
-
   return (
-    <div>
-      <span style={{ whiteSpace: 'pre-wrap' }}>{copyText}</span>
-      <button onClick={handleCopyClick}>
-        <span>{isCopied ? 'Copied!' : 'Copy'}</span>
+    <div className="invoice-copy">
+      <span className="copy-text">{copyText}</span>
+      <button onClick={handleCopyClick} className="copy-button small-btn">
+        <span>
+          {isCopied
+            ? `${t('buttons.invoiceCopied')}`
+            : `${t('buttons.invoiceCopy')}`}
+        </span>
       </button>
     </div>
   );

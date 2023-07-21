@@ -7,8 +7,10 @@ import {
 } from '../api/currency/currencyApiSlice';
 import { useEffect } from 'react';
 import LoadingDots from './LoadingDots';
+import { useTranslation } from 'react-i18next';
 
 const CurrencyCard = ({ date }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const currency = useSelector(checkCurrency);
   const currencyStatus = useSelector(checkCurrencyStatus);
@@ -38,13 +40,13 @@ const CurrencyCard = ({ date }) => {
           {currency.rates.map((rate, index) => (
             <div key={index} className="rate-content">
               <div>
-                Table:&nbsp;<span>{rate.no}</span>
+                {t('misc.currencyTable')}:&nbsp;<span>{rate.no}</span>
               </div>
               <div>
-                Effective date:&nbsp;<span>{rate.effectiveDate}</span>
+                {t('misc.currencyDate')}:&nbsp;<span>{rate.effectiveDate}</span>
               </div>
               <div>
-                Mid:&nbsp;<span>{`${rate.mid} PLN`}</span>
+                {t('misc.currencyMid')}:&nbsp;<span>{`${rate.mid} PLN`}</span>
               </div>
             </div>
           ))}
@@ -54,7 +56,7 @@ const CurrencyCard = ({ date }) => {
   } else if (currencyStatus === 'error') {
     currencyContent = (
       <div className="currency-card">
-        <h5>Error: {currencyError}</h5>
+        <h5>{t('misc.currencyError')}</h5>
       </div>
     );
   }

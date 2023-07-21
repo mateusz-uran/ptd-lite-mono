@@ -91,7 +91,7 @@ const CardSpecification = () => {
                 className="secondary-btn"
                 disabled={selectedTrips?.length <= 0}
               >
-                Calculate rates
+                {t('buttons.countInvoice')}
               </button>
             </Link>
             <button onClick={handleDeleteCard} className="primary-btn delete">

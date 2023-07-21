@@ -77,7 +77,18 @@
     "temperature": "Temperatura",
     "notes": "Notatki",
     "cargoFormHead": "Wybrane punkty trasy",
-    "cargoEditFormHead": "Edytuj informacje o ładunku"
+    "cargoEditFormHead": "Edytuj informacje o ładunku",
+    "currencyError": "Brak danych dla tej daty",
+    "currencyTable": "Tabela",
+    "currencyDate": "Data wejścia w życie",
+    "currencyMid": "Średnia",
+    "invoiceEmpty": "Brak danych",
+    "invoiceKmSummary": "Suma",
+    "invoiceDefault": "Podstawowa stawka",
+    "invoiceCountry": "Stawka wybranego kraju",
+    "invoiceSelectedMid": "Średnia kursu",
+    "invoiceHours": "Przejechane godziny",
+    "invoiceCopyText": "Usługa transportowa na terytorium {{countryName}}\nKURS ROZLICZENIA WALUTY ŚREDNI NBP\nTabela numer {{currencyTable}} z dnia {{currencyDate}}\n{{currencyCode}}/PLN ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})"
   },
   "buttons": {
     "browse": "Przeglądaj",
@@ -105,6 +116,10 @@
     "expand": "Rozwiń",
     "shrink": "Zwiń",
     "remove": "Usuń",
-    "updateCargo": "Aktualizuj ładunek"
+    "updateCargo": "Aktualizuj ładunek",
+    "countInvoice": "Faktura",
+    "invoiceSelectDefault": "Wybierz kraj",
+    "invoiceCopy": "Kopiuj",
+    "invoiceCopied": "Skopiowano"
   }
 }

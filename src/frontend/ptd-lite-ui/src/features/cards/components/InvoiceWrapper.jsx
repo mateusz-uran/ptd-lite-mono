@@ -74,7 +74,7 @@ const InvoiceWrapper = () => {
             onChange={handleCountryChange}
             className="primary-input"
           >
-            <option value="">Select a country</option>
+            <option value="">{t('buttons.invoiceSelectDefault')}</option>
             {hourRates?.rates.map((rate, index) => {
               const country = Object.keys(rate)[0];
               return (
@@ -91,7 +91,7 @@ const InvoiceWrapper = () => {
           />
         </>
       ) : (
-        <div className="invoice-values empty">No data</div>
+        <div className="invoice-values empty">{t('misc.invoiceEmpty')}</div>
       )}
     </div>
   );
