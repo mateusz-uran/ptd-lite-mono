@@ -4,6 +4,10 @@ server:
 pdf:
   csv:
     link: ${CSV_LINK}
+hour-rate:
+  json:
+    link: ${JSON_LINK}
+
 frontend:
   urls: ${FRONTEND_API_URI}
 backend:

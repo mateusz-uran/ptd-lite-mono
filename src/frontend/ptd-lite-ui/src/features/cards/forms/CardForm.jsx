@@ -18,6 +18,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { translateCardInputs } from '../inputs/cardInputs';
 import { translateCardValidations } from '../inputs/cardsValidations';
+import LoadingDots from '../../../components/LoadingDots';
+import SmallLoader from '../../../components/SmallLoader';
 
 const CardForm = () => {
   const { t } = useTranslation();
@@ -97,20 +99,28 @@ const CardForm = () => {
           {errors[inputs.name]?.message && (
             <p className="error-input">{errors[inputs.name].message}</p>
           )}
+          {errors?.number?.message && (
+            <p className="error-input">{t('misc.cardExists')}</p>
+          )}
         </div>
         <div className="button-wrapper">
           <div className="buttons">
             <button type="submit" disabled={isLoading} className="small-btn">
-              {editStatus ? (
-                <span>{t('buttons.save')}</span>
+              {!isLoading ? (
+                editStatus ? (
+                  <span>{t('buttons.save')}</span>
+                ) : (
+                  <span>{t('buttons.add')}</span>
+                )
               ) : (
-                <span>{t('buttons.add')}</span>
+                <SmallLoader />
               )}
             </button>
             <button
               type="button"
               className="small-btn revert-button"
               onClick={() => handleClearInput()}
+              disabled={isLoading}
             >
               <MdSettingsBackupRestore className="revert" />
             </button>

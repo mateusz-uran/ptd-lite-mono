@@ -13,7 +13,7 @@ const Dashboard = () => {
           },
         ]}
       />
-      <section>dashboard</section>
+      <section></section>
     </div>
   );
 };

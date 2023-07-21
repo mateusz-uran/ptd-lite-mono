@@ -8,7 +8,7 @@ import CardItem from '../features/cards/components/CardItem';
 import LoadingDots from './LoadingDots';
 import CardForm from '../features/cards/forms/CardForm';
 
-import DatePickers from '../features/archive/DatePickers';
+import DatePickersHolder from '../features/archive/DatePickersHolder';
 import { useSelector } from 'react-redux';
 import {
   endDateFromRange,
@@ -92,7 +92,7 @@ const Archives = () => {
         ]}
       />
       <section className="pickers">
-        <DatePickers refetchCards={refetch} />
+        <DatePickersHolder refetchCards={refetch} />
       </section>
       <div>
         <CardForm />

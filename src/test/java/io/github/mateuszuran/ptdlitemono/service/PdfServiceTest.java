@@ -7,6 +7,7 @@ import io.github.mateuszuran.ptdlitemono.pdf.CardFuels;
 import io.github.mateuszuran.ptdlitemono.pdf.CardTrips;
 import io.github.mateuszuran.ptdlitemono.pdf.Counters;
 import io.github.mateuszuran.ptdlitemono.pdf.PdfRequest;
+import io.github.mateuszuran.ptdlitemono.service.logic.CsvReader;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,18 +26,20 @@ class PdfServiceTest {
     private PdfService service;
     @Mock
     private CardService cardService;
+    @Mock
+    private CsvReader csvReader;
 
     @BeforeEach
     void setUp() {
         String testFilePath = getClass().getResource("/test.csv").getPath();
-        service = new PdfService(cardService);
+        service = new PdfService(cardService, csvReader);
         service.setCsvLink("file:" + testFilePath);
     }
 
     @Test
     void givenCsvFile_whenExists_thenReturnCsvData() {
         //given + when
-        var result = service.getCsvFileWithData();
+        var result = csvReader.readCsvFile(PdfCsvReader.class, null);
         //then
         assertThat(result).isEqualTo(expectedCsvValues());
     }

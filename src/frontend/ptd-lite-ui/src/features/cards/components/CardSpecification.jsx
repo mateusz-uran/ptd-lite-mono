@@ -81,6 +81,19 @@ const CardSpecification = () => {
                 {t('buttons.addCargo')}
               </button>
             </Link>
+            <Link
+              to={'invoice'}
+              className={`cargo-link ${
+                selectedTrips?.length <= 0 ? 'inactive' : undefined
+              }`}
+            >
+              <button
+                className="secondary-btn"
+                disabled={selectedTrips?.length <= 0}
+              >
+                {t('buttons.countInvoice')}
+              </button>
+            </Link>
             <button onClick={handleDeleteCard} className="primary-btn delete">
               {t('buttons.deleteCard')}
             </button>

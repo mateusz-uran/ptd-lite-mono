@@ -10,6 +10,7 @@ import { translateCargoInputs } from '../inputs/cargoInputs';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../../components/Header';
 import { useCreateTripsGroupMutation } from '../../../api/trips/tripsApiSlice';
+import SelectedTripsTable from '../components/SelectedTripsTable';
 
 const TripCargoForm = () => {
   const { t } = useTranslation();
@@ -50,43 +51,7 @@ const TripCargoForm = () => {
           },
         ]}
       />
-      <h4 className="cargo-form-h">{t('misc.cargoFormHead')}</h4>
-      <table>
-        <thead>
-          <tr>
-            <th colSpan={5}>{t('misc.tripStart')}</th>
-            <th colSpan={5}>{t('misc.tripEnd')}</th>
-          </tr>
-          <tr>
-            <th>{t('tripInputs.day')}</th>
-            <th>{t('tripInputs.hour')}</th>
-            <th>{t('tripInputs.location')}</th>
-            <th>{t('tripInputs.country')}</th>
-            <th>{t('tripInputs.counter')}</th>
-            <th>{t('tripInputs.day')}</th>
-            <th>{t('tripInputs.hour')}</th>
-            <th>{t('tripInputs.location')}</th>
-            <th>{t('tripInputs.country')}</th>
-            <th>{t('tripInputs.counter')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {selectedTrips.map((trip, index) => (
-            <tr key={index}>
-              <td>{trip.dayStart}</td>
-              <td>{trip.hourStart}</td>
-              <td>{trip.locationStart}</td>
-              <td>{trip.countryStart}</td>
-              <td>{trip.counterStart}</td>
-              <td>{trip.dayEnd}</td>
-              <td>{trip.hourEnd}</td>
-              <td>{trip.locationEnd}</td>
-              <td>{trip.countryEnd}</td>
-              <td>{trip.counterEnd}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <SelectedTripsTable trips={selectedTrips} />
       <div className="cargo-input-wrapper">
         <form onSubmit={handleSubmit(onSubmit)}>
           {inputs.map((input, index) => (

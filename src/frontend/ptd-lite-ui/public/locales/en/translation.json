@@ -78,7 +78,19 @@
     "temperature": "Temperature",
     "notes": "Notes",
     "cargoFormHead": "Selected trips",
-    "cargoEditFormHead": "Edit cargo information"
+    "cargoEditFormHead": "Edit cargo information",
+    "currencyError": "No data for this date",
+    "currencyTable": "Table",
+    "currencyDate": "Effective date",
+    "currencyMid": "Mid",
+    "invoiceEmpty": "No data",
+    "invoiceKmSummary": "Summary",
+    "invoiceDefault": "Default rate",
+    "invoiceCountry": "Country rate",
+    "invoiceSelectedMid": "Selected currency mid",
+    "invoiceHours": "Driven hours",
+    "invoiceCopyText": "Transport service in the territory {{countryName}}\nAVERAGE NBP CURRENCY SETTLEMENT RATE\nTable no. {{currencyTable}} from day {{currencyDate}}\n{{currencyCode}}/PLN ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})",
+    "cardExists": "Cards with that number already exists"
   },
   "buttons": {
     "browse": "Browse",
@@ -106,6 +118,10 @@
     "expand": "Expand",
     "shrink": "Shrink",
     "remove": "Remove",
-    "updateCargo": "Update cargo"
+    "updateCargo": "Update cargo",
+    "countInvoice": "Invoice",
+    "invoiceSelectDefault": "Select a country",
+    "invoiceCopy": "Copy",
+    "invoiceCopied": "Copied"
   }
 }
