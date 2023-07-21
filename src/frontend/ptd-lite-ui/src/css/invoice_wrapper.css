@@ -21,6 +21,7 @@
 .wrapper-container .currency-wrapper .currency-card {
   margin-top: 0.5rem;
   color: var(--text-color);
+  z-index: 1001;
 }
 
 .wrapper-container .currency-wrapper .currency-card .content-wrapper {
