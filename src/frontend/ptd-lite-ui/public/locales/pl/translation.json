@@ -88,7 +88,8 @@
     "invoiceCountry": "Stawka wybranego kraju",
     "invoiceSelectedMid": "Średnia kursu",
     "invoiceHours": "Przejechane godziny",
-    "invoiceCopyText": "Usługa transportowa na terytorium {{countryName}}\nKURS ROZLICZENIA WALUTY ŚREDNI NBP\nTabela numer {{currencyTable}} z dnia {{currencyDate}}\n{{currencyCode}}/PLN ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})"
+    "invoiceCopyText": "Usługa transportowa na terytorium {{countryName}}\nKURS ROZLICZENIA WALUTY ŚREDNI NBP\nTabela numer {{currencyTable}} z dnia {{currencyDate}}\n{{currencyCode}}/PLN ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})",
+    "cardExists": "Karta z takim numerem już istnieje"
   },
   "buttons": {
     "browse": "Przeglądaj",

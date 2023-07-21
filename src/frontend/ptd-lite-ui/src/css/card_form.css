@@ -12,6 +12,7 @@
   display: flex;
   margin-left: 5px;
   align-items: center;
+  justify-content: center;
 }
 
 .card-form form .button-wrapper .buttons .revert-button {

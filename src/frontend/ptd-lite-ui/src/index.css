@@ -129,6 +129,7 @@ body {
 
 .small-btn {
   box-shadow: var(--small-btn-shadow);
+  color: #000;
   border: 0;
   outline: 0;
   background: transparent;
@@ -142,6 +143,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 25px;
+  min-width: 55px;
 }
 
 .small-btn:hover {
@@ -423,7 +425,7 @@ body {
   }
 }
 
-/*cargo information from trip table*/
+/* ====== Cargo information from trip table ====== */
 .cargo-cell-wrapper {
   padding-right: 0;
   padding-left: 0;
@@ -499,7 +501,8 @@ body {
 .cargo-input-wrapper form button {
   margin-top: 0.5rem;
 }
-/**/
+
+/* ====== Media queries ====== */
 
 @media screen and (max-width: 810px) {
   .form-wrapper.trips .fields-wrapper .inputs-wrapper .inputs {

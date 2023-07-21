@@ -89,7 +89,8 @@
     "invoiceCountry": "Country rate",
     "invoiceSelectedMid": "Selected currency mid",
     "invoiceHours": "Driven hours",
-    "invoiceCopyText": "Transport service in the territory {{countryName}}\nAVERAGE NBP CURRENCY SETTLEMENT RATE\nTable no. {{currencyTable}} from day {{currencyDate}}\n{{currencyCode}}/PLN ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})"
+    "invoiceCopyText": "Transport service in the territory {{countryName}}\nAVERAGE NBP CURRENCY SETTLEMENT RATE\nTable no. {{currencyTable}} from day {{currencyDate}}\n{{currencyCode}}/PLN ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})",
+    "cardExists": "Cards with that number already exists"
   },
   "buttons": {
     "browse": "Browse",
