@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
   checkCurrency,
-  checkCurrencyError,
   checkCurrencyStatus,
   retrieveEuroRate,
-} from '../api/currency/currencyApiSlice';
+} from '../../../api/currency/currencyApiSlice';
 import { useEffect } from 'react';
-import LoadingDots from './LoadingDots';
+import LoadingDots from '../../../components/LoadingDots';
 import { useTranslation } from 'react-i18next';
 
 const CurrencyCard = ({ date }) => {
@@ -14,7 +13,6 @@ const CurrencyCard = ({ date }) => {
   const dispatch = useDispatch();
   const currency = useSelector(checkCurrency);
   const currencyStatus = useSelector(checkCurrencyStatus);
-  const currencyError = useSelector(checkCurrencyError);
 
   useEffect(() => {
     if (currencyStatus === 'idle') {

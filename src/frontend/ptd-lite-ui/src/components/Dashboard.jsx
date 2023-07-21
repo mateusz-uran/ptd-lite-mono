@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import Header from './Header';
-import CurrencyCard from './CurrencyCard';
 
 const Dashboard = () => {
   const { t } = useTranslation();
