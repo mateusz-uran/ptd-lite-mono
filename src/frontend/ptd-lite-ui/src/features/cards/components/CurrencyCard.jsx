@@ -35,7 +35,7 @@ const CurrencyCard = ({ date }) => {
           <h5>&euro; {currency.code}</h5>
         </div>
         <div className="content-wrapper">
-          {currency.rates.map((rate, index) => (
+          {currency?.rates?.map((rate, index) => (
             <div key={index} className="rate-content">
               <div>
                 {t('misc.currencyTable')}:&nbsp;<span>{rate.no}</span>
