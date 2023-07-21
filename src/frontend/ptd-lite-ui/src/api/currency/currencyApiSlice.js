@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const NBP_EURO_API_URL = '/api/nbp';
+const NBP_EURO_API_URL = '/api/nbp/';
 
 const initialState = {
   currency: [],
