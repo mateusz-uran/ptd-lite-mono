@@ -26,3 +26,10 @@ spring:
         jwt:
           audience: ${AUTH0_AUDIENCE}
           issuer-uri: ${AUTH0_ISSUER_URI}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - prometheus

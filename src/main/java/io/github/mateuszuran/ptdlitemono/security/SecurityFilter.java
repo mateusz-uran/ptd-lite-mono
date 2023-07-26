@@ -33,6 +33,7 @@ public class SecurityFilter {
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
                 .authorizeHttpRequests()
+                .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/api/card/rates").hasAuthority("read:rates")
                 .anyRequest().authenticated()
                 .and()

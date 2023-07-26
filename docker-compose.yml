@@ -12,3 +12,28 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.35.0
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    volumes:
+      - ./data/prometheus/config:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+
+  grafana:
+    image: grafana/grafana:8.2.3
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    user: '104'
+    links:
+      - prometheus
+volumes:
+  grafana-storage:
