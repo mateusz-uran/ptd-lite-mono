@@ -97,10 +97,12 @@ Requirements for application to work properly:
 
 ## Usage
 
+### Frontend Applications
+#### 1. ptd-lite-ui
+#### 2. [ptd-lite-mono-interface](../ptd-lite-mono-interface/README.md)
 ### API Endpoints
 
 ---
-[Go to Real Cool Heading section](#get-last-cards)
 
 #### 1. Card controller
 
@@ -379,6 +381,7 @@ _Response example_
 // status
 HttpStatus.NO_CONTENT 204
 ```
+
 ---
 
 #### Get trips
@@ -457,6 +460,7 @@ _Response example_
 // status
 HttpStatus.OK 200
 ```
+
 ---
 
 #### Delete Trips
@@ -477,6 +481,7 @@ _Response example_
 // status
 HttpStatus.NO_CONTENT 204
 ```
+
 ---
 
 #### Create Group
@@ -503,6 +508,7 @@ _Response example_
 // status
 HttpStatus.OK 200
 ```
+
 ---
 
 #### Update group
@@ -627,6 +633,7 @@ _Response example_
 // status
 HttpStatus.OK 200
 ```
+
 ---
 
 #### Add Trip To Group
@@ -652,6 +659,7 @@ _Response example_
 // status
 HttpStatus.OK 200
 ```
+
 ---
 
 #### Delete Group
@@ -668,6 +676,7 @@ _Response example_
 // status
 HttpStatus.NO_CONTENT 204
 ```
+
 ---
 
 #### Get Petrol
@@ -749,6 +758,7 @@ _Response example_
 // status
 HttpStatus.OK 200
 ```
+
 ---
 
 #### Add Blue
@@ -778,6 +788,7 @@ _Response example_
 // status
 HttpStatus.OK 200
 ```
+
 ---
 
 #### Update Petrol
@@ -864,6 +875,7 @@ _Response example_
 // status
 HttpStatus.NO_CONTENT 204
 ```
+
 ---
 
 #### Delete adBlue
@@ -880,6 +892,7 @@ _Response example_
 // status
 HttpStatus.NO_CONTENT 204
 ```
+
 ---
 
 #### Generate PDF
@@ -917,6 +930,7 @@ _Response example_
 // status
 HttpStatus.OK 200
 ```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
