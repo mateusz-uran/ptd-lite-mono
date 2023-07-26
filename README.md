@@ -100,11 +100,24 @@ Requirements for application to work properly:
 ### Frontend Applications
 
 #### 1. [ptd-lite-ui](https://github.com/mateusz-uran/ptd-lite-mono/tree/dev/src/frontend/ptd-lite-ui/README.md)
+
+- Main frontend application activly used in production environment, still in development.      
+
 #### 2. [ptd-lite-mono-interface (_deprecated_)](https://github.com/mateusz-uran/ptd-lite-mono/blob/dev/src/frontend/ptd-lite-mono-interface/README.md)
+
+- Old frontend application that is no longer maintained and used. Soon all api endpoints that is using will be deleted.
 
 ### API Endpoints
 
 ---
+
+**Since API is configured as resource server all calls to api needs authorization token otherwise API will return 401**
+
+for example <br/>
+```
+GET api/card/username=johndoe123
+Authorization: Bearer ${token}
+```
 
 #### 1. Card controller
 
