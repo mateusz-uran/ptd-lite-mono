@@ -949,9 +949,9 @@ Email - mateusz.uranowski@onet.pl
 
 Resources I've used to create this project!
 
-* [Auth0](https://auth0.com/)
-* [React Router](https://reactrouter.com/en/main)
-* [Material UI](https://mui.com/)
+* [Baeldung tutorials](https://www.baeldung.com/)
+* [Auth0](https://auth0.com/docs/quickstart/backend/java-spring-security5/01-authorization)
+* [API Documentation - Swagger UI](https://swagger.io/tools/swagger-ui/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
