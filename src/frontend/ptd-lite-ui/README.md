@@ -83,7 +83,7 @@ helper links:
    are and works great.
 
 <p align="center">
-  <img width="460" height="300" src="https://github.com/mateusz-uran/ptd-lite-mono/blob/dev/src/frontend/ptd-lite-ui/readmeimg/localhost.png">
+  <img src="https://github.com/mateusz-uran/ptd-lite-mono/blob/dev/src/frontend/ptd-lite-ui/readmeimg/localhost.png">
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
