@@ -218,5 +218,7 @@ Resources I've used to create this project!
 
 * [Auth0](https://auth0.com/)
 * [React Router](https://reactrouter.com/en/main)
+* [Redux](https://redux.js.org/tutorials/essentials/part-8-rtk-query-advanced)
+* [Dave Gray videos](https://github.com/gitdagray/react_redux_toolkit)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
