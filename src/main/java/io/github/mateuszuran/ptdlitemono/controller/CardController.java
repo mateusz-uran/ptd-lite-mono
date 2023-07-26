@@ -3,6 +3,7 @@ package io.github.mateuszuran.ptdlitemono.controller;
 import io.github.mateuszuran.ptdlitemono.dto.CardDetailsResponse;
 import io.github.mateuszuran.ptdlitemono.dto.CardRequest;
 import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
+import io.github.mateuszuran.ptdlitemono.dto.UserRates;
 import io.github.mateuszuran.ptdlitemono.service.CardService;
 import io.github.mateuszuran.ptdlitemono.service.HourRateService;
 import lombok.RequiredArgsConstructor;
@@ -66,7 +67,7 @@ public class CardController {
     }
 
     @GetMapping("/rates")
-    public ResponseEntity<?> getUserRates(@RequestParam String username) throws IOException {
+    public ResponseEntity<UserRates> getUserRates(@RequestParam String username) throws IOException {
         return ResponseEntity.ok().body(hourRateService.getUserHourRateValues(username));
     }
 }

@@ -3,7 +3,7 @@
 <br />
 <div align="center">
 
-  <h3 align="center">PTD Lite</h3>
+<h3 align="center">PTD Lite</h3>
 
   <p align="center">
     Manage your data faster.
@@ -36,97 +36,833 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
-Application to manage data requiered to fill road card for proffessional truck driver. Backend is created with spring boot to work as a REST api, 
-frontend is react which uses tailwindcss and material ui. Application is secured with auth0, API as resource server and frontend with PKCE authorization. 
-Project is in beta faze right now so it can have some bugs.
+The application was designed to streamline the work of professional drivers who need to complete a road card after each
+trip, which is later used for settlement purposes.
+The data that needs to be added to the card includes information about the transported cargo, traveled kilometers, and
+fuel consumption, among other things.
+All of this information must be present on the road card and delivered to the employer. The application significantly
+improves this process by automating certain tasks and using dynamic forms.
+Ultimately, the user stores all the data, and the application generates a finalized and formatted PDF file.
 
 Features:
-* Secured backend and frontend with auth0
-* Backend is storing and managing data, generates pdf (iText)
-* Data needed to generate pdf are downloaded from csv file which is stored in cloud
-* Frontend has dynamic forms with validations
-* Responsive design, table with big amount of data is pageable
-* User can select multiple rows to delete at once
-* Snackbars with custom exception descriptions
-* Alert dialogs, progress bar
-* Themes and translating to EN-PL based on language in user browser.
+
+* Adding, removing, and editing all data that the user enters.
+* Sorting created road cards by dates.
+* Archiving road cards.
+* Caching HTTP requests.
+* Securing with OAuth 2.0 protocol.
+* User roles determining access to specific functionalities.
+* Managing exceptions through ControllerAdvice.
+* And most importantly, generating PDF files.
+  Additionally, reading data from CSV and JSON files stored in the cloud under a public address.
 
 ### Built With
 
-Spring Boot 3.0.6, Java 17, postgresql as database, auth0 for security, iText to generate pdf, opencsv.
-Frontend is built with React and Vite, TailwindCSS and Material UI for styling, Formik and Yup for 
-forms and validations, auth0 to authorize requests to backend and i18next to translate.
+Backend built based on Java 17 and Spring 3.0+, Spring JPA, iText, ModelMapper, OpenCSV, using PostgreSQL as the
+database,
+along with Spring Security and Thymeleaf for templating.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
-## Getting Started
 
-Application is using external tools like auth0, link to csv file.
+## Getting Started
 
 ### Prerequisites
 
-Requirements for application to work properly: 
-* Create auth0 account and provide issuer uri and audience in application.properties
-* Provide link CSV file in format (example file in repository example_data.csv) as environment variable $CSV_LINK
+Requirements for application to work properly:
+
+* Create auth0 account and provide issuer uri and audience in application.properties file
+* Provide link CSV file in URL format (example file in repository example_data.csv) as environment variable $CSV_LINK
+* Same with file to JSON file (example file in repo)
 * Add database credentials also as env variables
 
 ### Installation
 
 1. Provide environment variables in spring boot application
-* ``${CSV_LINK}`` - direct download link
-* ``FRONTEND_API_URI`` - frontend url to configure cors policy 
+
+* ``CSV_LINK`` - direct download link for csv file
+* ``JSON_LINK`` - direct download link for json file
+* ``FRONTEND_API_URI`` - frontend url/urls to configure cors policy
 * ``SPRING_DATASOURCE_USERNAME;SPRING_DATASOURCE_PASSWORD;SPRING_DATASOURCE_URL`` - database credentials
 * ``AUTH0_ISSUER_URI;AUTH0_AUDIENCE`` - auth0 issuer and audience
-*  run application in your IDE
-2. React application also require some env variables
-* ``VITE_BACKEND_API_URL`` - url for react services to make calls
-* ``;VITE_AUTH0_DOMAIN;VITE_AUTH0_CLIENTID;VITE_AUTH0_AUDIENCE`` - auth0 configuration
+* run application in your IDE
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
-1. When user hits localhost:5173 he can see only navbar with theme toggle button and login button. After hitting login 
-is redirected to login page from auth0, when provided credentials are correct user can use application. He can add, delete cards
-and manage all data that is stoted in card. Form for adding a card has validations provided from backend.
 
+### API Endpoints
 
-  
+---
+[Go to Real Cool Heading section](#get-last-cards)
 
-https://github.com/mateusz-uran/ptd-lite-mono/assets/64634150/63878132-6b15-4f45-be10-d994db9df222
+#### 1. Card controller
 
+### GET, POST, PATCH, DELETE
 
-2. User can add to card trip information, forms are dynamic so at once can add multiple rows of data. Validations prevent from
-adding wrong informations, all is responsive which makes it easy to use app on mobiles.
-  
-  
+| Method | Endpoint                                                   | Description                                       |
+|--------|------------------------------------------------------------|---------------------------------------------------|
+| GET    | `/api/card?username=john123`                               | [get last three cards](#get-last-cards)           |
+| GET    | `/api/card/rates?username=john123`                         | [get user rates from json file](#get-rates)       |
+| GET    | `/api/card/details?id=123`                                 | [get all associated data from card](#get-details) |
+| GET    | `/api/card/archive?username=""&firstDate=""&secondDate=""` | [get all cards by dates between](#get-archive)    |
+| POST   | `/api/card/addcard`                                        | [add new card](#add-card)                         |
+| PATCH  | `/api/card?cardId=123`                                     | [update card number](#update-card)                |
+| DELETE | `/api/card/delete?cardId=123`                              | [delete card by id](#delete-card)                 |
 
-https://github.com/mateusz-uran/ptd-lite-mono/assets/64634150/c0289b86-8ada-454d-a10d-f7e70580cc13
+---
 
+#### 2. Trip controller
 
-3. Fuels information are similar to trip data. Forms are also responsive and have validations, both tables have functionality
-to delete one or multiple rows.
+#### GET, POST, PATCH, DELETE
 
+| Method | Endpoint                                | Description                                    |
+|--------|-----------------------------------------|------------------------------------------------|
+| GET    | `/api/trip?cardId=123`                  | [get all trips from card](#get-trips)          |
+| POST   | `/api/trip/add?cardId=123`              | [add array of trips to card](#add-trips)       |
+| DELETE | `/api/trip`                             | [delete many trips](#delete-trips)             |
+| POST   | `/api/trip/addgroup`                    | [create group for trips](#create-group)        |
+| PATCH  | `/api/trip/updategroup?groupId=123`     | [update trip group](#update-group)             |
+| PATCH  | `/api/trip/update?tripId=123`           | [update single trip](#update-trip)             |
+| PATCH  | `/api/trip/removefromgroup?groupId=123` | [remove single trip from group](#remove-trip)  |
+| PATCH  | `/api/trip/addtogroup?groupId=123`      | [add single trip to group](#add-trip-to-group) |
+| PATCH  | `/api/trip/deletegroup?groupId=123`     | [delete group](#delete-group)                  |
 
+---
 
-https://github.com/mateusz-uran/ptd-lite-mono/assets/64634150/21683a21-593d-4550-817a-b963ae4b8d4c
+#### 3. Fuel controller
 
+#### GET, POST, PATCH, DELETE
 
-  
-4. After adding minimum two rows of trip data and one row for fuel table user can generate PDF file based on provided information.
-PDF file contains all trips and refuelings and additional data from csv file like vehicle information (image, type etc.)
-Also trip table has pagination function for better user experience.
+| Method | Endpoint                                  | Description                                |
+|--------|-------------------------------------------|--------------------------------------------|
+| GET    | `/api/fuel/petrol?cardId=123`             | [get all petrol from card](#get-petrol)    |
+| GET    | `/api/fuel/blue?cardId=123`               | [get all adBlue from card](#get-blue)      |
+| POST   | `/api/fuel/petrol/addmultiple?cardId=123` | [add array of petrol to card](#add-petrol) |
+| POST   | `/api/fuel/blue/addmultiple?cardId=123`   | [add array of adBlue to card](#add-blue)   |
+| PATCH  | `/api/fuel/petrol/update?fuelId=123`      | [update petrol info](#update-petrol)       |
+| PATCH  | `/api/fuel/petrol/update?blueId=123`      | [update adBlue info](#update-blue)         |
+| DELETE | `/api/fuel/petrol/delete?fuelId=123`      | [delete single petrol](#delete-petrol)     |
+| DELETE | `/api/fuel/petrol/delete?blueId=123`      | [delete single adBlue](#delete-blue)       |
 
+#### 4. PDF controller
 
+#### POST
 
-https://github.com/mateusz-uran/ptd-lite-mono/assets/64634150/6a1e8630-c92f-498b-bf85-9c7205a90c41
+| Method | Endpoint                                                         | Description                   |
+|--------|------------------------------------------------------------------|-------------------------------|
+| POST   | `/api/pdf/generate-doc?username=john123&cardId=123&pageId=first` | [generate pdf](#generate-pdf) |
+
+---
+
+#### Get Last Cards
+
+endpoint: `/api/card?username=john123`
+
+|  Params  | Required |  Type  | Description                               |
+|:--------:|:--------:|:------:|-------------------------------------------|
+| username |   true   | string | Nickname registered user to get his cards |
+
+****Response example**** </br>
+
+```
+//cards are sorted by date from the newest to the oldest
+[
+  {
+  "id": 1,
+  "number": "string",
+  "creationTime": "yyyy-MM-dd HH:mm:ss"
+  },
+  {
+  "id": 2,
+  "number": "string",
+  "creationTime": "yyyy-MM-dd HH:mm:ss"
+  },
+  {
+  "id": 3,
+  "number": "string",
+  "creationTime": "yyyy-MM-dd HH:mm:ss"
+  }
+]
+```
+
+---
+
+#### Get Rates
+
+endpoint: `/api/card/rates?username=john123`
+
+|  Params  | Required |  Type  | Description                                              |
+|:--------:|:--------:|:------:|----------------------------------------------------------|
+| username |   true   | string | Nickname registered user to get his rates from JSON file |
+
+****Response example**** </br>
+
+```
+//json file contains all user rates
+{
+  "username": "string",
+  "defaultRate": "string",
+  "rates": [
+    {
+      "string1": number1,
+      "string2": number2,
+      "string3": number3
+    }
+  ]
+}
+```
+
+---
+
+#### Get Details
+
+endpoint: `/api/card/details?id=123`
+
+| Params | Required |  Type  | Description                        |
+|:------:|:--------:|:------:|------------------------------------|
+|   id   |   true   | number | Card id to get all associated data |
+
+****Response example**** </br>
+
+```
+//all data associated to card that user created
+{
+  "cardNumber": "string",
+  "trips": [
+    {
+      "id": 0,
+      "dayStart": "string",
+      "hourStart": "string",
+      "locationStart": "string",
+      "dayEnd": "string",
+      "hourEnd": "string",
+      "locationEnd": "string",
+      "countryStart": "string",
+      "countryEnd": "string",
+      "counterStart": 0,
+      "counterEnd": 0,
+      "carMileage": 0,
+      "group": {
+        "id": 0,
+        "cargoName": "string",
+        "weight": 0,
+        "temperature": 0,
+        "notes": "string",
+        "tripIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "fuels": [
+    {
+      "id": 0,
+      "refuelingDate": "string",
+      "refuelingLocation": "string",
+      "vehicleCounter": 0,
+      "refuelingAmount": 0,
+      "paymentMethod": "string"
+    }
+  ],
+  "blue": [
+    {
+      "id": 0,
+      "adBlueDate": "string",
+      "adBlueLocalization": "string",
+      "adBlueAmount": 0
+    }
+  ]
+}
+```
+
+---
+
+### Get Archives
+
+endpoint: `/api/card/archive?username="john123"&firstDate="12/06/2023"&secondDate="27/07/2023"`
+
+|   Params   | Required |  Type  | Description                                       |
+|:----------:|:--------:|:------:|---------------------------------------------------|
+|  username  |   true   | string | Nickname to get all cards associated to this user |
+| firstDate  |   true   | string | Starting date to get cards                        |
+| secondDate |   true   | string | End date to get cards                             |
+
+****Response example**** </br>
+
+```
+//array of all cards selected by creation time between
+[
+  {
+    "id": 1,
+    "number": "string",
+    "creationTime": "string"
+  },
+  {
+    "id": 2,
+    "number": "string",
+    "creationTime": "string"
+  },
+  {
+    "id": 3,
+    "number": "string",
+    "creationTime": "string"
+  }...
+]
+```
+
+---
+
+#### Add Card
+
+endpoint: `/api/card/addcard`</br>
+****Request body****
+
+```
+//single card body
+{
+  "number": "string",
+  "username": "string"
+}
+```
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Update Card
+
+endpoint: `/api/card?cardId=123`
+
+| Params | Required |  Type  | Description                                    |
+|:------:|:--------:|:------:|------------------------------------------------|
+| cardId |   true   | string | Card id to identify card which will be updated |
+
+****Request body****
+
+```
+//To update card in body is sent single string since only number can be updated
+```
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Delete card
+
+endpoint: `/api/card/delete?cardId=123`
+
+| Params | Required |  Type  | Description                                    |
+|:------:|:--------:|:------:|------------------------------------------------|
+| cardId |   true   | string | Card id to identify card which will be deleted |
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Get trips
+
+endpoint: `/api/trip?cardId=123`
+
+| Params | Required |  Type  | Description                                               |
+|:------:|:--------:|:------:|-----------------------------------------------------------|
+| cardId |   true   | string | Card id to identify card from which will listed all trips |
+
+****Response example****
+
+```
+//array of trips associated to selected card
+[
+  {
+    "id": 0,
+    "dayStart": "string",
+    "hourStart": "string",
+    "locationStart": "string",
+    "dayEnd": "string",
+    "hourEnd": "string",
+    "locationEnd": "string",
+    "countryStart": "string",
+    "countryEnd": "string",
+    "counterStart": 0,
+    "counterEnd": 0,
+    "carMileage": 0,
+    "group": {
+      "id": 0,
+      "cargoName": "string",
+      "weight": 0,
+      "temperature": 0,
+      "notes": "string",
+      "tripIds": [
+        0
+      ]
+    }
+  }
+] 
+```
+
+---
+
+#### Add Trips
+
+endpoint: `/api/trip/add?cardId=123`
+
+| Params | Required |  Type  | Description                                           |
+|:------:|:--------:|:------:|-------------------------------------------------------|
+| cardId |   true   | string | Card id to identify card to which will be added trips |
+
+****Request body****
+
+```
+//array of trips
+[
+  {
+    "dayStart": "string",
+    "hourStart": "string",
+    "locationStart": "string",
+    "dayEnd": "string",
+    "hourEnd": "string",
+    "locationEnd": "string",
+    "countryStart": "string",
+    "countryEnd": "string",
+    "counterStart": 0,
+    "counterEnd": 0
+  }
+]
+```
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Delete Trips
+
+endpoint: `/api/trip`</br>
+****Request body****
+
+```
+//array of trip ids
+[
+  1, 2, 3, 4...
+]
+```
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Create Group
+
+endpoint: `/api/trip/addgroup`</br>
+****Request body****
+
+```
+// TripGroup body and trips ids that will be asigned to this group
+{
+  "cargoName": "string",
+  "weight": 0,
+  "temperature": 0,
+  "notes": "string",
+  "tripIds": [
+    0
+  ]
+}
+```
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Update group
+
+endpoint: `/api/trip/updategroup?groupId=123`
+
+| Params  | Required |  Type  | Description                       |
+|:-------:|:--------:|:------:|-----------------------------------|
+| groupId |   true   | number | TripGroup id that will be updated |
+
+****Request body****
+
+```
+// all fields are optional
+{
+  "cargoName": "string",
+  "weight": 0,
+  "temperature": 0,
+  "notes": "string",
+  "tripIds": [
+    0
+  ]
+}
+```
+
+****Response example****
+
+```
+// updated TripGroup
+{
+  "id": 0,
+  "cargoName": "string",
+  "weight": 0,
+  "temperature": 0,
+  "notes": "string",
+  "tripIds": [
+    0
+  ]
+}
+```
+
+---
+
+#### Update Trip
+
+endpoint: `/api/trip/update?tripId=123` </br>
+
+| Params | Required |  Type  | Description                  |
+|:------:|:--------:|:------:|------------------------------|
+| tripId |   true   | number | Trip id that will be updated |
+
+****Request Body****
+
+```
+// user can update single value but requeired is whole object
+{
+  "dayStart": "string",
+  "hourStart": "string",
+  "locationStart": "string",
+  "dayEnd": "string",
+  "hourEnd": "string",
+  "locationEnd": "string",
+  "countryStart": "string",
+  "countryEnd": "string",
+  "counterStart": 0,
+  "counterEnd": 0
+}
+```
+
+****Response example****
+
+```
+// updated object also with associated groups when exists
+{
+  "id": 0,
+  "dayStart": "string",
+  "hourStart": "string",
+  "locationStart": "string",
+  "dayEnd": "string",
+  "hourEnd": "string",
+  "locationEnd": "string",
+  "countryStart": "string",
+  "countryEnd": "string",
+  "counterStart": 0,
+  "counterEnd": 0,
+  "carMileage": 0,
+  "group": {
+    "id": 0,
+    "cargoName": "string",
+    "weight": 0,
+    "temperature": 0,
+    "notes": "string",
+    "tripIds": [
+      0
+    ]
+  }
+}
+```
+
+---
+
+#### Remove Trip
+
+endpoint: `/api/trip/removefromgroup?groupId=123`
+
+| Params  | Required |  Type  | Description                                   |
+|:-------:|:--------:|:------:|-----------------------------------------------|
+| groupId |   true   | number | Group id to update when trips will be removed |
+
+****Request body****
+
+```
+// array of trip ids to remove from existing group
+[
+  1, 2, 3, 4...
+]
+```
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Add Trip To Group
+
+endpoint: `/api/trip/addtogroup?groupId=123`
+
+| Params  | Required |  Type  | Description                                 |
+|:-------:|:--------:|:------:|---------------------------------------------|
+| groupId |   true   | number | Group id to update when trips will be added |
+
+****Request body****
+
+```
+// array of trip ids to add to existing group
+[
+  1, 2, 3, 4...
+]
+```
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Delete Group
+
+endpoint: `/api/trip/deletegroup?groupId=123`
+
+| Params  | Required |  Type  | Description     |
+|:-------:|:--------:|:------:|-----------------|
+| groupId |   true   | number | Group id remove |
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Get Petrol
+
+endpoint: `/api/fuel/petrol?cardId=123`
+
+| Params | Required |  Type  | Description                          |
+|:------:|:--------:|:------:|--------------------------------------|
+| cardId |   true   | number | Card id to get all associated petrol |
+
+****Response example****
+
+```
+//array of all petrols already added to selected card
+[
+  {
+    "id": 0,
+    "refuelingDate": "string",
+    "refuelingLocation": "string",
+    "vehicleCounter": 0,
+    "refuelingAmount": 0,
+    "paymentMethod": "string"
+  }
+]
+```
+
+---
+
+#### Get Blue
+
+endpoint: `/api/fuel/blue?cardId=123`
+
+| Params | Required |  Type  | Description                          |
+|:------:|:--------:|:------:|--------------------------------------|
+| cardId |   true   | number | Card id to get all associated adBlue |
+
+****Response example****
+
+```
+//array of all adBlue already added to selected card
+[
+  {
+    "id": 0,
+    "adBlueDate": "string",
+    "adBlueLocalization": "string",
+    "adBlueAmount": 0
+  }
+]
+```
+
+---
+
+#### Add Petrol
+
+endpoint: `/api/fuel/petrol/addmultiple?cardId=123`
+
+| Params | Required |  Type  | Description                    |
+|:------:|:--------:|:------:|--------------------------------|
+| cardId |   true   | number | Card id to add array of petrol |
+
+****Request body****
+
+```
+//array of petrol objects
+[
+  {
+    "refuelingDate": "string",
+    "refuelingLocation": "string",
+    "vehicleCounter": 0,
+    "refuelingAmount": 0,
+    "paymentMethod": "string"
+  }
+]
+```
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Add Blue
+
+endpoint: `/api/fuel/blue/addmultiple?cardId=123`
+
+| Params | Required |  Type  | Description                    |
+|:------:|:--------:|:------:|--------------------------------|
+| cardId |   true   | number | Card id to add array of adBlue |
+
+****Request body****
+
+```
+//array of adBlue objects
+[
+  {
+    "adBlueDate": "string",
+    "adBlueLocalization": "string",
+    "adBlueAmount": 0
+  }
+]
+```
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Update Petrol
+
+endpoint: `/api/fuel/petrol/update?fuelId=123`
+
+| Params | Required |  Type  | Description         |
+|:------:|:--------:|:------:|---------------------|
+| fuelId |   true   | number | Petrol id to update |
+
+****Request body****
+
+```
+//same like with updating trips, user can update single filed but whole object is sent
+{
+  "refuelingDate": "string",
+  "refuelingLocation": "string",
+  "vehicleCounter": 0,
+  "refuelingAmount": 0,
+  "paymentMethod": "string"
+}
+```
+
+****Response example****
+
+```
+//updated object
+{
+  "id": 0,
+  "refuelingDate": "string",
+  "refuelingLocation": "string",
+  "vehicleCounter": 0,
+  "refuelingAmount": 0,
+  "paymentMethod": "string"
+}
+```
+
+---
+
+#### Update adBlue
+
+endpoint: `/api/fuel/petrol/update?blueId=123`
+
+| Params | Required |  Type  | Description         |
+|:------:|:--------:|:------:|---------------------|
+| blueId |   true   | number | AdBlue id to update |
+
+****Request body****
+
+```
+//user can update single filed but whole object is sent
+{
+  "adBlueDate": "string",
+  "adBlueLocalization": "string",
+  "adBlueAmount": 0
+}
+```
+
+****Response example****
+
+```
+//updated object
+{
+  "id": 0,
+  "adBlueDate": "string",
+  "adBlueLocalization": "string",
+  "adBlueAmount": 0
+}
+```
+
+---
+
+#### Delete petrol
+
+endpoint: `/api/fuel/petrol/delete?fuelId=123`
+
+| Params | Required |  Type  | Description         |
+|:------:|:--------:|:------:|---------------------|
+| fuelId |   true   | number | Petrol id to delete |
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Delete adBlue
+
+endpoint: `/api/fuel/petrol/delete?blueId=123`
+
+| Params | Required |  Type  | Description         |
+|:------:|:--------:|:------:|---------------------|
+| blueId |   true   | number | AdBlue id to delete |
+
+****Response example****
+``HttpStatus.OK 200``
+---
+
+#### Generate PDF
+
+endpoint: `/api/pdf/generate-doc?username=john123&cardId=123&pageId=first`
+
+|  Params  | Required |  Type  | Description                                                                                                           |
+|:--------:|:--------:|:------:|-----------------------------------------------------------------------------------------------------------------------|
+| username |   true   | string | Username to find all associated data                                                                                  |
+|  cardId  |   true   | number | CardId to find all data associated to user                                                                            |
+|  pageId  | optional | string | `first` / `second` - user can pick which page of pdf generate. When this param is empty, both pages will be generated |
+
+****Request body****
+
+```
+// Additional data required to generate pdf. 
+// User is sending that with request because storing it in database is unnecessary.
+{
+  "fuelInitialState": "string",
+  "fuelEndState": "string",
+  "aggregateInitialState": "string",
+  "aggregateAdBlue": "string",
+  "aggregateEndState": "string",
+  "avgFuelConsumption": "string",
+  "totalFuelConsumption": "string",
+  "avgSpeed": "string",
+  "fuelConsumptionIdle": "string",
+  "fuelConsumptionUneconomical": "string"
+}
+```
+
+****Response example****
+``HttpStatus.OK 200``
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
+
 ## Contact
 
 Email - mateusz.uranowski@onet.pl
@@ -134,6 +870,7 @@ Email - mateusz.uranowski@onet.pl
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
 Resources I've used to create this project!

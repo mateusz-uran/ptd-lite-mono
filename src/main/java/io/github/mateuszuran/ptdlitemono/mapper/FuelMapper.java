@@ -31,6 +31,7 @@ public class FuelMapper {
     public AdBlue mapToAdBlue(AdBlueRequest request) {
         return mapper.modelMapper().map(request, AdBlue.class);
     }
+
     public <T, V> void merge(T source, V target) {
         mapper.modelMapper().map(source, target);
     }
