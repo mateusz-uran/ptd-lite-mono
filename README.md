@@ -98,8 +98,10 @@ Requirements for application to work properly:
 ## Usage
 
 ### Frontend Applications
-#### 1. ptd-lite-ui
-#### 2. [ptd-lite-mono-interface](https://github.com/mateusz-uran/ptd-lite-mono/blob/dev/src/frontend/ptd-lite-mono-interface/README.md)
+
+#### 1. [ptd-lite-ui](https://github.com/mateusz-uran/ptd-lite-mono/tree/dev/src/frontend/ptd-lite-ui/README.md)
+#### 2. [ptd-lite-mono-interface (_deprecated_)](https://github.com/mateusz-uran/ptd-lite-mono/blob/dev/src/frontend/ptd-lite-mono-interface/README.md)
+
 ### API Endpoints
 
 ---
