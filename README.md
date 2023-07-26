@@ -912,8 +912,11 @@ _Request body_
 ```
 
 _Response example_
-``HttpStatus.OK 200``
 
+```
+// status
+HttpStatus.OK 200
+```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
