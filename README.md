@@ -322,7 +322,8 @@ _Response example_ </br>
 #### Add Card
 
 endpoint: `/api/card/addcard`</br>
-***Request body***
+
+_Request body_
 
 ```
 //single card body
@@ -332,8 +333,13 @@ endpoint: `/api/card/addcard`</br>
 }
 ```
 
-***Response example***
-``HttpStatus.OK 200``
+_Response example_
+
+```
+// status
+HttpStatus.OK 200
+```
+
 ---
 
 #### Update Card
@@ -351,7 +357,12 @@ _Request body_
 ```
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.OK 200
+```
+
 ---
 
 #### Delete card
@@ -363,7 +374,11 @@ endpoint: `/api/card/delete?cardId=123`
 | cardId |   true   | string | Card id to identify card which will be deleted |
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.NO_CONTENT 204
+```
 ---
 
 #### Get trips
@@ -437,7 +452,11 @@ _Request body_
 ```
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.OK 200
+```
 ---
 
 #### Delete Trips
@@ -453,7 +472,11 @@ _Request body_
 ```
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.NO_CONTENT 204
+```
 ---
 
 #### Create Group
@@ -475,7 +498,11 @@ _Request body_
 ```
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.OK 200
+```
 ---
 
 #### Update group
@@ -595,7 +622,11 @@ _Request body_
 ```
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.OK 200
+```
 ---
 
 #### Add Trip To Group
@@ -616,7 +647,11 @@ _Request body_
 ```
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.OK 200
+```
 ---
 
 #### Delete Group
@@ -628,7 +663,11 @@ endpoint: `/api/trip/deletegroup?groupId=123`
 | groupId |   true   | number | Group id remove |
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.NO_CONTENT 204
+```
 ---
 
 #### Get Petrol
@@ -705,7 +744,11 @@ _Request body_
 ```
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.OK 200
+```
 ---
 
 #### Add Blue
@@ -730,7 +773,11 @@ _Request body_
 ```
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.OK 200
+```
 ---
 
 #### Update Petrol
@@ -812,7 +859,11 @@ endpoint: `/api/fuel/petrol/delete?fuelId=123`
 | fuelId |   true   | number | Petrol id to delete |
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.NO_CONTENT 204
+```
 ---
 
 #### Delete adBlue
@@ -824,7 +875,11 @@ endpoint: `/api/fuel/petrol/delete?blueId=123`
 | blueId |   true   | number | AdBlue id to delete |
 
 _Response example_
-``HttpStatus.OK 200``
+
+```
+// status
+HttpStatus.NO_CONTENT 204
+```
 ---
 
 #### Generate PDF
