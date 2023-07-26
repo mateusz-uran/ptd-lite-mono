@@ -169,7 +169,7 @@ endpoint: `/api/card?username=john123`
 |:--------:|:--------:|:------:|-------------------------------------------|
 | username |   true   | string | Nickname registered user to get his cards |
 
-****Response example**** </br>
+_Response example_ </br>
 
 ```
 //cards are sorted by date from the newest to the oldest
@@ -202,7 +202,7 @@ endpoint: `/api/card/rates?username=john123`
 |:--------:|:--------:|:------:|----------------------------------------------------------|
 | username |   true   | string | Nickname registered user to get his rates from JSON file |
 
-****Response example**** </br>
+_Response example_ </br>
 
 ```
 //json file contains all user rates
@@ -229,7 +229,7 @@ endpoint: `/api/card/details?id=123`
 |:------:|:--------:|:------:|------------------------------------|
 |   id   |   true   | number | Card id to get all associated data |
 
-****Response example**** </br>
+_Response example_ </br>
 
 ```
 //all data associated to card that user created
@@ -294,7 +294,7 @@ endpoint: `/api/card/archive?username="john123"&firstDate="12/06/2023"&secondDat
 | firstDate  |   true   | string | Starting date to get cards                        |
 | secondDate |   true   | string | End date to get cards                             |
 
-****Response example**** </br>
+_Response example_ </br>
 
 ```
 //array of all cards selected by creation time between
@@ -322,7 +322,7 @@ endpoint: `/api/card/archive?username="john123"&firstDate="12/06/2023"&secondDat
 #### Add Card
 
 endpoint: `/api/card/addcard`</br>
-****Request body****
+***Request body***
 
 ```
 //single card body
@@ -332,7 +332,7 @@ endpoint: `/api/card/addcard`</br>
 }
 ```
 
-****Response example****
+***Response example***
 ``HttpStatus.OK 200``
 ---
 
@@ -344,13 +344,13 @@ endpoint: `/api/card?cardId=123`
 |:------:|:--------:|:------:|------------------------------------------------|
 | cardId |   true   | string | Card id to identify card which will be updated |
 
-****Request body****
+_Request body_
 
 ```
 //To update card in body is sent single string since only number can be updated
 ```
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -362,7 +362,7 @@ endpoint: `/api/card/delete?cardId=123`
 |:------:|:--------:|:------:|------------------------------------------------|
 | cardId |   true   | string | Card id to identify card which will be deleted |
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -374,7 +374,7 @@ endpoint: `/api/trip?cardId=123`
 |:------:|:--------:|:------:|-----------------------------------------------------------|
 | cardId |   true   | string | Card id to identify card from which will listed all trips |
 
-****Response example****
+_Response example_
 
 ```
 //array of trips associated to selected card
@@ -416,7 +416,7 @@ endpoint: `/api/trip/add?cardId=123`
 |:------:|:--------:|:------:|-------------------------------------------------------|
 | cardId |   true   | string | Card id to identify card to which will be added trips |
 
-****Request body****
+_Request body_
 
 ```
 //array of trips
@@ -436,14 +436,14 @@ endpoint: `/api/trip/add?cardId=123`
 ]
 ```
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
 #### Delete Trips
 
 endpoint: `/api/trip`</br>
-****Request body****
+_Request body_
 
 ```
 //array of trip ids
@@ -452,14 +452,14 @@ endpoint: `/api/trip`</br>
 ]
 ```
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
 #### Create Group
 
 endpoint: `/api/trip/addgroup`</br>
-****Request body****
+_Request body_
 
 ```
 // TripGroup body and trips ids that will be asigned to this group
@@ -474,7 +474,7 @@ endpoint: `/api/trip/addgroup`</br>
 }
 ```
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -486,7 +486,7 @@ endpoint: `/api/trip/updategroup?groupId=123`
 |:-------:|:--------:|:------:|-----------------------------------|
 | groupId |   true   | number | TripGroup id that will be updated |
 
-****Request body****
+_Request body_
 
 ```
 // all fields are optional
@@ -501,7 +501,7 @@ endpoint: `/api/trip/updategroup?groupId=123`
 }
 ```
 
-****Response example****
+_Response example_
 
 ```
 // updated TripGroup
@@ -527,7 +527,7 @@ endpoint: `/api/trip/update?tripId=123` </br>
 |:------:|:--------:|:------:|------------------------------|
 | tripId |   true   | number | Trip id that will be updated |
 
-****Request Body****
+_Request Body_
 
 ```
 // user can update single value but requeired is whole object
@@ -545,7 +545,7 @@ endpoint: `/api/trip/update?tripId=123` </br>
 }
 ```
 
-****Response example****
+_Response example_
 
 ```
 // updated object also with associated groups when exists
@@ -585,7 +585,7 @@ endpoint: `/api/trip/removefromgroup?groupId=123`
 |:-------:|:--------:|:------:|-----------------------------------------------|
 | groupId |   true   | number | Group id to update when trips will be removed |
 
-****Request body****
+_Request body_
 
 ```
 // array of trip ids to remove from existing group
@@ -594,7 +594,7 @@ endpoint: `/api/trip/removefromgroup?groupId=123`
 ]
 ```
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -606,7 +606,7 @@ endpoint: `/api/trip/addtogroup?groupId=123`
 |:-------:|:--------:|:------:|---------------------------------------------|
 | groupId |   true   | number | Group id to update when trips will be added |
 
-****Request body****
+_Request body_
 
 ```
 // array of trip ids to add to existing group
@@ -615,7 +615,7 @@ endpoint: `/api/trip/addtogroup?groupId=123`
 ]
 ```
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -627,7 +627,7 @@ endpoint: `/api/trip/deletegroup?groupId=123`
 |:-------:|:--------:|:------:|-----------------|
 | groupId |   true   | number | Group id remove |
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -639,7 +639,7 @@ endpoint: `/api/fuel/petrol?cardId=123`
 |:------:|:--------:|:------:|--------------------------------------|
 | cardId |   true   | number | Card id to get all associated petrol |
 
-****Response example****
+_Response example_
 
 ```
 //array of all petrols already added to selected card
@@ -665,7 +665,7 @@ endpoint: `/api/fuel/blue?cardId=123`
 |:------:|:--------:|:------:|--------------------------------------|
 | cardId |   true   | number | Card id to get all associated adBlue |
 
-****Response example****
+_Response example_
 
 ```
 //array of all adBlue already added to selected card
@@ -689,7 +689,7 @@ endpoint: `/api/fuel/petrol/addmultiple?cardId=123`
 |:------:|:--------:|:------:|--------------------------------|
 | cardId |   true   | number | Card id to add array of petrol |
 
-****Request body****
+_Request body_
 
 ```
 //array of petrol objects
@@ -704,7 +704,7 @@ endpoint: `/api/fuel/petrol/addmultiple?cardId=123`
 ]
 ```
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -716,7 +716,7 @@ endpoint: `/api/fuel/blue/addmultiple?cardId=123`
 |:------:|:--------:|:------:|--------------------------------|
 | cardId |   true   | number | Card id to add array of adBlue |
 
-****Request body****
+_Request body_
 
 ```
 //array of adBlue objects
@@ -729,7 +729,7 @@ endpoint: `/api/fuel/blue/addmultiple?cardId=123`
 ]
 ```
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -741,7 +741,7 @@ endpoint: `/api/fuel/petrol/update?fuelId=123`
 |:------:|:--------:|:------:|---------------------|
 | fuelId |   true   | number | Petrol id to update |
 
-****Request body****
+_Request body_
 
 ```
 //same like with updating trips, user can update single filed but whole object is sent
@@ -754,7 +754,7 @@ endpoint: `/api/fuel/petrol/update?fuelId=123`
 }
 ```
 
-****Response example****
+_Response example_
 
 ```
 //updated object
@@ -778,7 +778,7 @@ endpoint: `/api/fuel/petrol/update?blueId=123`
 |:------:|:--------:|:------:|---------------------|
 | blueId |   true   | number | AdBlue id to update |
 
-****Request body****
+_Request body_
 
 ```
 //user can update single filed but whole object is sent
@@ -789,7 +789,7 @@ endpoint: `/api/fuel/petrol/update?blueId=123`
 }
 ```
 
-****Response example****
+_Response example_
 
 ```
 //updated object
@@ -811,7 +811,7 @@ endpoint: `/api/fuel/petrol/delete?fuelId=123`
 |:------:|:--------:|:------:|---------------------|
 | fuelId |   true   | number | Petrol id to delete |
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -823,7 +823,7 @@ endpoint: `/api/fuel/petrol/delete?blueId=123`
 |:------:|:--------:|:------:|---------------------|
 | blueId |   true   | number | AdBlue id to delete |
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 ---
 
@@ -837,7 +837,7 @@ endpoint: `/api/pdf/generate-doc?username=john123&cardId=123&pageId=first`
 |  cardId  |   true   | number | CardId to find all data associated to user                                                                            |
 |  pageId  | optional | string | `first` / `second` - user can pick which page of pdf generate. When this param is empty, both pages will be generated |
 
-****Request body****
+_Request body_
 
 ```
 // Additional data required to generate pdf. 
@@ -856,7 +856,7 @@ endpoint: `/api/pdf/generate-doc?username=john123&cardId=123&pageId=first`
 }
 ```
 
-****Response example****
+_Response example_
 ``HttpStatus.OK 200``
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
