@@ -82,7 +82,9 @@ helper links:
    Since app is still in development statistics and dashboard is not available at the moment but `Cards` and `Archives`
    are and works great.
 
-![My Image](../ptd-lite-ui/readmeimg/localhost.png)
+<p align="center">
+  <img width="460" height="300" src="https://github.com/mateusz-uran/ptd-lite-mono/blob/dev/src/frontend/ptd-lite-ui/readmeimg/localhost.png">
+</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
