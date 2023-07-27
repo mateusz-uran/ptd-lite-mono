@@ -15,25 +15,32 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.35.0
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     container_name: prometheus
-    ports:
-      - "9090:9090"
     restart: unless-stopped
+    networks:
+      - prometheus_grafana_network
+    ports:
+      - 9090:9090
     volumes:
       - ./data/prometheus/config:/etc/prometheus/
+      - D:/ptd/ptd-lite-mono/ptd-lite-mono/data/prometheus/config/prometheus.yaml:/prometheus.yaml
     command:
       - '--config.file=/etc/prometheus/prometheus.yaml'
 
   grafana:
-    image: grafana/grafana:8.2.3
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    networks:
+      - prometheus_grafana_network
     ports:
-      - "3000:3000"
+      - 3000:3000
     volumes:
-      - grafana-storage:/var/lib/grafana
-    user: '104'
-    links:
-      - prometheus
-volumes:
-  grafana-storage:
+      - ./data/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_DOMAIN=localhost
+
+networks:
+  prometheus_grafana_network:
+    driver: bridge
