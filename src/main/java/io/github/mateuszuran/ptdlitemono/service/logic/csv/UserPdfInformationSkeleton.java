@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.dto;
+package io.github.mateuszuran.ptdlitemono.service.logic.csv;
 
 import com.opencsv.bean.CsvBindByPosition;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PdfCsvReader {
+public class UserPdfInformationSkeleton {
     @CsvBindByPosition(position = 0)
     private String username;
     @CsvBindByPosition(position = 1)

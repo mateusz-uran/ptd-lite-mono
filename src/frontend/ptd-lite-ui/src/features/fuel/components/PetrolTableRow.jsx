@@ -1,13 +1,13 @@
 import { AiOutlineEdit } from 'react-icons/ai';
 import { MdDeleteOutline } from 'react-icons/md';
 import { Fragment } from 'react';
+import FuelEditForm from '../forms/FuelEditForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   editType,
   isModalOpen,
   startEditingFuel,
 } from '../slices/fuelEditSlice';
-import FuelEditForm from '../forms/FuelEditForm';
 import { openModal } from '../../modal/slices/modalSlice';
 import { useTranslation } from 'react-i18next';
 

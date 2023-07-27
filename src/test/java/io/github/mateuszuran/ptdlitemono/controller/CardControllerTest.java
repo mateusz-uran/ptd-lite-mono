@@ -1,7 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.mateuszuran.ptdlitemono.dto.CardResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;

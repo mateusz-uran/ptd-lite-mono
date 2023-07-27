@@ -1,10 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.mapper;
 
 import io.github.mateuszuran.ptdlitemono.config.ModelMapperConfig;
-import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
-import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
-import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
-import io.github.mateuszuran.ptdlitemono.dto.TripResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripGroupRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class TripMapper {
     private final ModelMapperConfig mapper;
 
-    public TripResponse mapToTripResponseWithModelMapper(Trip trip) {
+    public TripResponse mapToTripResponse(Trip trip) {
         TripResponse tripResponse = mapper.modelMapper().map(trip, TripResponse.class);
         if (trip.getTripGroup() != null) {
             List<Long> tripIds = trip.getTripGroup().getTrips().stream()
@@ -29,12 +29,8 @@ public class TripMapper {
         return tripResponse;
     }
 
-    public Trip mapToTripValuesWithModelMapper(TripRequest tripValues) {
+    public Trip mapToTrip(TripRequest tripValues) {
         return mapper.modelMapper().map(tripValues, Trip.class);
-    }
-
-    public <T, V> void mapToUpdate(T source, V target) {
-        mapper.modelMapper().map(source, target);
     }
 
     public TripGroup mapToTripGroup(TripGroupRequest request) {

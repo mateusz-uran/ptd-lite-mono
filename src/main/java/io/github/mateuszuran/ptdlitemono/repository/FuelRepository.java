@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FuelRepository extends JpaRepository<Fuel, Long> {
+
     Optional<List<Fuel>> findAllFuelsByCardId(Long cardId);
 }

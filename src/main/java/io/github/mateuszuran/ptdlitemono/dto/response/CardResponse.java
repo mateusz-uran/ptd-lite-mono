@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.dto;
+package io.github.mateuszuran.ptdlitemono.dto.response;
 
 
 import lombok.AllArgsConstructor;

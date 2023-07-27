@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.pdf;
+package io.github.mateuszuran.ptdlitemono.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class CardFuels {
-    private Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class FuelRequest {
     private String refuelingDate;
     private String refuelingLocation;
     private Integer vehicleCounter;

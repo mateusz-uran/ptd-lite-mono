@@ -1,9 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
-import io.github.mateuszuran.ptdlitemono.dto.TripGroupResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripGroupRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupException;
+import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.model.TripGroup;
@@ -22,6 +23,7 @@ public class TripGroupService {
     private final TripGroupRepository repository;
     private final TripRepository tripRepository;
     private final TripMapper mapper;
+    private final GenericMapper genericMapper;
 
     public void createGroup(TripGroupRequest request) {
         var tripsToUpdate = tripRepository.findAllById(request.getTripIds());
@@ -81,7 +83,7 @@ public class TripGroupService {
 
     public TripGroupResponse editTripGroupInformation(Long groupId, TripGroupRequest request) {
         var groupToEdit = repository.findById(groupId).orElseThrow(TripGroupNotFoundException::new);
-        mapper.mapToUpdate(request, groupToEdit);
+        genericMapper.mergeTwoDifferentObjects(request, groupToEdit);
         var updatedGroup = repository.save(groupToEdit);
         return mapper.mapToTripGroupResponse(updatedGroup);
     }
