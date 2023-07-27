@@ -1,5 +1,6 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
+import io.github.mateuszuran.ptdlitemono.async.AsyncTestMethod;
 import io.github.mateuszuran.ptdlitemono.dto.*;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
 import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
@@ -29,6 +30,8 @@ public class CardService {
     private final CardMapper cardMapper;
     private final FuelMapper fuelMapper;
     private final TripMapper tripMapper;
+
+    private final AsyncTestMethod async;
 
     public Card checkIfCardExists(Long cardId) {
         return repository.findById(cardId).orElseThrow(CardNotFoundException::new);
@@ -101,7 +104,7 @@ public class CardService {
         repository.save(card);
     }
 
-    public void saveNewCard(CardRequest cardRequest) {
+    public void saveNewCard(CardRequest cardRequest) throws InterruptedException {
         if (repository.existsByNumberIgnoreCaseAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
             throw new CardExistsException(cardRequest.getNumber());
         }
@@ -117,6 +120,8 @@ public class CardService {
                 .creationTime(now)
                 .build();
         repository.save(card);
+        // call test async method
+        async.asyncMethodWithVoidReturnType();
     }
 
     public CardResponse editCard(Long cardId, String number) {

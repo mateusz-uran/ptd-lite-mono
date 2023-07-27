@@ -51,7 +51,7 @@ public class CardController {
     }
 
     @PostMapping("/addcard")
-    public ResponseEntity<?> saveNewCard(@RequestBody CardRequest cardRequest) {
+    public ResponseEntity<?> saveNewCard(@RequestBody CardRequest cardRequest) throws InterruptedException {
         service.saveNewCard(cardRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
