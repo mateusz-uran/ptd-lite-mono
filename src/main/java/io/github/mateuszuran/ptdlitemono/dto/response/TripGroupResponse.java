@@ -1,4 +1,5 @@
-package io.github.mateuszuran.ptdlitemono.dto;
+package io.github.mateuszuran.ptdlitemono.dto.response;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TripGroupRequest {
+public class TripGroupResponse {
+    private Long id;
     private String cargoName;
     private Integer weight;
     private Integer temperature;

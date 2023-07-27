@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.dto;
+package io.github.mateuszuran.ptdlitemono.service.logic.json.pojo;
 
 import lombok.*;
 
@@ -9,6 +9,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HourRateCsvReader {
+public class HourRateJsonSkeleton {
     private List<UserRates> users;
 }

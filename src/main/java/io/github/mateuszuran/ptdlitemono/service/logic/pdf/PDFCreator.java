@@ -1,9 +1,9 @@
-package io.github.mateuszuran.ptdlitemono.service.logic;
+package io.github.mateuszuran.ptdlitemono.service.logic.pdf;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
-import io.github.mateuszuran.ptdlitemono.pdf.CardAdditionalInfo;
-import io.github.mateuszuran.ptdlitemono.pdf.PdfSource;
+import io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo.CardAdditionalInfo;
+import io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo.PdfSource;
 import io.github.mateuszuran.ptdlitemono.service.PdfService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @Component
-public class PdfParser {
+public class PDFCreator {
     private final PdfService pdfService;
     private final TemplateEngine template;
 
@@ -33,11 +33,22 @@ public class PdfParser {
     }
 
     private WebContext generateContext(HttpServletRequest request, HttpServletResponse response, String username, Long cardId, CardAdditionalInfo info) {
-        PdfSource pdf = pdfService.retrieveInformation(username, cardId);
+        PdfSource pdf = pdfService.collectAllInformationForPdf(username, cardId);
         pdf.setInfo(info);
         WebContext webContext = createContext(request, response);
         webContext.setVariable("pdf", pdf);
         return webContext;
+    }
+
+    public String validateTemplate(String template) {
+        if (template != null) {
+            if (template.equals("first")) {
+                return "pdf-front";
+            } else if (template.equals("second")) {
+                return "pdf-back";
+            }
+        }
+        return "pdf-all";
     }
 
     private String processToTemplateEngine(WebContext context, String templateName) {
@@ -56,17 +67,6 @@ public class PdfParser {
             // Handle or log the exception
             return new byte[0];
         }
-    }
-
-    public String validateTemplate(String template) {
-        if (template != null) {
-            if (template.equals("first")) {
-                return "pdf-front";
-            } else if (template.equals("second")) {
-                return "pdf-back";
-            }
-        }
-        return "pdf-all";
     }
 
     public byte[] generatePdf(HttpServletRequest request, HttpServletResponse response, String username, Long cardId, String templateName, CardAdditionalInfo info) {

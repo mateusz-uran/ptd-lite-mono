@@ -1,10 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.mapper;
 
 import io.github.mateuszuran.ptdlitemono.config.ModelMapperConfig;
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueRequest;
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueResponse;
-import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
-import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class FuelMapper {
         return mapper.modelMapper().map(fuel, FuelResponse.class);
     }
 
-    public Fuel mapToFuelRequest(FuelRequest fuelRequest) {
+    public Fuel mapToFuel(FuelRequest fuelRequest) {
         return mapper.modelMapper().map(fuelRequest, Fuel.class);
     }
 
@@ -30,9 +30,5 @@ public class FuelMapper {
 
     public AdBlue mapToAdBlue(AdBlueRequest request) {
         return mapper.modelMapper().map(request, AdBlue.class);
-    }
-
-    public <T, V> void merge(T source, V target) {
-        mapper.modelMapper().map(source, target);
     }
 }

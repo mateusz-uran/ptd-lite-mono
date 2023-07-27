@@ -1,8 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueRequest;
-import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;

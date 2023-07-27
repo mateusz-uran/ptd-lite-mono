@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.dto;
+package io.github.mateuszuran.ptdlitemono.service.logic.json.pojo;
 
 import lombok.*;
 

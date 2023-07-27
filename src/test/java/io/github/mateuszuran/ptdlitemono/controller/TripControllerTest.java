@@ -1,9 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.mateuszuran.ptdlitemono.dto.TripGroupRequest;
-import io.github.mateuszuran.ptdlitemono.dto.TripRequest;
-import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripGroupRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.model.TripGroup;
@@ -20,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
