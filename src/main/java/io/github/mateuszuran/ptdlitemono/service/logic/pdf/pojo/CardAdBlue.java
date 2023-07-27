@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.pdf;
+package io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

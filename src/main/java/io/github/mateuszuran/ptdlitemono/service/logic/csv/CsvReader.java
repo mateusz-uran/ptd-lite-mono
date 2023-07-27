@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.service.logic;
+package io.github.mateuszuran.ptdlitemono.service.logic.csv;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;

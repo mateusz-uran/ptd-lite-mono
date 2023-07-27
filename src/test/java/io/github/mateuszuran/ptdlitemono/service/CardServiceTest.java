@@ -1,8 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.*;
-import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
-import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
+import io.github.mateuszuran.ptdlitemono.dto.request.CardRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.*;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
 import io.github.mateuszuran.ptdlitemono.mapper.CardMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
@@ -19,15 +18,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -105,79 +99,13 @@ class CardServiceTest {
                 .thenReturn(CardResponse.builder().number(editedCard.getNumber()).creationTime("2023-06-15 12:00 PM").build());
 
         //when
-        CardResponse editedCardResponse = service.editCard(cardId, newNumber);
+        CardResponse editedCardResponse = service.editCardNumber(cardId, newNumber);
 
         //then
         assertEquals(newNumber, editedCardResponse.getNumber());
         assertEquals("2023-06-15 12:00 PM", editedCardResponse.getCreationTime());
         verify(repository, times(1)).save(cardToBeEdited);
         verify(mapper, times(1)).mapToCardResponseWithFormattedCreationTime(editedCard);
-    }
-
-    @Test
-    void givenCardObject_whenSaveWithExistingNumber_thenThrowException() {
-        //given + when
-        CardRequest request = CardRequest.builder().number("ABC").username("admin").build();
-        when(repository.existsByNumberIgnoreCaseAndUsername(request.getNumber(), request.getUsername())).thenReturn(true);
-        //then
-        assertThatThrownBy(() -> service.saveCard(request, 2023, 3, 5))
-                .isInstanceOf(CardExistsException.class)
-                .hasMessageContaining("Card with number: " + request.getNumber() + " already exists.");
-    }
-
-    @Test
-    void givenCardObject_whenSaveWithEmptyNumber_thenThrowException() {
-        //given + when
-        CardRequest request = CardRequest.builder().number("").username("admin").build();
-        assertThatThrownBy(() -> service.saveCard(request, 2023, 3, 5))
-                .isInstanceOf(CardEmptyException.class)
-                .hasMessageContaining("Card is empty.");
-    }
-
-    @Test
-    void givenUsername_whenGetAllCards_thenReturnCardsFromCurrentMonth() {
-        //given
-        String username = "john_doe";
-        int year = 2023;
-        int month = 6;
-        LocalDate actualDate = LocalDate.of(year, month, 1);
-        LocalDateTime startDate = actualDate.withDayOfMonth(1).atStartOfDay();
-        LocalDateTime endDate = actualDate.withDayOfMonth(actualDate.lengthOfMonth()).atStartOfDay();
-
-        List<Card> expectedCards = new ArrayList<>();
-        expectedCards.add(Card.builder().number("1234567890").username(username).creationTime(LocalDateTime.of(2023, 6, 15, 12, 0)).build());
-        expectedCards.add(Card.builder().number("0987654321").username(username).creationTime(LocalDateTime.of(2023, 6, 20, 10, 30)).build());
-
-        when(repository.findAllByUsernameAndCreationTimeBetween(username, startDate, endDate))
-                .thenReturn(expectedCards);
-
-        // Act
-        List<Card> actualCards = service.getAllCardsByUserAndDate(username, year, month);
-
-        // Assert
-        assertEquals(expectedCards, actualCards);
-        verify(repository, times(1)).findAllByUsernameAndCreationTimeBetween(username, startDate, endDate);
-    }
-
-    @Test
-    void givenUsername_whenGetAllCards_thenReturnSortedList() {
-        //given
-        LocalDateTime startDate = LocalDate.of(2023, 5, 1).with(firstDayOfMonth()).atStartOfDay();
-        LocalDateTime endDate = LocalDate.of(2023, 5, 1).with(lastDayOfMonth()).atStartOfDay();
-
-        List<Card> cards = dummyModelData();
-        List<CardResponse> expectedResponse = dummyDtoData();
-
-        when(mapper.mapToCardResponseWithFormattedCreationTime(cards.get(0))).thenReturn(expectedResponse.get(0));
-        when(mapper.mapToCardResponseWithFormattedCreationTime(cards.get(1))).thenReturn(expectedResponse.get(1));
-        when(mapper.mapToCardResponseWithFormattedCreationTime(cards.get(2))).thenReturn(expectedResponse.get(2));
-        when(mapper.mapToCardResponseWithFormattedCreationTime(cards.get(3))).thenReturn(expectedResponse.get(3));
-
-        when(repository.findAllByUsernameAndCreationTimeBetween("admin", startDate, endDate)).thenReturn(cards);
-        //when
-        var result = service.getCardsSorted("admin", 2023, 5);
-        //then
-        assertThat(expectedResponse).isEqualTo(result);
     }
 
     @Test
@@ -221,9 +149,9 @@ class CardServiceTest {
         TripResponse response1 = TripResponse.builder().counterStart(111).counterEnd(222).build();
         TripResponse response2 = TripResponse.builder().counterStart(333).counterEnd(444).build();
         TripResponse response3 = TripResponse.builder().counterStart(555).counterEnd(666).build();
-        when(tripMapper.mapToTripResponseWithModelMapper(trip1)).thenReturn(response1);
-        when(tripMapper.mapToTripResponseWithModelMapper(trip2)).thenReturn(response2);
-        when(tripMapper.mapToTripResponseWithModelMapper(trip3)).thenReturn(response3);
+        when(tripMapper.mapToTripResponse(trip1)).thenReturn(response1);
+        when(tripMapper.mapToTripResponse(trip2)).thenReturn(response2);
+        when(tripMapper.mapToTripResponse(trip3)).thenReturn(response3);
         FuelResponse response4 = FuelResponse.builder().refuelingAmount(300).vehicleCounter(100).build();
         FuelResponse response5 = FuelResponse.builder().refuelingAmount(230).vehicleCounter(500).build();
         FuelResponse response6 = FuelResponse.builder().refuelingAmount(600).vehicleCounter(200).build();
@@ -240,7 +168,7 @@ class CardServiceTest {
                 .build();
 
         //when
-        var result = service.getCardDetails(anyLong());
+        var result = service.getAllCardsAssociatedInformation(anyLong());
         //then
         assertThat(result).isEqualTo(response);
 
@@ -282,12 +210,12 @@ class CardServiceTest {
         var repoResult = dummyModelData();
         var expectedResponse = dummyDtoData();
         when(repository.findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(username, firstDate, secondDate)).thenReturn(repoResult);
-        when(mapper.mapToCardResponseWithModelMapper(repoResult.get(0))).thenReturn(expectedResponse.get(0));
-        when(mapper.mapToCardResponseWithModelMapper(repoResult.get(1))).thenReturn(expectedResponse.get(1));
-        when(mapper.mapToCardResponseWithModelMapper(repoResult.get(2))).thenReturn(expectedResponse.get(2));
-        when(mapper.mapToCardResponseWithModelMapper(repoResult.get(3))).thenReturn(expectedResponse.get(3));
+        when(mapper.mapCardToCardResponse(repoResult.get(0))).thenReturn(expectedResponse.get(0));
+        when(mapper.mapCardToCardResponse(repoResult.get(1))).thenReturn(expectedResponse.get(1));
+        when(mapper.mapCardToCardResponse(repoResult.get(2))).thenReturn(expectedResponse.get(2));
+        when(mapper.mapCardToCardResponse(repoResult.get(3))).thenReturn(expectedResponse.get(3));
         //when
-        var result = service.retrieveCards(username, firstDatePlainString, secondDatePlainString);
+        var result = service.retrieveCardsForArchive(username, firstDatePlainString, secondDatePlainString);
         assertEquals(expectedResponse, result);
     }
 

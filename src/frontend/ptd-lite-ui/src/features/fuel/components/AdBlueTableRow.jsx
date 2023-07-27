@@ -9,6 +9,7 @@ import {
 } from '../slices/fuelEditSlice';
 import { openModal } from '../../modal/slices/modalSlice';
 import { useTranslation } from 'react-i18next';
+import FuelEditForm from '../forms/FuelEditForm';
 
 const AdBlueTableRow = ({ blueEntities }) => {
   const { t } = useTranslation();

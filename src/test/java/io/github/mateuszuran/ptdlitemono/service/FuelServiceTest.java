@@ -1,9 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
-import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.exception.PetrolEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
+import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.repository.FuelRepository;
@@ -32,28 +33,12 @@ class FuelServiceTest {
     private FuelRepository repository;
     @Mock
     private FuelMapper mapper;
+    @Mock
+    private GenericMapper genericMapper;
 
     @BeforeEach
     void setUp() {
-        service = new FuelService(cardService, mapper, repository);
-    }
-
-    @Test
-    void givenFuelObjectAndCardId_whenSave_thenDoNothing() {
-        List<Fuel> emptyFuelList = new ArrayList<>();
-        //given
-        Card card = Card.builder().id(anyLong()).number("XYZ").fuels(emptyFuelList).build();
-        when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
-        FuelRequest request = FuelRequest.builder().refuelingAmount(300).build();
-        Fuel fuel = Fuel.builder().refuelingAmount(300).build();
-        //when
-        service.addRefuelling(request, anyLong());
-        //then
-        var updatedCard = cardService.checkIfCardExists(card.getId());
-        assertThat(updatedCard.getFuels())
-                .hasSize(1)
-                .extracting(Fuel::getRefuelingAmount)
-                .contains(fuel.getRefuelingAmount());
+        service = new FuelService(cardService, mapper, repository, genericMapper);
     }
 
     @Test
@@ -77,7 +62,7 @@ class FuelServiceTest {
         when(mapper.mapToFuelResponse(fuel1)).thenReturn(response1);
         when(mapper.mapToFuelResponse(fuel2)).thenReturn(response2);
         //when
-        var result = service.retrieveFuels(anyLong());
+        var result = service.getAllFuelsFromCard(anyLong());
         //then
         assertEquals(List.of(response1, response2), result);
     }
@@ -120,11 +105,11 @@ class FuelServiceTest {
         when(mapper.mapToFuelResponse(updatedFuel)).thenReturn(expectedResponse);
 
         //when
-        FuelResponse result = service.updateFuel(request, fuelId);
+        FuelResponse result = service.updateSingleFuel(request, fuelId);
 
         //then
         verify(repository).findById(fuelId);
-        verify(mapper).merge(eq(request), eq(fuel));
+        verify(genericMapper).mergeTwoDifferentObjects(eq(request), eq(fuel));
         verify(repository).save(fuel);
         verify(mapper).mapToFuelResponse(updatedFuel);
 
@@ -139,10 +124,10 @@ class FuelServiceTest {
         when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
         var request = createFuelRequests();
         var response = createFuels();
-        when(mapper.mapToFuelRequest(request.get(0))).thenReturn(response.get(0));
-        when(mapper.mapToFuelRequest(request.get(1))).thenReturn(response.get(1));
-        when(mapper.mapToFuelRequest(request.get(2))).thenReturn(response.get(2));
-        when(mapper.mapToFuelRequest(request.get(3))).thenReturn(response.get(3));
+        when(mapper.mapToFuel(request.get(0))).thenReturn(response.get(0));
+        when(mapper.mapToFuel(request.get(1))).thenReturn(response.get(1));
+        when(mapper.mapToFuel(request.get(2))).thenReturn(response.get(2));
+        when(mapper.mapToFuel(request.get(3))).thenReturn(response.get(3));
         //when
         service.addMultipleFuels(request, card.getId());
         //then

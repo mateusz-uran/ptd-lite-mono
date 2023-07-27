@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
+
     boolean existsByNumberIgnoreCaseAndUsername(String number, String username);
 
     Optional<Card> findById(Long id);
 
-    List<Card> findAllByUsernameAndCreationTimeBetween(String username, LocalDateTime start, LocalDateTime end);
 
     @Query(value = "SELECT * FROM Cards WHERE username=:username AND creation_time BETWEEN :start AND :end ORDER BY creation_time DESC", nativeQuery = true)
     List<Card> findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(String username, LocalDateTime start, LocalDateTime end);

@@ -1,9 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueRequest;
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
 import io.github.mateuszuran.ptdlitemono.exception.AdBlueEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
+import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
@@ -31,10 +32,12 @@ class AdBlueServiceTest {
     private AdBlueRepository repository;
     @Mock
     private FuelMapper mapper;
+    @Mock
+    private GenericMapper genericMapper;
 
     @BeforeEach
     void setUp() {
-        service = new AdBlueService(cardService, repository, mapper);
+        service = new AdBlueService(cardService, repository, mapper, genericMapper);
     }
 
     @Test
@@ -48,7 +51,7 @@ class AdBlueServiceTest {
                 .build();
         when(repository.findById(blue.getId())).thenReturn(Optional.of(blue));
         //when
-        service.deleteBlue(blue.getId());
+        service.deleteSingleAdBlue(blue.getId());
         //then
         verify(repository, times(1)).delete(blue);
     }
@@ -58,7 +61,7 @@ class AdBlueServiceTest {
         //given
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
         //when + then
-        assertThatThrownBy(() -> service.deleteBlue(anyLong()))
+        assertThatThrownBy(() -> service.deleteSingleAdBlue(anyLong()))
                 .isInstanceOf(AdBlueEmptyException.class)
                 .hasMessageContaining("AdBlue data is empty");
     }
@@ -70,7 +73,7 @@ class AdBlueServiceTest {
         AdBlueResponse response1 = AdBlueResponse.builder().adBlueAmount(300).build();
         when(mapper.mapToAdBlueResponse(blue1)).thenReturn(response1);
         //when
-        var result = service.retrieveAdBlue(anyLong());
+        var result = service.getAllAdBlueFromCard(anyLong());
         //then
         assertEquals(result, List.of(response1));
     }
@@ -106,11 +109,11 @@ class AdBlueServiceTest {
         when(mapper.mapToAdBlueResponse(updatedBlue)).thenReturn(expectedResponse);
 
         //when
-        var result = service.updateAdBlue(request, blueId);
+        var result = service.updateSingleAdBlue(request, blueId);
 
         //then
         verify(repository).findById(blueId);
-        verify(mapper).merge(eq(request), eq(blue));
+        verify(genericMapper).mergeTwoDifferentObjects(eq(request), eq(blue));
         verify(repository).save(blue);
         verify(mapper).mapToAdBlueResponse(updatedBlue);
 
@@ -130,7 +133,7 @@ class AdBlueServiceTest {
         when(mapper.mapToAdBlue(request.get(2))).thenReturn(response.get(2));
         when(mapper.mapToAdBlue(request.get(3))).thenReturn(response.get(3));
         //when
-        service.addMultipleBlue(request, card.getId());
+        service.addMultipleAdBlueObjects(request, card.getId());
         //then
         var updatedCard = cardService.checkIfCardExists(card.getId());
         assertThat(updatedCard.getAdBlue()).isEqualTo(response);

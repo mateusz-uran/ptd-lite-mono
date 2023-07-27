@@ -1,9 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.FuelRequest;
-import io.github.mateuszuran.ptdlitemono.dto.FuelResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.exception.PetrolEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
+import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.repository.FuelRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,25 +20,13 @@ public class FuelService {
     private final CardService service;
     private final FuelMapper fuelMapper;
     private final FuelRepository repository;
-
-    public void addRefuelling(FuelRequest fuelDto, Long id) {
-        var card = service.checkIfCardExists(id);
-        Fuel fuelToSave = Fuel.builder()
-                .refuelingDate(fuelDto.getRefuelingDate())
-                .refuelingLocation(fuelDto.getRefuelingLocation())
-                .vehicleCounter(fuelDto.getVehicleCounter())
-                .refuelingAmount(fuelDto.getRefuelingAmount())
-                .paymentMethod(fuelDto.getPaymentMethod())
-                .build();
-        card.addFuel(fuelToSave);
-        repository.save(fuelToSave);
-    }
+    private final GenericMapper genericMapper;
 
     public void addMultipleFuels(List<FuelRequest> fuels, Long cardId) {
         var card = service.checkIfCardExists(cardId);
         List<Fuel> fuelsToSave = new ArrayList<>();
         fuels.forEach(fuel -> {
-            var mappedFuel = fuelMapper.mapToFuelRequest(fuel);
+            var mappedFuel = fuelMapper.mapToFuel(fuel);
             fuelsToSave.add(mappedFuel);
             card.addFuel(mappedFuel);
         });
@@ -49,7 +38,7 @@ public class FuelService {
         repository.delete(fuelToDelete);
     }
 
-    public List<FuelResponse> retrieveFuels(Long cardId) {
+    public List<FuelResponse> getAllFuelsFromCard(Long cardId) {
         var fuels = repository.findAllFuelsByCardId(cardId).orElseThrow(PetrolEmptyException::new);
         if (fuels.isEmpty()) {
             throw new PetrolEmptyException();
@@ -62,9 +51,9 @@ public class FuelService {
         }
     }
 
-    public FuelResponse updateFuel(FuelRequest request, Long fuelId) {
+    public FuelResponse updateSingleFuel(FuelRequest request, Long fuelId) {
         var fuel = repository.findById(fuelId).orElseThrow(PetrolEmptyException::new);
-        fuelMapper.merge(request, fuel);
+        genericMapper.mergeTwoDifferentObjects(request, fuel);
         var updatedFuel =  repository.save(fuel);
         return fuelMapper.mapToFuelResponse(updatedFuel);
     }

@@ -1,16 +1,15 @@
-package io.github.mateuszuran.ptdlitemono.dto;
+package io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo;
 
-import io.github.mateuszuran.ptdlitemono.model.TripGroup;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class TripResponse {
+@AllArgsConstructor
+@Builder
+public class CardTrips {
     private Long id;
     private String dayStart;
     private String hourStart;
@@ -23,5 +22,4 @@ public class TripResponse {
     private Integer counterStart;
     private Integer counterEnd;
     private Integer carMileage;
-    private TripGroupResponse group;
 }

@@ -1,9 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueRequest;
-import io.github.mateuszuran.ptdlitemono.dto.AdBlueResponse;
+import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
 import io.github.mateuszuran.ptdlitemono.exception.AdBlueEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
+import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,35 +19,9 @@ public class AdBlueService {
     private final CardService service;
     private final AdBlueRepository repository;
     private final FuelMapper fuelMapper;
+    private final GenericMapper genericMapper;
 
-    public void addNewAdBlue(AdBlueRequest request, Long cardId) {
-        var card = service.checkIfCardExists(cardId);
-        AdBlue adblue = AdBlue.builder()
-                .adBlueDate(request.getAdBlueDate())
-                .adBlueLocalization(request.getAdBlueLocalization())
-                .adBlueAmount(request.getAdBlueAmount())
-                .build();
-        card.addBlue(adblue);
-        repository.save(adblue);
-    }
-
-    public void addMultipleBlue(List<AdBlueRequest> adblue, Long cardId) {
-        var card = service.checkIfCardExists(cardId);
-        List<AdBlue> adBlueToSave = new ArrayList<>();
-        adblue.forEach(blue -> {
-            var mappedBlue = fuelMapper.mapToAdBlue(blue);
-            adBlueToSave.add(mappedBlue);
-            card.addBlue(mappedBlue);
-        });
-        repository.saveAll(adBlueToSave);
-    }
-
-    public void deleteBlue(Long blueId) {
-        var blueToDelete = repository.findById(blueId).orElseThrow(AdBlueEmptyException::new);
-        repository.delete(blueToDelete);
-    }
-
-    public List<AdBlueResponse> retrieveAdBlue(Long cardId) {
+    public List<AdBlueResponse> getAllAdBlueFromCard(Long cardId) {
         var blue = repository.findAllAdBluesByCardId(cardId).orElseThrow(AdBlueEmptyException::new);
         if (blue.isEmpty()) {
             throw new AdBlueEmptyException();
@@ -58,10 +33,26 @@ public class AdBlueService {
         }
     }
 
-    public AdBlueResponse updateAdBlue(AdBlueRequest request, Long blueId) {
+    public void addMultipleAdBlueObjects(List<AdBlueRequest> adBlue, Long cardId) {
+        var card = service.checkIfCardExists(cardId);
+        List<AdBlue> adBlueToSave = new ArrayList<>();
+        adBlue.forEach(blue -> {
+            var mappedBlue = fuelMapper.mapToAdBlue(blue);
+            adBlueToSave.add(mappedBlue);
+            card.addBlue(mappedBlue);
+        });
+        repository.saveAll(adBlueToSave);
+    }
+
+    public AdBlueResponse updateSingleAdBlue(AdBlueRequest request, Long blueId) {
         var blue = repository.findById(blueId).orElseThrow(AdBlueEmptyException::new);
-        fuelMapper.merge(request, blue);
+        genericMapper.mergeTwoDifferentObjects(request, blue);
         var updatedBlue =  repository.save(blue);
         return fuelMapper.mapToAdBlueResponse(updatedBlue);
+    }
+
+    public void deleteSingleAdBlue(Long blueId) {
+        var blueToDelete = repository.findById(blueId).orElseThrow(AdBlueEmptyException::new);
+        repository.delete(blueToDelete);
     }
 }

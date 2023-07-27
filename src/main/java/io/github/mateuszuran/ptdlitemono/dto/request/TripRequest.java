@@ -1,4 +1,4 @@
-package io.github.mateuszuran.ptdlitemono.pdf;
+package io.github.mateuszuran.ptdlitemono.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class CardTrips {
-    private Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class TripRequest {
     private String dayStart;
     private String hourStart;
     private String locationStart;
@@ -21,5 +20,4 @@ public class CardTrips {
     private String countryEnd;
     private Integer counterStart;
     private Integer counterEnd;
-    private Integer carMileage;
 }
