@@ -102,7 +102,7 @@ const TripTable = ({ cardId }) => {
             <th>{t('tripInputs.counter')}</th>
             <th className="manage-cell"></th>
             <th colSpan={2}>
-              {t('misc.cargo')}/{t('misc.weight')}/{t('misc.notes')}
+              {t('misc.cargo')} / {t('misc.weight')} / {t('misc.notes')}
             </th>
           </tr>
         </thead>

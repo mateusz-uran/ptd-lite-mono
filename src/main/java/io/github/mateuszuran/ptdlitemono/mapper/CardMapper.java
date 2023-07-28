@@ -6,6 +6,7 @@ import io.github.mateuszuran.ptdlitemono.model.Card;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
@@ -18,10 +19,14 @@ public class CardMapper {
     }
 
     public CardResponse mapToCardResponseWithFormattedCreationTime(Card card) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedTime = card.getCreationTime().format(formatter);
+        String formattedTime = formatLocalDateTime(card.getCreationTime());
         CardResponse response = mapper.modelMapper().map(card, CardResponse.class);
         response.setCreationTime(formattedTime);
         return response;
+    }
+
+    static String formatLocalDateTime(LocalDateTime creationTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return creationTime.format(formatter);
     }
 }
