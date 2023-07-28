@@ -19,9 +19,9 @@ public class CardMapper {
     }
 
     public CardResponse mapToCardResponseWithFormattedCreationTime(Card card) {
-        var formattedCreationTime = formatLocalDateTime(card.getCreationTime());
+        String formattedTime = formatLocalDateTime(card.getCreationTime());
         CardResponse response = mapper.modelMapper().map(card, CardResponse.class);
-        response.setCreationTime(formattedCreationTime);
+        response.setCreationTime(formattedTime);
         return response;
     }
 
