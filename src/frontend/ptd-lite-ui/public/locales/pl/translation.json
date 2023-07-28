@@ -73,7 +73,7 @@
     "dateFrom": "Od",
     "dateTo": "Do",
     "cargo": "Ładunek",
-    "weight": "Tonaż",
+    "weight": "Tonaż (t)",
     "temperature": "Temperatura",
     "notes": "Notatki",
     "cargoFormHead": "Wybrane punkty trasy",

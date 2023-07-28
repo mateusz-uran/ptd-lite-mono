@@ -22,10 +22,11 @@
 }
 
 .edit-modal .modal-wrapper {
-  min-height: 40vh;
+  min-height: fit-content;
   background: var(--body-color);
   border-radius: 5px;
   max-width: 80vw;
+  min-width: 30vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,7 +35,10 @@
 .edit-modal .modal-wrapper .modal-header {
   display: flex;
   position: relative;
-  padding: 1rem 1.5rem;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-bottom: 1rem;
+  justify-content: flex-start;
 }
 
 .edit-modal .modal-wrapper .modal-header h5 {
@@ -101,6 +105,7 @@
   display: flex;
   justify-content: space-between;
   align-self: flex-end;
+  padding-top: 1rem;
 }
 
 .edit-modal .modal-wrapper .form-wrapper .button-wrapper button.clear {
