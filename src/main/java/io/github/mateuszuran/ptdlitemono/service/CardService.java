@@ -10,6 +10,7 @@ import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
+import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,16 +28,10 @@ public class CardService {
     private final FuelMapper fuelMapper;
     private final TripMapper tripMapper;
 
+    private final CardStatisticsService statistics;
+
     public Card checkIfCardExists(Long cardId) {
         return repository.findById(cardId).orElseThrow(CardNotFoundException::new);
-    }
-
-    public void deleteCard(Long cardId) {
-        repository.findById(cardId).ifPresentOrElse(
-                (card) -> repository.deleteById(card.getId()),
-                () -> {
-                    throw new CardNotFoundException();
-                });
     }
 
     public CardDetailsResponse getAllCardsAssociatedInformation(Long id) {
@@ -74,6 +69,9 @@ public class CardService {
                 .creationTime(now)
                 .build();
         repository.save(card);
+
+        //async logic
+        statistics.incrementCardCounterPerMonth(now.getYear(), now.getMonth());
     }
 
     public CardResponse editCardNumber(Long cardId, String number) {
@@ -109,11 +107,6 @@ public class CardService {
         return new CardDetailsResponse(card.getNumber(), trips, fuels, blue);
     }
 
-    public LocalDateTime parseDate(String dateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.parse(dateString, formatter);
-    }
-
     public List<Card> retrieveCardsDateBetween(String username, LocalDateTime startDate, LocalDateTime endDate) {
         return repository.findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(username, startDate, endDate);
     }
@@ -125,5 +118,18 @@ public class CardService {
         return result.stream()
                 .map(cardMapper::mapCardToCardResponse)
                 .toList();
+    }
+
+    public void deleteCard(Long cardId) {
+        repository.findById(cardId).ifPresentOrElse(
+                (card) -> repository.deleteById(card.getId()),
+                () -> {
+                    throw new CardNotFoundException();
+                });
+    }
+
+    public LocalDateTime parseDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(dateString, formatter);
     }
 }

@@ -7,6 +7,7 @@ import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
+import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ public class TripService {
     private final TripMapper tripMapper;
     private final GenericMapper genericMapper;
 
+    private final CardStatisticsService statistics;
+
     public void addManyTrips(List<TripRequest> trips, Long cardId) {
         var card = service.checkIfCardExists(cardId);
         List<Trip> tripToSave = new ArrayList<>();
@@ -34,6 +37,11 @@ public class TripService {
                 }
         );
         repository.saveAll(tripToSave);
+
+        //async
+        var cardCreationTime = card.getCreationTime();
+        var tripCarMileageSum = tripToSave.stream().mapToInt(Trip::getCarMileage).sum();
+        statistics.sumCarMileageInMonth(tripCarMileageSum, cardCreationTime.getMonth(), cardCreationTime.getYear());
     }
 
     public void deleteSelectedTrips(List<Long> selectedTrips) {

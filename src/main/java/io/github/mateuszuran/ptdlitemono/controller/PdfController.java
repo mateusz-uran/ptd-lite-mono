@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/pdf")
 @RequiredArgsConstructor
 public class PdfController {
-    private final PDFCreator parser;
+    private final PDFCreator creator;
 
     @PostMapping("/generate-doc")
     public ResponseEntity<?> generatePdf(
@@ -26,7 +26,7 @@ public class PdfController {
             HttpServletRequest request,
             HttpServletResponse response
     ) {
-        var result = parser.generatePdf(request, response, username, cardId, page, info);
+        var result = creator.generatePdf(request, response, username, cardId, page, info);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(result);
