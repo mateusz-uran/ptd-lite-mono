@@ -113,13 +113,15 @@ const TripEditForm = ({ tripToEdit }) => {
       <div className="modal-wrapper">
         <div className="modal-header">
           <h5>{t('misc.editTripHeader')}</h5>
-          <button
-            type="button"
-            onClick={() => dispatch(stopEditing())}
-            className="small-btn close-modal"
-          >
-            <RiCloseFill />
-          </button>
+          <div className="exit-button-wrapper">
+            <button
+              type="button"
+              onClick={() => dispatch(stopEditing())}
+              className="small-btn close-modal"
+            >
+              <RiCloseFill />
+            </button>
+          </div>
         </div>
         {modalBody}
       </div>

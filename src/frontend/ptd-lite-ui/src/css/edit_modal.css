@@ -35,21 +35,28 @@
 .edit-modal .modal-wrapper .modal-header {
   display: flex;
   position: relative;
-  padding-top: 0.5rem;
-  padding-left: 0.5rem;
-  padding-bottom: 1rem;
   justify-content: flex-start;
 }
 
 .edit-modal .modal-wrapper .modal-header h5 {
   font-size: 16px;
   color: var(--text-color);
+  margin: 0.3rem 0.5rem;
+  width: 80%;
+  padding: 0.5rem 0;
+}
+
+.edit-modal .modal-wrapper .modal-header .exit-button-wrapper {
+  width: 20%;
+  position: relative;
 }
 
 .edit-modal .modal-wrapper .modal-header button.close-modal {
   position: absolute;
-  right: 5px;
+  height: 20px;
+  min-width: fit-content;
   top: 5px;
+  right: 5px;
 }
 
 .edit-modal .modal-wrapper .form-wrapper {
