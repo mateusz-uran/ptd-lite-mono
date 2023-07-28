@@ -35,6 +35,7 @@ public class TripService {
                 singleTrip -> {
                     var trip = tripMapper.mapToTrip(singleTrip);
                     trip.setCarMileage(subtractCarMileage(singleTrip.getCounterStart(), singleTrip.getCounterEnd()));
+
                     tripToSave.add(trip);
                     card.addTrip(trip);
                 }
