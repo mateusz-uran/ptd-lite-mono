@@ -69,9 +69,6 @@ public class CardService {
                 .creationTime(now)
                 .build();
         repository.save(card);
-
-        //async logic
-        statistics.incrementCardCounterPerMonth(now.getYear(), now.getMonth());
     }
 
     public CardResponse editCardNumber(Long cardId, String number) {

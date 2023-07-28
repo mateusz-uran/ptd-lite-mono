@@ -9,6 +9,7 @@ import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TripService {
@@ -30,9 +32,10 @@ public class TripService {
         var card = service.checkIfCardExists(cardId);
         List<Trip> tripToSave = new ArrayList<>();
         trips.forEach(
-                tripValues -> {
-                    var trip = tripMapper.mapToTrip(tripValues);
-                    trip.setCarMileage(subtractCarMileage(tripValues.getCounterStart(), tripValues.getCounterEnd()));
+                singleTrip -> {
+                    var trip = tripMapper.mapToTrip(singleTrip);
+                    trip.setCarMileage(subtractCarMileage(singleTrip.getCounterStart(), singleTrip.getCounterEnd()));
+                    tripToSave.add(trip);
                     card.addTrip(trip);
                 }
         );
