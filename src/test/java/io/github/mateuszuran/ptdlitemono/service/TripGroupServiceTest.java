@@ -4,6 +4,7 @@ import io.github.mateuszuran.ptdlitemono.dto.request.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupException;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
+import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.model.TripGroup;
@@ -35,10 +36,12 @@ class TripGroupServiceTest {
     private TripRepository tripRepository;
     @Mock
     private TripMapper mapper;
+    @Mock
+    private GenericMapper genericMapper;
 
     @BeforeEach
     void setUp() {
-        service = new TripGroupService(repository, tripRepository, mapper);
+        service = new TripGroupService(repository, tripRepository, mapper, genericMapper);
     }
 
     @Test

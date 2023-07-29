@@ -36,7 +36,7 @@ class TripServiceTest {
 
     @BeforeEach
     void setUp() {
-        service = new TripService(repository, cardService, mapper, genericMapper);
+        service = new TripService(repository, cardService, mapper, genericMapper, null);
     }
 
     @Test

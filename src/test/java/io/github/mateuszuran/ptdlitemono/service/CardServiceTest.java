@@ -2,6 +2,8 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.CardRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.*;
+import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
+import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
 import io.github.mateuszuran.ptdlitemono.mapper.CardMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
@@ -19,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,6 +89,28 @@ class CardServiceTest {
     }
 
     @Test
+    void givenCardObject_ifExists_thenThrowException() {
+        //given
+        CardRequest request = CardRequest.builder().number("1234567890").username("john_doe").build();
+        when(repository.existsByNumberIgnoreCaseAndUsername(anyString(), anyString()))
+                .thenReturn(true);
+        //then
+        assertThatThrownBy(() -> service.saveNewCard(request))
+                .isInstanceOf(CardExistsException.class)
+                .hasMessageContaining("Card with number: " + request.getNumber() + " already exists.");
+    }
+
+    @Test
+    void givenCardObject_whenNumberEmpty_thenThrowException() {
+        //given
+        CardRequest request = CardRequest.builder().number("").username("john_doe").build();
+        //then
+        assertThatThrownBy(() -> service.saveNewCard(request))
+                .isInstanceOf(CardEmptyException.class)
+                .hasMessageContaining("Card is empty.");
+    }
+
+    @Test
     void givenCardNumberAndId_whenUpdate_thenReturnUpdatedNumber() {
         //given
         Long cardId = 1L;
@@ -106,6 +131,45 @@ class CardServiceTest {
         assertEquals("2023-06-15 12:00 PM", editedCardResponse.getCreationTime());
         verify(repository, times(1)).save(cardToBeEdited);
         verify(mapper, times(1)).mapToCardResponseWithFormattedCreationTime(editedCard);
+    }
+
+    @Test
+    void givenUsername_whenGetLastThreeCards_thenReturnDescList() {
+        //given
+        String username = "admin";
+        var descCardModelList = dummySortedDescModelData();
+        var descCardResponseList = dummySortedDescDtoResponseModelData();
+        when(repository.findLastThreeEntitiesByUsernameAndOrderByCreationTime(username)).thenReturn(descCardModelList);
+
+        when(mapper.mapToCardResponseWithFormattedCreationTime(descCardModelList.get(0))).thenReturn(descCardResponseList.get(0));
+        when(mapper.mapToCardResponseWithFormattedCreationTime(descCardModelList.get(1))).thenReturn(descCardResponseList.get(1));
+        when(mapper.mapToCardResponseWithFormattedCreationTime(descCardModelList.get(2))).thenReturn(descCardResponseList.get(2));
+        when(mapper.mapToCardResponseWithFormattedCreationTime(descCardModelList.get(3))).thenReturn(descCardResponseList.get(3));
+        //when
+        var result = service.getLastThreeCardsSortedDescByTime(username);
+        //then
+        assertEquals(descCardResponseList, result);
+    }
+
+    @Test
+    void givenCardId_whenGetAllData_thenReturnReadyObject() {
+        //given
+        Long cardId = 123L;
+        var readyCardModel = cardModelForPdf();
+        var readyCardDtoResponseModel = cardDtoResponseForPdf();
+        when(repository.findById(cardId)).thenReturn(Optional.of(readyCardModel));
+        when(tripMapper.mapToTripResponse(readyCardModel.getTrips().get(0))).thenReturn(readyCardDtoResponseModel.getTrips().get(0));
+        when(tripMapper.mapToTripResponse(readyCardModel.getTrips().get(1))).thenReturn(readyCardDtoResponseModel.getTrips().get(1));
+        when(tripMapper.mapToTripResponse(readyCardModel.getTrips().get(2))).thenReturn(readyCardDtoResponseModel.getTrips().get(2));
+
+        when(fuelMapper.mapToFuelResponse(readyCardModel.getFuels().get(0))).thenReturn(readyCardDtoResponseModel.getFuels().get(0));
+        when(fuelMapper.mapToFuelResponse(readyCardModel.getFuels().get(1))).thenReturn(readyCardDtoResponseModel.getFuels().get(1));
+
+        when(fuelMapper.mapToAdBlueResponse(readyCardModel.getAdBlue().get(0))).thenReturn(readyCardDtoResponseModel.getBlue().get(0));
+        //when
+        var result = service.getAllCardDataForPdf(cardId);
+        //then
+        assertEquals(readyCardDtoResponseModel, result);
     }
 
     @Test
@@ -208,7 +272,7 @@ class CardServiceTest {
         LocalDateTime firstDate = LocalDateTime.of(2023, 5, 1, 12, 0, 0);
         LocalDateTime secondDate = LocalDateTime.of(2023, 5, 5, 15, 30, 0);
         var repoResult = dummyModelData();
-        var expectedResponse = dummyDtoData();
+        var expectedResponse = dummyDtoResponseModelData();
         when(repository.findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(username, firstDate, secondDate)).thenReturn(repoResult);
         when(mapper.mapCardToCardResponse(repoResult.get(0))).thenReturn(expectedResponse.get(0));
         when(mapper.mapCardToCardResponse(repoResult.get(1))).thenReturn(expectedResponse.get(1));
@@ -217,6 +281,73 @@ class CardServiceTest {
         //when
         var result = service.retrieveCardsForArchive(username, firstDatePlainString, secondDatePlainString);
         assertEquals(expectedResponse, result);
+    }
+
+    private String formattedTimeString(LocalDateTime time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return time.format(formatter);
+    }
+
+    public Card cardModelForPdf() {
+        Fuel fuel1 = Fuel.builder()
+                .refuelingAmount(350)
+                .vehicleCounter(150100)
+                .build();
+        Fuel fuel2 = Fuel.builder()
+                .refuelingAmount(250)
+                .vehicleCounter(150750)
+                .build();
+
+        Trip trip1 = Trip.builder()
+                .locationEnd("Warsaw")
+                .counterEnd(150320).build();
+        Trip trip2 = Trip.builder()
+                .locationEnd("Berlin")
+                .counterEnd(150470).build();
+        Trip trip3 = Trip.builder()
+                .locationEnd("Dover")
+                .counterEnd(150698).build();
+
+        AdBlue blue = AdBlue.builder()
+                .adBlueDate("12.03.2023").build();
+
+        return Card.builder()
+                .number("XYZ")
+                .trips(List.of(trip1, trip2, trip3))
+                .fuels(List.of(fuel1, fuel2))
+                .adBlue(List.of(blue))
+                .build();
+    }
+
+    public CardDetailsResponse cardDtoResponseForPdf() {
+        TripResponse trip1 = TripResponse.builder()
+                .locationEnd("Warsaw")
+                .counterEnd(150320).build();
+        TripResponse trip2 = TripResponse.builder()
+                .locationEnd("Berlin")
+                .counterEnd(150470).build();
+        TripResponse trip3 = TripResponse.builder()
+                .locationEnd("Dover")
+                .counterEnd(150698).build();
+
+        FuelResponse fuel1 = FuelResponse.builder()
+                .refuelingAmount(350)
+                .vehicleCounter(150100)
+                .build();
+        FuelResponse fuel2 = FuelResponse.builder()
+                .refuelingAmount(250)
+                .vehicleCounter(150750)
+                .build();
+
+        AdBlueResponse blue = AdBlueResponse.builder()
+                .adBlueDate("12.03.2023").build();
+
+        return CardDetailsResponse.builder()
+                .cardNumber("XYZ")
+                .trips(List.of(trip1, trip2, trip3))
+                .fuels(List.of(fuel1, fuel2))
+                .blue(List.of(blue))
+                .build();
     }
 
     private List<Card> dummyModelData() {
@@ -243,7 +374,19 @@ class CardServiceTest {
         return List.of(cardFour, cardThree, cardTwo, cardOne);
     }
 
-    private List<CardResponse> dummyDtoData() {
+    private List<CardResponse> dummySortedDescDtoResponseModelData() {
+        var cardOne = CardResponse.builder().number("ABC")
+                .creationTime(formattedTimeString(LocalDateTime.of(2023, 5, 1, 12, 0))).build();
+        var cardTwo = CardResponse.builder().number("DEF")
+                .creationTime(formattedTimeString(LocalDateTime.of(2023, 5, 2, 13, 0))).build();
+        var cardThree = CardResponse.builder().number("GHI")
+                .creationTime(formattedTimeString(LocalDateTime.of(2023, 5, 3, 14, 0))).build();
+        var cardFour = CardResponse.builder().number("JKL")
+                .creationTime(formattedTimeString(LocalDateTime.of(2023, 5, 4, 15, 0))).build();
+        return List.of(cardFour, cardThree, cardTwo, cardOne);
+    }
+
+    private List<CardResponse> dummyDtoResponseModelData() {
         CardResponse response1 = CardResponse.builder()
                 .creationTime("2023-05-1 12:00:00").build();
         CardResponse response2 = CardResponse.builder()

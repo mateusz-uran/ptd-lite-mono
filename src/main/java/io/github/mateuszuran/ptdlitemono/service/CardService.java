@@ -51,12 +51,12 @@ public class CardService {
     }
 
     public void saveNewCard(CardRequest cardRequest) {
-        if (repository.existsByNumberIgnoreCaseAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
-            throw new CardExistsException(cardRequest.getNumber());
-        }
-
         if (cardRequest.getNumber().isEmpty() || cardRequest.getNumber().trim().isEmpty()) {
             throw new CardEmptyException();
+        }
+
+        if (repository.existsByNumberIgnoreCaseAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
+            throw new CardExistsException(cardRequest.getNumber());
         }
 
         var now = LocalDateTime.now();
