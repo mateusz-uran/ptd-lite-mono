@@ -1,9 +1,11 @@
 package io.github.mateuszuran.ptdlitemono.model;
 
+import io.github.mateuszuran.ptdlitemono.service.logic.dateconverter.YearMonthDateAttributeConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.YearMonth;
+
 
 @Entity
 @Table(name = "card_statistics")
@@ -17,6 +19,8 @@ public class CardStatistics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    @Column(name = "year_month", columnDefinition = "DATE")
+    @Convert(converter = YearMonthDateAttributeConverter.class)
     private YearMonth yearMonth;
     private Integer cardMileage;
 }

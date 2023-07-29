@@ -10,7 +10,6 @@ import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
-import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +26,6 @@ public class CardService {
     private final CardMapper cardMapper;
     private final FuelMapper fuelMapper;
     private final TripMapper tripMapper;
-
-    private final CardStatisticsService statistics;
 
     public Card checkIfCardExists(Long cardId) {
         return repository.findById(cardId).orElseThrow(CardNotFoundException::new);

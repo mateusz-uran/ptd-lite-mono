@@ -1,8 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.TripGroupRequest;
-import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.service.TripGroupService;
 import io.github.mateuszuran.ptdlitemono.service.TripService;

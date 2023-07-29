@@ -5,11 +5,11 @@ import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripsEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
+import io.github.mateuszuran.ptdlitemono.model.CardStatistics;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +17,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TripService {
@@ -35,17 +34,14 @@ public class TripService {
                 singleTrip -> {
                     var trip = tripMapper.mapToTrip(singleTrip);
                     trip.setCarMileage(subtractCarMileage(singleTrip.getCounterStart(), singleTrip.getCounterEnd()));
-
                     tripToSave.add(trip);
                     card.addTrip(trip);
                 }
         );
-        repository.saveAll(tripToSave);
+        var savedTrips= repository.saveAll(tripToSave);
 
         //async
-        var cardCreationTime = card.getCreationTime();
-        var tripCarMileageSum = tripToSave.stream().mapToInt(Trip::getCarMileage).sum();
-        statistics.sumCarMileageInMonth(tripCarMileageSum, cardCreationTime.getMonth(), cardCreationTime.getYear());
+        statistics.sumCarMileageInMonth(savedTrips, card.getUsername());
     }
 
     public void deleteSelectedTrips(List<Long> selectedTrips) {
