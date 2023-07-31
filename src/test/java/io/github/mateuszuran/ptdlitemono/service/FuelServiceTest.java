@@ -42,6 +42,18 @@ class FuelServiceTest {
     }
 
     @Test
+    void givenFuelId_whenDelete_thenDoNothing() {
+        //given
+        Fuel fuel1 = Fuel.builder().refuelingAmount(500).vehicleCounter(300).build();
+        when(repository.findById(anyLong())).thenReturn(Optional.of(fuel1));
+        //when
+        service.deleteFuel(anyLong());
+        // then
+        verify(repository).findById(anyLong());
+        verify(repository, times(1)).delete(fuel1);
+    }
+
+    @Test
     void givenFuelId_whenNotFound_thenThrowException() {
         //given
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
@@ -65,6 +77,18 @@ class FuelServiceTest {
         var result = service.getAllFuelsFromCard(anyLong());
         //then
         assertEquals(List.of(response1, response2), result);
+    }
+
+    @Test
+    void givenCardId_whenFuelEmpty_thenThrowException() {
+        //given
+        Long cardId = 123L;
+        List<Fuel> emptyList = new ArrayList<>();
+        when(repository.findAllFuelsByCardId(cardId)).thenReturn(Optional.of(emptyList));
+        //when + then
+        assertThatThrownBy(() -> service.getAllFuelsFromCard(cardId))
+                .isInstanceOf(PetrolEmptyException.class)
+                .hasMessageContaining("Petrol data is empty");
     }
 
     @Test
@@ -133,6 +157,8 @@ class FuelServiceTest {
         //then
         var updatedCard = cardService.checkIfCardExists(card.getId());
         assertThat(updatedCard.getFuels()).isEqualTo(response);
+        verify(repository).saveAll(anyList());
+        verify(repository).saveAll(response);
     }
 
     private List<FuelRequest> createFuelRequests() {

@@ -24,12 +24,11 @@ public class FuelService {
 
     public void addMultipleFuels(List<FuelRequest> fuels, Long cardId) {
         var card = service.checkIfCardExists(cardId);
-        List<Fuel> fuelsToSave = new ArrayList<>();
-        fuels.forEach(fuel -> {
-            var mappedFuel = fuelMapper.mapToFuel(fuel);
-            fuelsToSave.add(mappedFuel);
-            card.addFuel(mappedFuel);
-        });
+        var fuelsToSave = fuels.stream().map(singleFuel -> {
+            var fuel = fuelMapper.mapToFuel(singleFuel);
+            card.addFuel(fuel);
+            return fuel;
+        }).toList();
         repository.saveAll(fuelsToSave);
     }
 

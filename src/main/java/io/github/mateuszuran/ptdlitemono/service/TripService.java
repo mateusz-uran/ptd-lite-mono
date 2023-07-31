@@ -29,16 +29,14 @@ public class TripService {
 
     public void addManyTrips(List<TripRequest> trips, Long cardId) {
         var card = service.checkIfCardExists(cardId);
-        List<Trip> tripToSave = new ArrayList<>();
-        trips.forEach(
-                singleTrip -> {
-                    var trip = tripMapper.mapToTrip(singleTrip);
-                    trip.setCarMileage(subtractCarMileage(singleTrip.getCounterStart(), singleTrip.getCounterEnd()));
-                    tripToSave.add(trip);
-                    card.addTrip(trip);
-                }
-        );
-        var savedTrips= repository.saveAll(tripToSave);
+
+        var tripsToSave = trips.stream().map(singleTrip -> {
+            var trip = tripMapper.mapToTrip(singleTrip);
+            trip.setCarMileage(subtractCarMileage(singleTrip.getCounterStart(), singleTrip.getCounterStart()));
+            card.addTrip(trip);
+            return trip;
+        }).toList();
+        var savedTrips = repository.saveAll(tripsToSave);
 
         //async
         statistics.sumCarMileageInMonth(savedTrips, card.getUsername());

@@ -53,7 +53,7 @@ class TripGroupServiceTest {
         String cargoName = "food";
         Integer cargoWeight = 50;
         Integer cargoTemperature = 123;
-        var trips = tripList();
+        var trips = createTripsModel();
         TripGroupRequest request = TripGroupRequest.builder()
                 .tripIds(List.of(tripId1, tripId2, tripId3))
                 .temperature(123)
@@ -249,13 +249,20 @@ class TripGroupServiceTest {
     void givenGroupId_whenExists_thenDelete() {
         //given
         Long groupId = 123L;
-        TripGroup group = TripGroup.builder().id(groupId).build();
+        List<Trip> trips = createTripsModel();
+        TripGroup group = TripGroup.builder().id(groupId).trips(trips).build();
         when(repository.findById(groupId)).thenReturn(Optional.of(group));
         //when
         service.deleteTripGroup(groupId);
         //then
         verify(repository, times(1)).findById(groupId);
         verify(repository, times(1)).delete(group);
+
+        assertEquals(0, group.getTrips().size());
+
+        for (Trip trip : trips) {
+            verify(trip).setTripGroup(null);
+        }
     }
 
     @Test
@@ -312,10 +319,20 @@ class TripGroupServiceTest {
                 .hasMessageContaining("Group not found");
     }
 
-    private List<Trip> tripList() {
-        Trip trip1 = Trip.builder().id(1L).counterStart(111).counterEnd(222).tripGroup(null).build();
-        Trip trip2 = Trip.builder().id(2L).counterStart(333).counterEnd(444).tripGroup(null).build();
-        Trip trip3 = Trip.builder().id(3L).counterStart(555).counterEnd(666).tripGroup(null).build();
-        return List.of(trip1, trip2, trip3);
+    private List<Trip> createTripsModel() {
+        List<Trip> trips = new ArrayList<>();
+        Trip trip1 = Trip.builder()
+                .counterStart(500)
+                .counterEnd(1500).build();
+        Trip trip2 = Trip.builder()
+                .counterStart(1600)
+                .counterEnd(1842).build();
+        Trip trip3 = Trip.builder()
+                .counterStart(1900)
+                .counterEnd(2400).build();
+        trips.add(trip1);
+        trips.add(trip2);
+        trips.add(trip3);
+        return trips;
     }
 }

@@ -5,14 +5,18 @@ import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripsEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
+import io.github.mateuszuran.ptdlitemono.model.Card;
+import io.github.mateuszuran.ptdlitemono.model.CardStatistics;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
+import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,14 +37,37 @@ class TripServiceTest {
     private TripMapper mapper;
     @Mock
     private GenericMapper genericMapper;
+    @Mock
+    private CardStatisticsService statisticsService;
 
     @BeforeEach
     void setUp() {
-        service = new TripService(repository, cardService, mapper, genericMapper, null);
+        service = new TripService(repository, cardService, mapper, genericMapper, statisticsService);
     }
 
     @Test
-    void givenIdList_whenFindAll_thenDelete() {
+    void givenTripRequestListAndCardId_whenSave_thenDoNothing() {
+        //given
+        List<Trip> emptyTripsList = new ArrayList<>();
+        Long cardId = 123L;
+        Card existingCard = Card.builder().number("XYZ").trips(emptyTripsList).build();
+        when(cardService.checkIfCardExists(cardId)).thenReturn(existingCard);
+
+        var tripRequest = createTripRequest();
+        var tripsModel = createTripsModel();
+        when(mapper.mapToTrip(tripRequest.get(0))).thenReturn(tripsModel.get(0));
+        when(mapper.mapToTrip(tripRequest.get(1))).thenReturn(tripsModel.get(1));
+        when(mapper.mapToTrip(tripRequest.get(2))).thenReturn(tripsModel.get(2));
+        //when
+        service.addManyTrips(tripRequest, cardId);
+        //then
+        verify(cardService).checkIfCardExists(cardId);
+        verify(mapper, times(tripRequest.size())).mapToTrip(any(TripRequest.class));
+        verify(repository).saveAll(anyList());
+    }
+
+    @Test
+    void givenTripsIdsList_whenFindAll_thenDelete() {
         //given
         Trip trip1 = Trip.builder().counterStart(111).counterEnd(222).build();
         Trip trip2 = Trip.builder().counterStart(333).counterEnd(444).build();
@@ -81,6 +108,18 @@ class TripServiceTest {
     }
 
     @Test
+    void givenCardId_whenTripsAreEmpty_thenThrowException() {
+        //given
+        Long cardId = 123L;
+        List<Trip> emptyList = new ArrayList<>();
+        when(repository.findAllTripsByCardId(cardId)).thenReturn(Optional.of(emptyList));
+        //when + then
+        assertThatThrownBy(() -> service.getAllTripsFromCard(cardId))
+                .isInstanceOf(TripsEmptyException.class)
+                .hasMessageContaining("Trips data is empty");
+    }
+
+    @Test
     void givenTripAndId_whenUpdate_thenReturnUpdatedObject() {
         //given
         Long tripId = 1L;
@@ -116,5 +155,39 @@ class TripServiceTest {
                 .isInstanceOf(TripsEmptyException.class)
                 .hasMessageContaining("Trips data is empty");
 
+    }
+
+    private List<TripRequest> createTripRequest() {
+        List<TripRequest> trips = new ArrayList<>();
+        TripRequest request1 = TripRequest.builder()
+                .counterStart(500)
+                .counterEnd(1500).build();
+        TripRequest request2 = TripRequest.builder()
+                .counterStart(1600)
+                .counterEnd(1842).build();
+        TripRequest request3 = TripRequest.builder()
+                .counterStart(1900)
+                .counterEnd(2400).build();
+        trips.add(request1);
+        trips.add(request2);
+        trips.add(request3);
+        return trips;
+    }
+
+    private List<Trip> createTripsModel() {
+        List<Trip> trips = new ArrayList<>();
+        Trip trip1 = Trip.builder()
+                .counterStart(500)
+                .counterEnd(1500).build();
+        Trip trip2 = Trip.builder()
+                .counterStart(1600)
+                .counterEnd(1842).build();
+        Trip trip3 = Trip.builder()
+                .counterStart(1900)
+                .counterEnd(2400).build();
+        trips.add(trip1);
+        trips.add(trip2);
+        trips.add(trip3);
+        return trips;
     }
 }

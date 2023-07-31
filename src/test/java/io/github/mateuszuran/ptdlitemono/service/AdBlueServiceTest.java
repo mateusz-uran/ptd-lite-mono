@@ -79,6 +79,18 @@ class AdBlueServiceTest {
     }
 
     @Test
+    void givenCardId_whenAdBlueListEmpty_thenThrowException() {
+        //given
+        Long cardId = 123L;
+        List<AdBlue> emptyList = new ArrayList<>();
+        when(repository.findAllAdBluesByCardId(cardId)).thenReturn(Optional.of(emptyList));
+        //when + then
+        assertThatThrownBy(() -> service.getAllAdBlueFromCard(cardId))
+                .isInstanceOf(AdBlueEmptyException.class)
+                .hasMessageContaining("AdBlue data is empty");
+    }
+
+    @Test
     void givenBlueId_whenUpdate_ThenReturnUpdatedObject() {
         Long blueId = 123L;
         AdBlue blue = AdBlue.builder()
