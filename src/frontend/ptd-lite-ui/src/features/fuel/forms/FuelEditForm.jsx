@@ -124,13 +124,15 @@ const FuelEditForm = () => {
       <div className="modal-wrapper fuel-modal">
         <div className="modal-header">
           <h5>{translatedModalType}</h5>
-          <button
-            type="button"
-            onClick={() => dispatch(stopEditingFuel())}
-            className="small-btn close-modal"
-          >
-            <RiCloseFill />
-          </button>
+          <div className="exit-button-wrapper">
+            <button
+              type="button"
+              onClick={() => dispatch(stopEditingFuel())}
+              className="small-btn close-modal"
+            >
+              <RiCloseFill />
+            </button>
+          </div>
         </div>
         {modalBody}
       </div>
