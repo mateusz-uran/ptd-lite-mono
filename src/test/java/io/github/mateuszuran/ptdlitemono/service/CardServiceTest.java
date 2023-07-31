@@ -5,6 +5,7 @@ import io.github.mateuszuran.ptdlitemono.dto.response.*;
 import io.github.mateuszuran.ptdlitemono.exception.CardEmptyException;
 import io.github.mateuszuran.ptdlitemono.exception.CardExistsException;
 import io.github.mateuszuran.ptdlitemono.exception.CardNotFoundException;
+import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
 import io.github.mateuszuran.ptdlitemono.mapper.CardMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
@@ -13,12 +14,15 @@ import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,9 +49,12 @@ class CardServiceTest {
     @Mock
     private TripMapper tripMapper;
 
+    private PTDModelHelpers helpers;
+
     @BeforeEach
     void setUp() {
         service = new CardService(repository, mapper, fuelMapper, tripMapper);
+        helpers = new PTDModelHelpers();
     }
 
     @Test
@@ -137,8 +144,8 @@ class CardServiceTest {
     void givenUsername_whenGetLastThreeCards_thenReturnDescList() {
         //given
         String username = "admin";
-        var descCardModelList = dummySortedDescModelData();
-        var descCardResponseList = dummySortedDescDtoResponseModelData();
+        var descCardModelList = helpers.createCardsModelSorted();
+        var descCardResponseList = helpers.createCardResponseSortedDesc();
         when(repository.findLastThreeEntitiesByUsernameAndOrderByCreationTime(username)).thenReturn(descCardModelList);
 
         when(mapper.mapToCardResponseWithFormattedCreationTime(descCardModelList.get(0))).thenReturn(descCardResponseList.get(0));
@@ -155,9 +162,11 @@ class CardServiceTest {
     void givenCardId_whenGetAllData_thenReturnReadyObject() {
         //given
         Long cardId = 123L;
-        var readyCardModel = cardModelForPdf();
-        var readyCardDtoResponseModel = cardDtoResponseForPdf();
+        var readyCardModel = helpers.cardModelForPdf();
+        var readyCardDtoResponseModel = helpers.cardDtoResponseForPdf();
+
         when(repository.findById(cardId)).thenReturn(Optional.of(readyCardModel));
+
         when(tripMapper.mapToTripResponse(readyCardModel.getTrips().get(0))).thenReturn(readyCardDtoResponseModel.getTrips().get(0));
         when(tripMapper.mapToTripResponse(readyCardModel.getTrips().get(1))).thenReturn(readyCardDtoResponseModel.getTrips().get(1));
         when(tripMapper.mapToTripResponse(readyCardModel.getTrips().get(2))).thenReturn(readyCardDtoResponseModel.getTrips().get(2));
@@ -166,6 +175,7 @@ class CardServiceTest {
         when(fuelMapper.mapToFuelResponse(readyCardModel.getFuels().get(1))).thenReturn(readyCardDtoResponseModel.getFuels().get(1));
 
         when(fuelMapper.mapToAdBlueResponse(readyCardModel.getAdBlue().get(0))).thenReturn(readyCardDtoResponseModel.getBlue().get(0));
+        when(fuelMapper.mapToAdBlueResponse(readyCardModel.getAdBlue().get(1))).thenReturn(readyCardDtoResponseModel.getBlue().get(1));
         //when
         var result = service.getAllCardDataForPdf(cardId);
         //then
@@ -255,7 +265,7 @@ class CardServiceTest {
         String username = "admin";
         LocalDateTime firstDate = LocalDateTime.of(2023, 5, 1, 12, 0, 0);
         LocalDateTime secondDate = LocalDateTime.of(2023, 5, 5, 15, 30, 0);
-        var expectedCards = dummySortedDescModelData();
+        var expectedCards = helpers.createCardsModelSorted();
         when(repository.findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(username, firstDate, secondDate)).thenReturn(expectedCards);
         //when
         var result = service.retrieveCardsDateBetween(username, firstDate, secondDate);
@@ -271,8 +281,8 @@ class CardServiceTest {
         String secondDatePlainString = "2023-05-05 15:30:00";
         LocalDateTime firstDate = LocalDateTime.of(2023, 5, 1, 12, 0, 0);
         LocalDateTime secondDate = LocalDateTime.of(2023, 5, 5, 15, 30, 0);
-        var repoResult = dummyModelData();
-        var expectedResponse = dummyDtoResponseModelData();
+        var repoResult = helpers.createCardsModel();
+        var expectedResponse = helpers.createCardResponse();
         when(repository.findAllByUsernameAndCreationTimeBetweenAndOrderByCreationTimeDesc(username, firstDate, secondDate)).thenReturn(repoResult);
         when(mapper.mapCardToCardResponse(repoResult.get(0))).thenReturn(expectedResponse.get(0));
         when(mapper.mapCardToCardResponse(repoResult.get(1))).thenReturn(expectedResponse.get(1));
@@ -281,120 +291,5 @@ class CardServiceTest {
         //when
         var result = service.retrieveCardsForArchive(username, firstDatePlainString, secondDatePlainString);
         assertEquals(expectedResponse, result);
-    }
-
-    private String formattedTimeString(LocalDateTime time) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return time.format(formatter);
-    }
-
-    public Card cardModelForPdf() {
-        Fuel fuel1 = Fuel.builder()
-                .refuelingAmount(350)
-                .vehicleCounter(150100)
-                .build();
-        Fuel fuel2 = Fuel.builder()
-                .refuelingAmount(250)
-                .vehicleCounter(150750)
-                .build();
-
-        Trip trip1 = Trip.builder()
-                .locationEnd("Warsaw")
-                .counterEnd(150320).build();
-        Trip trip2 = Trip.builder()
-                .locationEnd("Berlin")
-                .counterEnd(150470).build();
-        Trip trip3 = Trip.builder()
-                .locationEnd("Dover")
-                .counterEnd(150698).build();
-
-        AdBlue blue = AdBlue.builder()
-                .adBlueDate("12.03.2023").build();
-
-        return Card.builder()
-                .number("XYZ")
-                .trips(List.of(trip1, trip2, trip3))
-                .fuels(List.of(fuel1, fuel2))
-                .adBlue(List.of(blue))
-                .build();
-    }
-
-    public CardDetailsResponse cardDtoResponseForPdf() {
-        TripResponse trip1 = TripResponse.builder()
-                .locationEnd("Warsaw")
-                .counterEnd(150320).build();
-        TripResponse trip2 = TripResponse.builder()
-                .locationEnd("Berlin")
-                .counterEnd(150470).build();
-        TripResponse trip3 = TripResponse.builder()
-                .locationEnd("Dover")
-                .counterEnd(150698).build();
-
-        FuelResponse fuel1 = FuelResponse.builder()
-                .refuelingAmount(350)
-                .vehicleCounter(150100)
-                .build();
-        FuelResponse fuel2 = FuelResponse.builder()
-                .refuelingAmount(250)
-                .vehicleCounter(150750)
-                .build();
-
-        AdBlueResponse blue = AdBlueResponse.builder()
-                .adBlueDate("12.03.2023").build();
-
-        return CardDetailsResponse.builder()
-                .cardNumber("XYZ")
-                .trips(List.of(trip1, trip2, trip3))
-                .fuels(List.of(fuel1, fuel2))
-                .blue(List.of(blue))
-                .build();
-    }
-
-    private List<Card> dummyModelData() {
-        var cardOne = Card.builder().username("admin").number("ABC")
-                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
-        var cardTwo = Card.builder().username("admin").number("DEF")
-                .creationTime(LocalDateTime.of(2023, 5, 2, 13, 0)).build();
-        var cardThree = Card.builder().username("admin").number("GHI")
-                .creationTime(LocalDateTime.of(2023, 5, 3, 14, 0)).build();
-        var cardFour = Card.builder().username("admin").number("JKL")
-                .creationTime(LocalDateTime.of(2023, 5, 4, 15, 0)).build();
-        return List.of(cardOne, cardTwo, cardThree, cardFour);
-    }
-
-    private List<Card> dummySortedDescModelData() {
-        var cardOne = Card.builder().username("admin").number("ABC")
-                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
-        var cardTwo = Card.builder().username("admin").number("DEF")
-                .creationTime(LocalDateTime.of(2023, 5, 2, 13, 0)).build();
-        var cardThree = Card.builder().username("admin").number("GHI")
-                .creationTime(LocalDateTime.of(2023, 5, 3, 14, 0)).build();
-        var cardFour = Card.builder().username("admin").number("JKL")
-                .creationTime(LocalDateTime.of(2023, 5, 4, 15, 0)).build();
-        return List.of(cardFour, cardThree, cardTwo, cardOne);
-    }
-
-    private List<CardResponse> dummySortedDescDtoResponseModelData() {
-        var cardOne = CardResponse.builder().number("ABC")
-                .creationTime(formattedTimeString(LocalDateTime.of(2023, 5, 1, 12, 0))).build();
-        var cardTwo = CardResponse.builder().number("DEF")
-                .creationTime(formattedTimeString(LocalDateTime.of(2023, 5, 2, 13, 0))).build();
-        var cardThree = CardResponse.builder().number("GHI")
-                .creationTime(formattedTimeString(LocalDateTime.of(2023, 5, 3, 14, 0))).build();
-        var cardFour = CardResponse.builder().number("JKL")
-                .creationTime(formattedTimeString(LocalDateTime.of(2023, 5, 4, 15, 0))).build();
-        return List.of(cardFour, cardThree, cardTwo, cardOne);
-    }
-
-    private List<CardResponse> dummyDtoResponseModelData() {
-        CardResponse response1 = CardResponse.builder()
-                .creationTime("2023-05-1 12:00:00").build();
-        CardResponse response2 = CardResponse.builder()
-                .creationTime("2023-05-2 13:00:00").build();
-        CardResponse response3 = CardResponse.builder()
-                .creationTime("2023-05-3 14:00:00").build();
-        CardResponse response4 = CardResponse.builder()
-                .creationTime("2023-05-4 15:00:00").build();
-        return List.of(response4, response3, response2, response1);
     }
 }

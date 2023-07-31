@@ -85,14 +85,14 @@ public class CardService {
     public CardDetailsResponse getAllCardDataForPdf(Long cardId) {
         Card card = repository.findById(cardId).orElseThrow(CardNotFoundException::new);
 
-        List<FuelResponse> fuels = card.getFuels().stream()
-                .map(fuelMapper::mapToFuelResponse)
-                .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
-                .collect(Collectors.toList());
-
         List<TripResponse> trips = card.getTrips().stream()
                 .map(tripMapper::mapToTripResponse)
                 .sorted(Comparator.comparing(TripResponse::getCounterEnd))
+                .collect(Collectors.toList());
+
+        List<FuelResponse> fuels = card.getFuels().stream()
+                .map(fuelMapper::mapToFuelResponse)
+                .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
                 .collect(Collectors.toList());
 
         List<AdBlueResponse> blue = card.getAdBlue().stream()

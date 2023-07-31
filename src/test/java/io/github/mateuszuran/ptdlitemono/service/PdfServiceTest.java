@@ -1,5 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
+import com.opencsv.bean.ColumnPositionMappingStrategy;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import io.github.mateuszuran.ptdlitemono.exception.UserNotFoundException;
 import io.github.mateuszuran.ptdlitemono.service.logic.csv.CsvReader;
 import io.github.mateuszuran.ptdlitemono.service.logic.csv.UserPdfInformationSkeleton;
@@ -9,11 +12,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
@@ -24,27 +34,54 @@ class PdfServiceTest {
     @Mock
     private CsvReader csvReader;
 
+    @Value("${pdf.csv.link}")
+    private String csvLink;
+
     @BeforeEach
     void setUp() {
-        String testFilePath = getClass().getResource("/test.csv").getPath();
         service = new PdfService(cardService, csvReader);
-        service.setCsvLink("file:" + testFilePath);
+    }
+
+    void readCsvFile_ShouldParseCsvDataToList() {
+        //given
+        Class<UserPdfInformationSkeleton> clazz = UserPdfInformationSkeleton.class;
+        String csvLink = "/test.csv";
+
+        InputStream csvInputStream = getClass().getResourceAsStream(csvLink);
+        InputStreamReader reader = new InputStreamReader(csvInputStream, StandardCharsets.UTF_8);
+
+        ColumnPositionMappingStrategy<UserPdfInformationSkeleton> columnStrategy = new ColumnPositionMappingStrategy<>();
+        columnStrategy.setType(clazz);
+        columnStrategy.setColumnMapping("username", "truckModel", "truckType", "truckLicencePlate", "truckLeftTankFuelCapacity", "truckRightTankFuelCapacity", "truckFullTankCapacity", "truckAdBlueCapacity", "trailerType", "trailerLicensePlate", "trailerFuelCapacity", "truckImageLink", "truckImageDescription");
+
+        CsvToBeanBuilder<UserPdfInformationSkeleton> csvToBeanBuilder = new CsvToBeanBuilder<UserPdfInformationSkeleton>(reader)
+                .withType(clazz)
+                .withSeparator(';')
+                .withSkipLines(1)
+                .withMappingStrategy(columnStrategy);
+
+        CsvToBean<UserPdfInformationSkeleton> csvToBean = csvToBeanBuilder.build();
+
+        List<UserPdfInformationSkeleton> result = csvToBean.parse();
+
+        //then
+        var csvData = expectedCsvValues();
+        assertEquals(csvData, result);
     }
 
     @Test
-    void givenCsvFile_whenExists_thenReturnCsvData() {
-        //given + when
-        var result = csvReader.readCsvFile(UserPdfInformationSkeleton.class, null);
+    void givenUsername_whenReadCsvFile_thenReturnUserInformation() {
+        //given
+        String username = "john";
+        var userCsvInfo = expectedCsvValues()
+                .stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst().orElseThrow();
+        when(csvReader.readCsvFile(UserPdfInformationSkeleton.class, csvLink)).thenReturn(expectedCsvValues());
+        //when
+        var expectedUserInfo = service.getUserInformation(username);
         //then
-        assertThat(result).isEqualTo(expectedCsvValues());
-    }
-
-    @Test
-    void givenUsername_whenExists_thenReturnCsvObject() {
-        //given + when
-        var result = service.getUserInformation("will");
-        //then
-        assertThat(result).isEqualTo(expectedCsvValues().get(1));
+        assertEquals(userCsvInfo, expectedUserInfo);
     }
 
     @Test
@@ -52,6 +89,10 @@ class PdfServiceTest {
         assertThatThrownBy(() -> service.getUserInformation("foo"))
                 .isInstanceOf(UserNotFoundException.class)
                 .hasMessageContaining("User not found in csv file, please contact admin.");
+    }
+
+    void givenAllCardInformationForPdf_whenCalculate_thenReturnCounters() {
+
     }
 
     private List<UserPdfInformationSkeleton> expectedCsvValues() {

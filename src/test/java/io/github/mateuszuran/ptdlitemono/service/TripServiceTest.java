@@ -3,6 +3,7 @@ package io.github.mateuszuran.ptdlitemono.service;
 import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripsEmptyException;
+import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
@@ -39,10 +40,12 @@ class TripServiceTest {
     private GenericMapper genericMapper;
     @Mock
     private CardStatisticsService statisticsService;
+    private PTDModelHelpers helpers;
 
     @BeforeEach
     void setUp() {
         service = new TripService(repository, cardService, mapper, genericMapper, statisticsService);
+        helpers = new PTDModelHelpers();
     }
 
     @Test
@@ -53,8 +56,8 @@ class TripServiceTest {
         Card existingCard = Card.builder().number("XYZ").trips(emptyTripsList).build();
         when(cardService.checkIfCardExists(cardId)).thenReturn(existingCard);
 
-        var tripRequest = createTripRequest();
-        var tripsModel = createTripsModel();
+        var tripRequest = helpers.createTripRequest();
+        var tripsModel = helpers.createTripsModel();
         when(mapper.mapToTrip(tripRequest.get(0))).thenReturn(tripsModel.get(0));
         when(mapper.mapToTrip(tripRequest.get(1))).thenReturn(tripsModel.get(1));
         when(mapper.mapToTrip(tripRequest.get(2))).thenReturn(tripsModel.get(2));
@@ -155,39 +158,5 @@ class TripServiceTest {
                 .isInstanceOf(TripsEmptyException.class)
                 .hasMessageContaining("Trips data is empty");
 
-    }
-
-    private List<TripRequest> createTripRequest() {
-        List<TripRequest> trips = new ArrayList<>();
-        TripRequest request1 = TripRequest.builder()
-                .counterStart(500)
-                .counterEnd(1500).build();
-        TripRequest request2 = TripRequest.builder()
-                .counterStart(1600)
-                .counterEnd(1842).build();
-        TripRequest request3 = TripRequest.builder()
-                .counterStart(1900)
-                .counterEnd(2400).build();
-        trips.add(request1);
-        trips.add(request2);
-        trips.add(request3);
-        return trips;
-    }
-
-    private List<Trip> createTripsModel() {
-        List<Trip> trips = new ArrayList<>();
-        Trip trip1 = Trip.builder()
-                .counterStart(500)
-                .counterEnd(1500).build();
-        Trip trip2 = Trip.builder()
-                .counterStart(1600)
-                .counterEnd(1842).build();
-        Trip trip3 = Trip.builder()
-                .counterStart(1900)
-                .counterEnd(2400).build();
-        trips.add(trip1);
-        trips.add(trip2);
-        trips.add(trip3);
-        return trips;
     }
 }

@@ -138,8 +138,8 @@ class AdBlueServiceTest {
         List<AdBlue> emptyBlueList = new ArrayList<>();
         Card card = Card.builder().id(anyLong()).number("XYZ").adBlue(emptyBlueList).build();
         when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
-        var request = createBlueRequests();
-        var response = createBlues();
+        var request = createAdBlueRequest();
+        var response = createAdBlueModel();
         when(mapper.mapToAdBlue(request.get(0))).thenReturn(response.get(0));
         when(mapper.mapToAdBlue(request.get(1))).thenReturn(response.get(1));
         when(mapper.mapToAdBlue(request.get(2))).thenReturn(response.get(2));
@@ -151,7 +151,7 @@ class AdBlueServiceTest {
         assertThat(updatedCard.getAdBlue()).isEqualTo(response);
     }
 
-    private List<AdBlueRequest> createBlueRequests() {
+    private List<AdBlueRequest> createAdBlueRequest() {
         List<AdBlueRequest> blues = new ArrayList<>();
         AdBlueRequest blue1 = AdBlueRequest.builder().adBlueDate("1.01").build();
         AdBlueRequest blue2 = AdBlueRequest.builder().adBlueDate("2.01").build();
@@ -164,13 +164,12 @@ class AdBlueServiceTest {
         return blues;
     }
 
-    private List<AdBlue> createBlues() {
+    private List<AdBlue> createAdBlueModel() {
         List<AdBlue> blues = new ArrayList<>();
         AdBlue blue1 = AdBlue.builder().adBlueDate("1.01").build();
         AdBlue blue2 = AdBlue.builder().adBlueDate("2.01").build();
         AdBlue blue3 = AdBlue.builder().adBlueDate("3.01").build();
         AdBlue blue4 = AdBlue.builder().adBlueDate("4.01").build();
-        // Add fuel objects to the list
         blues.add(blue1);
         blues.add(blue2);
         blues.add(blue3);
