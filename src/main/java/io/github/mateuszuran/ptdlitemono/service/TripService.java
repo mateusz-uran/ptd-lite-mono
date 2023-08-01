@@ -31,7 +31,7 @@ public class TripService {
         var card = service.checkIfCardExists(cardId);
 
         var tripsToSave = trips.stream().map(singleTrip -> {
-            var trip = tripMapper.mapToTrip(singleTrip);
+            var trip = genericMapper.mapToEntityModel(singleTrip, Trip.class);
             trip.setCarMileage(subtractCarMileage(singleTrip.getCounterStart(), singleTrip.getCounterStart()));
             card.addTrip(trip);
             return trip;

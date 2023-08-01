@@ -8,6 +8,9 @@ import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
+import io.github.mateuszuran.ptdlitemono.service.logic.csv.UserPdfInformationSkeleton;
+import io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo.Counters;
+import io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo.PdfSource;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -80,12 +83,41 @@ public class PTDModelHelpers {
                 .build();
     }
 
+    public Counters readyCountersForPdf() {
+        var firstTrip = cardDtoResponseForPdf().getTrips().stream().mapToInt(TripResponse::getCounterStart).min();
+        var lastTrip = cardDtoResponseForPdf().getTrips().stream().mapToInt(TripResponse::getCounterEnd).max();
+        var tripsMileage = cardDtoResponseForPdf().getTrips().stream().mapToInt(TripResponse::getCarMileage).sum();
+        var petrolSum = cardDtoResponseForPdf().getFuels().stream().mapToInt(FuelResponse::getRefuelingAmount).sum();
+        //when trips are empty
+        int firstCounter = firstTrip.orElse(0);
+        int lastCounter = lastTrip.orElse(0);
+
+        return Counters.builder()
+                .firstCounter(firstCounter)
+                .lastCounter(lastCounter)
+                .mileage(tripsMileage)
+                .refuelingSum(petrolSum)
+                .build();
+    }
+
     public CardDetailsResponse cardDtoResponseForPdf() {
         return CardDetailsResponse.builder()
                 .cardNumber("XYZ")
                 .trips(createTripsResponse())
                 .fuels(createFueLResponse())
                 .blue(createAdBlueResponse())
+                .build();
+    }
+
+    public PdfSource skeletonForPdf(UserPdfInformationSkeleton userInfo) {
+        var cardDetailResp = cardDtoResponseForPdf();
+        return PdfSource.builder()
+                .userPdfSkeleton(userInfo)
+                .counters(readyCountersForPdf())
+                .cardNumber(cardDetailResp.getCardNumber())
+                .cardTripsList(cardDetailResp.getTrips())
+                .cardFuelsList(cardDetailResp.getFuels())
+                .cardAdBlueList(cardDetailResp.getBlue())
                 .build();
     }
 
@@ -128,15 +160,21 @@ public class PTDModelHelpers {
         TripResponse trip1 = TripResponse.builder()
                 .locationEnd("Warsaw")
                 .counterStart(150112)
-                .counterEnd(150320).build();
+                .counterEnd(150320)
+                .carMileage(208)
+                .build();
         TripResponse trip2 = TripResponse.builder()
                 .locationEnd("Berlin")
                 .counterStart(150320)
-                .counterEnd(150610).build();
+                .counterEnd(150610)
+                .carMileage(290)
+                .build();
         TripResponse trip3 = TripResponse.builder()
                 .locationEnd("Dover")
                 .counterStart(150610)
-                .counterEnd(150821).build();
+                .counterEnd(150821)
+                .carMileage(211)
+                .build();
         trips.add(trip1);
         trips.add(trip2);
         trips.add(trip3);
@@ -160,8 +198,12 @@ public class PTDModelHelpers {
         List<Fuel> fuels = new ArrayList<>();
         Fuel fuel1 = Fuel.builder().refuelingAmount(300).vehicleCounter(150100).build();
         Fuel fuel2 = Fuel.builder().refuelingAmount(400).vehicleCounter(150750).build();
+        Fuel fuel3 = Fuel.builder().refuelingAmount(500).vehicleCounter(151102).build();
+        Fuel fuel4 = Fuel.builder().refuelingAmount(600).vehicleCounter(151136).build();
         fuels.add(fuel1);
         fuels.add(fuel2);
+        fuels.add(fuel3);
+        fuels.add(fuel4);
         return fuels;
     }
 
@@ -169,25 +211,25 @@ public class PTDModelHelpers {
         List<FuelResponse> fuel = new ArrayList<>();
         FuelResponse fuel1 = FuelResponse.builder().refuelingAmount(300).vehicleCounter(150100).build();
         FuelResponse fuel2 = FuelResponse.builder().refuelingAmount(400).vehicleCounter(150750).build();
+        FuelResponse fuel3 = FuelResponse.builder().refuelingAmount(500).vehicleCounter(151102).build();
+        FuelResponse fuel4 = FuelResponse.builder().refuelingAmount(600).vehicleCounter(151136).build();
         fuel.add(fuel1);
         fuel.add(fuel2);
+        fuel.add(fuel3);
+        fuel.add(fuel4);
         return fuel;
     }
 
-    private List<AdBlueRequest> createAdBlueRequest() {
+    public List<AdBlueRequest> createAdBlueRequest() {
         List<AdBlueRequest> blues = new ArrayList<>();
         AdBlueRequest blue1 = AdBlueRequest.builder().adBlueDate("1.01").build();
         AdBlueRequest blue2 = AdBlueRequest.builder().adBlueDate("2.01").build();
-        AdBlueRequest blue3 = AdBlueRequest.builder().adBlueDate("3.01").build();
-        AdBlueRequest blue4 = AdBlueRequest.builder().adBlueDate("4.01").build();
         blues.add(blue1);
         blues.add(blue2);
-        blues.add(blue3);
-        blues.add(blue4);
         return blues;
     }
 
-    private List<AdBlue> createAdBlueModel() {
+    public List<AdBlue> createAdBlueModel() {
         List<AdBlue> blues = new ArrayList<>();
         AdBlue blue1 = AdBlue.builder().adBlueDate("12.03.2023").build();
         AdBlue blue2 = AdBlue.builder().adBlueDate("14.03.2023").build();

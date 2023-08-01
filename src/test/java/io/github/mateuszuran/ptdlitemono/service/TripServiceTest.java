@@ -58,14 +58,13 @@ class TripServiceTest {
 
         var tripRequest = helpers.createTripRequest();
         var tripsModel = helpers.createTripsModel();
-        when(mapper.mapToTrip(tripRequest.get(0))).thenReturn(tripsModel.get(0));
-        when(mapper.mapToTrip(tripRequest.get(1))).thenReturn(tripsModel.get(1));
-        when(mapper.mapToTrip(tripRequest.get(2))).thenReturn(tripsModel.get(2));
+        when(genericMapper.mapToEntityModel(tripRequest.get(0), Trip.class)).thenReturn(tripsModel.get(0));
+        when(genericMapper.mapToEntityModel(tripRequest.get(1), Trip.class)).thenReturn(tripsModel.get(1));
+        when(genericMapper.mapToEntityModel(tripRequest.get(2), Trip.class)).thenReturn(tripsModel.get(2));
         //when
         service.addManyTrips(tripRequest, cardId);
         //then
         verify(cardService).checkIfCardExists(cardId);
-        verify(mapper, times(tripRequest.size())).mapToTrip(any(TripRequest.class));
         verify(repository).saveAll(anyList());
     }
 

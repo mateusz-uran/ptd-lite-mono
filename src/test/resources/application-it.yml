@@ -25,6 +25,9 @@ spring:
 pdf:
   csv:
     link: file:/test.csv
+hour-rate:
+  json:
+    link: file:/rates_json.txt
 
 frontend:
   urls: http://localhost:5173,http://localhost:5173/home

@@ -173,6 +173,8 @@ class CardServiceTest {
 
         when(fuelMapper.mapToFuelResponse(readyCardModel.getFuels().get(0))).thenReturn(readyCardDtoResponseModel.getFuels().get(0));
         when(fuelMapper.mapToFuelResponse(readyCardModel.getFuels().get(1))).thenReturn(readyCardDtoResponseModel.getFuels().get(1));
+        when(fuelMapper.mapToFuelResponse(readyCardModel.getFuels().get(2))).thenReturn(readyCardDtoResponseModel.getFuels().get(2));
+        when(fuelMapper.mapToFuelResponse(readyCardModel.getFuels().get(3))).thenReturn(readyCardDtoResponseModel.getFuels().get(3));
 
         when(fuelMapper.mapToAdBlueResponse(readyCardModel.getAdBlue().get(0))).thenReturn(readyCardDtoResponseModel.getBlue().get(0));
         when(fuelMapper.mapToAdBlueResponse(readyCardModel.getAdBlue().get(1))).thenReturn(readyCardDtoResponseModel.getBlue().get(1));

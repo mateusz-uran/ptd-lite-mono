@@ -1,30 +1,50 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
+import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
+import io.github.mateuszuran.ptdlitemono.service.HourRateService;
+import io.github.mateuszuran.ptdlitemono.service.logic.json.JsonReader;
+import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.HourRateJsonSkeleton;
+import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.UserRates;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.client.ExpectedCount;
+import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.core.Is.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WithMockUser(value = "user123")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -37,12 +57,15 @@ class CardControllerTest {
     private CardRepository repository;
     @Autowired
     private ObjectMapper mapper;
+
     private Card card;
+    private PTDModelHelpers helpers;
 
     @BeforeEach
     void setUp() {
         card = Card.builder().username("user123").number("ABC")
                 .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
+        helpers = new PTDModelHelpers();
     }
 
     @AfterEach
@@ -51,48 +74,19 @@ class CardControllerTest {
     }
 
     @Test
-    void givenUsernameAndDate_whenFindCards_thenReturnList() throws Exception {
+    void givenUsername_whenGet_thenReturnLastThreeCards() throws Exception {
         //given
-        Card card2 = Card.builder().username("user123").number("XYZ")
-                .creationTime(LocalDateTime.of(2023, 5, 2, 13, 0)).build();
-        repository.saveAllAndFlush(List.of(card, card2));
-
+        String username = "admin";
+        var cards = helpers.createCardsModel();
+        repository.saveAll(cards);
         //when + then
-        mockMvc.perform(get("/api/card/all")
-                        .param("username", card.getUsername())
-                        .param("year", String.valueOf(2023))
-                        .param("month", String.valueOf(5))
+        mockMvc.perform(get("/api/card")
+                        .param("username", username)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content()
-                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size()", is(2)));
-    }
-
-    @Test
-    void givenUsernameAndDate_whenFindCards_thenReturnEmptyList() throws Exception {
-        mockMvc.perform(get("/api/card/all")
-                        .param("username", card.getUsername())
-                        .param("year", String.valueOf(2023))
-                        .param("month", String.valueOf(5))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content()
-                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.size()", is(0)));
-    }
-
-    @Test
-    void givenCardObjectAndDate_whenSave_thenReturnObject() throws Exception {
-        mockMvc.perform(post("/api/card/add")
-                        .param("year", String.valueOf(2023))
-                        .param("month", String.valueOf(5))
-                        .param("dayOfMonth", String.valueOf(12))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(card)))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.number").value(card.getNumber()));
+                .andExpect(jsonPath("$.size()", is(3)));
+
     }
 
     @Test
@@ -114,39 +108,6 @@ class CardControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("\"test\"")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.number").value("\"test\""));
-    }
-
-    @Test
-    void givenCardObjectAndDate_whenAlreadyExists_thenThrowException() throws Exception {
-        //given
-        repository.saveAndFlush(card);
-        //when
-        mockMvc.perform(post("/api/card/add")
-                        .param("year", String.valueOf(2023))
-                        .param("month", String.valueOf(5))
-                        .param("dayOfMonth", String.valueOf(12))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(card)))
-                .andExpect(status().isConflict())
-                .andDo(print())
-                .andExpect(jsonPath("$.description").value("Card with number: " + card.getNumber() + " already exists."));
-    }
-
-    @Test
-    void givenCardObjectAndDate_whenCardNumberIsEmpty_thenThrowException() throws Exception {
-        //given
-        Card emptyCard = Card.builder().username("admin").number("")
-                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
-        //when + then
-        mockMvc.perform(post("/api/card/add")
-                        .param("year", String.valueOf(2023))
-                        .param("month", String.valueOf(5))
-                        .param("dayOfMonth", String.valueOf(12))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(emptyCard)))
-                .andExpect(status().isBadRequest())
-                .andDo(print())
-                .andExpect(jsonPath("$.description").value("Card is empty."));
     }
 
     @Test
@@ -197,7 +158,8 @@ class CardControllerTest {
         String username = "admin";
         String firstDatePlainString = "2023-05-01 12:00:00";
         String secondDatePlainString = "2023-05-05 15:30:00";
-        repository.saveAll(dummyModelData());
+        var cards = helpers.createCardsModel();
+        repository.saveAll(cards);
         //when + then
         mockMvc.perform(get("/api/card/archive")
                         .param("username", username)
@@ -207,29 +169,5 @@ class CardControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.size()", is(4)));
-    }
-
-    private List<Card> dummyModelData() {
-        var cardOne = Card.builder().username("admin").number("ABC")
-                .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
-        var cardTwo = Card.builder().username("admin").number("DEF")
-                .creationTime(LocalDateTime.of(2023, 5, 2, 13, 0)).build();
-        var cardThree = Card.builder().username("admin").number("GHI")
-                .creationTime(LocalDateTime.of(2023, 5, 3, 14, 0)).build();
-        var cardFour = Card.builder().username("admin").number("JKL")
-                .creationTime(LocalDateTime.of(2023, 5, 4, 15, 0)).build();
-        return List.of(cardOne, cardTwo, cardThree, cardFour);
-    }
-
-    private List<CardResponse> dummyDtoData() {
-        CardResponse response1 = CardResponse.builder()
-                .creationTime("2023-05-1 12:00:00").build();
-        CardResponse response2 = CardResponse.builder()
-                .creationTime("2023-05-2 13:00:00").build();
-        CardResponse response3 = CardResponse.builder()
-                .creationTime("2023-05-3 14:00:00").build();
-        CardResponse response4 = CardResponse.builder()
-                .creationTime("2023-05-4 15:00:00").build();
-        return List.of(response4, response3, response2, response1);
     }
 }

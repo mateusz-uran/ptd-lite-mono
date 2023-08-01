@@ -6,6 +6,7 @@ import io.github.mateuszuran.ptdlitemono.exception.AdBlueEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
+import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.repository.AdBlueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,12 +36,11 @@ public class AdBlueService {
 
     public void addMultipleAdBlueObjects(List<AdBlueRequest> adBlue, Long cardId) {
         var card = service.checkIfCardExists(cardId);
-        List<AdBlue> adBlueToSave = new ArrayList<>();
-        adBlue.forEach(blue -> {
-            var mappedBlue = fuelMapper.mapToAdBlue(blue);
-            adBlueToSave.add(mappedBlue);
-            card.addBlue(mappedBlue);
-        });
+        var adBlueToSave = adBlue.stream().map(singleAdBlue -> {
+            var blue = genericMapper.mapToEntityModel(singleAdBlue, AdBlue.class);
+            card.addBlue(blue);
+            return blue;
+        }).toList();
         repository.saveAll(adBlueToSave);
     }
 

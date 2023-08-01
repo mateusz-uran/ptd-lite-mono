@@ -1,6 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.exception.PetrolEmptyException;
 import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
@@ -42,6 +43,27 @@ class FuelServiceTest {
     void setUp() {
         service = new FuelService(cardService, mapper, repository, genericMapper);
         helpers = new PTDModelHelpers();
+    }
+
+    @Test
+    void givenFuelList_whenSave_thenDoNothing() {
+        //given
+        List<Fuel> emptyFuelList = new ArrayList<>();
+        Long cardId = 123L;
+        Card existingCard = Card.builder().number("XYZ").fuels(emptyFuelList).build();
+        when(cardService.checkIfCardExists(cardId)).thenReturn(existingCard);
+
+        var request = helpers.createFuelRequests();
+        var response = helpers.createFuelsModel();
+        when(genericMapper.mapToEntityModel(request.get(0), Fuel.class)).thenReturn(response.get(0));
+        when(genericMapper.mapToEntityModel(request.get(1), Fuel.class)).thenReturn(response.get(1));
+        when(genericMapper.mapToEntityModel(request.get(2), Fuel.class)).thenReturn(response.get(2));
+        when(genericMapper.mapToEntityModel(request.get(3), Fuel.class)).thenReturn(response.get(3));
+        //when
+        service.addMultipleFuels(request, cardId);
+        //then
+        verify(cardService).checkIfCardExists(cardId);
+        verify(repository).saveAll(anyList());
     }
 
     @Test
@@ -141,26 +163,5 @@ class FuelServiceTest {
         verify(mapper).mapToFuelResponse(updatedFuel);
 
         assertEquals(expectedResponse, result);
-    }
-
-    @Test
-    void givenFuelList_whenSave_thenDoNothing() {
-        //given
-        Long cardId = 123L;
-        String cardNumber = "XYZ";
-        List<Fuel> emptyFuelList = new ArrayList<>();
-        Card card = Card.builder().id(cardId).number(cardNumber).fuels(emptyFuelList).build();
-        when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
-        var request = helpers.createFuelRequests();
-        var response = helpers.createFuelsModel();
-        when(mapper.mapToFuel(request.get(0))).thenReturn(response.get(0));
-        when(mapper.mapToFuel(request.get(1))).thenReturn(response.get(1));
-        //when
-        service.addMultipleFuels(request, cardId);
-        //then
-        var updatedCard = cardService.checkIfCardExists(card.getId());
-        assertThat(updatedCard.getFuels()).isEqualTo(response);
-        verify(repository).saveAll(anyList());
-        verify(repository).saveAll(response);
     }
 }

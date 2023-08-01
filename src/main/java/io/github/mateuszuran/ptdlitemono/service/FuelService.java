@@ -5,6 +5,7 @@ import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.exception.PetrolEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
+import io.github.mateuszuran.ptdlitemono.model.AdBlue;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.repository.FuelRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class FuelService {
     public void addMultipleFuels(List<FuelRequest> fuels, Long cardId) {
         var card = service.checkIfCardExists(cardId);
         var fuelsToSave = fuels.stream().map(singleFuel -> {
-            var fuel = fuelMapper.mapToFuel(singleFuel);
+            var fuel = genericMapper.mapToEntityModel(singleFuel, Fuel.class);
             card.addFuel(fuel);
             return fuel;
         }).toList();

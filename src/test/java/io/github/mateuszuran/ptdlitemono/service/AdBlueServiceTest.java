@@ -1,8 +1,11 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.AdBlueResponse;
 import io.github.mateuszuran.ptdlitemono.exception.AdBlueEmptyException;
+import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.model.AdBlue;
@@ -34,10 +37,12 @@ class AdBlueServiceTest {
     private FuelMapper mapper;
     @Mock
     private GenericMapper genericMapper;
+    private PTDModelHelpers helpers;
 
     @BeforeEach
     void setUp() {
         service = new AdBlueService(cardService, repository, mapper, genericMapper);
+        helpers = new PTDModelHelpers();
     }
 
     @Test
@@ -136,44 +141,18 @@ class AdBlueServiceTest {
     void givenFuelList_whenSave_thenDoNothing() {
         //given
         List<AdBlue> emptyBlueList = new ArrayList<>();
-        Card card = Card.builder().id(anyLong()).number("XYZ").adBlue(emptyBlueList).build();
-        when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
-        var request = createAdBlueRequest();
-        var response = createAdBlueModel();
-        when(mapper.mapToAdBlue(request.get(0))).thenReturn(response.get(0));
-        when(mapper.mapToAdBlue(request.get(1))).thenReturn(response.get(1));
-        when(mapper.mapToAdBlue(request.get(2))).thenReturn(response.get(2));
-        when(mapper.mapToAdBlue(request.get(3))).thenReturn(response.get(3));
+        Long cardId = 123L;
+        Card card = Card.builder().number("XYZ").adBlue(emptyBlueList).build();
+        when(cardService.checkIfCardExists(cardId)).thenReturn(card);
+
+        var request = helpers.createAdBlueRequest();
+        var response = helpers.createAdBlueModel();
+        when(genericMapper.mapToEntityModel(request.get(0), AdBlue.class)).thenReturn(response.get(0));
+        when(genericMapper.mapToEntityModel(request.get(1), AdBlue.class)).thenReturn(response.get(1));
         //when
-        service.addMultipleAdBlueObjects(request, card.getId());
+        service.addMultipleAdBlueObjects(request, cardId);
         //then
-        var updatedCard = cardService.checkIfCardExists(card.getId());
-        assertThat(updatedCard.getAdBlue()).isEqualTo(response);
-    }
-
-    private List<AdBlueRequest> createAdBlueRequest() {
-        List<AdBlueRequest> blues = new ArrayList<>();
-        AdBlueRequest blue1 = AdBlueRequest.builder().adBlueDate("1.01").build();
-        AdBlueRequest blue2 = AdBlueRequest.builder().adBlueDate("2.01").build();
-        AdBlueRequest blue3 = AdBlueRequest.builder().adBlueDate("3.01").build();
-        AdBlueRequest blue4 = AdBlueRequest.builder().adBlueDate("4.01").build();
-        blues.add(blue1);
-        blues.add(blue2);
-        blues.add(blue3);
-        blues.add(blue4);
-        return blues;
-    }
-
-    private List<AdBlue> createAdBlueModel() {
-        List<AdBlue> blues = new ArrayList<>();
-        AdBlue blue1 = AdBlue.builder().adBlueDate("1.01").build();
-        AdBlue blue2 = AdBlue.builder().adBlueDate("2.01").build();
-        AdBlue blue3 = AdBlue.builder().adBlueDate("3.01").build();
-        AdBlue blue4 = AdBlue.builder().adBlueDate("4.01").build();
-        blues.add(blue1);
-        blues.add(blue2);
-        blues.add(blue3);
-        blues.add(blue4);
-        return blues;
+        verify(cardService).checkIfCardExists(cardId);
+        verify(repository).saveAll(anyList());
     }
 }

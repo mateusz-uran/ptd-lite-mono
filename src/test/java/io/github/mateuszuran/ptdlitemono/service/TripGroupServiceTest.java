@@ -4,6 +4,7 @@ import io.github.mateuszuran.ptdlitemono.dto.request.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupException;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
+import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
@@ -38,10 +39,12 @@ class TripGroupServiceTest {
     private TripMapper mapper;
     @Mock
     private GenericMapper genericMapper;
+    private PTDModelHelpers helpers;
 
     @BeforeEach
     void setUp() {
         service = new TripGroupService(repository, tripRepository, mapper, genericMapper);
+        helpers = new PTDModelHelpers();
     }
 
     @Test
@@ -53,7 +56,7 @@ class TripGroupServiceTest {
         String cargoName = "food";
         Integer cargoWeight = 50;
         Integer cargoTemperature = 123;
-        var trips = createTripsModel();
+        var trips = helpers.createTripsModel();
         TripGroupRequest request = TripGroupRequest.builder()
                 .tripIds(List.of(tripId1, tripId2, tripId3))
                 .temperature(123)
@@ -249,7 +252,7 @@ class TripGroupServiceTest {
     void givenGroupId_whenExists_thenDelete() {
         //given
         Long groupId = 123L;
-        List<Trip> trips = createTripsModel();
+        List<Trip> trips = helpers.createTripsModel();
         TripGroup group = TripGroup.builder().id(groupId).trips(trips).build();
         when(repository.findById(groupId)).thenReturn(Optional.of(group));
         //when
@@ -317,22 +320,5 @@ class TripGroupServiceTest {
         assertThatThrownBy(() -> service.editTripGroupInformation(groupId, request))
                 .isInstanceOf(TripGroupNotFoundException.class)
                 .hasMessageContaining("Group not found");
-    }
-
-    private List<Trip> createTripsModel() {
-        List<Trip> trips = new ArrayList<>();
-        Trip trip1 = Trip.builder()
-                .counterStart(500)
-                .counterEnd(1500).build();
-        Trip trip2 = Trip.builder()
-                .counterStart(1600)
-                .counterEnd(1842).build();
-        Trip trip3 = Trip.builder()
-                .counterStart(1900)
-                .counterEnd(2400).build();
-        trips.add(trip1);
-        trips.add(trip2);
-        trips.add(trip3);
-        return trips;
     }
 }
