@@ -7,46 +7,28 @@ import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import io.github.mateuszuran.ptdlitemono.service.HourRateService;
-import io.github.mateuszuran.ptdlitemono.service.logic.json.JsonReader;
-import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.HourRateJsonSkeleton;
-import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.UserRates;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.client.ExpectedCount;
-import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.hamcrest.core.Is.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WithMockUser(value = "user123")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("it")
 @AutoConfigureMockMvc
@@ -58,12 +40,15 @@ class CardControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
+    @MockBean
+    private HourRateService hourRateService;
+
     private Card card;
     private PTDModelHelpers helpers;
 
     @BeforeEach
     void setUp() {
-        card = Card.builder().username("user123").number("ABC")
+        card = Card.builder().username("john").number("ABC")
                 .creationTime(LocalDateTime.of(2023, 5, 1, 12, 0)).build();
         helpers = new PTDModelHelpers();
     }
@@ -73,6 +58,7 @@ class CardControllerTest {
         repository.deleteAll();
     }
 
+    @WithMockUser(username = "admin")
     @Test
     void givenUsername_whenGet_thenReturnLastThreeCards() throws Exception {
         //given
@@ -89,6 +75,7 @@ class CardControllerTest {
 
     }
 
+    @WithMockUser(username = "admin")
     @Test
     void givenCardObjectAndDate_whenSave_thenStatus() throws Exception {
         mockMvc.perform(post("/api/card/addcard")
@@ -98,6 +85,7 @@ class CardControllerTest {
                 .andDo(print());
     }
 
+    @WithMockUser(username = "admin")
     @Test
     void givenCardNumberAndId_whenUpdate_thenReturnUpdatedObject() throws Exception {
         //given
@@ -110,18 +98,20 @@ class CardControllerTest {
                 .andExpect(jsonPath("$.number").value("\"test\""));
     }
 
+    @WithMockUser(username = "admin")
     @Test
     void givenCardId_whenDelete_thenReturnStatus() throws Exception {
         //given
         repository.save(card);
         //when + then
         mockMvc.perform(delete("/api/card/delete")
-                .param("cardId", String.valueOf(card.getId()))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print());
     }
 
+    @WithMockUser(username = "admin")
     @Test
     void givenCardId_whenCardNotFound_thenThrowException() throws Exception {
         // when + then
@@ -134,6 +124,7 @@ class CardControllerTest {
     }
 
 
+    @WithMockUser(username = "admin")
     @Test
     void givenCardId_whenGetTripsAndFuels_thenReturnCardDetails() throws Exception {
         Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).build();
@@ -152,6 +143,7 @@ class CardControllerTest {
                 .andDo(print());
     }
 
+    @WithMockUser(username = "admin")
     @Test
     void givenUsernameAndDates_whenRetrieve_thenReturnMappedCardsList() throws Exception {
         //given
@@ -169,5 +161,27 @@ class CardControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.size()", is(4)));
+    }
+
+    @WithMockUser(username = "john", authorities = {"read:rates"})
+    @Test
+    void rates() throws Exception {
+        // given
+        String username = "john";
+        var jsonContent = helpers.expectedJsonValues()
+                .getUsers()
+                .stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst().orElseThrow();
+        when(hourRateService.getUserHourRates(username))
+                .thenReturn(jsonContent);
+
+        // when + then
+        mockMvc.perform(get("/api/card/rates")
+                        .param("username", username)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.username").value(username));
     }
 }

@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "username": john",
+      "username": "john",
       "defaultRate": "0.32",
       "rates": [
         {

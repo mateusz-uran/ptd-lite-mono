@@ -9,13 +9,17 @@ import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.service.logic.csv.UserPdfInformationSkeleton;
+import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.HourRateJsonSkeleton;
+import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.UserRates;
 import io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo.Counters;
 import io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo.PdfSource;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PTDModelHelpers {
 
@@ -245,5 +249,33 @@ public class PTDModelHelpers {
         blue.add(blue1);
         blue.add(blue2);
         return blue;
+    }
+
+    public HourRateJsonSkeleton expectedJsonValues() {
+        Map<String, Float> rates1 = new HashMap<>();
+        rates1.put("DE", 15f);
+        rates1.put("BE", 18.5f);
+        rates1.put("FR", 12.87f);
+        rates1.put("NL", 13.56f);
+
+        Map<String, Float> rates2 = new HashMap<>();
+        rates2.put("DE", 14.5f);
+        rates2.put("BE", 16f);
+        rates2.put("FR", 11.53f);
+        rates2.put("NL", 14.77f);
+
+        UserRates johnsRates = UserRates.builder()
+                .username("john")
+                .defaultRate("0.32")
+                .rates(List.of(rates1))
+                .build();
+        UserRates willsRates = UserRates.builder()
+                .username("will")
+                .defaultRate("0.77")
+                .rates(List.of(rates2))
+                .build();
+
+        return HourRateJsonSkeleton.builder()
+                .users(List.of(johnsRates, willsRates)).build();
     }
 }
