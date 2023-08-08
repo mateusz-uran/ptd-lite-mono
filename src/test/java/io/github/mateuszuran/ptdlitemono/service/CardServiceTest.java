@@ -14,6 +14,7 @@ import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
+import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,12 +49,14 @@ class CardServiceTest {
     private FuelMapper fuelMapper;
     @Mock
     private TripMapper tripMapper;
+    @Mock
+    private CardStatisticsService statisticsService;
 
     private PTDModelHelpers helpers;
 
     @BeforeEach
     void setUp() {
-        service = new CardService(repository, mapper, fuelMapper, tripMapper);
+        service = new CardService(repository, mapper, fuelMapper, tripMapper, statisticsService);
         helpers = new PTDModelHelpers();
     }
 

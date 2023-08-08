@@ -18,9 +18,12 @@ public class CardStatistics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Version
+    private Long version;
     private String username;
     @Column(name = "year_month", columnDefinition = "DATE")
     @Convert(converter = YearMonthDateAttributeConverter.class)
     private YearMonth yearMonth;
     private Integer cardMileage;
+    private Integer cardCounter;
 }
