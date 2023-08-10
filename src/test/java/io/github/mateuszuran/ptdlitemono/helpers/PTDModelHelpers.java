@@ -4,10 +4,7 @@ import io.github.mateuszuran.ptdlitemono.dto.request.AdBlueRequest;
 import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
 import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.*;
-import io.github.mateuszuran.ptdlitemono.model.AdBlue;
-import io.github.mateuszuran.ptdlitemono.model.Card;
-import io.github.mateuszuran.ptdlitemono.model.Fuel;
-import io.github.mateuszuran.ptdlitemono.model.Trip;
+import io.github.mateuszuran.ptdlitemono.model.*;
 import io.github.mateuszuran.ptdlitemono.service.logic.csv.UserPdfInformationSkeleton;
 import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.HourRateJsonSkeleton;
 import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.UserRates;
@@ -15,6 +12,7 @@ import io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo.Counters;
 import io.github.mateuszuran.ptdlitemono.service.logic.pdf.pojo.PdfSource;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,14 +143,26 @@ public class PTDModelHelpers {
     public List<Trip> createTripsModel() {
         List<Trip> trips = new ArrayList<>();
         Trip trip1 = Trip.builder()
+                .dayStart("01.07.2023")
+                .dayEnd("01.07.2023")
                 .counterStart(150112)
-                .counterEnd(150320).build();
+                .counterEnd(150320)
+                .carMileage(208)
+                .build();
         Trip trip2 = Trip.builder()
+                .dayStart("02.07.2023")
+                .dayEnd("03.07.2023")
                 .counterStart(150320)
-                .counterEnd(150610).build();
+                .counterEnd(150610)
+                .carMileage(290)
+                .build();
         Trip trip3 = Trip.builder()
+                .dayStart("03.07.2023")
+                .dayEnd("05.07.2023")
                 .counterStart(150610)
-                .counterEnd(150821).build();
+                .counterEnd(150821)
+                .carMileage(211)
+                .build();
         trips.add(trip1);
         trips.add(trip2);
         trips.add(trip3);
@@ -277,5 +287,37 @@ public class PTDModelHelpers {
 
         return HourRateJsonSkeleton.builder()
                 .users(List.of(johnsRates, willsRates)).build();
+    }
+
+    public List<CardStatistics> createCardStatisticList(String username, int year) {
+        CardStatistics stat1 = CardStatistics.builder()
+                .username(username)
+                .yearMonth(YearMonth.of(year, 3))
+                .cardMileage(300)
+                .cardCounter(2).build();
+        CardStatistics stat2 = CardStatistics.builder()
+                .username(username)
+                .yearMonth(YearMonth.of(year, 5))
+                .cardMileage(482)
+                .cardCounter(3).build();
+        CardStatistics stat3 = CardStatistics.builder()
+                .username(username)
+                .yearMonth(YearMonth.of(year, 6))
+                .cardMileage(590)
+                .cardCounter(6).build();
+        return List.of(stat1, stat2, stat3);
+    }
+
+    public List<CardStatisticResponse> createCardStatisticResponseList() {
+        CardStatisticResponse stat1 = CardStatisticResponse.builder()
+                .cardMileage(300)
+                .cardCounter(2).build();
+        CardStatisticResponse stat2 = CardStatisticResponse.builder()
+                .cardMileage(482)
+                .cardCounter(3).build();
+        CardStatisticResponse stat3 = CardStatisticResponse.builder()
+                .cardMileage(590)
+                .cardCounter(6).build();
+        return List.of(stat1, stat2, stat3);
     }
 }

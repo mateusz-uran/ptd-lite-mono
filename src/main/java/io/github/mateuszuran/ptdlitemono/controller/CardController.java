@@ -3,10 +3,13 @@ package io.github.mateuszuran.ptdlitemono.controller;
 import io.github.mateuszuran.ptdlitemono.dto.response.CardDetailsResponse;
 import io.github.mateuszuran.ptdlitemono.dto.request.CardRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
+import io.github.mateuszuran.ptdlitemono.dto.response.CardStatisticResponse;
+import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.UserRates;
 import io.github.mateuszuran.ptdlitemono.service.CardService;
 import io.github.mateuszuran.ptdlitemono.service.HourRateService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/card")
 public class CardController {
     private final CardService service;
     private final HourRateService hourRateService;
+    private final CardStatisticsService statisticsService;
 
     @GetMapping
     public ResponseEntity<List<CardResponse>> getLastThreeCardsByMonth(@RequestParam String username) {
@@ -57,5 +62,11 @@ public class CardController {
     public ResponseEntity<?> deleteCard(@RequestParam Long cardId) {
         service.deleteCard(cardId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //statistics
+    @GetMapping("/stat/year/{year}/{username}")
+    public ResponseEntity<List<CardStatisticResponse>> getAllStatisticFromYear(@PathVariable int year, @PathVariable String username) {
+        return ResponseEntity.ok().body(statisticsService.getAllStatisticByYearAndUsername(year, username));
     }
 }

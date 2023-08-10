@@ -1,5 +1,7 @@
 package io.github.mateuszuran.ptdlitemono.service.async;
 
+import io.github.mateuszuran.ptdlitemono.dto.response.CardStatisticResponse;
+import io.github.mateuszuran.ptdlitemono.mapper.CardStatisticMapper;
 import io.github.mateuszuran.ptdlitemono.model.CardStatistics;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardStatisticsRepository;
@@ -20,8 +22,18 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CardStatisticsService {
-
     private final CardStatisticsRepository repository;
+    private final CardStatisticMapper mapper;
+
+    public List<CardStatisticResponse> getAllStatisticByYearAndUsername(int year , String username) {
+        var beginningOfTheYear = YearMonth.of(year, 1);
+        var endOfTheYear = YearMonth.of(year, 12);
+        return repository.findAllByYearMonthRangeAndUsername(beginningOfTheYear, endOfTheYear, username)
+                .orElseThrow(() -> new IllegalArgumentException("No statistics found for the given criteria."))
+                .stream()
+                .map(mapper::mapToCardStatisticResponse)
+                .toList();
+    }
 
     @Async("ptdLiteTaskExecutor")
     public void incrementCardCounterPerMonth(LocalDateTime cardCreationTime, String username) {
@@ -46,7 +58,7 @@ public class CardStatisticsService {
     @Async("ptdLiteTaskExecutor")
     public void sumCarMileageInMonth(List<Trip> trips, String username) {
         var mapTripDateMileage = mapDayEndFromTrips(trips);
-        updateOrCreateStatistic(mapTripDateMileage, username);
+        updateOrCrateCardMileage(mapTripDateMileage, username);
     }
 
     private Map<YearMonth, Integer> mapDayEndFromTrips(List<Trip> trips) {
@@ -59,7 +71,7 @@ public class CardStatisticsService {
                 ));
     }
 
-    private void updateOrCreateStatistic(Map<YearMonth, Integer> mappedTripDateAndMileage, String username) {
+    private void updateOrCrateCardMileage(Map<YearMonth, Integer> mappedTripDateAndMileage, String username) {
         mappedTripDateAndMileage.forEach((key, value) -> repository.findByYearMonthAndUsername(key, username)
                 .ifPresentOrElse(statistic -> {
                     var summedMileage = new AtomicInteger(statistic.getCardMileage());

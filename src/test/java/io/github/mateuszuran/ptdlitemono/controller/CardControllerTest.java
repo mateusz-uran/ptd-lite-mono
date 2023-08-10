@@ -6,6 +6,7 @@ import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
+import io.github.mateuszuran.ptdlitemono.repository.CardStatisticsRepository;
 import io.github.mateuszuran.ptdlitemono.service.HourRateService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +38,8 @@ class CardControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private CardRepository repository;
+    @Autowired
+    private CardStatisticsRepository statisticsRepository;
     @Autowired
     private ObjectMapper mapper;
 
@@ -165,7 +168,7 @@ class CardControllerTest {
 
     @WithMockUser(username = "john", authorities = {"read:rates"})
     @Test
-    void rates() throws Exception {
+    void givenUsername_whenRatesExists_thenReturnSelectedUserJsonRates() throws Exception {
         // given
         String username = "john";
         var jsonContent = helpers.expectedJsonValues()
@@ -183,5 +186,22 @@ class CardControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.username").value(username));
+    }
+
+    @WithMockUser(username = "john")
+    @Test
+    void givenUsernameAndYear_whenStatisticExists_thenReturnListOfPerYear() throws Exception {
+        //given
+        String username = "john";
+        int year = 2023;
+
+        var fakeCardStats = helpers.createCardStatisticList(username, year);
+        statisticsRepository.saveAllAndFlush(fakeCardStats);
+        //when + then
+        mockMvc.perform(get("/api/card/stat/year/{year}/{username}",year, username)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+
     }
 }
