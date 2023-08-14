@@ -14,10 +14,10 @@ public class AsyncTaskExecutorConfig {
     @Bean(name = "ptdLiteTaskExecutor")
     public Executor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setCorePoolSize(2); //default: 1
-        threadPoolTaskExecutor.setMaxPoolSize(10); //default: Integer.MAX_VALUE
-        threadPoolTaskExecutor.setQueueCapacity(20); // default: Integer.MAX_VALUE
-        threadPoolTaskExecutor.setKeepAliveSeconds(120); // default: 60 seconds
+        threadPoolTaskExecutor.setCorePoolSize(2);
+        threadPoolTaskExecutor.setMaxPoolSize(10);
+        threadPoolTaskExecutor.setQueueCapacity(20);
+        threadPoolTaskExecutor.setKeepAliveSeconds(120);
         threadPoolTaskExecutor.initialize();
         return threadPoolTaskExecutor;
     }
