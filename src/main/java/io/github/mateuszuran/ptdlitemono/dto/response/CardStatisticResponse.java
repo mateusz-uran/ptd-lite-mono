@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.YearMonth;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -13,4 +15,5 @@ public class CardStatisticResponse {
     private Long id;
     private int cardMileage;
     private int cardCounter;
+    private YearMonth yearMonth;
 }

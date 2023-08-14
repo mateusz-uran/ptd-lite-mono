@@ -35,6 +35,13 @@ public class CardStatisticsService {
                 .toList();
     }
 
+    public CardStatisticResponse getAllStatisticByYearAndMonthAndUsername(int year, int month, String username) {
+        var specificYearAndMonth = YearMonth.of(year, month);
+        var result = repository.findByYearMonthAndUsername(specificYearAndMonth, username)
+                .orElseThrow(() -> new IllegalArgumentException("No statistics found for the given criteria."));
+        return mapper.mapToCardStatisticResponse(result);
+    }
+
     @Async("ptdLiteTaskExecutor")
     public void incrementCardCounterPerMonth(LocalDateTime cardCreationTime, String username) {
         var yearMonth = cardCreationTime.query(YearMonth::from);

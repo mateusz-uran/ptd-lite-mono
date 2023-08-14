@@ -21,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -195,13 +196,33 @@ class CardControllerTest {
         String username = "john";
         int year = 2023;
 
-        var fakeCardStats = helpers.createCardStatisticList(username, year);
+        var fakeCardStats = helpers.createCardStatisticListWithRandomMonth(username, year);
         statisticsRepository.saveAllAndFlush(fakeCardStats);
         //when + then
         mockMvc.perform(get("/api/card/stat/year/{year}/{username}",year, username)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andDo(print())
+                .andExpect(jsonPath("$.[0].yearMonth").value("2023-03"))
+                .andExpect(jsonPath("$.[2].yearMonth").value("2023-06"));
+    }
 
+    @WithMockUser(username = "john")
+    @Test
+    void givenUsernameAndYearAndMonth_whenStatisticExists_thenReturnSpecificStatistic() throws Exception {
+        //given
+        String username = "john";
+        int year = 2023;
+        int month = 10;
+
+        var fakeCardStats = helpers.createCardStatisticListWithSpecificYearAndMonth(username, year, month);
+        statisticsRepository.saveAndFlush(fakeCardStats);
+        //when + then
+        mockMvc.perform(get("/api/card/stat/year/{year}/month/{month}/{username}",year, month, username)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.yearMonth").value("2023-10"))
+                .andExpect(jsonPath("$.cardMileage").value(300));
     }
 }

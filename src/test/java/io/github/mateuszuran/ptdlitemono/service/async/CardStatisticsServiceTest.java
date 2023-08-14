@@ -18,6 +18,7 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -130,12 +131,12 @@ class CardStatisticsServiceTest {
     }
 
     @Test
-    void givenYearMonthBeginAndEnd_whenFind_thenReturnStatisticOfTheYear() {
+    void givenYear_whenFindAllFromYear_thenReturnStatisticOfTheYear() {
         //given
         int year = 2022;
         String username = "johndoe123";
-        var statistic = helpers.createCardStatisticList(username, year);
-        var statResponse = helpers.createCardStatisticResponseList();
+        var statistic = helpers.createCardStatisticListWithRandomMonth(username, year);
+        var statResponse = helpers.createCardStatisticResponseListWithRandomMonth();
 
         var beginningOfTheYear = YearMonth.of(year, 1);
         var endOfTheYear = YearMonth.of(year, 12);
@@ -151,5 +152,50 @@ class CardStatisticsServiceTest {
         assertEquals(statResponse.get(0), result.get(0));
         assertEquals(statResponse.get(0).getCardCounter(), result.get(0).getCardCounter());
         assertEquals(590, result.get(2).getCardMileage());
+    }
+
+    @Test
+    void givenYear_whenNoStatExistsInYear_thenThrowException() {
+        //given
+        int year = 2022;
+        String username = "johndoe123";
+        var beginningOfTheYear = YearMonth.of(year, 1);
+        var endOfTheYear = YearMonth.of(year, 12);
+        when(repository.findAllByYearMonthRangeAndUsername(beginningOfTheYear, endOfTheYear, username)).thenReturn(Optional.empty());
+        //when + then
+        assertThatThrownBy(() -> service.getAllStatisticByYearAndUsername(year, username))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("No statistics found for the given criteria.");
+    }
+
+    @Test
+    void givenYearAndMonth_whenStatExists_thenReturnFromSpecificYearAndMonth() {
+        //given
+        int year = 2022;
+        int month = 6;
+        String username = "johndoe123";
+        var fakeCardStats = helpers.createCardStatisticListWithSpecificYearAndMonth(username, year, month);
+        var fakeCardStatResponse = helpers.createCardStatisticResponseListWithSpecificYearAndMonth(year, month);
+        when(repository.findByYearMonthAndUsername(YearMonth.of(year, month), username)).thenReturn(Optional.of(fakeCardStats));
+        when(mapper.mapToCardStatisticResponse(fakeCardStats)).thenReturn(fakeCardStatResponse);
+        //when
+        var result = service.getAllStatisticByYearAndMonthAndUsername(year, month, username);
+        //then
+        assertEquals(fakeCardStatResponse, result);
+        assertEquals(year, result.getYearMonth().getYear());
+        assertEquals(month, result.getYearMonth().getMonth().getValue());
+    }
+
+    @Test
+    void givenYearAndMonth_whenNoStatExistsInYearAndMonth_thenThrowException() {
+        //given
+        int year = 2022;
+        int month = 6;
+        String username = "johndoe123";
+        when(repository.findByYearMonthAndUsername(YearMonth.of(year, month), username)).thenReturn(Optional.empty());
+        //when + then
+        assertThatThrownBy(() -> service.getAllStatisticByYearAndMonthAndUsername(year, month, username))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("No statistics found for the given criteria.");
     }
 }

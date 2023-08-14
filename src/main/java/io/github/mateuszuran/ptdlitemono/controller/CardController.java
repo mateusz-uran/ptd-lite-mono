@@ -69,4 +69,12 @@ public class CardController {
     public ResponseEntity<List<CardStatisticResponse>> getAllStatisticFromYear(@PathVariable int year, @PathVariable String username) {
         return ResponseEntity.ok().body(statisticsService.getAllStatisticByYearAndUsername(year, username));
     }
+
+    @GetMapping("/stat/year/{year}/month/{month}/{username}")
+    public ResponseEntity<CardStatisticResponse> getAllStatisticFromYearByMonth(
+            @PathVariable int year,
+            @PathVariable int month,
+            @PathVariable String username) {
+        return ResponseEntity.ok().body(statisticsService.getAllStatisticByYearAndMonthAndUsername(year, month, username));
+    }
 }

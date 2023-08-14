@@ -289,7 +289,7 @@ public class PTDModelHelpers {
                 .users(List.of(johnsRates, willsRates)).build();
     }
 
-    public List<CardStatistics> createCardStatisticList(String username, int year) {
+    public List<CardStatistics> createCardStatisticListWithRandomMonth(String username, int year) {
         CardStatistics stat1 = CardStatistics.builder()
                 .username(username)
                 .yearMonth(YearMonth.of(year, 3))
@@ -308,7 +308,15 @@ public class PTDModelHelpers {
         return List.of(stat1, stat2, stat3);
     }
 
-    public List<CardStatisticResponse> createCardStatisticResponseList() {
+    public CardStatistics createCardStatisticListWithSpecificYearAndMonth(String username, int year, int month) {
+        return CardStatistics.builder()
+                .username(username)
+                .yearMonth(YearMonth.of(year, month))
+                .cardMileage(300)
+                .cardCounter(2).build();
+    }
+
+    public List<CardStatisticResponse> createCardStatisticResponseListWithRandomMonth() {
         CardStatisticResponse stat1 = CardStatisticResponse.builder()
                 .cardMileage(300)
                 .cardCounter(2).build();
@@ -319,5 +327,13 @@ public class PTDModelHelpers {
                 .cardMileage(590)
                 .cardCounter(6).build();
         return List.of(stat1, stat2, stat3);
+    }
+
+    public CardStatisticResponse createCardStatisticResponseListWithSpecificYearAndMonth(int year, int month) {
+        return CardStatisticResponse.builder()
+                .cardMileage(300)
+                .cardCounter(2)
+                .yearMonth(YearMonth.of(year, month))
+                .build();
     }
 }
