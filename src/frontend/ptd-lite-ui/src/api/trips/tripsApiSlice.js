@@ -24,26 +24,26 @@ export const tripApiSlice = apiSlice.injectEndpoints({
       },
     }),
     saveTrips: builder.mutation({
-      query: (tripPayload) => ({
-        url: `/trip/add?cardId=${tripPayload.cardId}`,
+      query: ({ cardId, trips }) => ({
+        url: `/trip/add?cardId=${cardId}`,
         method: 'POST',
-        body: tripPayload.trips,
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
-    }),
-    deleteTrips: builder.mutation({
-      query: (trips) => ({
-        url: '/trip',
-        method: 'DELETE',
         body: trips,
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
     }),
+    deleteTrips: builder.mutation({
+      query: ({ selectedTripIds, nickname }) => ({
+        url: `/trip?username=${nickname}`,
+        method: 'DELETE',
+        body: selectedTripIds,
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
+    }),
     editTrip: builder.mutation({
-      query: (tripPayload) => ({
-        url: `/trip/update?tripId=${tripPayload.tripId}`,
+      query: ({ tripId, updatedTrip }) => ({
+        url: `/trip/update?tripId=${tripId}`,
         method: 'PATCH',
-        body: tripPayload.updatedTrip,
+        body: updatedTrip,
       }),
       invalidatesTags: (result, error, arg) => [
         { type: 'Trips', id: arg.tripId },
@@ -58,18 +58,18 @@ export const tripApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
     }),
     addTripToExistingGroup: builder.mutation({
-      query: (tripGroupPayload) => ({
-        url: `/trip/addtogroup?groupId=${tripGroupPayload.groupId}`,
+      query: ({ tripIds, groupId }) => ({
+        url: `/trip/addtogroup?groupId=${groupId}`,
         method: 'PATCH',
-        body: tripGroupPayload.tripIds,
+        body: tripIds,
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
     }),
     removeTripFromGroup: builder.mutation({
-      query: (tripGroupPayload) => ({
-        url: `/trip/removefromgroup?groupId=${tripGroupPayload.groupId}`,
+      query: ({ tripIds, groupId }) => ({
+        url: `/trip/removefromgroup?groupId=${groupId}`,
         method: 'PATCH',
-        body: tripGroupPayload.tripIds,
+        body: tripIds,
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
     }),
@@ -81,10 +81,10 @@ export const tripApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
     }),
     updateTripGroupInformation: builder.mutation({
-      query: (tripGroupPayload) => ({
-        url: `/trip/updategroup?groupId=${tripGroupPayload.groupId}`,
+      query: ({ groupId, group }) => ({
+        url: `/trip/updategroup?groupId=${groupId}`,
         method: 'PATCH',
-        body: tripGroupPayload.request,
+        body: group,
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
     }),

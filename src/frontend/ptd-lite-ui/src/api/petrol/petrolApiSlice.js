@@ -24,18 +24,18 @@ export const petrolApiSlice = apiSlice.injectEndpoints({
       },
     }),
     savePetrol: builder.mutation({
-      query: (fuelPayload) => ({
-        url: `/fuel/petrol/addmultiple?cardId=${fuelPayload.cardId}`,
+      query: ({ cardId, petrol }) => ({
+        url: `/fuel/petrol/addmultiple?cardId=${cardId}`,
         method: 'POST',
-        body: fuelPayload.petrol,
+        body: petrol,
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Petrol', id: 'LIST' }],
     }),
     updatePetrol: builder.mutation({
-      query: (fuelPayload) => ({
-        url: `/fuel/petrol/update?fuelId=${fuelPayload.fuelId}`,
+      query: ({ fuelId, petrol }) => ({
+        url: `/fuel/petrol/update?fuelId=${fuelId}`,
         method: 'PATCH',
-        body: fuelPayload.petrol,
+        body: petrol,
       }),
       invalidatesTags: (result, error, arg) => [
         { type: 'Petrol', id: arg.fuelId },

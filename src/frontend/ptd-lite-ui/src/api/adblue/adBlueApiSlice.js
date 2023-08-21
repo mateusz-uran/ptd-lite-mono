@@ -24,18 +24,18 @@ export const blueApiSlice = apiSlice.injectEndpoints({
       },
     }),
     saveAdBlue: builder.mutation({
-      query: (fuelPayload) => ({
-        url: `/fuel/blue/addmultiple?cardId=${fuelPayload.cardId}`,
+      query: ({ cardId, blue }) => ({
+        url: `/fuel/blue/addmultiple?cardId=${cardId}`,
         method: 'POST',
-        body: fuelPayload.blue,
+        body: blue,
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'AdBlue', id: 'LIST' }],
     }),
     updateAdBlue: builder.mutation({
-      query: (fuelPayload) => ({
-        url: `/fuel/blue/update?blueId=${fuelPayload.blueId}`,
+      query: ({ blueId, blue }) => ({
+        url: `/fuel/blue/update?blueId=${blueId}`,
         method: 'PATCH',
-        body: fuelPayload.blue,
+        body: blue,
       }),
       invalidatesTags: (result, error, arg) => [
         { type: 'AdBlue', id: arg.blueId },

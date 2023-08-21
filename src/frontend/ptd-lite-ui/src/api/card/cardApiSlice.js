@@ -15,8 +15,8 @@ export const cardApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'Card', id: arg }],
     }),
     getCardsFromArchive: builder.query({
-      query: (payload) =>
-        `/card/archive?username=${payload.username}&firstDate=${payload.firstDate}&secondDate=${payload.secondDate}`,
+      query: ({ username, firstDate, secondDate }) =>
+        `/card/archive?username=${username}&firstDate=${firstDate}&secondDate=${secondDate}`,
       providesTags: (result = [], error, arg) => [
         'Card',
         'cardsBigList',

@@ -25,20 +25,22 @@ const Archives = () => {
   const startDateRange = useSelector(startDateFromRange);
   const endDateRange = useSelector(endDateFromRange);
 
-  let payload = {
-    username: user.nickname,
-    firstDate: String(startDateRange),
-    secondDate: String(endDateRange),
-  };
   const {
     data: allCards,
     isSuccess,
     isError,
     isLoading,
     refetch,
-  } = useGetCardsFromArchiveQuery(payload, {
-    skip: !skipStatus,
-  });
+  } = useGetCardsFromArchiveQuery(
+    {
+      username: user.nickname,
+      firstDate: String(startDateRange),
+      secondDate: String(endDateRange),
+    },
+    {
+      skip: !skipStatus,
+    }
+  );
 
   archiveBody = (
     <div className="card-wrapper">

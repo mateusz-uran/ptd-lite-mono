@@ -70,6 +70,23 @@ public class CardStatisticsService {
         log.info("Car mileage per month has been increased.");
     }
 
+    @Async("ptdLiteTaskExecutor")
+    public void removeCarMileageInMonth(List<Trip> trips, String username) {
+        var mapTripDateMileage = mapDayEndFromTrips(trips);
+        updateCardMileage(mapTripDateMileage, username);
+        log.info("Car mileage per month has been decreased.");
+    }
+
+    private void updateCardMileage(Map<YearMonth, Integer> mappedTripDateAndMileage, String username) {
+        mappedTripDateAndMileage.forEach((key, value) -> repository.findByYearMonthAndUsername(key, username)
+                .ifPresent(statistic -> {
+                    var summedMileage = new AtomicInteger(statistic.getCardMileage());
+                    summedMileage.addAndGet(-value);
+                    statistic.setCardMileage(summedMileage.get());
+                    repository.save(statistic);
+                }));
+    }
+
     private Map<YearMonth, Integer> mapDayEndFromTrips(List<Trip> trips) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return trips.stream()

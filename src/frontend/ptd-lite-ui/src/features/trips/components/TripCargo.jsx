@@ -39,11 +39,10 @@ const TripCargo = ({ group }) => {
   const handleAddTripToGroup = async () => {
     try {
       const selectedTripIds = selectedTrips.map((trip) => trip.id);
-      let tripGroupPayload = {
+      await addTripToExistingGroup({
         tripIds: selectedTripIds,
         groupId: group.id,
-      };
-      await addTripToExistingGroup(tripGroupPayload).unwrap();
+      }).unwrap();
       dispatch(clearSelectedTrips());
       toast.success(t('toasitfy.cargoAddSuccess'));
     } catch (err) {
@@ -55,11 +54,10 @@ const TripCargo = ({ group }) => {
   const handleRemoveTripFromGroup = async () => {
     try {
       const selectedTripIds = selectedTrips.map((trip) => trip.id);
-      let tripGroupPayload = {
+      await removeTripFromGroup({
         tripIds: selectedTripIds,
         groupId: group.id,
-      };
-      await removeTripFromGroup(tripGroupPayload).unwrap();
+      }).unwrap();
       dispatch(clearSelectedTrips());
       toast.success(t('toastify.cargoRemoveSuccess'));
     } catch (err) {

@@ -51,20 +51,10 @@ const FuelEditForm = () => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    let fuelPayload = {};
-
     if (modalType === 'petrol') {
-      fuelPayload = {
-        fuelId: data.id,
-        petrol: data,
-      };
-      await updatePetrol(fuelPayload).unwrap();
+      await updatePetrol({ fuelId: data.id, petrol: data }).unwrap();
     } else if (modalType === 'blue') {
-      fuelPayload = {
-        blueId: data.id,
-        blue: data,
-      };
-      await updateAdBlue(fuelPayload).unwrap();
+      await updateAdBlue({ blueId: data.id, blue: data }).unwrap();
     }
     dispatch(stopEditingFuel());
   };

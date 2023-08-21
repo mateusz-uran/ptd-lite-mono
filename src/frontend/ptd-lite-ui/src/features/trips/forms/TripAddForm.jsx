@@ -38,11 +38,7 @@ const TripAddForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      let tripPayload = {
-        cardId: cardId,
-        trips: data.inputs,
-      };
-      await saveTrips(tripPayload).unwrap();
+      await saveTrips({ cardId, trips: data.inputs }).unwrap();
       navigate(-1);
     } catch (err) {
       console.log('Error: ', err);

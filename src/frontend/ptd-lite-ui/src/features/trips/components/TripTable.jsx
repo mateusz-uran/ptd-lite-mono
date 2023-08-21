@@ -14,6 +14,7 @@ import {
   selectedTripArray,
 } from '../slices/tripSelectedSlice';
 import { toast } from 'react-toastify';
+import { getUsername } from '../../auth/auth0Slice';
 
 const TripTable = ({ cardId }) => {
   const { t } = useTranslation();
@@ -24,11 +25,12 @@ const TripTable = ({ cardId }) => {
   const { selectAll: selectAllTripsFromCard } = getTripSelectors(cardId);
   const tripEntities = useSelector(selectAllTripsFromCard);
   const selectedTrips = useSelector(selectedTripArray);
+  const nickname = useSelector(getUsername);
 
   const handleDelete = async () => {
     try {
       const selectedTripIds = selectedTrips.map((trip) => trip.id);
-      await deleteTrips(selectedTripIds).unwrap();
+      await deleteTrips({ selectedTripIds, nickname }).unwrap();
       dispatch(clearSelectedTrips());
       toast.success(t('toastify.deletedSuccesfully'));
     } catch (err) {

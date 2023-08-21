@@ -21,7 +21,10 @@ const TripEditCargoModal = ({ groupToEdit }) => {
       groupId: data.id,
       request: data,
     };
-    await updateTripGroupInformation(payload).unwrap();
+    await updateTripGroupInformation({
+      groupId: data.id,
+      group: data,
+    }).unwrap();
     dispatch(stopEditingCargo());
   };
 

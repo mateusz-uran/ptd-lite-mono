@@ -43,8 +43,8 @@ public class TripController {
     }
 
     @PatchMapping("/updategroup")
-    public ResponseEntity<TripGroupResponse> updateTripGroupInformation(@RequestParam Long groupId, @RequestBody TripGroupRequest request) {
-        return ResponseEntity.ok().body(groupService.editTripGroupInformation(groupId, request));
+    public ResponseEntity<TripGroupResponse> updateTripGroupInformation(@RequestParam Long groupId, @RequestBody TripGroupRequest group) {
+        return ResponseEntity.ok().body(groupService.editTripGroupInformation(groupId, group));
     }
 
     @PatchMapping("/addtogroup")
@@ -60,8 +60,8 @@ public class TripController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteSelectedTrips(@RequestBody List<Long> selectedTripId) {
-        service.deleteSelectedTrips(selectedTripId);
+    public ResponseEntity<?> deleteSelectedTrips(@RequestParam String username, @RequestBody List<Long> selectedTripId) {
+        service.deleteSelectedTrips(selectedTripId, username);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -5,20 +5,16 @@ import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripsEmptyException;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
-import io.github.mateuszuran.ptdlitemono.model.CardStatistics;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TripService {
@@ -45,9 +41,11 @@ public class TripService {
         statistics.sumCarMileageInMonth(savedTrips, card.getUsername());
     }
 
-    public void deleteSelectedTrips(List<Long> selectedTrips) {
+    public void deleteSelectedTrips(List<Long> selectedTrips, String username) {
         var result = repository.findAllByIdIn(selectedTrips).orElseThrow();
         repository.deleteAll(result);
+        //async
+        statistics.removeCarMileageInMonth(result, username);
     }
 
 
