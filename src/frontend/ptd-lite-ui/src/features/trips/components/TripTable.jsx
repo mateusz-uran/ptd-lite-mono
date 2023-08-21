@@ -7,12 +7,14 @@ import {
 } from '../../../api/trips/tripsApiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingDots from '../../../components/LoadingDots';
-import TripTableRow from './TripTableRow';
+import TripTableBody from './TripTableBody';
 import { useTranslation } from 'react-i18next';
 import {
   clearSelectedTrips,
   selectedTripArray,
 } from '../slices/tripSelectedSlice';
+import { toast } from 'react-toastify';
+
 const TripTable = ({ cardId }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -22,16 +24,20 @@ const TripTable = ({ cardId }) => {
   const { selectAll: selectAllTripsFromCard } = getTripSelectors(cardId);
   const tripEntities = useSelector(selectAllTripsFromCard);
   const selectedTrips = useSelector(selectedTripArray);
-  let tableContent;
-
-  const numRows = tripEntities?.length;
 
   const handleDelete = async () => {
-    const selectedTripIds = selectedTrips.map((trip) => trip.id);
-    await deleteTrips(selectedTripIds).unwrap();
-    dispatch(clearSelectedTrips());
+    try {
+      const selectedTripIds = selectedTrips.map((trip) => trip.id);
+      await deleteTrips(selectedTripIds).unwrap();
+      dispatch(clearSelectedTrips());
+      toast.success(t('toastify.deletedSuccesfully'));
+    } catch (err) {
+      toast.error(t('toastify.failDelete'));
+      console.log('Cant delete those trips: ', err);
+    }
   };
 
+  let tableContent;
   if (isLoading) {
     tableContent = (
       <tr>
@@ -40,15 +46,9 @@ const TripTable = ({ cardId }) => {
         </td>
       </tr>
     );
-  }
-
-  if (isSuccess && tripEntities?.length) {
-    tableContent = (
-      <TripTableRow tripEntities={tripEntities} numRows={numRows} />
-    );
-  }
-
-  if (isError && error.data?.statusCode === 404) {
+  } else if (isSuccess && tripEntities?.length) {
+    tableContent = <TripTableBody tripEntities={tripEntities} />;
+  } else if (isError && error.data?.statusCode === 404) {
     tableContent = (
       <tr>
         <td colSpan={13}>
@@ -56,9 +56,7 @@ const TripTable = ({ cardId }) => {
         </td>
       </tr>
     );
-  }
-
-  if (isError && error.data === undefined) {
+  } else if (isError && error.data === undefined) {
     tableContent = (
       <tr>
         <td colSpan={13}>

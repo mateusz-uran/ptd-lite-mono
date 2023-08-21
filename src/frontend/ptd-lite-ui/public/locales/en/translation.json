@@ -123,5 +123,19 @@
     "invoiceSelectDefault": "Select a country",
     "invoiceCopy": "Copy",
     "invoiceCopied": "Copied"
+  },
+  "toastify": {
+    "error": "Something went wrong",
+    "newCard": "Added new card",
+    "updateCardNumber": "Updated card number",
+    "deletedSuccesfully": "Successfuly deleted",
+    "errorAdding": "Couldn't add new rows",
+    "failDelete": "Deleting failed",
+    "cargoAddSuccess": "Added trip to cargo",
+    "cargoAddFail": "Cant add this trip to cargo",
+    "cargoRemoveSuccess": "Removed trip from cargo",
+    "cargoRemoveFail": "Cannot remove from cargo",
+    "additionalAddSuccess": "Save additional information",
+    "additionalAddFail": "Cannot additional information"
   }
 }

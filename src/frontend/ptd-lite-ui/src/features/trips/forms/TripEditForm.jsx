@@ -29,7 +29,6 @@ const TripEditForm = ({ tripToEdit }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    console.log(data);
     let tripPayload = {
       tripId: data.id,
       updatedTrip: data,

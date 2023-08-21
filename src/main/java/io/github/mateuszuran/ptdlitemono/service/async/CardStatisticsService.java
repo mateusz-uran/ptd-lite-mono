@@ -60,12 +60,14 @@ public class CardStatisticsService {
                             .build();
                     repository.save(statistic);
                 });
+        log.info("Card counter per month has been increased.");
     }
 
     @Async("ptdLiteTaskExecutor")
     public void sumCarMileageInMonth(List<Trip> trips, String username) {
         var mapTripDateMileage = mapDayEndFromTrips(trips);
         updateOrCrateCardMileage(mapTripDateMileage, username);
+        log.info("Car mileage per month has been increased.");
     }
 
     private Map<YearMonth, Integer> mapDayEndFromTrips(List<Trip> trips) {
@@ -90,6 +92,7 @@ public class CardStatisticsService {
                             .username(username)
                             .yearMonth(key)
                             .cardMileage(value)
+                            .cardCounter(1)
                             .build();
                     repository.save(statistic);
                 }));

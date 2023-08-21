@@ -11,7 +11,7 @@ import {
 } from '../slices/tripUpdateSlice';
 import TripCargo from './TripCargo';
 
-const TripTableRow = ({ tripEntities }) => {
+const TripTableBody = ({ tripEntities }) => {
   const dispatch = useDispatch();
   const selectTripToEdit = useSelector(tripToEdit);
   const isEditing = useSelector(editFormStatus);
@@ -90,4 +90,4 @@ const TripTableRow = ({ tripEntities }) => {
     </Fragment>
   ));
 };
-export default TripTableRow;
+export default TripTableBody;

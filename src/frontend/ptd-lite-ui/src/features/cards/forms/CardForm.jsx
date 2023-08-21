@@ -18,8 +18,9 @@ import {
 import { useTranslation } from 'react-i18next';
 import { translateCardInputs } from '../inputs/cardInputs';
 import { translateCardValidations } from '../inputs/cardsValidations';
-import LoadingDots from '../../../components/LoadingDots';
 import SmallLoader from '../../../components/SmallLoader';
+
+import { toast } from 'react-toastify';
 
 const CardForm = () => {
   const { t } = useTranslation();
@@ -32,8 +33,11 @@ const CardForm = () => {
   const editStatus = useSelector(isCardEditing);
   const cardId = useSelector(cardIdToUpdate);
   const cardNumber = useSelector(cardNumberToUpdate);
-  const [addNewCard, { isLoading }] = useAddNewCardMutation();
-  const [updateCard] = useUpdateCardMutation();
+
+  const [addNewCard, { isLoading: loadingNewCard }] = useAddNewCardMutation();
+  const [updateCard, { isLoading: loadingEditedCard }] =
+    useUpdateCardMutation();
+  let loadingStatus = loadingNewCard || loadingEditedCard;
 
   const {
     register,
@@ -44,30 +48,43 @@ const CardForm = () => {
     reset,
   } = useForm({ resolver: yupResolver(cardSchema) });
 
+  const createCardObject = (data, user, cardId, editStatus) => {
+    const card = {
+      number: data.cardNumber,
+    };
+
+    if (editStatus) {
+      card.id = cardId;
+    } else {
+      card.username = user.nickname;
+    }
+
+    return card;
+  };
+
   const onSubmit = async (data) => {
     try {
+      const card = createCardObject(data, user, cardId, editStatus);
+
       if (!editStatus) {
-        let card = {
-          number: data.cardNumber,
-          username: user.nickname,
-        };
         await addNewCard(card).unwrap();
+        toast.success(t('toastify.newCard'));
       } else {
-        let card = {
-          id: cardId,
-          number: data.cardNumber,
-        };
         await updateCard(card).unwrap();
         dispatch(stopEditing(false));
+        toast.success(t('toastify.updateCardNumber'));
       }
       reset();
     } catch (err) {
-      console.log(err);
       if (err.status === 409) {
         setError('number', {
           type: 'server',
           message: err.data.description,
         });
+        console.log('card exists');
+      } else {
+        toast.error(t('toastify.error'));
+        console.log('Error: ', err);
       }
     }
   };
@@ -105,8 +122,12 @@ const CardForm = () => {
         </div>
         <div className="button-wrapper">
           <div className="buttons">
-            <button type="submit" disabled={isLoading} className="small-btn">
-              {!isLoading ? (
+            <button
+              type="submit"
+              disabled={loadingStatus}
+              className="small-btn"
+            >
+              {!loadingStatus ? (
                 editStatus ? (
                   <span>{t('buttons.save')}</span>
                 ) : (
@@ -120,7 +141,8 @@ const CardForm = () => {
               type="button"
               className="small-btn revert-button"
               onClick={() => handleClearInput()}
-              disabled={isLoading}
+              disabled={loadingStatus}
+              title="stop editing / clear"
             >
               <MdSettingsBackupRestore className="revert" />
             </button>

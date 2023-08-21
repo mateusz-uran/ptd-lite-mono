@@ -1,13 +1,37 @@
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { openModal } from '../../modal/slices/modalSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  closeToastNotification,
+  isNotificationShown,
+  notificationType,
+  openModal,
+} from '../../modal/slices/modalSlice';
 import { Link, useLocation } from 'react-router-dom';
 import { updateCardStatus } from '../slices/updateCardSlice';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const CardItem = ({ cards }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const toastNotificationIsShown = useSelector(isNotificationShown);
+  const toastNotificationType = useSelector(notificationType);
+
+  useEffect(() => {
+    if (toastNotificationIsShown) {
+      if (toastNotificationType === 'success') {
+        toast.success(t('toastify.deletedSuccesfully'));
+      } else if (toastNotificationType === 'error') {
+        toast.error(t('toastify.failDelete'));
+      } else {
+        toast.warn(t('toastify.error'));
+      }
+      dispatch(closeToastNotification());
+    }
+  }, []);
+
   const formattedCards = cards.map((card) => {
     const creationTime = card.creationTime;
     const formattedDate = new Date(creationTime).toISOString().split('T')[0];

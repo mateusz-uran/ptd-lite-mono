@@ -25,6 +25,9 @@
   --small-btn-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
     rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
   margin-right: 5px;
+
+  /* ====== Toastify ====== */
+  --toastify-toast-min-height: 48px;
 }
 
 body {
@@ -166,6 +169,7 @@ body {
 .small-btn:disabled,
 .small-btn[disabled] {
   pointer-events: none;
+  opacity: 0.5;
 }
 
 /* ====== Forms ====== */
@@ -258,11 +262,6 @@ body {
 .form-wrapper .buttons-wrapper button.add {
   margin-right: 10px;
   font-size: 17px;
-  box-shadow: var(--small-btn-shadow);
-}
-
-.form-wrapper .buttons-wrapper button.submit {
-  box-shadow: var(--big-btn-shadow);
 }
 
 .form-wrapper .buttons-wrapper button.submit:hover {
@@ -313,7 +312,6 @@ body {
   .single-input
   p.trip-error {
   font-size: 10px;
-  white-space: nowrap;
 }
 
 /* Chrome, Safari, Edge, Opera */

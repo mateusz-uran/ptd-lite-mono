@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+import { toast } from 'react-toastify';
+
 const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
 const initialState = {
@@ -35,6 +37,7 @@ export const generatePdf = createAsyncThunk(
 
       URL.revokeObjectURL(objectURL);
     } catch (error) {
+      toast.error('Error generating PDF');
       console.error('Error generating PDF:', error);
       throw new Error('Failed to generate PDF');
     }
