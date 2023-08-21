@@ -122,5 +122,19 @@
     "invoiceSelectDefault": "Wybierz kraj",
     "invoiceCopy": "Kopiuj",
     "invoiceCopied": "Skopiowano"
+  },
+  "toastify": {
+    "error": "Coś poszło nie tak",
+    "newCard": "Dodano nową kartę",
+    "updateCardNumber": "Zaktualizowano numer karty",
+    "deletedSuccesfully": "Usunięto",
+    "errorAdding": "Nie można dodać",
+    "failDelete": "Nie można usunąć",
+    "cargoAddSuccess": "Dodano do ładunku",
+    "cargoAddFail": "Nie można dodać do ładunku",
+    "cargoRemoveSuccess": "Usunięto trasę z ładunku",
+    "cargoRemoveFail": "Nie można usunąć z ładunku",
+    "additionalAddSuccess": "Zapisano informację",
+    "additionalAddFail": "Nie można zapisać informacji"
   }
 }

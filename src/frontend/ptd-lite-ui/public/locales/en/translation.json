@@ -135,7 +135,7 @@
     "cargoAddFail": "Cant add this trip to cargo",
     "cargoRemoveSuccess": "Removed trip from cargo",
     "cargoRemoveFail": "Cannot remove from cargo",
-    "additionalAddSuccess": "Save additional information",
+    "additionalAddSuccess": "Saved additional information",
     "additionalAddFail": "Cannot additional information"
   }
 }
