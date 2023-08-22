@@ -9,12 +9,14 @@ import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
 import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TripService {
@@ -61,12 +63,18 @@ public class TripService {
                 .collect(Collectors.toList());
     }
 
-    public TripResponse editSingleTrip(Long tripId, TripRequest request) {
+    public TripResponse editSingleTrip(Long tripId, TripRequest request, String username) {
         var tripToEdit = repository.findById(tripId).orElseThrow(TripsEmptyException::new);
+        var storeTripToEditMileage = tripToEdit.getCarMileage();
         genericMapper.mergeTwoDifferentObjects(request, tripToEdit);
         var mileage = subtractCarMileage(tripToEdit.getCounterStart(), tripToEdit.getCounterEnd());
         tripToEdit.setCarMileage(mileage);
         var updatedTrip = repository.save(tripToEdit);
+        //async - update card car mileage when mileage has changed
+        if (!storeTripToEditMileage.equals(updatedTrip.getCarMileage())) {
+            var tripDifference = updatedTrip.getCarMileage() - storeTripToEditMileage;
+            statistics.updateCarMileageInMonth(updatedTrip, tripDifference, username);
+        }
         return tripMapper.mapToTripResponse(updatedTrip);
     }
 

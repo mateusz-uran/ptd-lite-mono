@@ -199,7 +199,7 @@ class CardControllerTest {
         var fakeCardStats = helpers.createCardStatisticListWithRandomMonth(username, year);
         statisticsRepository.saveAllAndFlush(fakeCardStats);
         //when + then
-        mockMvc.perform(get("/api/card/stat/year/{year}/{username}",year, username)
+        mockMvc.perform(get("/api/card/stat/{year}/{username}",year, username)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -218,7 +218,7 @@ class CardControllerTest {
         var fakeCardStats = helpers.createCardStatisticListWithSpecificYearAndMonth(username, year, month);
         statisticsRepository.saveAndFlush(fakeCardStats);
         //when + then
-        mockMvc.perform(get("/api/card/stat/year/{year}/month/{month}/{username}",year, month, username)
+        mockMvc.perform(get("/api/card/stat/{year}/{month}/{username}",year, month, username)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())

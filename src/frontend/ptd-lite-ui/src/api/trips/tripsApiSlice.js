@@ -40,8 +40,8 @@ export const tripApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
     }),
     editTrip: builder.mutation({
-      query: ({ tripId, updatedTrip }) => ({
-        url: `/trip/update?tripId=${tripId}`,
+      query: ({ tripId, updatedTrip, username }) => ({
+        url: `/trip/update?username=${username}&tripId=${tripId}`,
         method: 'PATCH',
         body: updatedTrip,
       }),

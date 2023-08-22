@@ -71,6 +71,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return createErrorResponse(exception, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<ErrorMessage> handleTripHasGroup(IllegalArgumentException exception) {
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
+    }
+
     private ResponseEntity<ErrorMessage> createErrorResponse(Exception exception, HttpStatus httpStatus) {
         ErrorMessage message = new ErrorMessage(
                 httpStatus.value(),

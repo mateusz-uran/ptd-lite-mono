@@ -124,7 +124,11 @@ public class CardService {
 
     public void deleteCard(Long cardId) {
         repository.findById(cardId).ifPresentOrElse(
-                (card) -> repository.deleteById(card.getId()),
+                (card) -> {
+                    repository.deleteById(card.getId());
+                    //async
+                    statistics.decrementCardCounterPerMonth(card.getCreationTime(), card.getUsername());
+                },
                 () -> {
                     throw new CardNotFoundException();
                 });

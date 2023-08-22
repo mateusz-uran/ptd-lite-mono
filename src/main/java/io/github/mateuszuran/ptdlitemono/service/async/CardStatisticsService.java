@@ -15,6 +15,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -47,10 +48,11 @@ public class CardStatisticsService {
         var yearMonth = cardCreationTime.query(YearMonth::from);
 
         repository.findByYearMonthAndUsername(yearMonth, username)
-                .ifPresentOrElse(stat -> {
-                    int updatedCardCounter = stat.getCardCounter() + 1;
-                    stat.setCardCounter(updatedCardCounter);
-                    repository.save(stat);
+                .ifPresentOrElse(statistics -> {
+                    var cardCounter = new AtomicInteger(statistics.getCardCounter());
+                    cardCounter.addAndGet(1);
+                    statistics.setCardCounter(cardCounter.get());
+                    repository.save(statistics);
                 }, () -> {
                     CardStatistics statistic = CardStatistics.builder()
                             .username(username)
@@ -64,6 +66,19 @@ public class CardStatisticsService {
     }
 
     @Async("ptdLiteTaskExecutor")
+    public void decrementCardCounterPerMonth(LocalDateTime cardCreationTime, String username) {
+        var yearMonth = cardCreationTime.query(YearMonth::from);
+        repository.findByYearMonthAndUsername(yearMonth, username)
+                .ifPresent(statistics -> {
+                    var cardCounter = new AtomicInteger(statistics.getCardCounter());
+                    cardCounter.addAndGet(-1);
+                    statistics.setCardCounter(cardCounter.get());
+                    repository.save(statistics);
+                    log.info("Card counter per month has been decreased.");
+                });
+    }
+
+    @Async("ptdLiteTaskExecutor")
     public void sumCarMileageInMonth(List<Trip> trips, String username) {
         var mapTripDateMileage = mapDayEndFromTrips(trips);
         updateOrCrateCardMileage(mapTripDateMileage, username);
@@ -73,11 +88,28 @@ public class CardStatisticsService {
     @Async("ptdLiteTaskExecutor")
     public void removeCarMileageInMonth(List<Trip> trips, String username) {
         var mapTripDateMileage = mapDayEndFromTrips(trips);
-        updateCardMileage(mapTripDateMileage, username);
+        updateCardMileageWhenDeletedTrip(mapTripDateMileage, username);
         log.info("Car mileage per month has been decreased.");
     }
 
-    private void updateCardMileage(Map<YearMonth, Integer> mappedTripDateAndMileage, String username) {
+    @Async("ptdLiteTaskExecutor")
+    public void updateCarMileageInMonth(Trip trip, int diff, String username) {
+        updateCardMileageWhenUpdatedTrip(trip, diff, username);
+        log.info("Car mileage per month has been updated dew to trip update.");
+    }
+
+    private void updateCardMileageWhenUpdatedTrip(Trip trip, int tripMileageDifference, String username) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        var tripYearMonth = YearMonth.parse(trip.getDayEnd(), formatter);
+        var result = repository.findByYearMonthAndUsername(tripYearMonth, username)
+                .orElseThrow(() -> new NoSuchElementException("Statistics not found"));
+        var summedMileage = new AtomicInteger(result.getCardMileage());
+        summedMileage.addAndGet(tripMileageDifference);
+        result.setCardMileage(summedMileage.get());
+        repository.save(result);
+    }
+
+    private void updateCardMileageWhenDeletedTrip(Map<YearMonth, Integer> mappedTripDateAndMileage, String username) {
         mappedTripDateAndMileage.forEach((key, value) -> repository.findByYearMonthAndUsername(key, username)
                 .ifPresent(statistic -> {
                     var summedMileage = new AtomicInteger(statistic.getCardMileage());

@@ -38,8 +38,8 @@ public class TripController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<TripResponse> updateSingleTrip(@RequestParam Long tripId, @RequestBody TripRequest request) {
-        return ResponseEntity.ok().body(service.editSingleTrip(tripId, request));
+    public ResponseEntity<TripResponse> updateSingleTrip(@RequestParam String username, @RequestParam Long tripId, @RequestBody TripRequest request) {
+        return ResponseEntity.ok().body(service.editSingleTrip(tripId, request, username));
     }
 
     @PatchMapping("/updategroup")
