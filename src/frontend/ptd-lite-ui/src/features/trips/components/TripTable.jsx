@@ -32,7 +32,7 @@ const TripTable = ({ cardId }) => {
       const selectedTripIds = selectedTrips.map((trip) => trip.id);
       await deleteTrips({ selectedTripIds, nickname }).unwrap();
       dispatch(clearSelectedTrips());
-      toast.success(t('toastify.deletedSuccesfully'));
+      toast.info(t('toastify.deletedSuccesfully'));
     } catch (err) {
       toast.error(t('toastify.failDelete'));
       console.log('Cant delete those trips: ', err);

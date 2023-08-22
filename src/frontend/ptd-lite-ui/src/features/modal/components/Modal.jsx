@@ -12,7 +12,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDeleteTripGroupMutation } from '../../../api/trips/tripsApiSlice';
 import { useDeletePetrolMutation } from '../../../api/petrol/petrolApiSlice';
 import { useDeleteAdBlueMutation } from '../../../api/adblue/adBlueApiSlice';
-import { toast } from 'react-toastify';
 
 const Modal = () => {
   const { t } = useTranslation();

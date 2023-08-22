@@ -22,7 +22,7 @@ const CardItem = ({ cards }) => {
   useEffect(() => {
     if (toastNotificationIsShown) {
       if (toastNotificationType === 'success') {
-        toast.success(t('toastify.deletedSuccesfully'));
+        toast.info(t('toastify.deletedSuccesfully'));
       } else if (toastNotificationType === 'error') {
         toast.error(t('toastify.failDelete'));
       } else {

@@ -47,7 +47,7 @@ const Sidebar = () => {
             <li>
               <Link to={'dashboard'}>
                 <div className="icon-wrapper">
-                  <MdDashboard className="icon" />
+                  <MdDashboard className="icon" title={t('misc.dashboard')} />
                 </div>
                 <div className="text-wrapper">{t('misc.dashboard')}</div>
               </Link>
@@ -55,7 +55,7 @@ const Sidebar = () => {
             <li>
               <Link to={'cards'}>
                 <div className="icon-wrapper">
-                  <BsBook className="icon" />
+                  <BsBook className="icon" title={t('misc.cards')} />
                 </div>
                 <div className="text-wrapper">{t('misc.cards')}</div>
               </Link>
@@ -63,7 +63,10 @@ const Sidebar = () => {
             <li>
               <Link to={'stats'}>
                 <div className="icon-wrapper">
-                  <MdOutlineQueryStats className="icon" />
+                  <MdOutlineQueryStats
+                    className="icon"
+                    title={t('misc.stats')}
+                  />
                 </div>
                 <div className="text-wrapper">{t('misc.stats')}</div>
               </Link>
@@ -71,7 +74,7 @@ const Sidebar = () => {
             <li>
               <Link to={'archive'}>
                 <div className="icon-wrapper">
-                  <BsArchiveFill className="icon" />
+                  <BsArchiveFill className="icon" title={t('misc.arch')} />
                 </div>
                 <div className="text-wrapper">{t('misc.arch')}</div>
               </Link>

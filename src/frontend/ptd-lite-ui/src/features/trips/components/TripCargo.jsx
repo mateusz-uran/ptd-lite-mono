@@ -59,7 +59,7 @@ const TripCargo = ({ group }) => {
         groupId: group.id,
       }).unwrap();
       dispatch(clearSelectedTrips());
-      toast.success(t('toastify.cargoRemoveSuccess'));
+      toast.info(t('toastify.cargoRemoveSuccess'));
     } catch (err) {
       console.log('Cannot remove this trip from cargo: ', err);
       toast.error(t('toastify.cargoRemoveFail'));
