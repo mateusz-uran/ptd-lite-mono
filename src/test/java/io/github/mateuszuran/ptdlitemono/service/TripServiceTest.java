@@ -71,6 +71,7 @@ class TripServiceTest {
     @Test
     void givenTripsIdsList_whenFindAll_thenDelete() {
         //given
+        String username = "johndoe";
         Trip trip1 = Trip.builder().counterStart(111).counterEnd(222).build();
         Trip trip2 = Trip.builder().counterStart(333).counterEnd(444).build();
         Trip trip3 = Trip.builder().counterStart(555).counterEnd(666).build();
@@ -78,7 +79,7 @@ class TripServiceTest {
         List<Long> selectedTrips = List.of(1L, 2L, 3L);
         when(repository.findAllByIdIn(selectedTrips)).thenReturn(Optional.of(trips));
         //when
-        service.deleteSelectedTrips(List.of(1L, 2L, 3L));
+        service.deleteSelectedTrips(List.of(1L, 2L, 3L), username);
         //then
         verify(repository, times(1)).deleteAll(trips);
     }
@@ -124,6 +125,7 @@ class TripServiceTest {
     @Test
     void givenTripAndId_whenUpdate_thenReturnUpdatedObject() {
         //given
+        String username = "johndoe";
         Long tripId = 1L;
         Trip tripToUpdate = Trip.builder().counterStart(200).counterEnd(500).carMileage(300).build();
         TripRequest request = TripRequest.builder().counterStart(150).build();
@@ -137,7 +139,7 @@ class TripServiceTest {
         when(mapper.mapToTripResponse(updatedTrip)).thenReturn(expectedResponse);
 
         //when
-        TripResponse actualResponse = service.editSingleTrip(tripId, request);
+        TripResponse actualResponse = service.editSingleTrip(tripId, request, username);
 
         //then
         assertEquals(expectedResponse, actualResponse);
@@ -150,10 +152,11 @@ class TripServiceTest {
     @Test
     void givenTripId_whenUpdate_thenThrowException() {
         //given
+        String username = "johndoe";
         TripRequest request = TripRequest.builder().counterStart(150).build();
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
         //when + then
-        assertThatThrownBy(() -> service.editSingleTrip(anyLong(), request))
+        assertThatThrownBy(() -> service.editSingleTrip(anyLong(), request, username))
                 .isInstanceOf(TripsEmptyException.class)
                 .hasMessageContaining("Trips data is empty");
 

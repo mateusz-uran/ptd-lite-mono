@@ -192,6 +192,7 @@ class CardControllerTest {
     @WithMockUser(username = "john")
     @Test
     void givenUsernameAndYear_whenStatisticExists_thenReturnListOfPerYear() throws Exception {
+        statisticsRepository.deleteAll();
         //given
         String username = "john";
         int year = 2023;

@@ -53,6 +53,7 @@ public class CardStatisticsService {
                     cardCounter.addAndGet(1);
                     statistics.setCardCounter(cardCounter.get());
                     repository.save(statistics);
+                    log.info("Card counter per month has been increased.");
                 }, () -> {
                     CardStatistics statistic = CardStatistics.builder()
                             .username(username)
@@ -61,8 +62,8 @@ public class CardStatisticsService {
                             .cardMileage(0)
                             .build();
                     repository.save(statistic);
+                    log.info("Card counter per month has been created.");
                 });
-        log.info("Card counter per month has been increased.");
     }
 
     @Async("ptdLiteTaskExecutor")
@@ -98,6 +99,16 @@ public class CardStatisticsService {
         log.info("Car mileage per month has been updated dew to trip update.");
     }
 
+    private void updateCardMileageWhenDeletedTrip(Map<YearMonth, Integer> mappedTripDateAndMileage, String username) {
+        mappedTripDateAndMileage.forEach((key, value) -> repository.findByYearMonthAndUsername(key, username)
+                .ifPresent(statistic -> {
+                    var summedMileage = new AtomicInteger(statistic.getCardMileage());
+                    summedMileage.addAndGet(-value);
+                    statistic.setCardMileage(summedMileage.get());
+                    repository.save(statistic);
+                }));
+    }
+
     private void updateCardMileageWhenUpdatedTrip(Trip trip, int tripMileageDifference, String username) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         var tripYearMonth = YearMonth.parse(trip.getDayEnd(), formatter);
@@ -107,16 +118,6 @@ public class CardStatisticsService {
         summedMileage.addAndGet(tripMileageDifference);
         result.setCardMileage(summedMileage.get());
         repository.save(result);
-    }
-
-    private void updateCardMileageWhenDeletedTrip(Map<YearMonth, Integer> mappedTripDateAndMileage, String username) {
-        mappedTripDateAndMileage.forEach((key, value) -> repository.findByYearMonthAndUsername(key, username)
-                .ifPresent(statistic -> {
-                    var summedMileage = new AtomicInteger(statistic.getCardMileage());
-                    summedMileage.addAndGet(-value);
-                    statistic.setCardMileage(summedMileage.get());
-                    repository.save(statistic);
-                }));
     }
 
     private Map<YearMonth, Integer> mapDayEndFromTrips(List<Trip> trips) {

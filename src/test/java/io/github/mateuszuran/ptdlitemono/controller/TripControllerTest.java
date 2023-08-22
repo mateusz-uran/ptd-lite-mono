@@ -79,11 +79,13 @@ class TripControllerTest {
     @Test
     void givenCardIdAndIdList_whenDelete_thenReturnStatus() throws Exception {
         //given
+        String username = "johndoe123";
         Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).build();
         Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).build();
         repository.saveAllAndFlush(List.of(trip1, trip2));
         //when + then
         mockMvc.perform(delete("/api/trip")
+                        .param("username", username)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(List.of(trip1.getId(), trip2.getId()))))
                 .andExpect(status().isNoContent())
@@ -118,9 +120,11 @@ class TripControllerTest {
     @Test
     void givenTripIdAndObject_whenUpdate_thenReturnMappedObject() throws Exception {
         //given
+        String username = "johndoe123";
         Trip tripToUpdate = Trip.builder()
                 .counterStart(455)
                 .counterEnd(999)
+                .carMileage(544)
                 .build();
         repository.saveAndFlush(tripToUpdate);
         TripRequest request = TripRequest.builder()
@@ -129,6 +133,7 @@ class TripControllerTest {
         //when + then
         mockMvc.perform(patch("/api/trip/update")
                         .param("tripId", String.valueOf(tripToUpdate.getId()))
+                        .param("username", username)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -139,12 +144,14 @@ class TripControllerTest {
     @Test
     void givenTripIdAndObject_whenTripNotFound_thenReturnErrorMessage() throws Exception {
         //given
+        String username = "johndoe123";
         TripRequest request = TripRequest.builder()
                 .counterStart(300)
                 .build();
         //when + then
         mockMvc.perform(patch("/api/trip/update")
                         .param("tripId", String.valueOf(123L))
+                        .param("username", username)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound())
