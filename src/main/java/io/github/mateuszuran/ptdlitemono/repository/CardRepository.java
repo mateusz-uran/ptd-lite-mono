@@ -21,4 +21,5 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Query(value = "SELECT * FROM Cards WHERE username=:username ORDER BY creation_time DESC LIMIT 3", nativeQuery = true)
     List<Card> findLastThreeEntitiesByUsernameAndOrderByCreationTime(String username);
 
+    List<Card> findAllByUsername(String username);
 }

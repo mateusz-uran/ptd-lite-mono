@@ -16,10 +16,10 @@ const Auth0Wrapper = ({ children }) => {
     try {
       const token = await getAccessTokenSilently();
       dispatch(setAuthAccessToken({ token: token }));
-      setTokenLoading(false); // Token is now available
+      setTokenLoading(false);
     } catch (error) {
       console.log(error);
-      setTokenLoading(false); // Token fetching failed
+      setTokenLoading(false);
     }
   };
 

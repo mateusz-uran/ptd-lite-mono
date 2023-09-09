@@ -14,19 +14,15 @@ import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Fuel;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
-import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
-import lombok.RequiredArgsConstructor;
+import io.github.mateuszuran.ptdlitemono.service.async.AsyncStatisticService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +46,7 @@ class CardServiceTest {
     @Mock
     private TripMapper tripMapper;
     @Mock
-    private CardStatisticsService statisticsService;
+    private AsyncStatisticService statisticsService;
 
     private PTDModelHelpers helpers;
 

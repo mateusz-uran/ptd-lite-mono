@@ -74,6 +74,41 @@ public class PTDModelHelpers {
         return time.format(formatter);
     }
 
+    public List<Card> cardModelFroStatistic(String username, LocalDateTime creationTimeFirstCard, LocalDateTime creationTimeSecondCard) {
+        List<Card> cards = new ArrayList<>();
+        Trip trip1 = Trip.builder()
+                .dayStart("10.07.2023")
+                .dayEnd("10.07.2023")
+                .counterStart(152321)
+                .counterEnd(152776)
+                .carMileage(455)
+                .build();
+        Trip trip2 = Trip.builder()
+                .dayStart("10.07.2023")
+                .dayEnd("11.07.2023")
+                .counterStart(152776)
+                .counterEnd(153121)
+                .carMileage(345)
+                .build();
+
+        Card card1 = Card.builder()
+                .id(2L)
+                .number("XYZ")
+                .username(username)
+                .creationTime(creationTimeFirstCard)
+                .trips(createTripsModel())
+                .build();
+        Card card2 = Card.builder()
+                .id(4L)
+                .number("ABC")
+                .username(username)
+                .creationTime(creationTimeSecondCard)
+                .trips(List.of(trip1, trip2))
+                .build();
+        cards.add(card1);
+        cards.add(card2);
+        return cards;
+    }
 
     public Card cardModelForPdf() {
         return Card.builder()

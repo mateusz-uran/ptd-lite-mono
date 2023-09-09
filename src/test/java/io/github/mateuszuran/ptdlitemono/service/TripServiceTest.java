@@ -7,10 +7,9 @@ import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
-import io.github.mateuszuran.ptdlitemono.model.CardStatistics;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
-import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
+import io.github.mateuszuran.ptdlitemono.service.async.AsyncStatisticService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +38,7 @@ class TripServiceTest {
     @Mock
     private GenericMapper genericMapper;
     @Mock
-    private CardStatisticsService statisticsService;
+    private AsyncStatisticService statisticsService;
     private PTDModelHelpers helpers;
 
     @BeforeEach

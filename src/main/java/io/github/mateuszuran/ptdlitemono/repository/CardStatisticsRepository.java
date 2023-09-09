@@ -14,11 +14,12 @@ public interface CardStatisticsRepository extends JpaRepository<CardStatistics, 
     @Query("SELECT cs FROM CardStatistics cs WHERE cs.yearMonth=:yearMonth AND cs.username=:username")
     Optional<CardStatistics> findByYearMonthAndUsername(@Param("yearMonth") YearMonth yearMonth, @Param("username") String username);
 
-    @Query("SELECT cs FROM CardStatistics cs WHERE cs.yearMonth BETWEEN :beginningOfTheYear AND :endOfTheYear AND cs.username = :username")
+    @Query("SELECT cs FROM CardStatistics cs WHERE cs.yearMonth BETWEEN :beginningOfTheYear AND :endOfTheYear AND cs.username = :username ORDER BY cs.yearMonth")
     Optional<List<CardStatistics>> findAllByYearMonthRangeAndUsername(
             @Param("beginningOfTheYear") YearMonth beginningOfTheYear,
             @Param("endOfTheYear") YearMonth endOfTheYear,
             @Param("username") String username
     );
 
+    List<CardStatistics> findAllByUsername(String username);
 }

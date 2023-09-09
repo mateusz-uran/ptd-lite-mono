@@ -4,7 +4,8 @@ import io.github.mateuszuran.ptdlitemono.dto.response.CardDetailsResponse;
 import io.github.mateuszuran.ptdlitemono.dto.request.CardRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.CardStatisticResponse;
-import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
+import io.github.mateuszuran.ptdlitemono.service.CardStatisticService;
+import io.github.mateuszuran.ptdlitemono.service.cronjob.StatisticCollector;
 import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.UserRates;
 import io.github.mateuszuran.ptdlitemono.service.CardService;
 import io.github.mateuszuran.ptdlitemono.service.HourRateService;
@@ -24,7 +25,9 @@ import java.util.List;
 public class CardController {
     private final CardService service;
     private final HourRateService hourRateService;
-    private final CardStatisticsService statisticsService;
+
+    private final CardStatisticService statisticsService;
+    private final StatisticCollector updater;
 
     @GetMapping
     public ResponseEntity<List<CardResponse>> getLastThreeCardsByMonth(@RequestParam String username) {
@@ -76,5 +79,13 @@ public class CardController {
             @PathVariable int month,
             @PathVariable String username) {
         return ResponseEntity.ok().body(statisticsService.getAllStatisticByYearAndMonthAndUsername(year, month, username));
+    }
+
+    //update stats testing method
+    // TODO: 06.09.2023 remove and create cron job based on that
+    @GetMapping("/stat/{username}")
+    public ResponseEntity<?> updateStatistics(@PathVariable String username) {
+        updater.statisticExecutor(username);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

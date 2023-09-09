@@ -7,7 +7,7 @@ import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
-import io.github.mateuszuran.ptdlitemono.service.async.CardStatisticsService;
+import io.github.mateuszuran.ptdlitemono.service.async.AsyncStatisticService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class TripService {
     private final TripMapper tripMapper;
     private final GenericMapper genericMapper;
 
-    private final CardStatisticsService statistics;
+    private final AsyncStatisticService statistics;
 
     public void addManyTrips(List<TripRequest> trips, Long cardId) {
         var card = service.checkIfCardExists(cardId);
