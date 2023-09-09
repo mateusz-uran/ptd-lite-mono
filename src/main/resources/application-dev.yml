@@ -10,6 +10,15 @@ frontend:
 backend:
   url: http://localhost:8080
 
+# Machine to Machine credentials #
+ptd:
+  lite:
+    machine-to-machine:
+      domain: ${M2M_DOMAIN}
+      audience: ${M2M_AUDIENCE}
+      client-secret: ${M2M_CLIENT_SECRET}
+      client-id: ${M2M_CLIENT_ID}
+
 spring:
   jpa:
     hibernate:

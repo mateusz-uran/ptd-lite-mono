@@ -5,6 +5,7 @@ import io.github.mateuszuran.ptdlitemono.dto.request.CardRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.CardStatisticResponse;
 import io.github.mateuszuran.ptdlitemono.service.CardStatisticService;
+import io.github.mateuszuran.ptdlitemono.service.cronjob.Auth0AccessTokenProvider;
 import io.github.mateuszuran.ptdlitemono.service.cronjob.StatisticCollector;
 import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.UserRates;
 import io.github.mateuszuran.ptdlitemono.service.CardService;
@@ -28,6 +29,8 @@ public class CardController {
 
     private final CardStatisticService statisticsService;
     private final StatisticCollector updater;
+
+    private final Auth0AccessTokenProvider provider;
 
     @GetMapping
     public ResponseEntity<List<CardResponse>> getLastThreeCardsByMonth(@RequestParam String username) {
@@ -87,5 +90,12 @@ public class CardController {
     public ResponseEntity<?> updateStatistics(@PathVariable String username) {
         updater.statisticExecutor(username);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/stat/token")
+    public ResponseEntity<?> callToken() throws IOException, InterruptedException {
+        var result = provider.callAccessToken();
+        log.info(result.body());
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }
