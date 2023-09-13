@@ -1,15 +1,15 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
-import io.github.mateuszuran.ptdlitemono.dto.response.CardDetailsResponse;
 import io.github.mateuszuran.ptdlitemono.dto.request.CardRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.CardDetailsResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.CardResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.CardStatisticResponse;
+import io.github.mateuszuran.ptdlitemono.service.CardService;
 import io.github.mateuszuran.ptdlitemono.service.CardStatisticService;
-import io.github.mateuszuran.ptdlitemono.service.cronjob.Auth0AccessTokenProvider;
+import io.github.mateuszuran.ptdlitemono.service.HourRateService;
+import io.github.mateuszuran.ptdlitemono.service.cronjob.Auth0UsersListProvider;
 import io.github.mateuszuran.ptdlitemono.service.cronjob.StatisticCollector;
 import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.UserRates;
-import io.github.mateuszuran.ptdlitemono.service.CardService;
-import io.github.mateuszuran.ptdlitemono.service.HourRateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class CardController {
     private final CardStatisticService statisticsService;
     private final StatisticCollector updater;
 
-    private final Auth0AccessTokenProvider provider;
+    private final Auth0UsersListProvider nicknamesProvider;
 
     @GetMapping
     public ResponseEntity<List<CardResponse>> getLastThreeCardsByMonth(@RequestParam String username) {
@@ -93,9 +93,9 @@ public class CardController {
     }
 
     @GetMapping("/stat/token")
-    public ResponseEntity<?> callToken() throws IOException, InterruptedException {
-        var result = provider.callAccessToken();
-        log.info(result.body());
-        return ResponseEntity.ok(HttpStatus.OK);
+    public String callToken() throws IOException, InterruptedException {
+        var nickname = nicknamesProvider.extractUsersNicknames();
+        log.info(String.valueOf(nickname));
+        return "test";
     }
 }
