@@ -46,6 +46,7 @@ public class StatisticUpdater {
                 statisticsRepository.save(newStatistic);
                 log.info("Created statistic for: " + yearMonth);
             }
+            log.info("Updating finished.");
         }
     }
 }

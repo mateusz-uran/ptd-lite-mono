@@ -1,8 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.service.cronjob;
 
 import io.github.mateuszuran.ptdlitemono.model.Card;
-import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.model.CardStatistics;
+import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
 import io.github.mateuszuran.ptdlitemono.repository.CardStatisticsRepository;
 import lombok.RequiredArgsConstructor;
