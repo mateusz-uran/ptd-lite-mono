@@ -83,19 +83,4 @@ public class CardController {
             @PathVariable String username) {
         return ResponseEntity.ok().body(statisticsService.getAllStatisticByYearAndMonthAndUsername(year, month, username));
     }
-
-    //update stats testing method
-    // TODO: 06.09.2023 remove and create cron job based on that
-    @GetMapping("/stat/{username}")
-    public ResponseEntity<?> updateStatistics(@PathVariable String username) {
-        updater.statisticExecutor(username);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/stat/token")
-    public String callToken() throws IOException, InterruptedException {
-        var nickname = nicknamesProvider.extractUsersNicknames();
-        log.info(String.valueOf(nickname));
-        return "test";
-    }
 }
