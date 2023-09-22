@@ -89,7 +89,8 @@
     "invoiceSelectedMid": "Średnia kursu",
     "invoiceHours": "Przejechane godziny",
     "invoiceCopyText": "Usługa transportowa na terytorium {{countryName}}\nKURS ROZLICZENIA WALUTY ŚREDNI NBP\nTabela numer {{currencyTable}} z dnia {{currencyDate}}\n{{currencyCode}}/PLN ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})",
-    "cardExists": "Karta z takim numerem już istnieje"
+    "cardExists": "Karta z takim numerem już istnieje",
+    "errorFirstPageInfo": "Wystąpił błąd, skontaktuj się z supportem PTD lub wróć później."
   },
   "buttons": {
     "browse": "Przeglądaj",

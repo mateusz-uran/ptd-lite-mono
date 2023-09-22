@@ -14,7 +14,8 @@ public class StatisticExecutor {
     private final Auth0UsersListProvider provider;
     private final StatisticCollector collector;
 
-    @Scheduled(cron = "0 0 14 * * *")
+    /** Every month on the 1st, at noon **/
+    @Scheduled(cron = "0 0 12 1 * ?")
     public void cronJobUpdateStats() {
         var users = provider.extractUsersNicknames();
 

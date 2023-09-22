@@ -1,20 +1,20 @@
-import '../css/archives.css';
-import { useTranslation } from 'react-i18next';
-import Header from './Header';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useGetCardsFromArchiveQuery } from '../api/card/cardApiSlice';
-import CardItem from '../features/cards/components/CardItem';
-import LoadingDots from './LoadingDots';
-import CardForm from '../features/cards/forms/CardForm';
+import "../css/archives.css";
+import { useTranslation } from "react-i18next";
+import Header from "./Header";
+import "react-datepicker/dist/react-datepicker.css";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useGetCardsFromArchiveQuery } from "../api/card/cardApiSlice";
+import CardItem from "../features/cards/components/CardItem";
+import LoadingDots from "./LoadingDots";
+import CardForm from "../features/cards/forms/CardForm";
 
-import DatePickersHolder from '../features/archive/DatePickersHolder';
-import { useSelector } from 'react-redux';
+import DatePickersHolder from "../features/archive/DatePickersHolder";
+import { useSelector } from "react-redux";
 import {
   endDateFromRange,
   isFetchingByDatesRange,
   startDateFromRange,
-} from '../features/archive/datesRangeSlice';
+} from "../features/archive/datesRangeSlice";
 
 const Archives = () => {
   const { t } = useTranslation();
@@ -45,7 +45,7 @@ const Archives = () => {
   archiveBody = (
     <div className="card-wrapper">
       <div className="single-card error">
-        <span>{t('misc.datePicker')}</span>
+        <span>{t("misc.datePicker")}</span>
       </div>
     </div>
   );
@@ -64,7 +64,7 @@ const Archives = () => {
     archiveBody = (
       <div className="card-wrapper">
         <div className="single-card error">
-          <span>{t('misc.errorMessage')}</span>
+          <span>{t("misc.errorMessage")}</span>
         </div>
       </div>
     );
@@ -78,7 +78,7 @@ const Archives = () => {
     archiveBody = (
       <div className="card-wrapper">
         <div className="single-card error">
-          <span>{t('misc.noCards')}.</span>
+          <span>{t("misc.noCards")}.</span>
         </div>
       </div>
     );
@@ -89,7 +89,7 @@ const Archives = () => {
       <Header
         compArray={[
           {
-            compName: t('misc.arch'),
+            compName: t("misc.arch"),
           },
         ]}
       />
