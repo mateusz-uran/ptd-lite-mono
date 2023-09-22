@@ -14,7 +14,7 @@ public class StatisticExecutor {
     private final Auth0UsersListProvider provider;
     private final StatisticCollector collector;
 
-    @Scheduled(cron = "0 59 17 * * *")
+    @Scheduled(cron = "0 0 14 * * *")
     public void cronJobUpdateStats() {
         var users = provider.extractUsersNicknames();
 
