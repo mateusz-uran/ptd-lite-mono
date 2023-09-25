@@ -138,5 +138,25 @@
     "cargoRemoveFail": "Cannot remove from cargo",
     "additionalAddSuccess": "Saved additional information",
     "additionalAddFail": "Cannot additional information"
+  },
+  "statistics": {
+    "mileage": "przebieg",
+    "headerPie": "Number of cards in each month",
+    "headerLine": "Mileage in each month",
+    "info1": "Statistics are updating each 1st month.",
+    "info2": "For now statistics are only available from 2023.",
+    "counter": "counter",
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
   }
 }

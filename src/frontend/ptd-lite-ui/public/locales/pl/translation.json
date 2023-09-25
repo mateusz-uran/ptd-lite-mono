@@ -137,5 +137,25 @@
     "cargoRemoveFail": "Nie można usunąć z ładunku",
     "additionalAddSuccess": "Zapisano informację",
     "additionalAddFail": "Nie można zapisać informacji"
+  },
+  "statistics": {
+    "mileage": "przebieg",
+    "headerPie": "Licznik kart w każdym miesiącu",
+    "headerLine": "Przebieg kilometrów w każdym miesiącu",
+    "info1": "Statystyki aktualizują się pierwszego każdego miesiąca.",
+    "info2": "Obecnie statystyki są dostępne tylko z 2023 roku.",
+    "counter": "ilość",
+    "january": "Styczeń",
+    "february": "Luty",
+    "march": "Marzec",
+    "april": "Kwiecień",
+    "may": "Maj",
+    "june": "Czerwiec",
+    "july": "Lipiec",
+    "august": "Sierpień",
+    "september": "Wrzesień",
+    "october": "Październik",
+    "november": "Listopad",
+    "december": "Grudzień"
   }
 }
