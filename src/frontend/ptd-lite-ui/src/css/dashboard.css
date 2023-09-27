@@ -1,6 +1,35 @@
 #dashboard {
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+#dashboard .skeleton-modal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: rgba(204, 204, 204, 0.4);
+  z-index: 1500;
+  height: fit-content;
+  width: fit-content;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 3rem;
+  border: 2px solid var(--primary-color);
+}
+
+#dashboard .skeleton-modal p {
+  font-weight: bold;
+}
+
+#dashboard .skeleton-modal a {
+  margin-top: 10px;
 }
 
 #dashboard .btn-manage {
@@ -8,6 +37,10 @@
   align-items: center;
   margin-top: 1rem;
   margin-left: 5px;
+}
+
+#dashboard .btn-manage .disabled-link {
+  pointer-events: none;
 }
 
 #dashboard .btn-manage .small-manage-btn {
@@ -19,9 +52,92 @@
   margin: 10px 0;
 }
 
+.btn-manage-skeleton {
+  background: var(--skeleton-color);
+  display: flex;
+  max-width: 180px;
+  border-radius: 5px;
+}
+
+.dash-manage-skeleton .manage {
+  display: flex;
+  width: 90px;
+  height: 25px;
+  width: 90px;
+  height: 25px;
+  border-radius: 5px;
+  background: var(--skeleton-color);
+  margin-bottom: 5px;
+  margin-left: 3px;
+}
+
+.dash-manage-skeleton .buttons-wrapper > * {
+  background: var(--skeleton-color);
+  min-width: 90px;
+  min-height: 25px;
+  margin: 0 3px;
+  border-radius: 5px;
+}
+
+#dashboard .trip-manage,
+#dashboard .petrol-manage,
+#dashboard .adblue-manage {
+  margin: 15px 0;
+}
+
+.manage-skeleton span {
+  display: flex;
+  background: var(--skeleton-color);
+  width: 90px;
+  height: 25px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.manage-skeleton .table-skeleton .skeleton-table {
+  min-height: 50px;
+  background: var(--skeleton-color);
+  border-radius: 5px;
+}
+
+.manage-skeleton .table-skeleton .skeleton-table table tr,
+.manage-skeleton .table-skeleton .skeleton-table table th,
+.manage-skeleton .table-skeleton .skeleton-table table td {
+  border: 0;
+}
+
+#dashboard .stats-skeleton section {
+  display: flex;
+}
+
+#dashboard .stats-skeleton section .linear {
+  background: #f3f3f3;
+  width: 550px;
+  height: 250px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+#dashboard .stats-skeleton section .pie {
+  background: #eeeeee;
+  width: 370px;
+  height: 250px;
+  border-radius: 5px;
+}
+
 @media screen and (max-width: 1256px) {
   #dashboard .trip-manage {
     overflow-x: scroll;
+  }
+
+  #dashboard .stats-skeleton section {
+    flex-direction: column;
+    overflow-x: scroll;
+  }
+
+  #dashboard .stats-skeleton section .linear,
+  #dashboard .stats-skeleton section .pie {
+    margin-bottom: 5px;
   }
 }
 
@@ -29,5 +145,11 @@
   #dashboard .petrol-manage,
   #dashboard .adblue-manage {
     overflow-x: scroll;
+  }
+}
+
+@media screen and (max-width: 690px) {
+  .dash-manage-skeleton .buttons-wrapper > * {
+    margin-top: 3px;
   }
 }

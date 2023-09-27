@@ -123,7 +123,8 @@
     "countInvoice": "Faktura",
     "invoiceSelectDefault": "Wybierz kraj",
     "invoiceCopy": "Kopiuj",
-    "invoiceCopied": "Skopiowano"
+    "invoiceCopied": "Skopiowano",
+    "refresh": "Odśwież"
   },
   "toastify": {
     "error": "Coś poszło nie tak",
@@ -145,6 +146,7 @@
     "headerLine": "Przebieg kilometrów w każdym miesiącu",
     "info1": "Statystyki aktualizują się pierwszego każdego miesiąca.",
     "info2": "Obecnie statystyki są dostępne tylko z 2023 roku.",
+    "error": "Coś poszło nie tak, spróbuj odświeżyć.",
     "counter": "ilość",
     "january": "Styczeń",
     "february": "Luty",
@@ -160,6 +162,7 @@
     "december": "Grudzień"
   },
   "dashboard": {
-    "chosenCard": "Wybrana karta"
+    "chosenCard": "Wybrana karta",
+    "modal": "Wybierz kartę aby przeglądać informacje."
   }
 }

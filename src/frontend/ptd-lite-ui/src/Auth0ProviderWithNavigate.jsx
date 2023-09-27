@@ -32,7 +32,7 @@ const Auth0ProviderWithNavigate = ({ children }) => {
               className="secondary-btn"
               onClick={() => window.location.reload(false)}
             >
-              Refresh
+              {t("buttons.refresh")}
             </button>
           </div>
         </div>
