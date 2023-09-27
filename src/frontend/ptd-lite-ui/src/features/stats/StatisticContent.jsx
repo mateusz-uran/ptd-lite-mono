@@ -32,10 +32,18 @@ const StatisticContent = ({ fetchData }) => {
     sectionContent = <LoadingDots />;
   }
 
+  if (isSuccess && Boolean(statisticFromYear.length == 0)) {
+    sectionContent = (
+      <div className="stat-error">
+        <p>{t("statistics.error2")}</p>
+      </div>
+    );
+  }
+
   if (isError) {
     sectionContent = (
       <div className="stat-error">
-        <p>{t("statistics.error")}</p>
+        <p>{t("statistics.error1")}</p>
         <button
           className="secondary-btn"
           onClick={() => window.location.reload(false)}
@@ -64,6 +72,7 @@ const StatisticContent = ({ fetchData }) => {
   var mappedStatistics =
     !isLoading &&
     isSuccess &&
+    statisticFromYear.length !== 0 &&
     statisticFromYear?.map((item) => {
       const [year, month] = item.yearMonth.split("-");
       const monthName = `${monthNames[parseInt(month) - 1]}`;
@@ -74,7 +83,7 @@ const StatisticContent = ({ fetchData }) => {
       };
     });
 
-  if (!isLoading && isSuccess) {
+  if (!isLoading && isSuccess && statisticFromYear.length !== 0) {
     sectionContent = (
       <>
         <MileageLineChart stat={mappedStatistics}></MileageLineChart>

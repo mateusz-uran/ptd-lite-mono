@@ -18,6 +18,8 @@
 #statistics .stat-error {
   padding: 2rem;
   text-align: center;
+  background: var(--toggle-color);
+  border-radius: 5px;
 }
 
 #statistics .stat-error p {
