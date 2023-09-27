@@ -29,3 +29,12 @@ spring:
         jwt:
           audience: ${AUTH0_AUDIENCE}
           issuer-uri: ${AUTH0_ISSUER_URI}
+
+# Machine to Machine credentials #
+ptd:
+  lite:
+    machine-to-machine:
+      domain: ${M2M_DOMAIN}
+      audience: ${M2M_AUDIENCE}
+      client-secret: ${M2M_CLIENT_SECRET}
+      client-id: ${M2M_CLIENT_ID}
