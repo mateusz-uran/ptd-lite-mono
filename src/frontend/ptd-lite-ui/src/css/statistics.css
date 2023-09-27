@@ -1,0 +1,52 @@
+#statistics section {
+  display: flex;
+}
+
+#statistics section .piechart,
+#statistics section .linechart {
+  text-align: center;
+  padding: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin: 0 3px;
+}
+
+#statistics p {
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+#statistics .stat-error {
+  padding: 2rem;
+  text-align: center;
+}
+
+#statistics .stat-error p {
+  font-size: 17px;
+}
+
+#statistics .stat-error button {
+  margin-top: 5px;
+}
+
+#statistics .info {
+  display: flex;
+  flex-direction: column;
+}
+
+#statistics .info > small {
+  margin-top: 3px;
+}
+
+@media screen and (max-width: 1256px) {
+  #statistics section {
+    flex-direction: column;
+  }
+
+  #statistics section .piechart,
+  #statistics section .linechart {
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

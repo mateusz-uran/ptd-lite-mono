@@ -1,16 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit';
-import auht0Reducer from './features/auth/auth0Slice';
-import updateCardReducer from './features/cards/slices/updateCardSlice';
-import tripUpdateReducer from './features/trips/slices/tripUpdateSlice';
-import fuelEditReducer from './features/fuel/slices/fuelEditSlice';
-import additionalInfoReducer from './features/additionalInfo/additionalInfoSlice';
-import { apiSlice } from './api/apiSlice';
-import modalReducer from './features/modal/slices/modalSlice';
-import pdfApiReducer from './api/pdf/pdfApiSlice';
-import datesRangeReducer from './features/archive/datesRangeSlice';
-import tripSelectedReducer from './features/trips/slices/tripSelectedSlice';
-import tripCargoUpdateReducer from './features/trips/slices/tripCargoUpdateSlice';
-import currencyApiReducer from './api/currency/currencyApiSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import auht0Reducer from "./features/auth/auth0Slice";
+import updateCardReducer from "./features/cards/slices/updateCardSlice";
+import tripUpdateReducer from "./features/trips/slices/tripUpdateSlice";
+import fuelEditReducer from "./features/fuel/slices/fuelEditSlice";
+import additionalInfoReducer from "./features/additionalInfo/additionalInfoSlice";
+import { apiSlice } from "./api/apiSlice";
+import modalReducer from "./features/modal/slices/modalSlice";
+import pdfApiReducer from "./api/pdf/pdfApiSlice";
+import datesRangeReducer from "./features/archive/datesRangeSlice";
+import tripSelectedReducer from "./features/trips/slices/tripSelectedSlice";
+import tripCargoUpdateReducer from "./features/trips/slices/tripCargoUpdateSlice";
+import currencyApiReducer from "./api/currency/currencyApiSlice";
+import petrolContentToggleReducer from "./features/fuel/slices/petrolContentToggleSlice";
+import adBlueContentToggleReducer from "./features/fuel/slices/adBlueContentToggleSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +28,8 @@ export const store = configureStore({
     tripSelected: tripSelectedReducer,
     tripCargoUpdate: tripCargoUpdateReducer,
     currency: currencyApiReducer,
+    petrolContentToggle: petrolContentToggleReducer,
+    adBlueContentToggle: adBlueContentToggleReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

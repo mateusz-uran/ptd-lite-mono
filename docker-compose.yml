@@ -12,3 +12,35 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.35.0
+    container_name: prometheus
+    restart: unless-stopped
+    networks:
+      - prometheus_grafana_network
+    ports:
+      - 9090:9090
+    volumes:
+      - ./data/prometheus/config:/etc/prometheus/
+      - D:/ptd/ptd-lite-mono/ptd-lite-mono/data/prometheus/config/prometheus.yaml:/prometheus.yaml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    networks:
+      - prometheus_grafana_network
+    ports:
+      - 3000:3000
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_DOMAIN=localhost
+
+networks:
+  prometheus_grafana_network:
+    driver: bridge

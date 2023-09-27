@@ -6,11 +6,12 @@ import { translatedTripSingleSchema } from '../inputs/tripValidations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { translateTripInputs } from '../inputs/tripInputs';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { stopEditing } from '../slices/tripUpdateSlice';
 import { createPortal } from 'react-dom';
 import { useEditTripMutation } from '../../../api/trips/tripsApiSlice';
 import { useTranslation } from 'react-i18next';
+import { getUsername } from '../../auth/auth0Slice';
 
 const TripEditForm = ({ tripToEdit }) => {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ const TripEditForm = ({ tripToEdit }) => {
   const [editTrip] = useEditTripMutation();
   const tripInputs = translateTripInputs();
   const tripSchemaSingle = translatedTripSingleSchema();
+  const username = useSelector(getUsername);
 
   const {
     handleSubmit,
@@ -29,12 +31,7 @@ const TripEditForm = ({ tripToEdit }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    console.log(data);
-    let tripPayload = {
-      tripId: data.id,
-      updatedTrip: data,
-    };
-    await editTrip(tripPayload);
+    await editTrip({ tripId: data.id, updatedTrip: data, username });
     dispatch(stopEditing());
   };
 

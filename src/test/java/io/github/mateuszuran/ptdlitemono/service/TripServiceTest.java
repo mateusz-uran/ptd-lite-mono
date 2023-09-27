@@ -3,16 +3,20 @@ package io.github.mateuszuran.ptdlitemono.service;
 import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripsEmptyException;
+import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
+import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.repository.TripRepository;
+import io.github.mateuszuran.ptdlitemono.service.async.AsyncStatisticService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,15 +37,40 @@ class TripServiceTest {
     private TripMapper mapper;
     @Mock
     private GenericMapper genericMapper;
+    @Mock
+    private AsyncStatisticService statisticsService;
+    private PTDModelHelpers helpers;
 
     @BeforeEach
     void setUp() {
-        service = new TripService(repository, cardService, mapper, genericMapper);
+        service = new TripService(repository, cardService, mapper, genericMapper, statisticsService);
+        helpers = new PTDModelHelpers();
     }
 
     @Test
-    void givenIdList_whenFindAll_thenDelete() {
+    void givenTripRequestListAndCardId_whenSave_thenDoNothing() {
         //given
+        List<Trip> emptyTripsList = new ArrayList<>();
+        Long cardId = 123L;
+        Card existingCard = Card.builder().number("XYZ").trips(emptyTripsList).build();
+        when(cardService.checkIfCardExists(cardId)).thenReturn(existingCard);
+
+        var tripRequest = helpers.createTripRequest();
+        var tripsModel = helpers.createTripsModel();
+        when(genericMapper.mapToEntityModel(tripRequest.get(0), Trip.class)).thenReturn(tripsModel.get(0));
+        when(genericMapper.mapToEntityModel(tripRequest.get(1), Trip.class)).thenReturn(tripsModel.get(1));
+        when(genericMapper.mapToEntityModel(tripRequest.get(2), Trip.class)).thenReturn(tripsModel.get(2));
+        //when
+        service.addManyTrips(tripRequest, cardId);
+        //then
+        verify(cardService).checkIfCardExists(cardId);
+        verify(repository).saveAll(anyList());
+    }
+
+    @Test
+    void givenTripsIdsList_whenFindAll_thenDelete() {
+        //given
+        String username = "johndoe";
         Trip trip1 = Trip.builder().counterStart(111).counterEnd(222).build();
         Trip trip2 = Trip.builder().counterStart(333).counterEnd(444).build();
         Trip trip3 = Trip.builder().counterStart(555).counterEnd(666).build();
@@ -49,7 +78,7 @@ class TripServiceTest {
         List<Long> selectedTrips = List.of(1L, 2L, 3L);
         when(repository.findAllByIdIn(selectedTrips)).thenReturn(Optional.of(trips));
         //when
-        service.deleteSelectedTrips(List.of(1L, 2L, 3L));
+        service.deleteSelectedTrips(List.of(1L, 2L, 3L), username);
         //then
         verify(repository, times(1)).deleteAll(trips);
     }
@@ -81,8 +110,21 @@ class TripServiceTest {
     }
 
     @Test
+    void givenCardId_whenTripsAreEmpty_thenThrowException() {
+        //given
+        Long cardId = 123L;
+        List<Trip> emptyList = new ArrayList<>();
+        when(repository.findAllTripsByCardId(cardId)).thenReturn(Optional.of(emptyList));
+        //when + then
+        assertThatThrownBy(() -> service.getAllTripsFromCard(cardId))
+                .isInstanceOf(TripsEmptyException.class)
+                .hasMessageContaining("Trips data is empty");
+    }
+
+    @Test
     void givenTripAndId_whenUpdate_thenReturnUpdatedObject() {
         //given
+        String username = "johndoe";
         Long tripId = 1L;
         Trip tripToUpdate = Trip.builder().counterStart(200).counterEnd(500).carMileage(300).build();
         TripRequest request = TripRequest.builder().counterStart(150).build();
@@ -96,7 +138,7 @@ class TripServiceTest {
         when(mapper.mapToTripResponse(updatedTrip)).thenReturn(expectedResponse);
 
         //when
-        TripResponse actualResponse = service.editSingleTrip(tripId, request);
+        TripResponse actualResponse = service.editSingleTrip(tripId, request, username);
 
         //then
         assertEquals(expectedResponse, actualResponse);
@@ -109,12 +151,26 @@ class TripServiceTest {
     @Test
     void givenTripId_whenUpdate_thenThrowException() {
         //given
+        String username = "johndoe";
         TripRequest request = TripRequest.builder().counterStart(150).build();
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
         //when + then
-        assertThatThrownBy(() -> service.editSingleTrip(anyLong(), request))
+        assertThatThrownBy(() -> service.editSingleTrip(anyLong(), request, username))
                 .isInstanceOf(TripsEmptyException.class)
                 .hasMessageContaining("Trips data is empty");
 
+    }
+
+    @Test
+    void givenCardId_whenGetLastTrip_thenReturnOneTrip() {
+       //given
+        Trip trip = Trip.builder().counterEnd(100600).build();
+        TripResponse tripResponse2 = TripResponse.builder().counterEnd(100600).build();
+        when(repository.findTopByCardIdOrderByCounterEndDesc(anyLong())).thenReturn(trip);
+        when(mapper.mapToTripResponse(trip)).thenReturn(tripResponse2);
+        //when
+        var result = service.getLastTripFromCard(anyLong());
+        //then
+        assertEquals(result.getCounterEnd(), trip.getCounterEnd());
     }
 }

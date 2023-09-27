@@ -1,3 +1,3 @@
-﻿username;truckModel;truckType;truckLicencePlate;truckLeftTankFuelCapacity;truckRightTankFuelCapacity;truckFullTankCapacity;truckAdBlueCapacity;trailerType;trailerLicensePlate;trailerFuelCapacity;truckImageLink;truckImageDescription
-john;test;ab-123;lop123;100;200;300;40;fridge;lop321;100;link;test1/test2
-will;test2;zx-987;lop987;200;300;400;50;lorry;lop789;200;link2;test3/test4
+﻿username;truckModel;truckType;truckLicencePlate;truckLeftTankFuelCapacity;truckRightTankFuelCapacity;truckFullTankCapacity;truckAdBlueCapacity;trailerType;trailerLicensePlate;trailerFuelCapacity;truckImageLink;truckImageDescription;ceoDetailsLink;driverSurname
+john;test;ab-123;lop123;100;200;300;40;fridge;lop321;100;link;test1/test2;ceoLink1;doe
+will;test2;zx-987;lop987;200;300;400;50;lorry;lop789;200;link2;test3/test4;ceoLink2;smith

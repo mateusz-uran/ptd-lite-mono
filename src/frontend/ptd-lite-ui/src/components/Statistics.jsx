@@ -1,5 +1,6 @@
-import { useTranslation } from 'react-i18next';
-import Header from './Header';
+import Header from "./Header";
+import StatisticContent from "../features/stats/StatisticContent";
+import { useTranslation } from "react-i18next";
 
 const Statistics = () => {
   const { t } = useTranslation();
@@ -8,11 +9,11 @@ const Statistics = () => {
       <Header
         compArray={[
           {
-            compName: t('misc.stats'),
+            compName: t("misc.stats"),
           },
         ]}
       />
-      <section>stats</section>
+      <StatisticContent />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useSaveTripsMutation } from '../../../api/trips/tripsApiSlice';
 import { translateTripInputs } from '../inputs/tripInputs';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const TripAddForm = () => {
   const { t } = useTranslation();
@@ -37,14 +38,11 @@ const TripAddForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      let tripPayload = {
-        cardId: cardId,
-        trips: data.inputs,
-      };
-      await saveTrips(tripPayload).unwrap();
+      await saveTrips({ cardId, trips: data.inputs }).unwrap();
       navigate(-1);
     } catch (err) {
-      console.log(err);
+      console.log('Error: ', err);
+      toast.error(t('toastify.errorAdding'));
     }
   };
 
@@ -117,6 +115,7 @@ const TripAddForm = () => {
             onClick={() => remove(index)}
             disabled={fields.length === 1}
             className="small-btn remove"
+            title="remove row"
           >
             <IoIosRemove />
           </button>
@@ -124,7 +123,12 @@ const TripAddForm = () => {
       ))}
 
       <div className="buttons-wrapper">
-        <button type="button" onClick={handleAddRow} className="small-btn add">
+        <button
+          type="button"
+          onClick={handleAddRow}
+          className="small-btn add"
+          title="add new row"
+        >
           <GrFormAdd />
         </button>
 

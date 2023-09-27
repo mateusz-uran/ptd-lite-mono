@@ -66,6 +66,7 @@
     "petrolTableEmpty": "Brak tankowań w karcie",
     "blueTableEmpty": "Brak adBlue w karcie",
     "tripHead": "Trasy",
+    "tripSmallHead": "Ostatnia trasa",
     "petrolHead": "Paliwo",
     "blueHead": "AdBlue",
     "additonalHead": "Końcowe informacje",
@@ -88,8 +89,9 @@
     "invoiceCountry": "Stawka wybranego kraju",
     "invoiceSelectedMid": "Średnia kursu",
     "invoiceHours": "Przejechane godziny",
-    "invoiceCopyText": "Usługa transportowa na terytorium {{countryName}}\nKURS ROZLICZENIA WALUTY ŚREDNI NBP\nTabela numer {{currencyTable}} z dnia {{currencyDate}}\n{{currencyCode}}/PLN ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})",
-    "cardExists": "Karta z takim numerem już istnieje"
+    "invoiceCopyText": "Usługa transportowa na terytorium {{countryName}}\nKURS ROZLICZENIA WALUTY ŚREDNI NBP\nTabela numer {{currencyTable}} z dnia {{currencyDate}}\n{{currencyCode}}/PLN = {{currencyRate}} ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})",
+    "cardExists": "Karta z takim numerem już istnieje",
+    "errorFirstPageInfo": "Wystąpił błąd, skontaktuj się z supportem PTD lub wróć później."
   },
   "buttons": {
     "browse": "Przeglądaj",
@@ -122,5 +124,42 @@
     "invoiceSelectDefault": "Wybierz kraj",
     "invoiceCopy": "Kopiuj",
     "invoiceCopied": "Skopiowano"
+  },
+  "toastify": {
+    "error": "Coś poszło nie tak",
+    "newCard": "Dodano nową kartę",
+    "updateCardNumber": "Zaktualizowano numer karty",
+    "deletedSuccesfully": "Usunięto",
+    "errorAdding": "Nie można dodać",
+    "failDelete": "Nie można usunąć",
+    "cargoAddSuccess": "Dodano do ładunku",
+    "cargoAddFail": "Nie można dodać do ładunku",
+    "cargoRemoveSuccess": "Usunięto trasę z ładunku",
+    "cargoRemoveFail": "Nie można usunąć z ładunku",
+    "additionalAddSuccess": "Zapisano informację",
+    "additionalAddFail": "Nie można zapisać informacji"
+  },
+  "statistics": {
+    "mileage": "przebieg",
+    "headerPie": "Licznik kart w każdym miesiącu",
+    "headerLine": "Przebieg kilometrów w każdym miesiącu",
+    "info1": "Statystyki aktualizują się pierwszego każdego miesiąca.",
+    "info2": "Obecnie statystyki są dostępne tylko z 2023 roku.",
+    "counter": "ilość",
+    "january": "Styczeń",
+    "february": "Luty",
+    "march": "Marzec",
+    "april": "Kwiecień",
+    "may": "Maj",
+    "june": "Czerwiec",
+    "july": "Lipiec",
+    "august": "Sierpień",
+    "september": "Wrzesień",
+    "october": "Październik",
+    "november": "Listopad",
+    "december": "Grudzień"
+  },
+  "dashboard": {
+    "chosenCard": "Wybrana karta"
   }
 }

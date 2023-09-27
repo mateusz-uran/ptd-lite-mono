@@ -21,10 +21,6 @@ public class PdfService {
     @Value("${pdf.csv.link}")
     private String csvLink;
 
-    public void setCsvLink(String csvLink) {
-        this.csvLink = csvLink;
-    }
-
     public UserPdfInformationSkeleton getUserInformation(String username) {
         return csvReader.readCsvFile(UserPdfInformationSkeleton.class, csvLink).stream()
                 .filter(user -> user.getUsername().equals(username))

@@ -1,5 +1,5 @@
-import { createEntityAdapter, createSelector } from '@reduxjs/toolkit';
-import { apiSlice } from '../apiSlice';
+import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import { apiSlice } from "../apiSlice";
 
 const petrolApiAdatper = createEntityAdapter();
 
@@ -15,39 +15,39 @@ export const petrolApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => {
         if (!error) {
           return [
-            { type: 'Petrol', id: 'LIST' },
-            ...result.ids.map((id) => ({ type: 'Petrol', id })),
+            { type: "Petrol", id: "LIST" },
+            ...result.ids.map((id) => ({ type: "Petrol", id })),
           ];
         } else {
-          return [{ type: 'Petrol', id: 'LIST' }];
+          return [{ type: "Petrol", id: "LIST" }];
         }
       },
     }),
     savePetrol: builder.mutation({
-      query: (fuelPayload) => ({
-        url: `/fuel/petrol/addmultiple?cardId=${fuelPayload.cardId}`,
-        method: 'POST',
-        body: fuelPayload.petrol,
+      query: ({ cardId, petrol }) => ({
+        url: `/fuel/petrol/addmultiple?cardId=${cardId}`,
+        method: "POST",
+        body: petrol,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Petrol', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [{ type: "Petrol", id: "LIST" }],
     }),
     updatePetrol: builder.mutation({
-      query: (fuelPayload) => ({
-        url: `/fuel/petrol/update?fuelId=${fuelPayload.fuelId}`,
-        method: 'PATCH',
-        body: fuelPayload.petrol,
+      query: ({ fuelId, petrol }) => ({
+        url: `/fuel/petrol/update?fuelId=${fuelId}`,
+        method: "PATCH",
+        body: petrol,
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: 'Petrol', id: arg.fuelId },
+        { type: "Petrol", id: arg.fuelId },
       ],
     }),
     deletePetrol: builder.mutation({
       query: (fuelId) => ({
         url: `/fuel/petrol/delete?fuelId=${fuelId}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: 'Petrol', id: arg.fuelId },
+        { type: "Petrol", id: arg.fuelId },
       ],
     }),
   }),

@@ -1,8 +1,8 @@
 package io.github.mateuszuran.ptdlitemono.controller;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.TripGroupRequest;
-import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
+import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripResponse;
 import io.github.mateuszuran.ptdlitemono.service.TripGroupService;
 import io.github.mateuszuran.ptdlitemono.service.TripService;
@@ -25,6 +25,11 @@ public class TripController {
         return ResponseEntity.ok().body(service.getAllTripsFromCard(cardId));
     }
 
+    @GetMapping("/last")
+    public ResponseEntity<TripResponse> getLastTripInCard(@RequestParam Long cardId) {
+        return ResponseEntity.ok().body(service.getLastTripFromCard(cardId));
+    }
+
     @PostMapping("/add")
     public ResponseEntity<?> addListOfTripsToCard(@RequestBody List<TripRequest> trips, @RequestParam Long cardId) {
         service.addManyTrips(trips, cardId);
@@ -38,13 +43,13 @@ public class TripController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<TripResponse> updateSingleTrip(@RequestParam Long tripId, @RequestBody TripRequest request) {
-        return ResponseEntity.ok().body(service.editSingleTrip(tripId, request));
+    public ResponseEntity<TripResponse> updateSingleTrip(@RequestParam String username, @RequestParam Long tripId, @RequestBody TripRequest request) {
+        return ResponseEntity.ok().body(service.editSingleTrip(tripId, request, username));
     }
 
     @PatchMapping("/updategroup")
-    public ResponseEntity<TripGroupResponse> updateTripGroupInformation(@RequestParam Long groupId, @RequestBody TripGroupRequest request) {
-        return ResponseEntity.ok().body(groupService.editTripGroupInformation(groupId, request));
+    public ResponseEntity<TripGroupResponse> updateTripGroupInformation(@RequestParam Long groupId, @RequestBody TripGroupRequest group) {
+        return ResponseEntity.ok().body(groupService.editTripGroupInformation(groupId, group));
     }
 
     @PatchMapping("/addtogroup")
@@ -60,8 +65,8 @@ public class TripController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteSelectedTrips(@RequestBody List<Long> selectedTripId) {
-        service.deleteSelectedTrips(selectedTripId);
+    public ResponseEntity<?> deleteSelectedTrips(@RequestParam String username, @RequestBody List<Long> selectedTripId) {
+        service.deleteSelectedTrips(selectedTripId, username);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ class TripControllerTest {
         Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).build();
         Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).build();
         //when + then
-        mockMvc.perform(post("/api/trip")
+        mockMvc.perform(post("/api/trip/add")
                         .param("cardId", String.valueOf(card.getId()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(List.of(trip1, trip2))))
@@ -78,11 +79,13 @@ class TripControllerTest {
     @Test
     void givenCardIdAndIdList_whenDelete_thenReturnStatus() throws Exception {
         //given
+        String username = "johndoe123";
         Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).build();
         Trip trip2 = Trip.builder().counterStart(300).counterEnd(400).build();
         repository.saveAllAndFlush(List.of(trip1, trip2));
         //when + then
         mockMvc.perform(delete("/api/trip")
+                        .param("username", username)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(List.of(trip1.getId(), trip2.getId()))))
                 .andExpect(status().isNoContent())
@@ -117,9 +120,11 @@ class TripControllerTest {
     @Test
     void givenTripIdAndObject_whenUpdate_thenReturnMappedObject() throws Exception {
         //given
+        String username = "johndoe123";
         Trip tripToUpdate = Trip.builder()
                 .counterStart(455)
                 .counterEnd(999)
+                .carMileage(544)
                 .build();
         repository.saveAndFlush(tripToUpdate);
         TripRequest request = TripRequest.builder()
@@ -128,6 +133,7 @@ class TripControllerTest {
         //when + then
         mockMvc.perform(patch("/api/trip/update")
                         .param("tripId", String.valueOf(tripToUpdate.getId()))
+                        .param("username", username)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -138,12 +144,14 @@ class TripControllerTest {
     @Test
     void givenTripIdAndObject_whenTripNotFound_thenReturnErrorMessage() throws Exception {
         //given
+        String username = "johndoe123";
         TripRequest request = TripRequest.builder()
                 .counterStart(300)
                 .build();
         //when + then
         mockMvc.perform(patch("/api/trip/update")
                         .param("tripId", String.valueOf(123L))
+                        .param("username", username)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound())
@@ -205,20 +213,26 @@ class TripControllerTest {
     @Test
     void givenTripsIds_whenRemoveTripsFromGroup_thenReturnStatusIsOk() throws Exception {
         //given
-        Trip trip1 = Trip.builder().id(1L).build();
-        Trip trip2 = Trip.builder().id(2L).build();
+        Trip trip1 = Trip.builder().build();
+        Trip trip2 = Trip.builder().build();
         repository.saveAll(List.of(trip1, trip2));
-        Long groupId = 1L;
+
+        Long groupId = 2L;
         TripGroup existingGroup = TripGroup.builder()
                 .id(groupId)
-                .trips(new ArrayList<>(Arrays.asList(trip1, trip2)))
+                .trips(new ArrayList<>())
                 .build();
+        groupRepository.save(existingGroup);
+
+
+        existingGroup.addTripsToGroup(trip1);
+        existingGroup.addTripsToGroup(trip2);
         groupRepository.save(existingGroup);
         //when + then
         mockMvc.perform(patch("/api/trip/removefromgroup")
                         .param("groupId", String.valueOf(groupId))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(Arrays.asList(1L, 2L))))
+                        .content(mapper.writeValueAsString(Arrays.asList(trip1.getId(), trip2.getId()))))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -226,15 +240,23 @@ class TripControllerTest {
     @Test
     void givenTripsIds_whenRemoveTripsFromNotExistingGroup_thenReturnErrorMessage() throws Exception {
         //given
-        Trip trip1 = Trip.builder().id(1L).build();
-        Trip trip2 = Trip.builder().id(2L).build();
+        Trip trip1 = Trip.builder().build();
+        Trip trip2 = Trip.builder().build();
         repository.saveAll(List.of(trip1, trip2));
-        Long groupId = 1L;
+        Long existingGroupId = 1L;
+        Long nonExistingGroupId = 123L;
+        TripGroup existingGroup = TripGroup.builder()
+                .id(existingGroupId)
+                .trips(new ArrayList<>())
+                .build();
+        existingGroup.addTripsToGroup(trip1);
+        existingGroup.addTripsToGroup(trip2);
+        groupRepository.save(existingGroup);
         //when + then
         mockMvc.perform(patch("/api/trip/removefromgroup")
-                        .param("groupId", String.valueOf(groupId))
+                        .param("groupId", String.valueOf(nonExistingGroupId))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(Arrays.asList(1L, 2L))))
+                        .content(mapper.writeValueAsString(Arrays.asList(trip1.getId(), trip2.getId()))))
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Group not found"));
@@ -297,5 +319,20 @@ class TripControllerTest {
                 .andExpect(status().isNotFound())
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Group not found"));
+    }
+
+    @Test
+    void givenCardId_whenGetLastTrip_thenReturnTripObject() throws Exception {
+        //given
+        Trip trip1 = Trip.builder().counterEnd(100600).card(card).build();
+        Trip trip2 = Trip.builder().counterEnd(100800).card(card).build();
+        repository.saveAll(List.of(trip1, trip2));
+        //when
+        mockMvc.perform(get("/api/trip/last")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.counterEnd").value("100800"));
     }
 }

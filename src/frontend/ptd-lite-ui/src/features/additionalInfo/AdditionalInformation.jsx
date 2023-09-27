@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdditionalInfo, saveAdditionalData } from './additionalInfoSlice';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const AdditionalInformation = () => {
   const { t } = useTranslation();
@@ -23,7 +24,13 @@ const AdditionalInformation = () => {
   }, [additionalInfo]);
 
   const onSubmit = (data) => {
-    dispatch(saveAdditionalData(data));
+    try {
+      dispatch(saveAdditionalData(data));
+      toast.success(t('toastify.additionalAddSuccess'));
+    } catch (err) {
+      console.log('Cant save additional info: ', err);
+      toast.error(t('toastify.additionalAddFail'));
+    }
   };
 
   return (

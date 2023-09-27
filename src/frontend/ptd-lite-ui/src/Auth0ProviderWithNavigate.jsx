@@ -1,7 +1,10 @@
-import { Auth0Provider } from '@auth0/auth0-react';
-import { useNavigate } from 'react-router-dom';
+import { Auth0Provider } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
+import { AiTwotoneMail } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 
 const Auth0ProviderWithNavigate = ({ children }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const domain = import.meta.env.VITE_AUTH0_DOMAIN;
@@ -14,7 +17,27 @@ const Auth0ProviderWithNavigate = ({ children }) => {
   };
 
   if (!(domain && clientId && redirectUri && audience)) {
-    return null;
+    return (
+      <>
+        <div id="first_layer">
+          <div className="info-wrapper">
+            <h3>{t("misc.errorFirstPageInfo")}</h3>
+            <span>
+              <AiTwotoneMail className="icon" />
+              <a href="mailto: ptd-lite-support@gmail.com">
+                ptd-lite-support@gmail.com
+              </a>
+            </span>
+            <button
+              className="secondary-btn"
+              onClick={() => window.location.reload(false)}
+            >
+              Refresh
+            </button>
+          </div>
+        </div>
+      </>
+    );
   }
 
   return (

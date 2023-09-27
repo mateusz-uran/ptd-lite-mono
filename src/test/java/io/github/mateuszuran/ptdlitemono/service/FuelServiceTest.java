@@ -1,8 +1,10 @@
 package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.FuelRequest;
+import io.github.mateuszuran.ptdlitemono.dto.request.TripRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.FuelResponse;
 import io.github.mateuszuran.ptdlitemono.exception.PetrolEmptyException;
+import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
 import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
@@ -35,10 +37,45 @@ class FuelServiceTest {
     private FuelMapper mapper;
     @Mock
     private GenericMapper genericMapper;
+    private PTDModelHelpers helpers;
 
     @BeforeEach
     void setUp() {
         service = new FuelService(cardService, mapper, repository, genericMapper);
+        helpers = new PTDModelHelpers();
+    }
+
+    @Test
+    void givenFuelList_whenSave_thenDoNothing() {
+        //given
+        List<Fuel> emptyFuelList = new ArrayList<>();
+        Long cardId = 123L;
+        Card existingCard = Card.builder().number("XYZ").fuels(emptyFuelList).build();
+        when(cardService.checkIfCardExists(cardId)).thenReturn(existingCard);
+
+        var request = helpers.createFuelRequests();
+        var response = helpers.createFuelsModel();
+        when(genericMapper.mapToEntityModel(request.get(0), Fuel.class)).thenReturn(response.get(0));
+        when(genericMapper.mapToEntityModel(request.get(1), Fuel.class)).thenReturn(response.get(1));
+        when(genericMapper.mapToEntityModel(request.get(2), Fuel.class)).thenReturn(response.get(2));
+        when(genericMapper.mapToEntityModel(request.get(3), Fuel.class)).thenReturn(response.get(3));
+        //when
+        service.addMultipleFuels(request, cardId);
+        //then
+        verify(cardService).checkIfCardExists(cardId);
+        verify(repository).saveAll(anyList());
+    }
+
+    @Test
+    void givenFuelId_whenDelete_thenDoNothing() {
+        //given
+        Fuel fuel1 = Fuel.builder().refuelingAmount(500).vehicleCounter(300).build();
+        when(repository.findById(anyLong())).thenReturn(Optional.of(fuel1));
+        //when
+        service.deleteFuel(anyLong());
+        // then
+        verify(repository).findById(anyLong());
+        verify(repository, times(1)).delete(fuel1);
     }
 
     @Test
@@ -65,6 +102,18 @@ class FuelServiceTest {
         var result = service.getAllFuelsFromCard(anyLong());
         //then
         assertEquals(List.of(response1, response2), result);
+    }
+
+    @Test
+    void givenCardId_whenFuelEmpty_thenThrowException() {
+        //given
+        Long cardId = 123L;
+        List<Fuel> emptyList = new ArrayList<>();
+        when(repository.findAllFuelsByCardId(cardId)).thenReturn(Optional.of(emptyList));
+        //when + then
+        assertThatThrownBy(() -> service.getAllFuelsFromCard(cardId))
+                .isInstanceOf(PetrolEmptyException.class)
+                .hasMessageContaining("Petrol data is empty");
     }
 
     @Test
@@ -117,51 +166,15 @@ class FuelServiceTest {
     }
 
     @Test
-    void givenFuelList_whenSave_thenDoNothing() {
+    void givenCardId_whenFindFuel_thenReturnLast() {
         //given
-        List<Fuel> emptyFuelList = new ArrayList<>();
-        Card card = Card.builder().id(anyLong()).number("XYZ").fuels(emptyFuelList).build();
-        when(cardService.checkIfCardExists(card.getId())).thenReturn(card);
-        var request = createFuelRequests();
-        var response = createFuels();
-        when(mapper.mapToFuel(request.get(0))).thenReturn(response.get(0));
-        when(mapper.mapToFuel(request.get(1))).thenReturn(response.get(1));
-        when(mapper.mapToFuel(request.get(2))).thenReturn(response.get(2));
-        when(mapper.mapToFuel(request.get(3))).thenReturn(response.get(3));
+        Fuel fuel = Fuel.builder().refuelingAmount(300).vehicleCounter(150500).build();
+        FuelResponse fuelResponse = FuelResponse.builder().refuelingAmount(300).vehicleCounter(150500).build();
+        when(repository.findTopByCardIdOrderByVehicleCounterDesc(anyLong())).thenReturn(fuel);
+        when(mapper.mapToFuelResponse(fuel)).thenReturn(fuelResponse);
         //when
-        service.addMultipleFuels(request, card.getId());
+        var result = service.getLastFuelFromCard(anyLong());
         //then
-        var updatedCard = cardService.checkIfCardExists(card.getId());
-        assertThat(updatedCard.getFuels()).isEqualTo(response);
-    }
-
-    private List<FuelRequest> createFuelRequests() {
-        // Create and return a list of FuelRequest objects for testing
-        List<FuelRequest> fuels = new ArrayList<>();
-        FuelRequest fuel1 = FuelRequest.builder().refuelingAmount(300).build();
-        FuelRequest fuel2 = FuelRequest.builder().refuelingAmount(400).build();
-        FuelRequest fuel3 = FuelRequest.builder().refuelingAmount(500).build();
-        FuelRequest fuel4 = FuelRequest.builder().refuelingAmount(600).build();
-        fuels.add(fuel1);
-        fuels.add(fuel2);
-        fuels.add(fuel3);
-        fuels.add(fuel4);
-        // Add fuel request objects to the list
-        return fuels;
-    }
-
-    private List<Fuel> createFuels() {
-        // Create and return a list of Fuel objects for testing
-        List<Fuel> fuels = new ArrayList<>();
-        Fuel fuel1 = Fuel.builder().refuelingAmount(300).build();
-        Fuel fuel2 = Fuel.builder().refuelingAmount(400).build();
-        Fuel fuel3 = Fuel.builder().refuelingAmount(500).build();
-        Fuel fuel4 = Fuel.builder().refuelingAmount(600).build();
-        // Add fuel objects to the list
-        fuels.add(fuel1);
-        fuels.add(fuel2);
-        fuels.add(fuel3);
-        fuels.add(fuel4);
-        return fuels;
+        assertEquals(result.getVehicleCounter(), fuel.getVehicleCounter());
     }
 }

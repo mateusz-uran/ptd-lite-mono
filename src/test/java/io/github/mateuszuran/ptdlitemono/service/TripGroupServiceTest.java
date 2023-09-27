@@ -4,6 +4,8 @@ import io.github.mateuszuran.ptdlitemono.dto.request.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupException;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
+import io.github.mateuszuran.ptdlitemono.helpers.PTDModelHelpers;
+import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;
 import io.github.mateuszuran.ptdlitemono.model.TripGroup;
@@ -35,10 +37,14 @@ class TripGroupServiceTest {
     private TripRepository tripRepository;
     @Mock
     private TripMapper mapper;
+    @Mock
+    private GenericMapper genericMapper;
+    private PTDModelHelpers helpers;
 
     @BeforeEach
     void setUp() {
-        service = new TripGroupService(repository, tripRepository, mapper);
+        service = new TripGroupService(repository, tripRepository, mapper, genericMapper);
+        helpers = new PTDModelHelpers();
     }
 
     @Test
@@ -50,7 +56,7 @@ class TripGroupServiceTest {
         String cargoName = "food";
         Integer cargoWeight = 50;
         Integer cargoTemperature = 123;
-        var trips = tripList();
+        var trips = helpers.createTripsModel();
         TripGroupRequest request = TripGroupRequest.builder()
                 .tripIds(List.of(tripId1, tripId2, tripId3))
                 .temperature(123)
@@ -246,13 +252,20 @@ class TripGroupServiceTest {
     void givenGroupId_whenExists_thenDelete() {
         //given
         Long groupId = 123L;
-        TripGroup group = TripGroup.builder().id(groupId).build();
+        List<Trip> trips = helpers.createTripsModel();
+        TripGroup group = TripGroup.builder().id(groupId).trips(trips).build();
         when(repository.findById(groupId)).thenReturn(Optional.of(group));
         //when
         service.deleteTripGroup(groupId);
         //then
         verify(repository, times(1)).findById(groupId);
         verify(repository, times(1)).delete(group);
+
+        assertEquals(0, group.getTrips().size());
+
+        for (Trip trip : trips) {
+            verify(trip).setTripGroup(null);
+        }
     }
 
     @Test
@@ -307,12 +320,5 @@ class TripGroupServiceTest {
         assertThatThrownBy(() -> service.editTripGroupInformation(groupId, request))
                 .isInstanceOf(TripGroupNotFoundException.class)
                 .hasMessageContaining("Group not found");
-    }
-
-    private List<Trip> tripList() {
-        Trip trip1 = Trip.builder().id(1L).counterStart(111).counterEnd(222).tripGroup(null).build();
-        Trip trip2 = Trip.builder().id(2L).counterStart(333).counterEnd(444).tripGroup(null).build();
-        Trip trip3 = Trip.builder().id(3L).counterStart(555).counterEnd(666).tripGroup(null).build();
-        return List.of(trip1, trip2, trip3);
     }
 }

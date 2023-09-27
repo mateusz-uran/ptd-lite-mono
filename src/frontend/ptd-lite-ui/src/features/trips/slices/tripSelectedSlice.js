@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  selectedTripisBody: [],
+  selectedTripBody: [],
 };
 
 const tripSelectedSlice = createSlice({
@@ -9,25 +9,24 @@ const tripSelectedSlice = createSlice({
   initialState,
   reducers: {
     storeSelectedTrips: (state, action) => {
-      state.selectedTripisBody.push(action.payload);
+      state.selectedTripBody.push(action.payload);
     },
     removeSelectedTrip: (state, action) => {
       const tripToRemove = action.payload;
-      const index = state.selectedTripisBody.findIndex(
+      const index = state.selectedTripBody.findIndex(
         (trip) => trip.id === tripToRemove.id
       );
       if (index !== -1) {
-        state.selectedTripisBody.splice(index, 1);
+        state.selectedTripBody.splice(index, 1);
       }
     },
     clearSelectedTrips: (state) => {
-      state.selectedTripisBody = [];
+      state.selectedTripBody = [];
     },
   },
 });
 
-export const selectedTripArray = (state) =>
-  state.tripSelected.selectedTripisBody;
+export const selectedTripArray = (state) => state.tripSelected.selectedTripBody;
 
 export const { storeSelectedTrips, removeSelectedTrip, clearSelectedTrips } =
   tripSelectedSlice.actions;

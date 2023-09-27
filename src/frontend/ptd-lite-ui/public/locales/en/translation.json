@@ -67,6 +67,7 @@
     "petrolTableEmpty": "No petrol data",
     "blueTableEmpty": "No adBlue data",
     "tripHead": "Trips",
+    "tripSmallHead": "Last trip",
     "petrolHead": "Petrol",
     "blueHead": "AdBlue",
     "additonalHead": "Additional info",
@@ -89,8 +90,9 @@
     "invoiceCountry": "Country rate",
     "invoiceSelectedMid": "Selected currency mid",
     "invoiceHours": "Driven hours",
-    "invoiceCopyText": "Transport service in the territory {{countryName}}\nAVERAGE NBP CURRENCY SETTLEMENT RATE\nTable no. {{currencyTable}} from day {{currencyDate}}\n{{currencyCode}}/PLN ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})",
-    "cardExists": "Cards with that number already exists"
+    "invoiceCopyText": "Transport service in the territory {{countryName}}\nAVERAGE NBP CURRENCY SETTLEMENT RATE\nTable no. {{currencyTable}} from day {{currencyDate}}\n{{currencyCode}}/PLN = {{currencyRate}} ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})",
+    "cardExists": "Cards with that number already exists",
+    "errorFirstPageInfo": "Something went wrong, please contact support or comeback later."
   },
   "buttons": {
     "browse": "Browse",
@@ -123,5 +125,42 @@
     "invoiceSelectDefault": "Select a country",
     "invoiceCopy": "Copy",
     "invoiceCopied": "Copied"
+  },
+  "toastify": {
+    "error": "Something went wrong",
+    "newCard": "Added new card",
+    "updateCardNumber": "Updated card number",
+    "deletedSuccesfully": "Successfuly deleted",
+    "errorAdding": "Couldn't add new rows",
+    "failDelete": "Deleting failed",
+    "cargoAddSuccess": "Added trip to cargo",
+    "cargoAddFail": "Cant add this trip to cargo",
+    "cargoRemoveSuccess": "Removed trip from cargo",
+    "cargoRemoveFail": "Cannot remove from cargo",
+    "additionalAddSuccess": "Saved additional information",
+    "additionalAddFail": "Cannot additional information"
+  },
+  "statistics": {
+    "mileage": "przebieg",
+    "headerPie": "Number of cards in each month",
+    "headerLine": "Mileage in each month",
+    "info1": "Statistics are updating each 1st month.",
+    "info2": "For now statistics are only available from 2023.",
+    "counter": "counter",
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  },
+  "dashboard": {
+    "chosenCard": "Selected card"
   }
 }

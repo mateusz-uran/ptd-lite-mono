@@ -10,6 +10,7 @@ import io.github.mateuszuran.ptdlitemono.mapper.FuelMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Card;
 import io.github.mateuszuran.ptdlitemono.repository.CardRepository;
+import io.github.mateuszuran.ptdlitemono.service.async.AsyncStatisticService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,16 +28,10 @@ public class CardService {
     private final FuelMapper fuelMapper;
     private final TripMapper tripMapper;
 
+    private final AsyncStatisticService statistics;
+
     public Card checkIfCardExists(Long cardId) {
         return repository.findById(cardId).orElseThrow(CardNotFoundException::new);
-    }
-
-    public void deleteCard(Long cardId) {
-        repository.findById(cardId).ifPresentOrElse(
-                (card) -> repository.deleteById(card.getId()),
-                () -> {
-                    throw new CardNotFoundException();
-                });
     }
 
     public CardDetailsResponse getAllCardsAssociatedInformation(Long id) {
@@ -59,12 +54,12 @@ public class CardService {
     }
 
     public void saveNewCard(CardRequest cardRequest) {
-        if (repository.existsByNumberIgnoreCaseAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
-            throw new CardExistsException(cardRequest.getNumber());
-        }
-
         if (cardRequest.getNumber().isEmpty() || cardRequest.getNumber().trim().isEmpty()) {
             throw new CardEmptyException();
+        }
+
+        if (repository.existsByNumberIgnoreCaseAndUsername(cardRequest.getNumber(), cardRequest.getUsername())) {
+            throw new CardExistsException(cardRequest.getNumber());
         }
 
         var now = LocalDateTime.now();
@@ -73,7 +68,12 @@ public class CardService {
                 .username(cardRequest.getUsername())
                 .creationTime(now)
                 .build();
-        repository.save(card);
+        var savedCard = repository.save(card);
+
+        //async
+        if (savedCard.getCreationTime() != null && savedCard.getUsername() != null) {
+            statistics.incrementCardCounterPerMonth(savedCard.getCreationTime(), savedCard.getUsername());
+        }
     }
 
     public CardResponse editCardNumber(Long cardId, String number) {
@@ -93,25 +93,20 @@ public class CardService {
     public CardDetailsResponse getAllCardDataForPdf(Long cardId) {
         Card card = repository.findById(cardId).orElseThrow(CardNotFoundException::new);
 
-        List<FuelResponse> fuels = card.getFuels().stream()
-                .map(fuelMapper::mapToFuelResponse)
-                .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
-                .collect(Collectors.toList());
-
         List<TripResponse> trips = card.getTrips().stream()
                 .map(tripMapper::mapToTripResponse)
                 .sorted(Comparator.comparing(TripResponse::getCounterEnd))
+                .collect(Collectors.toList());
+
+        List<FuelResponse> fuels = card.getFuels().stream()
+                .map(fuelMapper::mapToFuelResponse)
+                .sorted(Comparator.comparing(FuelResponse::getVehicleCounter))
                 .collect(Collectors.toList());
 
         List<AdBlueResponse> blue = card.getAdBlue().stream()
                 .map(fuelMapper::mapToAdBlueResponse)
                 .toList();
         return new CardDetailsResponse(card.getNumber(), trips, fuels, blue);
-    }
-
-    public LocalDateTime parseDate(String dateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.parse(dateString, formatter);
     }
 
     public List<Card> retrieveCardsDateBetween(String username, LocalDateTime startDate, LocalDateTime endDate) {
@@ -125,5 +120,22 @@ public class CardService {
         return result.stream()
                 .map(cardMapper::mapCardToCardResponse)
                 .toList();
+    }
+
+    public void deleteCard(Long cardId) {
+        repository.findById(cardId).ifPresentOrElse(
+                (card) -> {
+                    repository.deleteById(card.getId());
+                    //async
+                    statistics.decrementCardCounterPerMonth(card.getCreationTime(), card.getUsername());
+                },
+                () -> {
+                    throw new CardNotFoundException();
+                });
+    }
+
+    public LocalDateTime parseDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(dateString, formatter);
     }
 }

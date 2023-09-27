@@ -37,3 +37,4 @@ build/
 /card-db-v2/
 /src/frontend/ptd-lite-ui/.env
 /src/frontend/ptd-lite-ui/.env.production
+/src/frontend/ptd-lite-ui/src/.env

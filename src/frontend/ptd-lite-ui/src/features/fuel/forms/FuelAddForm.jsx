@@ -50,19 +50,10 @@ const FuelAddForm = () => {
   const [savePetrol] = useSavePetrolMutation();
   const [saveAdBlue] = useSaveAdBlueMutation();
   const onSubmit = async (data) => {
-    let fuelPayload = {};
     if (type === 'petrol') {
-      fuelPayload = {
-        cardId: cardId,
-        petrol: data.inputs,
-      };
-      await savePetrol(fuelPayload).unwrap();
+      await savePetrol({ cardId: cardId, petrol: data.inputs }).unwrap();
     } else if (type === 'blue') {
-      fuelPayload = {
-        cardId: cardId,
-        blue: data.inputs,
-      };
-      await saveAdBlue(fuelPayload).unwrap();
+      await saveAdBlue({ cardId: cardId, blue: data.inputs }).unwrap();
     }
     navigate(-1);
   };

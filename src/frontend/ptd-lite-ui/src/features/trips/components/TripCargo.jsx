@@ -19,6 +19,7 @@ import {
 import TripEditCargoModal from '../forms/TripEditCargoModal';
 import { useTranslation } from 'react-i18next';
 import { openModal } from '../../modal/slices/modalSlice';
+import { toast } from 'react-toastify';
 
 const TripCargo = ({ group }) => {
   const { t } = useTranslation();
@@ -36,32 +37,46 @@ const TripCargo = ({ group }) => {
   );
 
   const handleAddTripToGroup = async () => {
-    const selectedTripIds = selectedTrips.map((trip) => trip.id);
-    let tripGroupPayload = {
-      tripIds: selectedTripIds,
-      groupId: group.id,
-    };
-    await addTripToExistingGroup(tripGroupPayload).unwrap();
-    dispatch(clearSelectedTrips());
+    try {
+      const selectedTripIds = selectedTrips.map((trip) => trip.id);
+      await addTripToExistingGroup({
+        tripIds: selectedTripIds,
+        groupId: group.id,
+      }).unwrap();
+      dispatch(clearSelectedTrips());
+      toast.success(t('toasitfy.cargoAddSuccess'));
+    } catch (err) {
+      console.log('Cant add trip to cargo: ', err);
+      toast.error(t('toastify.cargoAddFail'));
+    }
   };
 
   const handleRemoveTripFromGroup = async () => {
-    const selectedTripIds = selectedTrips.map((trip) => trip.id);
-    let tripGroupPayload = {
-      tripIds: selectedTripIds,
-      groupId: group.id,
-    };
-    await removeTripFromGroup(tripGroupPayload).unwrap();
-    dispatch(clearSelectedTrips());
+    try {
+      const selectedTripIds = selectedTrips.map((trip) => trip.id);
+      await removeTripFromGroup({
+        tripIds: selectedTripIds,
+        groupId: group.id,
+      }).unwrap();
+      dispatch(clearSelectedTrips());
+      toast.info(t('toastify.cargoRemoveSuccess'));
+    } catch (err) {
+      console.log('Cannot remove this trip from cargo: ', err);
+      toast.error(t('toastify.cargoRemoveFail'));
+    }
   };
 
   const handleDeleteTripGroup = (groupId) => {
-    let tripGroupDeletePayload = {
-      objectId: groupId,
-      message: t('misc.modalMessage'),
-      method: 'deleteTripGroup',
-    };
-    dispatch(openModal(tripGroupDeletePayload));
+    try {
+      let tripGroupDeletePayload = {
+        objectId: groupId,
+        message: t('misc.modalMessage'),
+        method: 'deleteTripGroup',
+      };
+      dispatch(openModal(tripGroupDeletePayload));
+    } catch (err) {
+      console.log('Cannot delete this cargo: ', err);
+    }
   };
 
   return (

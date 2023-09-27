@@ -43,7 +43,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<ErrorMessage> handleUserNotFound(UserNotFoundException exception) {
-        return createErrorResponse(exception, HttpStatus.FORBIDDEN);
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({TripsEmptyException.class})
@@ -69,6 +69,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     @ExceptionHandler({TripGroupException.class})
     public ResponseEntity<ErrorMessage> handleTripHasGroup(TripGroupException exception) {
         return createErrorResponse(exception, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<ErrorMessage> handleTripHasGroup(IllegalArgumentException exception) {
+        return createErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
     private ResponseEntity<ErrorMessage> createErrorResponse(Exception exception, HttpStatus httpStatus) {

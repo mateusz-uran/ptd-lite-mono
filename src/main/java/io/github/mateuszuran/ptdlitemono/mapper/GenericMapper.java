@@ -12,4 +12,8 @@ public class GenericMapper {
     public <T, V> void mergeTwoDifferentObjects(T source, V target) {
         mapper.modelMapper().map(source, target);
     }
+
+    public <T, V> T mapToEntityModel(V request, Class<T> clazz) {
+        return mapper.modelMapper().map(request, clazz);
+    }
 }

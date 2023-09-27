@@ -19,6 +19,8 @@
 		<itext.pdfhtml.version>4.0.3</itext.pdfhtml.version>
 		<itext.kernel.version>7.2.3</itext.kernel.version>
 		<oauth2-jose.version>6.0.2</oauth2-jose.version>
+		<open-csv.version>5.7.1</open-csv.version>
+		<jackson.version>2.15.1</jackson.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -48,7 +50,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.13.3</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<dependency>
@@ -59,7 +61,7 @@
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
-			<version>5.7.1</version>
+			<version>${open-csv.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -101,6 +103,20 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 

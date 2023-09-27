@@ -64,10 +64,10 @@ class FuelControllerTest {
         //given
         Fuel fuel = Fuel.builder().vehicleCounter(1500).refuelingAmount(300).build();
         //when + then
-        mockMvc.perform(post("/api/fuel/petrol/add")
+        mockMvc.perform(post("/api/fuel/petrol/addmultiple")
                         .param("cardId", String.valueOf(card.getId()))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(fuel)))
+                        .content(mapper.writeValueAsString(List.of(fuel))))
                 .andExpect(status().isCreated())
                 .andDo(print());
     }
