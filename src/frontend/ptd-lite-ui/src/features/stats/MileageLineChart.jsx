@@ -17,7 +17,7 @@ const MileageLineChart = ({ stat }) => {
   return (
     <div className="linechart">
       <h5>{t("statistics.headerLine")}</h5>
-      <ResponsiveContainer width={600} height="80%">
+      <ResponsiveContainer width={600} height="80%" minHeight={250}>
         <LineChart
           data={stat}
           margin={{

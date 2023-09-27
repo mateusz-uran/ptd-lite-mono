@@ -1,69 +1,76 @@
-import '../../../css/tables.css';
-import { useSelector } from 'react-redux';
-import LoadingDots from '../../../components/LoadingDots';
+import "../../../css/tables.css";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAdBlueSelectors,
   useGetBlueByCardIdQuery,
-} from '../../../api/adblue/adBlueApiSlice';
-import AdBlueTableRow from './AdBlueTableRow';
-import { useTranslation } from 'react-i18next';
+} from "../../../api/adblue/adBlueApiSlice";
+import { useTranslation } from "react-i18next";
+import ToggleButton from "../../../components/ToggleButton";
+import AdBlueTableContent from "./AdBlueTableContent";
+import {
+  hideAdBlueContent,
+  isAdBlueContentToggled,
+  showAdBlueContent,
+} from "../slices/adBlueContentToggleSlice";
 
-const AdBlueTable = ({ cardId }) => {
+const AdBlueTable = ({ cardId, component }) => {
   const { t } = useTranslation();
-  const { isLoading, isSuccess, isError, error } =
-    useGetBlueByCardIdQuery(cardId);
+  const adBlueTableContent = useSelector(isAdBlueContentToggled);
+  const { isLoading, isSuccess, isError, error } = useGetBlueByCardIdQuery(
+    cardId,
+    { skip: component === "dashboard" && !adBlueTableContent }
+  );
   const { selectAll: selectAllBlueFromCard } = getAdBlueSelectors(cardId);
   const blueEntities = useSelector(selectAllBlueFromCard);
+  const dispatch = useDispatch();
+
   let tableContent;
 
-  if (isLoading) {
+  if (component === "dashboard" && !adBlueTableContent) {
     tableContent = (
       <tr>
-        <td colSpan={4}>
-          <LoadingDots />
+        <td colSpan={6}>
+          <ToggleButton
+            toggleFunction={() => dispatch(showAdBlueContent())}
+            toggleCondition={adBlueTableContent}
+          />
         </td>
       </tr>
     );
-  }
-
-  if (isSuccess && blueEntities?.length) {
-    tableContent = <AdBlueTableRow blueEntities={blueEntities} />;
-  }
-
-  if (isError && error.data?.statusCode === 404) {
+  } else {
     tableContent = (
-      <tr>
-        <td colSpan={4}>
-          <span className="empty-response">{t('misc.blueTableEmpty')}</span>
-        </td>
-      </tr>
-    );
-  }
-
-  if (isError && error.data === undefined) {
-    tableContent = (
-      <tr>
-        <td colSpan={4}>
-          <span className="empty-response">{t('misc.errorMessage')}.</span>
-        </td>
-      </tr>
+      <AdBlueTableContent
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+        blueEntities={blueEntities}
+        isError={isError}
+        error={error}
+      />
     );
   }
 
   return (
     <div className="fuel-table">
-      <h3>{t('misc.blueHead')}</h3>
+      <h3>{t("misc.blueHead")}</h3>
       <table>
         <thead>
           <tr>
-            <th>{t('adBlueInputs.date')}</th>
-            <th>{t('adBlueInputs.location')}</th>
-            <th>{t('adBlueInputs.amount')}</th>
+            <th>{t("adBlueInputs.date")}</th>
+            <th>{t("adBlueInputs.location")}</th>
+            <th>{t("adBlueInputs.amount")}</th>
             <th className="manage-cell-wrapper"></th>
           </tr>
         </thead>
         <tbody>{tableContent}</tbody>
       </table>
+      <div className="toggle-button-wrapper">
+        {component === "dashboard" && adBlueTableContent && (
+          <ToggleButton
+            toggleFunction={() => dispatch(hideAdBlueContent())}
+            toggleCondition={adBlueTableContent}
+          />
+        )}
+      </div>
     </div>
   );
 };

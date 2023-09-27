@@ -1,5 +1,5 @@
-import { createEntityAdapter, createSelector } from '@reduxjs/toolkit';
-import { apiSlice } from '../apiSlice';
+import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import { apiSlice } from "../apiSlice";
 
 const tripApiAdapter = createEntityAdapter();
 
@@ -15,84 +15,115 @@ export const tripApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => {
         if (!error) {
           return [
-            { type: 'Trips', id: 'LIST' },
-            ...result.ids.map((id) => ({ type: 'Trips', id })),
+            { type: "Trips", id: "LIST" },
+            ...result.ids.map((id) => ({ type: "Trips", id })),
           ];
         } else {
-          return [{ type: 'Trips', id: 'LIST' }];
+          return [{ type: "Trips", id: "LIST" }];
         }
       },
+    }),
+    getLastTripByCardId: builder.query({
+      query: (cardId) => `/trip/last?cardId=${cardId}`,
+      transformResponse: (responseData) => {
+        const lastTripAsArray = [responseData];
+        return lastTripAsArray;
+      },
+      providesTags: ["LastTrip"],
     }),
     saveTrips: builder.mutation({
       query: ({ cardId, trips }) => ({
         url: `/trip/add?cardId=${cardId}`,
-        method: 'POST',
+        method: "POST",
         body: trips,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Trips", id: "LIST" },
+        "LastTrip",
+      ],
     }),
     deleteTrips: builder.mutation({
       query: ({ selectedTripIds, nickname }) => ({
         url: `/trip?username=${nickname}`,
-        method: 'DELETE',
+        method: "DELETE",
         body: selectedTripIds,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Trips", id: "LIST" },
+        "LastTrip",
+      ],
     }),
     editTrip: builder.mutation({
       query: ({ tripId, updatedTrip, username }) => ({
         url: `/trip/update?username=${username}&tripId=${tripId}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: updatedTrip,
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: 'Trips', id: arg.tripId },
+        { type: "Trips", id: arg.tripId },
+        "LastTrip",
       ],
     }),
     createTripsGroup: builder.mutation({
       query: (tripGroupPayload) => ({
-        url: '/trip/addgroup',
-        method: 'POST',
+        url: "/trip/addgroup",
+        method: "POST",
         body: tripGroupPayload,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Trips", id: "LIST" },
+        "LastTrip",
+      ],
     }),
     addTripToExistingGroup: builder.mutation({
       query: ({ tripIds, groupId }) => ({
         url: `/trip/addtogroup?groupId=${groupId}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: tripIds,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Trips", id: "LIST" },
+        "LastTrip",
+      ],
     }),
     removeTripFromGroup: builder.mutation({
       query: ({ tripIds, groupId }) => ({
         url: `/trip/removefromgroup?groupId=${groupId}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: tripIds,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Trips", id: "LIST" },
+        "LastTrip",
+      ],
     }),
     deleteTripGroup: builder.mutation({
       query: (groupId) => ({
         url: `/trip/deletegroup?groupId=${groupId}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Trips", id: "LIST" },
+        "LastTrip",
+      ],
     }),
     updateTripGroupInformation: builder.mutation({
       query: ({ groupId, group }) => ({
         url: `/trip/updategroup?groupId=${groupId}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: group,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Trips', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Trips", id: "LIST" },
+        "LastTrip",
+      ],
     }),
   }),
 });
 
 export const {
   useGetTripsByCardIdQuery,
+  useGetLastTripByCardIdQuery,
   useSaveTripsMutation,
   useDeleteTripsMutation,
   useEditTripMutation,

@@ -25,6 +25,11 @@ public class TripController {
         return ResponseEntity.ok().body(service.getAllTripsFromCard(cardId));
     }
 
+    @GetMapping("/last")
+    public ResponseEntity<TripResponse> getLastTripInCard(@RequestParam Long cardId) {
+        return ResponseEntity.ok().body(service.getLastTripFromCard(cardId));
+    }
+
     @PostMapping("/add")
     public ResponseEntity<?> addListOfTripsToCard(@RequestBody List<TripRequest> trips, @RequestParam Long cardId) {
         service.addManyTrips(trips, cardId);

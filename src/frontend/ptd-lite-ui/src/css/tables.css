@@ -5,6 +5,12 @@
   width: 100%;
 }
 
+.fuel-table .toggle-button-wrapper {
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-start;
+}
+
 .trip-table h3,
 .fuel-table h3 {
   font-size: 15px;
@@ -61,7 +67,7 @@ table tr td {
   width: 5px;
 }
 
-.trip-table table tr td:first-child input[type='checkbox'] {
+.trip-table table tr td:first-child input[type="checkbox"] {
   cursor: pointer;
 }
 

@@ -1,7 +1,5 @@
 #statistics section {
   display: flex;
-  min-height: 40vh;
-  max-height: 80vh;
 }
 
 #statistics section .piechart,
@@ -39,7 +37,7 @@
   margin-top: 3px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1256px) {
   #statistics section {
     flex-direction: column;
   }
@@ -47,5 +45,8 @@
   #statistics section .piechart,
   #statistics section .linechart {
     overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

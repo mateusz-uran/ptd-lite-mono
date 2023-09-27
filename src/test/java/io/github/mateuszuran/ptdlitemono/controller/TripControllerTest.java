@@ -320,4 +320,19 @@ class TripControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.description").value("Group not found"));
     }
+
+    @Test
+    void givenCardId_whenGetLastTrip_thenReturnTripObject() throws Exception {
+        //given
+        Trip trip1 = Trip.builder().counterEnd(100600).card(card).build();
+        Trip trip2 = Trip.builder().counterEnd(100800).card(card).build();
+        repository.saveAll(List.of(trip1, trip2));
+        //when
+        mockMvc.perform(get("/api/trip/last")
+                        .param("cardId", String.valueOf(card.getId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.counterEnd").value("100800"));
+    }
 }

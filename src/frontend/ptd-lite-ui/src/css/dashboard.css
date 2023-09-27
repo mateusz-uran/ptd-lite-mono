@@ -1,0 +1,33 @@
+#dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+#dashboard .btn-manage {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  margin-left: 5px;
+}
+
+#dashboard .btn-manage .small-manage-btn {
+  min-width: 25px;
+  margin-left: 5px;
+}
+
+#dashboard .dash-manage {
+  margin: 10px 0;
+}
+
+@media screen and (max-width: 1256px) {
+  #dashboard .trip-manage {
+    overflow-x: scroll;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #dashboard .petrol-manage,
+  #dashboard .adblue-manage {
+    overflow-x: scroll;
+  }
+}

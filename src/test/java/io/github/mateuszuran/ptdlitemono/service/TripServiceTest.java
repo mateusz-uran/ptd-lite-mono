@@ -160,4 +160,17 @@ class TripServiceTest {
                 .hasMessageContaining("Trips data is empty");
 
     }
+
+    @Test
+    void givenCardId_whenGetLastTrip_thenReturnOneTrip() {
+       //given
+        Trip trip = Trip.builder().counterEnd(100600).build();
+        TripResponse tripResponse2 = TripResponse.builder().counterEnd(100600).build();
+        when(repository.findTopByCardIdOrderByCounterEndDesc(anyLong())).thenReturn(trip);
+        when(mapper.mapToTripResponse(trip)).thenReturn(tripResponse2);
+        //when
+        var result = service.getLastTripFromCard(anyLong());
+        //then
+        assertEquals(result.getCounterEnd(), trip.getCounterEnd());
+    }
 }

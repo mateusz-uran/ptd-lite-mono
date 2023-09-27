@@ -66,6 +66,7 @@
     "petrolTableEmpty": "Brak tankowań w karcie",
     "blueTableEmpty": "Brak adBlue w karcie",
     "tripHead": "Trasy",
+    "tripSmallHead": "Ostatnia trasa",
     "petrolHead": "Paliwo",
     "blueHead": "AdBlue",
     "additonalHead": "Końcowe informacje",
@@ -157,5 +158,8 @@
     "october": "Październik",
     "november": "Listopad",
     "december": "Grudzień"
+  },
+  "dashboard": {
+    "chosenCard": "Wybrana karta"
   }
 }

@@ -30,16 +30,21 @@ const CardCounterPieChart = ({ stat }) => {
   return (
     <div className="piechart">
       <h5>{t("statistics.headerPie")}</h5>
-      <ResponsiveContainer width={400} height="80%">
-        <PieChart>
+      <ResponsiveContainer width={400} height="80%" minHeight={250}>
+        <PieChart
+          margin={{
+            right: 0,
+            left: 0,
+          }}
+        >
           <Pie
             dataKey={t("statistics.counter")}
             isAnimationActive={true}
+            label
             data={stat}
             cx="50%"
             cy="50%"
             outerRadius={80}
-            label
           >
             {stat.map((entry, index) => (
               <Cell key={index} fill={COLORS[index % COLORS.length]} />

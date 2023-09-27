@@ -33,3 +33,12 @@ frontend:
   urls: http://localhost:5173,http://localhost:5173/home
 backend:
   url: http://localhost:8080
+
+# Machine to Machine credentials #
+ptd:
+  lite:
+    machine-to-machine:
+      domain: dev-123.eu.auth0.com
+      audience: https://dev-123.eu.auth0.com/api/v2/
+      client-secret: xyz
+      client-id: abc

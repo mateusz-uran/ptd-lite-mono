@@ -67,6 +67,7 @@
     "petrolTableEmpty": "No petrol data",
     "blueTableEmpty": "No adBlue data",
     "tripHead": "Trips",
+    "tripSmallHead": "Last trip",
     "petrolHead": "Petrol",
     "blueHead": "AdBlue",
     "additonalHead": "Additional info",
@@ -158,5 +159,8 @@
     "october": "October",
     "november": "November",
     "december": "December"
+  },
+  "dashboard": {
+    "chosenCard": "Selected card"
   }
 }

@@ -540,6 +540,16 @@ body {
   padding: 0 0.5rem;
 }
 
+/* ====== Small table toggle button ====== */
+#toggle-button {
+  font-size: 15px;
+}
+
+#toggle-button .rotate {
+  transition: var(--tran-03);
+  transform: rotate(180deg);
+}
+
 /* ====== Media queries ====== */
 
 @media screen and (max-width: 810px) {

@@ -164,4 +164,17 @@ class FuelServiceTest {
 
         assertEquals(expectedResponse, result);
     }
+
+    @Test
+    void givenCardId_whenFindFuel_thenReturnLast() {
+        //given
+        Fuel fuel = Fuel.builder().refuelingAmount(300).vehicleCounter(150500).build();
+        FuelResponse fuelResponse = FuelResponse.builder().refuelingAmount(300).vehicleCounter(150500).build();
+        when(repository.findTopByCardIdOrderByVehicleCounterDesc(anyLong())).thenReturn(fuel);
+        when(mapper.mapToFuelResponse(fuel)).thenReturn(fuelResponse);
+        //when
+        var result = service.getLastFuelFromCard(anyLong());
+        //then
+        assertEquals(result.getVehicleCounter(), fuel.getVehicleCounter());
+    }
 }

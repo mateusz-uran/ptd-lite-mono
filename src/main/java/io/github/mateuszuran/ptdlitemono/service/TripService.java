@@ -78,6 +78,11 @@ public class TripService {
         return tripMapper.mapToTripResponse(updatedTrip);
     }
 
+    public TripResponse getLastTripFromCard(Long cardId) {
+        var lastTrip = repository.findTopByCardIdOrderByCounterEndDesc(cardId);
+        return tripMapper.mapToTripResponse(lastTrip);
+    }
+
     private Integer subtractCarMileage(Integer min, Integer max) {
         return max - min;
     }
