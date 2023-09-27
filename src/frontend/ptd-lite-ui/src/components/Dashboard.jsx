@@ -106,7 +106,7 @@ const Dashboard = () => {
             component={"dashboard"}
           />
         </div>
-        <StatisticContent fetchData={fetchData} />
+        <StatisticContent />
       </>
     );
   }
