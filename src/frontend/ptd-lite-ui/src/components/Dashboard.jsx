@@ -12,6 +12,7 @@ import SmallTripTable from "../features/trips/components/SmallTripTable";
 import { useGetLastTripByCardIdQuery } from "../api/trips/tripsApiSlice";
 import PetrolTable from "../features/fuel/components/PetrolTable";
 import AdBlueTable from "../features/fuel/components/AdBlueTable";
+import DashSkeleton from "../features/dashboard/DashSkeleton";
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -33,28 +34,29 @@ const Dashboard = () => {
     isSuccess,
   } = useGetLastTripByCardIdQuery(selectedCardId);
 
-  return (
-    <div>
-      <Header
-        compArray={[
-          {
-            compName: t("misc.dashboard"),
-          },
-        ]}
-      />
-      <section id="dashboard">
+  let sectionContent;
+
+  if (selectedCardNumber === null) {
+    sectionContent = <DashSkeleton />;
+  } else {
+    sectionContent = (
+      <>
         <div className="btn-manage">
           <h5>
             {t("dashboard.chosenCard")}
             :&nbsp;
-            {selectedCardNumber}
+            {selectedCardNumber ? selectedCardNumber : "brak"}
           </h5>
           <Link
             to={`${location.pathname}/${encodeURIComponent(
               selectedCardNumber
             )}/${selectedCardId}`}
+            className={`${selectedCardNumber === null ? "disabled-link" : ""}`}
           >
-            <button className="small-btn small-manage-btn">
+            <button
+              className="small-btn small-manage-btn"
+              disabled={selectedCardNumber === null}
+            >
               <BiLinkExternal />
             </button>
           </Link>
@@ -82,7 +84,20 @@ const Dashboard = () => {
           <AdBlueTable cardId={selectedCardId} component={"dashboard"} />
         </div>
         <StatisticContent />
-      </section>
+      </>
+    );
+  }
+
+  return (
+    <div>
+      <Header
+        compArray={[
+          {
+            compName: t("misc.dashboard"),
+          },
+        ]}
+      />
+      <section id="dashboard">{sectionContent}</section>
     </div>
   );
 };

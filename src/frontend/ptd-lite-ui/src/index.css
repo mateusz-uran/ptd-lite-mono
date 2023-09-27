@@ -13,6 +13,7 @@
   --primary-color-light: #e4f4e4;
   --toggle-color: #ddd;
   --text-color: #707070;
+  --skeleton-color: #e7e7e7;
 
   /* ====== Transition ====== */
   --tran-03: all 0.2s ease;
