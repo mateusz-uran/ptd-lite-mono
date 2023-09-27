@@ -7,7 +7,7 @@ import CardCounterPieChart from "./CardCounterPieChart";
 import "../../css/statistics.css";
 import LoadingDots from "../../components/LoadingDots";
 
-const StatisticContent = () => {
+const StatisticContent = ({ fetchData }) => {
   const { t } = useTranslation();
   const { user } = useAuth0();
   const currentDate = new Date();
@@ -18,10 +18,13 @@ const StatisticContent = () => {
     isSuccess,
     isError,
     isLoading,
-  } = useGetStatisticsFromYearByUsernameQuery({
-    year: statsYear,
-    username: user.nickname,
-  });
+  } = useGetStatisticsFromYearByUsernameQuery(
+    {
+      year: statsYear,
+      username: user.nickname,
+    },
+    { skip: !fetchData }
+  );
 
   let sectionContent;
 
@@ -32,12 +35,12 @@ const StatisticContent = () => {
   if (isError) {
     sectionContent = (
       <div className="stat-error">
-        <p>Something went wrong, try to refresh</p>
+        <p>{t("statistics.error")}</p>
         <button
           className="secondary-btn"
           onClick={() => window.location.reload(false)}
         >
-          Refresh
+          {t("buttons.refresh")}
         </button>
       </div>
     );

@@ -124,7 +124,8 @@
     "countInvoice": "Invoice",
     "invoiceSelectDefault": "Select a country",
     "invoiceCopy": "Copy",
-    "invoiceCopied": "Copied"
+    "invoiceCopied": "Copied",
+    "refresh": "Refresh"
   },
   "toastify": {
     "error": "Something went wrong",
@@ -146,6 +147,7 @@
     "headerLine": "Mileage in each month",
     "info1": "Statistics are updating each 1st month.",
     "info2": "For now statistics are only available from 2023.",
+    "error": "Something went wrong, try to refresh.",
     "counter": "counter",
     "january": "January",
     "february": "February",
@@ -161,6 +163,7 @@
     "december": "December"
   },
   "dashboard": {
-    "chosenCard": "Selected card"
+    "chosenCard": "Selected card",
+    "modal": "Select card to check informations."
   }
 }

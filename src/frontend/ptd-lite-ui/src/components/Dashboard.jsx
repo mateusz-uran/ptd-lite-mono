@@ -13,12 +13,23 @@ import { useGetLastTripByCardIdQuery } from "../api/trips/tripsApiSlice";
 import PetrolTable from "../features/fuel/components/PetrolTable";
 import AdBlueTable from "../features/fuel/components/AdBlueTable";
 import DashSkeleton from "../features/dashboard/DashSkeleton";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useState } from "react";
 
 const Dashboard = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  var selectedCardId = localStorage.getItem("selected_card_id");
-  var selectedCardNumber = localStorage.getItem("selected_card_number");
+  const { user } = useAuth0();
+  var storedCardAndUser = JSON.parse(localStorage.getItem("card_and_user"));
+
+  let fetchData = true;
+  if (storedCardAndUser && storedCardAndUser.nick === user.nickname) {
+    fetchData = true;
+  } else {
+    localStorage.removeItem("card_and_user");
+    fetchData = false;
+  }
+
   const selectedTrips = useSelector(selectedTripArray);
   const loggedInUserRole = useSelector(getPermissions);
 
@@ -32,11 +43,13 @@ const Dashboard = () => {
     error,
     isLoading,
     isSuccess,
-  } = useGetLastTripByCardIdQuery(selectedCardId);
+  } = useGetLastTripByCardIdQuery(storedCardAndUser?.cardId, {
+    skip: storedCardAndUser === null || !fetchData,
+  });
 
   let sectionContent;
 
-  if (selectedCardNumber === null) {
+  if (storedCardAndUser === null) {
     sectionContent = <DashSkeleton />;
   } else {
     sectionContent = (
@@ -45,25 +58,29 @@ const Dashboard = () => {
           <h5>
             {t("dashboard.chosenCard")}
             :&nbsp;
-            {selectedCardNumber ? selectedCardNumber : "brak"}
+            {storedCardAndUser.cardNumber
+              ? storedCardAndUser.cardNumber
+              : "-/-"}
           </h5>
           <Link
             to={`${location.pathname}/${encodeURIComponent(
-              selectedCardNumber
-            )}/${selectedCardId}`}
-            className={`${selectedCardNumber === null ? "disabled-link" : ""}`}
+              storedCardAndUser.cardNumber
+            )}/${storedCardAndUser.cardId}`}
+            className={`${
+              storedCardAndUser.cardNumber === null ? "disabled-link" : ""
+            }`}
           >
             <button
               className="small-btn small-manage-btn"
-              disabled={selectedCardNumber === null}
+              disabled={storedCardAndUser.cardNumber === null}
             >
               <BiLinkExternal />
             </button>
           </Link>
         </div>
         <DashManageBar
-          selectedCardId={selectedCardId}
-          selectedCardNumber={selectedCardNumber}
+          selectedCardId={storedCardAndUser.cardId}
+          selectedCardNumber={storedCardAndUser.cardNumber}
           selectedTrips={selectedTrips}
           containsGroup={containsGroup}
           loggedInUserRole={loggedInUserRole}
@@ -78,12 +95,18 @@ const Dashboard = () => {
           />
         </div>
         <div className="petrol-manage">
-          <PetrolTable cardId={selectedCardId} component={"dashboard"} />
+          <PetrolTable
+            cardId={storedCardAndUser.cardId}
+            component={"dashboard"}
+          />
         </div>
         <div className="adblue-manage">
-          <AdBlueTable cardId={selectedCardId} component={"dashboard"} />
+          <AdBlueTable
+            cardId={storedCardAndUser.cardId}
+            component={"dashboard"}
+          />
         </div>
-        <StatisticContent />
+        <StatisticContent fetchData={fetchData} />
       </>
     );
   }

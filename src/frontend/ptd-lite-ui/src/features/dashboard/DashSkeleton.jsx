@@ -1,13 +1,15 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const DashSkeleton = () => {
+  const { t } = useTranslation();
   return (
     <>
       <div className="skeleton-modal">
-        <p>Select card to browse information</p>
+        <p>{t("dashboard.modal")}</p>
         <Link to={"/home/cards"}>
-          <button className="secondary-btn">karty</button>
+          <button className="secondary-btn">{t("buttons.browse")}</button>
         </Link>
       </div>
       <div>
@@ -31,15 +33,19 @@ const DashSkeleton = () => {
             <span>&nbsp;</span>
             <div className="skeleton-table">
               <table>
-                <tr>
-                  <th colSpan={13}>&nbsp;</th>
-                </tr>
-                <tr>
-                  <th colSpan={13}>&nbsp;</th>
-                </tr>
-                <tr>
-                  <td colSpan={13}>&nbsp;</td>
-                </tr>
+                <thead>
+                  <tr>
+                    <th colSpan={13}>&nbsp;</th>
+                  </tr>
+                  <tr>
+                    <th colSpan={13}>&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colSpan={13}>&nbsp;</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -49,12 +55,16 @@ const DashSkeleton = () => {
             <span>&nbsp;</span>
             <div className="skeleton-table">
               <table>
-                <tr>
-                  <th colSpan={6}>&nbsp;</th>
-                </tr>
-                <tr>
-                  <td colSpan={6}>&nbsp;</td>
-                </tr>
+                <thead>
+                  <tr>
+                    <th colSpan={6}>&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colSpan={6}>&nbsp;</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -64,12 +74,16 @@ const DashSkeleton = () => {
             <span>&nbsp;</span>
             <div className="skeleton-table">
               <table>
-                <tr>
-                  <th colSpan={4}>&nbsp;</th>
-                </tr>
-                <tr>
-                  <td colSpan={4}>&nbsp;</td>
-                </tr>
+                <thead>
+                  <tr>
+                    <th colSpan={4}>&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colSpan={4}>&nbsp;</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>

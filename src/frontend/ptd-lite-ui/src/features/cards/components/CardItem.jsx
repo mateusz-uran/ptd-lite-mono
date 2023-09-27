@@ -10,11 +10,13 @@ import { Link, useLocation } from "react-router-dom";
 import { updateCardStatus } from "../slices/updateCardSlice";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CardItem = ({ cards }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
+  const { user } = useAuth0();
 
   const toastNotificationIsShown = useSelector(isNotificationShown);
   const toastNotificationType = useSelector(notificationType);
@@ -60,7 +62,12 @@ const CardItem = ({ cards }) => {
   };
 
   function storeSelectedCard(cardId, cardNumber) {
-    console.log(cardNumber);
+    var selectedCardAndUser = {
+      cardId: Number(cardId),
+      cardNumber: String(cardNumber),
+      nick: String(user.nickname),
+    };
+    localStorage.setItem("card_and_user", JSON.stringify(selectedCardAndUser));
     localStorage.setItem("selected_card_id", Number(cardId));
     localStorage.setItem("selected_card_number", String(cardNumber));
   }
