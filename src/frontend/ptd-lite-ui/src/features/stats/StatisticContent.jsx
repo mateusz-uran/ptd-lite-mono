@@ -18,6 +18,7 @@ const StatisticContent = ({ fetchData }) => {
     isSuccess,
     isError,
     isLoading,
+    error,
   } = useGetStatisticsFromYearByUsernameQuery(
     {
       year: statsYear,
@@ -33,6 +34,14 @@ const StatisticContent = ({ fetchData }) => {
   }
 
   if (isSuccess && Boolean(statisticFromYear.length == 0)) {
+    sectionContent = (
+      <div className="stat-error">
+        <p>{t("statistics.error2")}</p>
+      </div>
+    );
+  }
+
+  if (isError && error.statusCode === 404) {
     sectionContent = (
       <div className="stat-error">
         <p>{t("statistics.error2")}</p>
