@@ -7,7 +7,7 @@ import CardCounterPieChart from "./CardCounterPieChart";
 import "../../css/statistics.css";
 import LoadingDots from "../../components/LoadingDots";
 
-const StatisticContent = ({ fetchData }) => {
+const StatisticContent = () => {
   const { t } = useTranslation();
   const { user } = useAuth0();
   const currentDate = new Date();
@@ -19,13 +19,10 @@ const StatisticContent = ({ fetchData }) => {
     isError,
     isLoading,
     error,
-  } = useGetStatisticsFromYearByUsernameQuery(
-    {
-      year: statsYear,
-      username: user.nickname,
-    },
-    { skip: !fetchData }
-  );
+  } = useGetStatisticsFromYearByUsernameQuery({
+    year: statsYear,
+    username: user.nickname,
+  });
 
   let sectionContent;
 
