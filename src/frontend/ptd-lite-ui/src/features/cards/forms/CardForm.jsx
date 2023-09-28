@@ -1,26 +1,26 @@
-import '../../../css/card_form.css';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useDispatch, useSelector } from 'react-redux';
+import "../../../css/card_form.css";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   cardIdToUpdate,
   cardNumberToUpdate,
   isCardEditing,
   stopEditing,
-} from '../slices/updateCardSlice';
-import { useEffect } from 'react';
-import { MdSettingsBackupRestore } from 'react-icons/md';
+} from "../slices/updateCardSlice";
+import { useEffect } from "react";
+import { MdSettingsBackupRestore } from "react-icons/md";
 import {
   useAddNewCardMutation,
   useUpdateCardMutation,
-} from '../../../api/card/cardApiSlice';
-import { useTranslation } from 'react-i18next';
-import { translateCardInputs } from '../inputs/cardInputs';
-import { translateCardValidations } from '../inputs/cardsValidations';
-import SmallLoader from '../../../components/SmallLoader';
+} from "../../../api/card/cardApiSlice";
+import { useTranslation } from "react-i18next";
+import { translateCardInputs } from "../inputs/cardInputs";
+import { translateCardValidations } from "../inputs/cardsValidations";
+import SmallLoader from "../../../components/SmallLoader";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const CardForm = () => {
   const { t } = useTranslation();
@@ -68,23 +68,33 @@ const CardForm = () => {
 
       if (!editStatus) {
         await addNewCard(card).unwrap();
-        toast.success(t('toastify.newCard'));
+        toast.success(t("toastify.newCard"));
       } else {
         await updateCard(card).unwrap();
+        var storedCardAndUser = JSON.parse(
+          localStorage.getItem("card_and_user")
+        );
+        if (storedCardAndUser !== null) {
+          storedCardAndUser.cardNumber = data.cardNumber;
+          localStorage.setItem(
+            "card_and_user",
+            JSON.stringify(storedCardAndUser)
+          );
+        }
         dispatch(stopEditing(false));
-        toast.success(t('toastify.updateCardNumber'));
+        toast.success(t("toastify.updateCardNumber"));
       }
       reset();
     } catch (err) {
       if (err.status === 409) {
-        setError('number', {
-          type: 'server',
+        setError("number", {
+          type: "server",
           message: err.data.description,
         });
-        console.log('card exists');
+        console.log("card exists");
       } else {
-        toast.error(t('toastify.error'));
-        console.log('Error: ', err);
+        toast.error(t("toastify.error"));
+        console.log("Error: ", err);
       }
     }
   };
@@ -117,7 +127,7 @@ const CardForm = () => {
             <p className="error-input">{errors[inputs.name].message}</p>
           )}
           {errors?.number?.message && (
-            <p className="error-input">{t('misc.cardExists')}</p>
+            <p className="error-input">{t("misc.cardExists")}</p>
           )}
         </div>
         <div className="button-wrapper">
@@ -129,9 +139,9 @@ const CardForm = () => {
             >
               {!loadingStatus ? (
                 editStatus ? (
-                  <span>{t('buttons.save')}</span>
+                  <span>{t("buttons.save")}</span>
                 ) : (
-                  <span>{t('buttons.add')}</span>
+                  <span>{t("buttons.add")}</span>
                 )
               ) : (
                 <SmallLoader />
