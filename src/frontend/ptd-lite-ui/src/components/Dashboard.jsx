@@ -14,7 +14,6 @@ import PetrolTable from "../features/fuel/components/PetrolTable";
 import AdBlueTable from "../features/fuel/components/AdBlueTable";
 import DashSkeleton from "../features/dashboard/DashSkeleton";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useState } from "react";
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -85,6 +84,7 @@ const Dashboard = () => {
           containsGroup={containsGroup}
           loggedInUserRole={loggedInUserRole}
         />
+
         <div className="trip-manage">
           <SmallTripTable
             lastTrip={lastTrip}

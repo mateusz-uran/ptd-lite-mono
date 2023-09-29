@@ -17,6 +17,7 @@ import CallbackPage from "./features/auth/CallbackPage";
 import CargoForm from "./features/trips/forms/TripCargoForm";
 import Cards from "./features/cards/components/Cards";
 import InvoiceWrapper from "./features/cards/components/InvoiceWrapper";
+import CrmForm from "./features/crm/CrmForm";
 
 function App() {
   const isOpen = useSelector(isModalOpen);
@@ -56,6 +57,7 @@ function App() {
             path="/home/:compName/:cardNumber/:cardId/invoice"
             element={<InvoiceWrapper />}
           />
+          <Route path="/home/:compName/crm" element={<CrmForm />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
