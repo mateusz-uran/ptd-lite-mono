@@ -65,7 +65,7 @@ const SecondRowContent = () => {
           height: "80px",
         }}
       >
-        <View style={{ width: "100%" }}>
+        <View style={{ width: "100%", justifyContent: "space-between" }}>
           <View
             style={{
               display: "flex",
@@ -86,6 +86,16 @@ const SecondRowContent = () => {
               Przewoźnik (nazwisko lub nazwa, adres, kraj) {"\n"} EFrachtfuhrer
               (Name, Anschrift, Land) {"\n"} Carrier (name, address, country)
             </Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={{
+                padding: "0 3",
+              }}
+            >
+              &nbsp;
+            </Text>
+            <Text>DYNAMIC TEXT</Text>
           </View>
         </View>
       </View>

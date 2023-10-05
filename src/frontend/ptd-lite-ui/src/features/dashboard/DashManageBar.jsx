@@ -2,8 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import GeneratePDF from "../pdf/components/GeneratePDF";
 import { Link } from "react-router-dom";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import CrmPDF from "../crm/CrmPDF";
 
 const DashManageBar = ({
   selectedCardId,
@@ -71,10 +69,10 @@ const DashManageBar = ({
             </button>
           </Link>
         )}
-        <Link to={`${location.pathname}/crm`}>
+        {/* <Link to={`${location.pathname}/crm`}>
           <button className="secondary-btn">CRM form</button>
         </Link>
-        <PDFDownloadLink document={<CrmPDF />} fileName={"CRM.pdf"}>
+        <PDFDownloadLink document={<CRMReadyPDF />} fileName={"CRM.pdf"}>
           {({ blob, url, loading, error }) =>
             loading ? (
               "Loading..."
@@ -82,7 +80,10 @@ const DashManageBar = ({
               <button className="secondary-btn">CRM</button>
             )
           }
-        </PDFDownloadLink>
+        </PDFDownloadLink> */}
+        <Link to={`${location.pathname}/crm`}>
+          <button className="secondary-btn">CRM</button>
+        </Link>
       </div>
     </div>
   );

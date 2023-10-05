@@ -78,36 +78,32 @@ const FirstRowContent = () => {
               INTERNATIONALER FRACHTBRIEF {"\n"} INTERNATIONAL CONSIGNMENT
             </Text>
           </View>
-          <View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                height: "35%",
-                width: "70%",
-                justifyContent: "space-evenly",
-                marginBottom: "3px",
-              }}
-            >
-              <Image
-                src={CRM}
-                style={{
-                  height: "100%",
-                }}
-              ></Image>
-              <Text style={{ fontSize: "4" }}>No. …………………………</Text>
-            </View>
-            <Text style={{ fontSize: "4" }}>
-              Niniejszy przewóz podlega postanowieniom konwencji o umowie
-              międzynarodowej przewozu {"\n"} drogowego towarów (CMR) bez
-              względu na jakąkolwiek przeciwną klauzulę
-            </Text>
-          </View>
           <View
             style={{
               display: "flex",
               flexDirection: "row",
+              height: "40%",
+              width: "70%",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <Image
+              src={CRM}
+              style={{
+                height: "100%",
+              }}
+            ></Image>
+          </View>
+          <Text style={{ fontSize: "4", paddingBottom: "2px" }}>
+            Niniejszy przewóz podlega postanowieniom konwencji o umowie
+            międzynarodowej przewozu {"\n"} drogowego towarów (CMR) bez względu
+            na jakąkolwiek przeciwną klauzulę
+          </Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              paddingBottom: "2px",
             }}
           >
             <Text style={{ fontSize: "4", width: "50%" }}>

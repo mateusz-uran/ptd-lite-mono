@@ -1,1 +1,120 @@
 /* ====== CRM form styling ====== */
+#crm-form-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+#crm-form-wrapper .form-wrapper {
+  width: 40%;
+}
+
+#crm-form-wrapper .form-wrapper .row {
+  display: flex;
+  margin: 10px 0;
+  padding: 0.8rem 0;
+}
+
+#crm-form-wrapper .form-wrapper .row textarea {
+  box-sizing: border-box;
+  height: 90px;
+  width: 100%;
+}
+
+#crm-form-wrapper .form-wrapper .row .sender,
+#crm-form-wrapper .form-wrapper .row .receiver,
+#crm-form-wrapper .form-wrapper .row .delivery,
+#crm-form-wrapper .form-wrapper .row .place-loading,
+#crm-form-wrapper .form-wrapper .row .cargo-info,
+#crm-form-wrapper .form-wrapper .row .cargo-instructions,
+#crm-form-wrapper .form-wrapper .row .signature,
+#crm-form-wrapper .form-wrapper .row .carrier {
+  margin: 0 5px;
+}
+
+#crm-form-wrapper .form-wrapper .row .address-2-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+#crm-form-wrapper .form-wrapper .row .address-2-wrapper .mover-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#crm-form-wrapper .form-wrapper .row .address-2-wrapper .mover-wrapper input {
+  margin: 2px 5px;
+}
+
+#crm-form-wrapper .form-wrapper .row .sender .sender-check-wrapper {
+  display: flex;
+}
+
+#crm-form-wrapper .form-wrapper .row .address-2-wrapper p,
+#crm-form-wrapper .form-wrapper .row .sender-check-wrapper p {
+  font-size: 10px;
+  color: var(--text-color);
+  margin: 2px 5px;
+}
+
+#crm-form-wrapper .form-wrapper .row.cargo-informations,
+#crm-form-wrapper .form-wrapper .row.cargo-instructions {
+  display: flex;
+  flex-direction: column;
+}
+
+#crm-form-wrapper .form-wrapper .row.bottom .signature,
+#crm-form-wrapper .form-wrapper .row.bottom .carrier {
+  width: 50%;
+}
+
+#crm-form-wrapper .form-wrapper .row .primary-input {
+  margin: 5px 0;
+}
+
+#crm-form-wrapper .crm-reader {
+  border: 1px solid red;
+}
+
+@media screen and (max-width: 867px) {
+  #crm-form-wrapper {
+    flex-direction: column;
+  }
+
+  #crm-form-wrapper .form-wrapper {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  #crm-form-wrapper .form-wrapper .row.sender,
+  #crm-form-wrapper .form-wrapper .row.middle,
+  #crm-form-wrapper .form-wrapper .row.cargo-informations,
+  #crm-form-wrapper .form-wrapper .row.cargo-instructions,
+  #crm-form-wrapper .form-wrapper .row.bottom {
+    flex-direction: column;
+  }
+
+  #crm-form-wrapper .form-wrapper .row.sender .receiver,
+  #crm-form-wrapper .form-wrapper .row.middle .delivery,
+  #crm-form-wrapper .form-wrapper .row.middle .place-loading,
+  #crm-form-wrapper .form-wrapper .row.cargo-informations .cargo-info,
+  #crm-form-wrapper .form-wrapper .row.cargo-instructions .cargo-instructions,
+  #crm-form-wrapper .form-wrapper .row.bottom .signature,
+  #crm-form-wrapper .form-wrapper .row.bottom .carrier {
+    margin-top: 15px;
+  }
+
+  #crm-form-wrapper .form-wrapper .row.sender h5,
+  #crm-form-wrapper .form-wrapper .row.middle h5,
+  #crm-form-wrapper .form-wrapper .row.cargo-informations h5,
+  #crm-form-wrapper .form-wrapper .row.cargo-instructions h5,
+  #crm-form-wrapper .form-wrapper .row.bottom h5 {
+    margin: 0 5px;
+  }
+
+  #crm-form-wrapper .form-wrapper .row.bottom .signature,
+  #crm-form-wrapper .form-wrapper .row.bottom .carrier {
+    width: auto;
+  }
+}

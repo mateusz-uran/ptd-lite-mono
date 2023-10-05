@@ -204,7 +204,6 @@ const ThirdRowContent = () => {
               >
                 &nbsp;
               </Text>
-              <Text>Truck No : .. / ..</Text>
             </View>
           </View>
         </View>

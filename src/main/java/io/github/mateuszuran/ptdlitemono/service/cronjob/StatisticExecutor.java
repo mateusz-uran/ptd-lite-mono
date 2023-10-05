@@ -15,8 +15,7 @@ public class StatisticExecutor {
     private final StatisticCollector collector;
 
     /** Every month on the 1st, at noon **/
-    //0 0 12 1 * ?
-    @Scheduled(cron = "0 10 11 * * *")
+    @Scheduled(cron = "0 0 12 1 * ?")
     public void cronJobUpdateStats() {
         var users = provider.extractUsersNicknames();
 

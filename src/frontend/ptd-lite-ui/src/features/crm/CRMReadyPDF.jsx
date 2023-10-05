@@ -5,6 +5,7 @@ import SecondRowContent from "./components/SecondRowContent";
 import ThirdRowContent from "./components/ThirdRowContent";
 import FourthRowContent from "./components/FourthRowContent";
 import FifthRowContent from "./components/FifthRowContent";
+import SixthRowContent from "./components/SixthRowContent";
 
 const CRMReadyPDF = () => {
   const styles = StyleSheet.create({
@@ -37,6 +38,9 @@ const CRMReadyPDF = () => {
           </View>
           <View style={styles.row}>
             <FifthRowContent />
+          </View>
+          <View>
+            <SixthRowContent />
           </View>
         </View>
       </Page>
