@@ -1,11 +1,12 @@
 /* ====== CRM form styling ====== */
 #crm-form-wrapper {
   display: flex;
+  height: 100%;
   align-items: flex-start;
 }
 
 #crm-form-wrapper .form-wrapper {
-  width: 40%;
+  flex: 2;
 }
 
 #crm-form-wrapper .form-wrapper .row {
@@ -72,8 +73,19 @@
   margin: 5px 0;
 }
 
-#crm-form-wrapper .crm-reader {
-  border: 1px solid red;
+#crm-form-wrapper .crm-wrapper {
+  height: 100%;
+  width: 60%;
+}
+
+#crm-form-wrapper .crm-wrapper .pdf-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+#crm-form-wrapper .form-wrapper .buttons {
+  display: flex;
+  justify-content: center;
 }
 
 @media screen and (max-width: 867px) {
@@ -83,6 +95,14 @@
 
   #crm-form-wrapper .form-wrapper {
     width: 100%;
+  }
+
+  #crm-form-wrapper .crm-wrapper {
+    width: 100%;
+  }
+
+  #crm-form-wrapper .crm-wrapper .pdf-viewer {
+    height: 100vh;
   }
 }
 

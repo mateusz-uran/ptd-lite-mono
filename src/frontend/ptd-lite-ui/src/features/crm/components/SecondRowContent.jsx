@@ -1,7 +1,7 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 
-const SecondRowContent = () => {
+const SecondRowContent = ({ receiver, carrier }) => {
   return (
     <>
       <View
@@ -46,12 +46,15 @@ const SecondRowContent = () => {
           >
             <Text
               style={{
+                marginLeft: "5px",
                 padding: "0 3",
+                fontSize: "10px",
               }}
             >
-              &nbsp;
+              {receiver.receiverName} {"\n"}
+              {receiver.addressReceiver1} {"\n"}
+              {receiver.addressReceiver2} {"\n"}
             </Text>
-            <Text>DYNAMIC TEXT</Text>
           </View>
         </View>
       </View>
@@ -90,12 +93,13 @@ const SecondRowContent = () => {
           <View style={{ flexDirection: "row" }}>
             <Text
               style={{
+                marginLeft: "5px",
                 padding: "0 3",
+                fontSize: "10px",
               }}
             >
-              &nbsp;
+              {carrier.carrierName} {"\n"}
             </Text>
-            <Text>DYNAMIC TEXT</Text>
           </View>
         </View>
       </View>

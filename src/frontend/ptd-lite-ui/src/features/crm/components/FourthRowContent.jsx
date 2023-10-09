@@ -1,7 +1,7 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 
-const FourthRowContent = () => {
+const FourthRowContent = ({ cargoInfo }) => {
   return (
     <>
       <View
@@ -96,7 +96,7 @@ const FourthRowContent = () => {
                 padding: "0 3",
               }}
             >
-              8
+              9
             </Text>
             <Text style={{ fontSize: "5", fontWeight: "light" }}>
               Rodzaj towaru {"\n"} Bezeichung des Gutes {"\n"} nature of the
@@ -110,7 +110,9 @@ const FourthRowContent = () => {
             height: "100%",
           }}
         >
-          <Text style={{ marginLeft: "10" }}>DYNAMIC TEXT</Text>
+          <Text style={{ marginLeft: "5px", padding: "0 3", fontSize: "10px" }}>
+            {cargoInfo.info}
+          </Text>
         </View>
         <View
           style={{
@@ -139,11 +141,10 @@ const FourthRowContent = () => {
               flexDirection: "column",
               fontSize: "5",
               marginRight: "40",
+              justifyContent: "center",
             }}
           >
-            <Text>&nbsp;</Text>
             <Text>(ADR*)</Text>
-            <Text>&nbsp;</Text>
           </View>
         </View>
       </View>

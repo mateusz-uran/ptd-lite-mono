@@ -2,7 +2,7 @@ import { Image, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import CRM from "../../../assets/CMR-cropped.png";
 
-const FirstRowContent = () => {
+const FirstRowContent = ({ sender }) => {
   return (
     <>
       <View
@@ -46,12 +46,16 @@ const FirstRowContent = () => {
           >
             <Text
               style={{
+                marginLeft: "5px",
                 padding: "0 3",
+                fontSize: "10px",
               }}
             >
-              &nbsp;
+              {sender.senderName} {"\n"}
+              {sender.addressSender1} {"\n"}
+              {sender.addressSender2} {"\n"}
+              {sender.senderCountry} {"\n"}
             </Text>
-            <Text>DYNAMIC TEXT</Text>
           </View>
         </View>
       </View>

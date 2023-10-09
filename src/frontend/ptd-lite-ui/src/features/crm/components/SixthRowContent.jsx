@@ -1,7 +1,7 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 
-const SixthRowContent = () => {
+const SixthRowContent = ({ placeLoading, signature }) => {
   return (
     <View
       style={{
@@ -56,7 +56,7 @@ const SixthRowContent = () => {
             </Text>
             <View style={{ border: "1px solid black", marginTop: "15" }}>
               <Text style={{ fontSize: "8", fontWeight: "bold", padding: "5" }}>
-                dynamic text
+                {placeLoading.addressLoading}
               </Text>
             </View>
           </View>
@@ -75,7 +75,6 @@ const SixthRowContent = () => {
             <Text style={{ width: "20%", textAlign: "center" }}>15</Text>
             <Text>Zapłata/ Ruckerstattung / Cash on deliver</Text>
           </View>
-          <View>&nbsp;</View>
         </View>
       </View>
       <View
@@ -91,7 +90,16 @@ const SixthRowContent = () => {
             <Text style={{ fontSize: "5", padding: "0 3" }}>22</Text>
             <View style={{ height: "70", justifyContent: "space-between" }}>
               <View>
-                <Text>dynamic text</Text>
+                <Text
+                  style={{
+                    fontSize: "10px",
+                  }}
+                >
+                  {signature.signatureName} {"\n"}
+                  {signature.addressSignature1} {"\n"}
+                  {signature.addressSignature2} {"\n"}
+                  {signature.signatureCountry} {"\n"}
+                </Text>
               </View>
               <View
                 style={{
@@ -115,7 +123,7 @@ const SixthRowContent = () => {
           <View style={{ flexDirection: "row" }}>
             <Text style={{ fontSize: "5", padding: "0 3" }}>23</Text>
             <View style={{ height: "70", justifyContent: "space-between" }}>
-              <Text>&nbsp;</Text>
+              <View></View>
               <View
                 style={{
                   height: "30%",

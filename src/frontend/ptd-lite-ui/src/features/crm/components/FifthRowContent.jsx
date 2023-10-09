@@ -1,7 +1,7 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 
-const FifthRowContent = () => {
+const FifthRowContent = ({ cargoInsturctions }) => {
   return (
     <>
       <View
@@ -51,8 +51,9 @@ const FifthRowContent = () => {
               </Text>
             </View>
             <View style={{ height: "80%" }}>
-              <Text style={{ paddingTop: "10" }}>dynamic 1</Text>
-              <Text style={{ paddingTop: "15" }}>dynamic 2</Text>
+              <Text style={{ paddingTop: "10", fontSize: "10px" }}>
+                {cargoInsturctions.instructions}
+              </Text>
             </View>
             <View style={{ textAlign: "center" }}>
               <Text style={{ fontSize: "5" }}>

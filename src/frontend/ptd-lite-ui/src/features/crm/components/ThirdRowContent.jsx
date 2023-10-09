@@ -1,7 +1,7 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 
-const ThirdRowContent = () => {
+const ThirdRowContent = ({ delivery, placeLoading }) => {
   return (
     <>
       <View style={{ flexDirection: "column" }}>
@@ -47,12 +47,13 @@ const ThirdRowContent = () => {
             >
               <Text
                 style={{
+                  marginLeft: "5px",
                   padding: "0 3",
+                  fontSize: "10px",
                 }}
               >
-                &nbsp;
+                {delivery.addressDelivery}
               </Text>
-              <Text>DYNAMIC TEXT</Text>
             </View>
           </View>
         </View>
@@ -98,12 +99,13 @@ const ThirdRowContent = () => {
             >
               <Text
                 style={{
+                  marginLeft: "5px",
                   padding: "0 3",
+                  fontSize: "10px",
                 }}
               >
-                &nbsp;
+                {placeLoading.addressLoading}
               </Text>
-              <Text>DYNAMIC TEXT</Text>
             </View>
           </View>
         </View>
@@ -138,20 +140,6 @@ const ThirdRowContent = () => {
               <Text style={{ fontSize: "5", fontWeight: "light" }}>
                 Załączone dokumenty {"\n"}
                 Belgfulgte Dokumente {"\n"} Documents attached
-              </Text>
-            </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Text
-                style={{
-                  padding: "0 3",
-                }}
-              >
-                &nbsp;
               </Text>
             </View>
           </View>
@@ -189,20 +177,6 @@ const ThirdRowContent = () => {
                 Kolejni przewoźnicy (nazwisko lub nazwa, adres, kraj) {"\n"}
                 Nachtuhrer Frachtfuhrer (Name, Anschrift, Land)
                 {"\n"} Successive (name, adress, country)
-              </Text>
-            </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Text
-                style={{
-                  padding: "0 3",
-                }}
-              >
-                &nbsp;
               </Text>
             </View>
           </View>

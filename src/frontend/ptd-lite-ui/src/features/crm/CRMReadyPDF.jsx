@@ -7,7 +7,14 @@ import FourthRowContent from "./components/FourthRowContent";
 import FifthRowContent from "./components/FifthRowContent";
 import SixthRowContent from "./components/SixthRowContent";
 
-const CRMReadyPDF = () => {
+const CRMReadyPDF = ({
+  firstPage,
+  secondPage,
+  thirdPage,
+  fourthPage,
+  fifthPage,
+  sixthPage,
+}) => {
   const styles = StyleSheet.create({
     page: {
       margin: "15 15",
@@ -25,22 +32,31 @@ const CRMReadyPDF = () => {
       <Page size="A4" style={styles.page}>
         <View style={styles.table}>
           <View style={styles.row}>
-            <FirstRowContent />
+            <FirstRowContent sender={firstPage} />
           </View>
           <View style={styles.row}>
-            <SecondRowContent />
+            <SecondRowContent
+              receiver={secondPage.receiverForm}
+              carrier={secondPage.carrierForm}
+            />
           </View>
           <View style={styles.row}>
-            <ThirdRowContent />
+            <ThirdRowContent
+              delivery={thirdPage.deliveryForm}
+              placeLoading={thirdPage.placeLoadingForm}
+            />
           </View>
           <View style={styles.row}>
-            <FourthRowContent />
+            <FourthRowContent cargoInfo={fourthPage} />
           </View>
           <View style={styles.row}>
-            <FifthRowContent />
+            <FifthRowContent cargoInsturctions={fifthPage} />
           </View>
-          <View>
-            <SixthRowContent />
+          <View style={styles.row}>
+            <SixthRowContent
+              placeLoading={sixthPage.placeLoadingForm}
+              signature={sixthPage.signatureForm}
+            />
           </View>
         </View>
       </Page>
