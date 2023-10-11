@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import CRMViewer from "./CRMViewer";
 import { useDispatch } from "react-redux";
-import { saveForm } from "./slices/crmFormSlice";
+import { resetForm, saveForm } from "./slices/crmFormSlice";
 
 const CRMForm = () => {
   const { t } = useTranslation();
-  const { register, handleSubmit, getValues, setValue } = useForm();
+  const { register, handleSubmit, getValues, setValue, reset } = useForm();
   const dispatch = useDispatch();
 
   const [moveSenderAddress, setMoveSenderAddress] = useState(false);
@@ -98,6 +98,11 @@ const CRMForm = () => {
     }
   };
 
+  const handleCleanForm = () => {
+    reset();
+    dispatch(resetForm());
+  };
+
   return (
     <>
       <Header
@@ -115,13 +120,13 @@ const CRMForm = () => {
           <form onSubmit={handleSubmit(handleCrmGeneration)}>
             <div className="row sender">
               <div className="sender">
-                <h5>Sender</h5>
+                <h5>{t("cmr.sender")} (1)</h5>
                 <input
                   className="primary-input"
                   type="text"
                   name="senderName"
                   {...register("senderName")}
-                  placeholder="name"
+                  placeholder={t("cmr.placeholders.name")}
                   disabled={moveSender}
                 />
                 <input
@@ -129,7 +134,7 @@ const CRMForm = () => {
                   type="text"
                   name="addressSender1"
                   {...register("addressSender1")}
-                  placeholder="Address"
+                  placeholder={t("cmr.placeholders.address1")}
                   disabled={moveSender}
                 />
                 <div className="address-2-wrapper">
@@ -138,11 +143,11 @@ const CRMForm = () => {
                     type="text"
                     name="addressSender2"
                     {...register("addressSender2")}
-                    placeholder="Address 2"
+                    placeholder={t("cmr.placeholders.address2")}
                     disabled={moveSenderAddress || moveSender}
                   />
                   <div className="mover-wrapper">
-                    <p>Move</p>
+                    <p>{t("cmr.move")}</p>
                     <input
                       type="checkbox"
                       name="senderCheck"
@@ -157,11 +162,11 @@ const CRMForm = () => {
                   type="text"
                   name="senderCountry"
                   {...register("senderCountry")}
-                  placeholder="Country"
+                  placeholder={t("cmr.placeholders.country")}
                   disabled={moveSender}
                 />
                 <div className="sender-check-wrapper">
-                  <p>Same in signature</p>
+                  <p>{t("cmr.moveSignature")} (14)</p>
                   <input
                     type="checkbox"
                     name="senderCheck"
@@ -172,20 +177,20 @@ const CRMForm = () => {
                 </div>
               </div>
               <div className="receiver">
-                <h5>Receiver</h5>
+                <h5>{t("cmr.receiver")} (2)</h5>
                 <input
                   className="primary-input"
                   type="text"
                   name="receiverName"
                   {...register("receiverName")}
-                  placeholder="name"
+                  placeholder={t("cmr.placeholders.name")}
                 />
                 <input
                   className="primary-input"
                   type="text"
                   name="addressReceiver1"
                   {...register("addressReceiver1")}
-                  placeholder="Address"
+                  placeholder={t("cmr.placeholders.address1")}
                 />
                 <div className="address-2-wrapper">
                   <input
@@ -193,11 +198,11 @@ const CRMForm = () => {
                     type="text"
                     name="addressReceiver2"
                     {...register("addressReceiver2")}
-                    placeholder="Address 2"
+                    placeholder={t("cmr.placeholders.address2")}
                     disabled={moveReceiverAddress}
                   />
                   <div className="mover-wrapper">
-                    <p>Move</p>
+                    <p>{t("cmr.move")}</p>
                     <input
                       type="checkbox"
                       name="receiverCheck"
@@ -211,93 +216,97 @@ const CRMForm = () => {
             </div>
             <div className="row middle">
               <div className="delivery">
-                <h5>Delivery</h5>
+                <h5>{t("cmr.delivery")} (3)</h5>
                 <input
                   className="primary-input"
                   type="text"
                   name="addressDelivery"
                   {...register("addressDelivery")}
-                  placeholder="Address"
+                  placeholder={t("cmr.placeholders.address1")}
                 />
               </div>
               <div className="place-loading">
-                <h5>Loading place</h5>
+                <h5>{t("cmr.placeLoading")} (4)</h5>
                 <input
                   className="primary-input"
                   type="text"
                   name="addressLoading"
                   {...register("addressLoading")}
-                  placeholder="Address"
+                  placeholder={t("cmr.placeholders.address2")}
                 />
               </div>
             </div>
             <div className="row cargo-informations">
               <div className="cargo-info">
-                <h5>Cargo informations</h5>
+                <h5>{t("cmr.cargoInfo")} (6-12)</h5>
                 <textarea
                   className="primary-input"
                   name="cargoInfo"
                   {...register("cargoInfo")}
-                  placeholder="Cargo info"
+                  placeholder={t("cmr.placeholders.cargoInfo")}
                 />
               </div>
             </div>
             <div className="row cargo-instructions">
               <div className="cargo-instructions">
-                <h5>Cargo instructions</h5>
+                <h5>{t("cmr.cargoInstructions")} (13)</h5>
                 <textarea
                   className="primary-input"
                   name="cargoInstructions"
                   {...register("cargoInstructions")}
-                  placeholder="Cargo instructions"
+                  placeholder={t("cmr.placeholders.cargoInstructions")}
                 />
               </div>
             </div>
             <div className="row bottom">
               <div className="signature">
-                <h5>Signature</h5>
+                <h5>{t("cmr.signature")} (22)</h5>
                 <input
                   className="primary-input"
                   type="text"
                   name="signatureName"
                   {...register("signatureName")}
-                  placeholder="name"
+                  placeholder={t("cmr.placeholders.name")}
                 />
                 <input
                   className="primary-input"
                   type="text"
                   name="addressSignature1"
                   {...register("addressSignature1")}
-                  placeholder="Address"
+                  placeholder={t("cmr.placeholders.address1")}
                 />
                 <input
                   className="primary-input"
                   type="text"
                   name="addressSignature2"
                   {...register("addressSignature2")}
-                  placeholder="Address 2"
+                  placeholder={t("cmr.placeholders.address2")}
                 />
                 <input
                   className="primary-input"
                   type="text"
                   name="signatureCountry"
                   {...register("signatureCountry")}
-                  placeholder="Country"
+                  placeholder={t("cmr.placeholders.country")}
                 />
               </div>
               <div className="carrier">
-                <h5>Carrier information</h5>
+                <h5>{t("cmr.carrier")} (16)</h5>
                 <input
                   className="primary-input"
                   type="text"
                   name="carrier"
                   {...register("carrier")}
-                  placeholder="carrier"
+                  placeholder={t("cmr.placeholders.carrier")}
                 />
               </div>
             </div>
             <div className="buttons">
-              <button type="button" className="secondary-btn">
+              <button
+                type="button"
+                className="secondary-btn"
+                onClick={handleCleanForm}
+              >
                 Wyczyść
               </button>
               <button type="submit" className="primary-btn">

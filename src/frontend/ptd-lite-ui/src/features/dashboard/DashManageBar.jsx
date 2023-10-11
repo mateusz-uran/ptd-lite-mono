@@ -69,18 +69,6 @@ const DashManageBar = ({
             </button>
           </Link>
         )}
-        {/* <Link to={`${location.pathname}/crm`}>
-          <button className="secondary-btn">CRM form</button>
-        </Link>
-        <PDFDownloadLink document={<CRMReadyPDF />} fileName={"CRM.pdf"}>
-          {({ blob, url, loading, error }) =>
-            loading ? (
-              "Loading..."
-            ) : (
-              <button className="secondary-btn">CRM</button>
-            )
-          }
-        </PDFDownloadLink> */}
         <Link to={`${location.pathname}/crm`}>
           <button className="secondary-btn">CRM</button>
         </Link>

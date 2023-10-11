@@ -166,5 +166,26 @@
   "dashboard": {
     "chosenCard": "Selected card",
     "modal": "Select card to check informations."
+  },
+  "cmr": {
+    "sender": "Sender",
+    "move": "Move",
+    "moveSignature": "Move to signature",
+    "receiver": "Receiver",
+    "delivery": "Delivery",
+    "placeLoading": "Loading",
+    "cargoInfo": "Cargo informations",
+    "cargoInstructions": "Cargo instructions",
+    "signature": "Signature",
+    "carrier": "Carrier",
+    "placeholders": {
+      "name": "Name",
+      "address1": "Address 1",
+      "address2": "Address 2",
+      "country": "Country",
+      "cargoInfo": "Cargo informations",
+      "cargoInstructions": "Cargo instructions",
+      "carrier": "Carrier"
+    }
   }
 }

@@ -165,5 +165,26 @@
   "dashboard": {
     "chosenCard": "Wybrana karta",
     "modal": "Wybierz kartę aby przeglądać informacje."
+  },
+  "cmr": {
+    "sender": "Nadawca",
+    "move": "Przenieś",
+    "moveSignature": "Przenieś do podpisu",
+    "receiver": "Odbiorca",
+    "delivery": "Miejsce przeznaczenia",
+    "placeLoading": "Miejsce załadowania",
+    "cargoInfo": "Informacje o ładunku",
+    "cargoInstructions": "Instrukcje nadawcy",
+    "signature": "Podpis",
+    "carrier": "Przewoźnik",
+    "placeholders": {
+      "name": "Nazwa",
+      "address1": "Adres 1",
+      "address2": "Adres 2",
+      "country": "Kraj",
+      "cargoInfo": "Informacje o ładunku",
+      "cargoInstructions": "Instrukcje nadawcy",
+      "carrier": "Przewoźnik"
+    }
   }
 }
