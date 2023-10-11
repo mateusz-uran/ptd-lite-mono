@@ -69,6 +69,9 @@ const DashManageBar = ({
             </button>
           </Link>
         )}
+        <Link to={`${location.pathname}/crm`}>
+          <button className="secondary-btn">CRM</button>
+        </Link>
       </div>
     </div>
   );

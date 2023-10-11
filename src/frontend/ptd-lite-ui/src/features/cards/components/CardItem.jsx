@@ -68,8 +68,6 @@ const CardItem = ({ cards }) => {
       nick: String(user.nickname),
     };
     localStorage.setItem("card_and_user", JSON.stringify(selectedCardAndUser));
-    localStorage.setItem("selected_card_id", Number(cardId));
-    localStorage.setItem("selected_card_number", String(cardNumber));
   }
 
   return formattedCards.map((card, index) => (

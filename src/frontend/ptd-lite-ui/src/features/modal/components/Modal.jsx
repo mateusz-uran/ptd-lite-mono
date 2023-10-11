@@ -1,17 +1,17 @@
-import '../../../css/modal.css';
-import { useDispatch, useSelector } from 'react-redux';
+import "../../../css/modal.css";
+import { useDispatch, useSelector } from "react-redux";
 import {
   closeModal,
   method,
   modalMessage,
   objectId,
-} from '../slices/modalSlice';
-import { useDeletecardMutation } from '../../../api/card/cardApiSlice';
-import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useDeleteTripGroupMutation } from '../../../api/trips/tripsApiSlice';
-import { useDeletePetrolMutation } from '../../../api/petrol/petrolApiSlice';
-import { useDeleteAdBlueMutation } from '../../../api/adblue/adBlueApiSlice';
+} from "../slices/modalSlice";
+import { useDeletecardMutation } from "../../../api/card/cardApiSlice";
+import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDeleteTripGroupMutation } from "../../../api/trips/tripsApiSlice";
+import { useDeletePetrolMutation } from "../../../api/petrol/petrolApiSlice";
+import { useDeleteAdBlueMutation } from "../../../api/adblue/adBlueApiSlice";
 
 const Modal = () => {
   const { t } = useTranslation();
@@ -29,26 +29,32 @@ const Modal = () => {
   const handleConfirmModal = async () => {
     try {
       switch (methodToCall) {
-        case 'deleteCard':
+        case "deleteCard":
           await deleteCard(objectIdToDelete).unwrap();
+          var storedCardAndUser = JSON.parse(
+            localStorage.getItem("card_and_user")
+          );
+          if (storedCardAndUser.cardId === objectIdToDelete) {
+            localStorage.removeItem("card_and_user");
+          }
           if (location.pathname.includes(String(objectIdToDelete))) {
             navigate(-1);
           }
           break;
-        case 'deleteTripGroup':
+        case "deleteTripGroup":
           await deleteTripGroup(objectIdToDelete).unwrap();
           break;
-        case 'deletePetrol':
+        case "deletePetrol":
           await deletePetrol(objectIdToDelete).unwrap();
           break;
-        case 'deleteAdBlue':
+        case "deleteAdBlue":
           await deleteAdBlue(objectIdToDelete).unwrap();
           break;
       }
-      dispatch(closeModal('success'));
+      dispatch(closeModal("success"));
     } catch (err) {
-      console.log('Cant delete via modal: ', err);
-      dispatch(closeModal('error'));
+      console.log("Cant delete via modal: ", err);
+      dispatch(closeModal("error"));
     }
   };
 
@@ -62,7 +68,7 @@ const Modal = () => {
             className="primary-btn confirm-btn"
             onClick={handleConfirmModal}
           >
-            {t('buttons.confirm')}
+            {t("buttons.confirm")}
           </button>
           <button
             type="button"
@@ -71,7 +77,7 @@ const Modal = () => {
               dispatch(closeModal());
             }}
           >
-            {t('buttons.cancel')}
+            {t("buttons.cancel")}
           </button>
         </div>
       </div>
