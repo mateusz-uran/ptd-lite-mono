@@ -18,7 +18,7 @@ const CRMReadyPDF = ({
   // Register Font
   Font.register({
     family: "Roboto",
-    src: "https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxP.ttf",
+    src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf",
   });
 
   const styles = StyleSheet.create({
