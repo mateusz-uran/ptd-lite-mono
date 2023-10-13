@@ -31,7 +31,7 @@ const FourthRowContent = ({ cargoInfo }) => {
               style={{
                 alignSelf: "center",
                 fontSize: "7",
-                fontWeight: "bold",
+                fontWeight: "700",
                 padding: "0 3",
               }}
             >
@@ -51,7 +51,7 @@ const FourthRowContent = ({ cargoInfo }) => {
               style={{
                 alignSelf: "center",
                 fontSize: "7",
-                fontWeight: "bold",
+                fontWeight: "700",
                 padding: "0 3",
               }}
             >
@@ -71,7 +71,7 @@ const FourthRowContent = ({ cargoInfo }) => {
               style={{
                 alignSelf: "center",
                 fontSize: "7",
-                fontWeight: "bold",
+                fontWeight: "700",
                 padding: "0 3",
               }}
             >
@@ -92,7 +92,7 @@ const FourthRowContent = ({ cargoInfo }) => {
               style={{
                 alignSelf: "center",
                 fontSize: "7",
-                fontWeight: "bold",
+                fontWeight: "700",
                 padding: "0 3",
               }}
             >
@@ -110,7 +110,14 @@ const FourthRowContent = ({ cargoInfo }) => {
             height: "100%",
           }}
         >
-          <Text style={{ marginLeft: "5px", padding: "0 3", fontSize: "10px" }}>
+          <Text
+            style={{
+              marginLeft: "5px",
+              padding: "0 3",
+              fontSize: "10px",
+              fontWeight: "700",
+            }}
+          >
             {cargoInfo.info}
           </Text>
         </View>
@@ -169,8 +176,8 @@ const FourthRowContent = ({ cargoInfo }) => {
           <Text
             style={{
               fontSize: "6",
-              fontWeight: "800",
               padding: "3",
+              fontWeight: "700",
             }}
           >
             10
@@ -186,7 +193,7 @@ const FourthRowContent = ({ cargoInfo }) => {
             borderRight: "1px solid black",
           }}
         >
-          <Text style={{ fontSize: "6", fontWeight: "800", padding: "3" }}>
+          <Text style={{ fontSize: "6", fontWeight: "700", padding: "3" }}>
             11
           </Text>
           <Text style={{ fontSize: "5" }}>
@@ -200,7 +207,7 @@ const FourthRowContent = ({ cargoInfo }) => {
             borderRight: "1px solid black",
           }}
         >
-          <Text style={{ fontSize: "6", fontWeight: "800", padding: "3" }}>
+          <Text style={{ fontSize: "6", fontWeight: "700", padding: "3" }}>
             12
           </Text>
           <Text style={{ fontSize: "5" }}>

@@ -176,7 +176,7 @@
     "cargoInfo": "Informacje o ładunku",
     "cargoInstructions": "Instrukcje nadawcy",
     "signature": "Podpis",
-    "carrier": "Przewoźnik",
+    "carrier": "Numery rejestracyjne",
     "placeholders": {
       "name": "Nazwa",
       "address1": "Adres 1",
@@ -184,7 +184,7 @@
       "country": "Kraj",
       "cargoInfo": "Informacje o ładunku",
       "cargoInstructions": "Instrukcje nadawcy",
-      "carrier": "Przewoźnik"
+      "carrier": "Numery rejestracyjne"
     }
   }
 }

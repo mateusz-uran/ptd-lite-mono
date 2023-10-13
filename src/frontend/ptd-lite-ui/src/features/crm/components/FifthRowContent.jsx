@@ -33,7 +33,7 @@ const FifthRowContent = ({ cargoInsturctions }) => {
                 style={{
                   alignSelf: "center",
                   fontSize: "7",
-                  fontWeight: "bold",
+                  fontWeight: "700",
                   padding: "0 3",
                 }}
               >
@@ -51,7 +51,13 @@ const FifthRowContent = ({ cargoInsturctions }) => {
               </Text>
             </View>
             <View style={{ height: "80%" }}>
-              <Text style={{ paddingTop: "10", fontSize: "10px" }}>
+              <Text
+                style={{
+                  paddingTop: "10",
+                  fontSize: "10px",
+                  fontWeight: "700",
+                }}
+              >
                 {cargoInsturctions.instructions}
               </Text>
             </View>
@@ -86,7 +92,7 @@ const FifthRowContent = ({ cargoInsturctions }) => {
                   style={{
                     alignSelf: "center",
                     fontSize: "7",
-                    fontWeight: "bold",
+                    fontWeight: "700",
                     padding: "0 3",
                   }}
                 >
@@ -209,7 +215,7 @@ const FifthRowContent = ({ cargoInsturctions }) => {
                 style={{
                   alignSelf: "center",
                   fontSize: "7",
-                  fontWeight: "bold",
+                  fontWeight: "700",
                   padding: "0 3",
                 }}
               >
