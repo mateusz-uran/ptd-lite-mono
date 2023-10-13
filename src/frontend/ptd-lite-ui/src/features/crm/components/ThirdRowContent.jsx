@@ -27,7 +27,7 @@ const ThirdRowContent = ({ delivery, placeLoading }) => {
                 style={{
                   alignSelf: "center",
                   fontSize: "7",
-                  fontWeight: "bold",
+                  fontWeight: "700",
                   padding: "0 3",
                 }}
               >
@@ -50,6 +50,7 @@ const ThirdRowContent = ({ delivery, placeLoading }) => {
                   marginLeft: "5px",
                   padding: "0 3",
                   fontSize: "10px",
+                  fontWeight: "700",
                 }}
               >
                 {delivery.addressDelivery}
@@ -79,7 +80,7 @@ const ThirdRowContent = ({ delivery, placeLoading }) => {
                 style={{
                   alignSelf: "center",
                   fontSize: "7",
-                  fontWeight: "bold",
+                  fontWeight: "700",
                   padding: "0 3",
                 }}
               >
@@ -102,6 +103,7 @@ const ThirdRowContent = ({ delivery, placeLoading }) => {
                   marginLeft: "5px",
                   padding: "0 3",
                   fontSize: "10px",
+                  fontWeight: "700",
                 }}
               >
                 {placeLoading.addressLoading}
@@ -131,7 +133,7 @@ const ThirdRowContent = ({ delivery, placeLoading }) => {
                 style={{
                   alignSelf: "center",
                   fontSize: "7",
-                  fontWeight: "bold",
+                  fontWeight: "700",
                   padding: "0 3",
                 }}
               >
@@ -202,7 +204,7 @@ const ThirdRowContent = ({ delivery, placeLoading }) => {
                 style={{
                   alignSelf: "flex-start",
                   fontSize: "7",
-                  fontWeight: "bold",
+                  fontWeight: "700",
                   padding: "5 3",
                 }}
               >

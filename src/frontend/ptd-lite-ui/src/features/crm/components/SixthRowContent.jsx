@@ -39,7 +39,7 @@ const SixthRowContent = ({ placeLoading, signature }) => {
             <Text
               style={{
                 fontSize: "7",
-                fontWeight: "bold",
+                fontWeight: "700",
                 padding: "0 3",
               }}
             >
@@ -55,7 +55,7 @@ const SixthRowContent = ({ placeLoading, signature }) => {
               dnia / am / on
             </Text>
             <View style={{ border: "1px solid black", marginTop: "15" }}>
-              <Text style={{ fontSize: "8", fontWeight: "bold", padding: "5" }}>
+              <Text style={{ fontSize: "8", fontWeight: "700", padding: "5" }}>
                 {placeLoading.addressLoading}
               </Text>
             </View>
@@ -72,7 +72,11 @@ const SixthRowContent = ({ placeLoading, signature }) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ width: "20%", textAlign: "center" }}>15</Text>
+            <Text
+              style={{ width: "20%", textAlign: "center", fontWeight: "700" }}
+            >
+              15
+            </Text>
             <Text>Zapłata/ Ruckerstattung / Cash on deliver</Text>
           </View>
         </View>
@@ -87,7 +91,9 @@ const SixthRowContent = ({ placeLoading, signature }) => {
       >
         <View style={{ width: "250px" }}>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontSize: "5", padding: "0 3" }}>22</Text>
+            <Text style={{ fontSize: "5", padding: "0 3", fontWeight: "700" }}>
+              22
+            </Text>
             <View style={{ height: "70", justifyContent: "space-between" }}>
               <View>
                 <Text
@@ -121,7 +127,9 @@ const SixthRowContent = ({ placeLoading, signature }) => {
         </View>
         <View style={{ width: "150px", borderLeft: "1px solid black" }}>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontSize: "5", padding: "0 3" }}>23</Text>
+            <Text style={{ fontSize: "5", padding: "0 3", fontWeight: "700" }}>
+              23
+            </Text>
             <View style={{ height: "70", justifyContent: "space-between" }}>
               <View></View>
               <View

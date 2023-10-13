@@ -1,4 +1,4 @@
-import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
+import { Document, Font, Page, StyleSheet, View } from "@react-pdf/renderer";
 import React from "react";
 import FirstRowContent from "./components/FirstRowContent";
 import SecondRowContent from "./components/SecondRowContent";
@@ -15,9 +15,16 @@ const CRMReadyPDF = ({
   fifthPage,
   sixthPage,
 }) => {
+  // Register Font
+  Font.register({
+    family: "Roboto",
+    src: "https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxP.ttf",
+  });
+
   const styles = StyleSheet.create({
     page: {
       margin: "15 15",
+      fontFamily: "Roboto",
     },
     table: {
       flexDirection: "column",

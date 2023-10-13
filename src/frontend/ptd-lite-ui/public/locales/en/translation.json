@@ -177,7 +177,7 @@
     "cargoInfo": "Cargo informations",
     "cargoInstructions": "Cargo instructions",
     "signature": "Signature",
-    "carrier": "Carrier",
+    "carrier": "Registration numbers",
     "placeholders": {
       "name": "Name",
       "address1": "Address 1",
@@ -185,7 +185,7 @@
       "country": "Country",
       "cargoInfo": "Cargo informations",
       "cargoInstructions": "Cargo instructions",
-      "carrier": "Carrier"
+      "carrier": "Registration numbers"
     }
   }
 }

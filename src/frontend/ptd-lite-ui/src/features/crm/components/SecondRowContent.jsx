@@ -26,7 +26,7 @@ const SecondRowContent = ({ receiver, carrier }) => {
               style={{
                 alignSelf: "center",
                 fontSize: "7",
-                fontWeight: "bold",
+                fontWeight: "700",
                 padding: "0 3",
               }}
             >
@@ -49,6 +49,7 @@ const SecondRowContent = ({ receiver, carrier }) => {
                 marginLeft: "5px",
                 padding: "0 3",
                 fontSize: "10px",
+                fontWeight: "700",
               }}
             >
               {receiver.receiverName} {"\n"}
@@ -79,7 +80,7 @@ const SecondRowContent = ({ receiver, carrier }) => {
               style={{
                 alignSelf: "center",
                 fontSize: "7",
-                fontWeight: "bold",
+                fontWeight: "700",
                 padding: "0 3",
               }}
             >
@@ -96,6 +97,8 @@ const SecondRowContent = ({ receiver, carrier }) => {
                 marginLeft: "5px",
                 padding: "0 3",
                 fontSize: "10px",
+                fontWeight: "700",
+                textTransform: "uppercase",
               }}
             >
               {carrier.carrierName} {"\n"}

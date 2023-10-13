@@ -26,7 +26,7 @@ const FirstRowContent = ({ sender }) => {
               style={{
                 alignSelf: "center",
                 fontSize: "7",
-                fontWeight: "bold",
+                fontWeight: "700",
                 padding: "0 3",
               }}
             >
@@ -49,6 +49,7 @@ const FirstRowContent = ({ sender }) => {
                 marginLeft: "5px",
                 padding: "0 3",
                 fontSize: "10px",
+                fontWeight: "700",
               }}
             >
               {sender.senderName} {"\n"}
