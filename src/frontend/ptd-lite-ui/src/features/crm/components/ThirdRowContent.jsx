@@ -211,7 +211,7 @@ const ThirdRowContent = ({ delivery, placeLoading }) => {
                 17
               </Text>
               <Text style={{ fontSize: "5", fontWeight: "light" }}>
-                Zastrzerzenia i uwagi przewoźnika {"\n"}
+                Zastrzeżenia i uwagi przewoźnika {"\n"}
                 Vorbehalte und Bemerkungen der Frachtfuhrer
                 {"\n"} Carrier`s reservations and Observations {"\n"}
                 {"\n"}
