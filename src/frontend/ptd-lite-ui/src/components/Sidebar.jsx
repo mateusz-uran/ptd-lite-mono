@@ -1,17 +1,17 @@
-import { Link, useOutlet } from 'react-router-dom';
-import logo from '../assets/logo-bg.png';
-import { MdLogout, MdDashboard, MdOutlineQueryStats } from 'react-icons/md';
-import { BsBook, BsArchiveFill } from 'react-icons/bs';
-import { RiArrowDropLeftLine, RiArrowDropDownLine } from 'react-icons/ri';
-import '../css/sidebar.css';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { clearAuthContext } from '../features/auth/auth0Slice';
-import { useAuth0 } from '@auth0/auth0-react';
+import { Link, useOutlet } from "react-router-dom";
+import logo from "../assets/logo-bg.png";
+import { MdLogout, MdDashboard, MdOutlineQueryStats } from "react-icons/md";
+import { BsBook, BsArchiveFill } from "react-icons/bs";
+import { RiArrowDropLeftLine } from "react-icons/ri";
+import "../css/sidebar.css";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { clearAuthContext } from "../features/auth/auth0Slice";
+import { useAuth0 } from "@auth0/auth0-react";
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Sidebar = () => {
   const { t } = useTranslation();
@@ -27,7 +27,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar-wrapper">
-      <nav className={`sidebar ${showSidebar ? '' : 'close'}`}>
+      <nav className={`sidebar ${showSidebar ? "" : "close"}`}>
         <header>
           <div className="logo">
             <span className="image">
@@ -45,38 +45,38 @@ const Sidebar = () => {
         <div className="menu">
           <ul>
             <li>
-              <Link to={'dashboard'}>
+              <Link to={"dashboard"}>
                 <div className="icon-wrapper">
-                  <MdDashboard className="icon" title={t('misc.dashboard')} />
+                  <MdDashboard className="icon" title={t("misc.dashboard")} />
                 </div>
-                <div className="text-wrapper">{t('misc.dashboard')}</div>
+                <div className="text-wrapper">{t("misc.dashboard")}</div>
               </Link>
             </li>
             <li>
-              <Link to={'cards'}>
+              <Link to={"cards"}>
                 <div className="icon-wrapper">
-                  <BsBook className="icon" title={t('misc.cards')} />
+                  <BsBook className="icon" title={t("misc.cards")} />
                 </div>
-                <div className="text-wrapper">{t('misc.cards')}</div>
+                <div className="text-wrapper">{t("misc.cards")}</div>
               </Link>
             </li>
             <li>
-              <Link to={'stats'}>
+              <Link to={"stats"}>
                 <div className="icon-wrapper">
                   <MdOutlineQueryStats
                     className="icon"
-                    title={t('misc.stats')}
+                    title={t("misc.stats")}
                   />
                 </div>
-                <div className="text-wrapper">{t('misc.stats')}</div>
+                <div className="text-wrapper">{t("misc.stats")}</div>
               </Link>
             </li>
             <li>
-              <Link to={'archive'}>
+              <Link to={"archive"}>
                 <div className="icon-wrapper">
-                  <BsArchiveFill className="icon" title={t('misc.arch')} />
+                  <BsArchiveFill className="icon" title={t("misc.arch")} />
                 </div>
-                <div className="text-wrapper">{t('misc.arch')}</div>
+                <div className="text-wrapper">{t("misc.arch")}</div>
               </Link>
             </li>
           </ul>
@@ -84,7 +84,7 @@ const Sidebar = () => {
           <footer className="logout-button">
             <button onClick={handleLogout}>
               <MdLogout className="icon" />
-              <span>{t('buttons.logout')}</span>
+              <span>{t("buttons.logout")}</span>
             </button>
           </footer>
         </div>
