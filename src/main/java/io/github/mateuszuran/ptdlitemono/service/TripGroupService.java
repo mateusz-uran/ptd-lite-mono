@@ -2,8 +2,8 @@ package io.github.mateuszuran.ptdlitemono.service;
 
 import io.github.mateuszuran.ptdlitemono.dto.request.TripGroupRequest;
 import io.github.mateuszuran.ptdlitemono.dto.response.TripGroupResponse;
-import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
 import io.github.mateuszuran.ptdlitemono.exception.TripGroupException;
+import io.github.mateuszuran.ptdlitemono.exception.TripGroupNotFoundException;
 import io.github.mateuszuran.ptdlitemono.mapper.GenericMapper;
 import io.github.mateuszuran.ptdlitemono.mapper.TripMapper;
 import io.github.mateuszuran.ptdlitemono.model.Trip;

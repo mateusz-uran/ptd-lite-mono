@@ -54,18 +54,18 @@ class TripGroupServiceTest {
         Long tripId2 = 2L;
         Long tripId3 = 3L;
         String cargoName = "food";
-        Integer cargoWeight = 50;
+        Double cargoWeight = 50D;
         Integer cargoTemperature = 123;
         var trips = helpers.createTripsModel();
         TripGroupRequest request = TripGroupRequest.builder()
                 .tripIds(List.of(tripId1, tripId2, tripId3))
                 .temperature(123)
-                .weight(50)
+                .weight(50D)
                 .cargoName(cargoName)
                 .build();
         when(tripRepository.findAllById(List.of(tripId1, tripId2, tripId3))).thenReturn(trips);
 
-        TripGroup group = TripGroup.builder().cargoName(cargoName).temperature(123).weight(50).trips(new ArrayList<>()).build();
+        TripGroup group = TripGroup.builder().cargoName(cargoName).temperature(123).weight(50D).trips(new ArrayList<>()).build();
         when(mapper.mapToTripGroup(request)).thenReturn(group);
         //when
         service.createGroup(request);
@@ -98,7 +98,7 @@ class TripGroupServiceTest {
         TripGroupRequest request = TripGroupRequest.builder()
                 .tripIds(List.of(tripId1, tripId2))
                 .temperature(123)
-                .weight(50)
+                .weight(50D)
                 .cargoName(cargoName)
                 .build();
         when(tripRepository.findAllById(List.of(tripId1, tripId2))).thenReturn(List.of(trip1, trip2));

@@ -1,16 +1,16 @@
-import { Fragment } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Fragment } from "react";
+import { useTranslation } from "react-i18next";
 import {
   clearSelectedTrips,
   selectedTripArray,
-} from '../slices/tripSelectedSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import { translateCargoInputs } from '../inputs/cargoInputs';
-import { useNavigate, useParams } from 'react-router-dom';
-import Header from '../../../components/Header';
-import { useCreateTripsGroupMutation } from '../../../api/trips/tripsApiSlice';
-import SelectedTripsTable from '../components/SelectedTripsTable';
+} from "../slices/tripSelectedSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { translateCargoInputs } from "../inputs/cargoInputs";
+import { useNavigate, useParams } from "react-router-dom";
+import Header from "../../../components/Header";
+import { useCreateTripsGroupMutation } from "../../../api/trips/tripsApiSlice";
+import SelectedTripsTable from "../components/SelectedTripsTable";
 
 const TripCargoForm = () => {
   const { t } = useTranslation();
@@ -27,8 +27,11 @@ const TripCargoForm = () => {
   const onSubmit = async (data) => {
     try {
       const selectedTripIds = selectedTrips.map((trip) => trip.id);
+      const weight = parseFloat(data.weight);
+
       let tripGroupPayload = {
         ...data,
+        weight,
         tripIds: selectedTripIds,
       };
       await createTripsGroup(tripGroupPayload).unwrap();
@@ -44,7 +47,7 @@ const TripCargoForm = () => {
       <Header
         compArray={[
           {
-            compName: t('misc.cards'),
+            compName: t("misc.cards"),
           },
           {
             compName: cardNumber,
@@ -63,11 +66,12 @@ const TripCargoForm = () => {
                 type={input.type}
                 name={input.name}
                 {...register(input.name)}
+                step={input?.step}
                 className="primary-input"
               />
             </div>
           ))}
-          <button className="primary-btn">{t('buttons.addCargo')}</button>
+          <button className="primary-btn">{t("buttons.addCargo")}</button>
         </form>
       </div>
     </Fragment>
