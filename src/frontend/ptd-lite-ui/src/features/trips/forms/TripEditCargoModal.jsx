@@ -1,13 +1,13 @@
-import '../../../css/edit_modal.css';
-import { RiCloseFill } from 'react-icons/ri';
-import { createPortal } from 'react-dom';
-import { useDispatch } from 'react-redux';
-import { stopEditingCargo } from '../slices/tripCargoUpdateSlice';
-import { useForm } from 'react-hook-form';
-import { translateCargoInputs } from '../inputs/cargoInputs';
-import { useEffect } from 'react';
-import { useUpdateTripGroupInformationMutation } from '../../../api/trips/tripsApiSlice';
-import { useTranslation } from 'react-i18next';
+import "../../../css/edit_modal.css";
+import { RiCloseFill } from "react-icons/ri";
+import { createPortal } from "react-dom";
+import { useDispatch } from "react-redux";
+import { stopEditingCargo } from "../slices/tripCargoUpdateSlice";
+import { useForm } from "react-hook-form";
+import { translateCargoInputs } from "../inputs/cargoInputs";
+import { useEffect } from "react";
+import { useUpdateTripGroupInformationMutation } from "../../../api/trips/tripsApiSlice";
+import { useTranslation } from "react-i18next";
 
 const TripEditCargoModal = ({ groupToEdit }) => {
   const { t } = useTranslation();
@@ -46,12 +46,13 @@ const TripEditCargoModal = ({ groupToEdit }) => {
           <input
             type={input.type}
             name={input.name}
+            step={input?.step}
             {...register(input.name)}
             className="primary-input"
           />
         </div>
       ))}
-      <button className="primary-btn">{t('buttons.updateCargo')}</button>
+      <button className="primary-btn">{t("buttons.updateCargo")}</button>
     </form>
   );
 
@@ -59,7 +60,7 @@ const TripEditCargoModal = ({ groupToEdit }) => {
     <div className="edit-modal cargo">
       <div className="modal-wrapper">
         <div className="modal-header">
-          <h5>{t('misc.cargoEditFormHead')}</h5>
+          <h5>{t("misc.cargoEditFormHead")}</h5>
           <div className="exit-button-wrapper">
             <button
               type="button"
