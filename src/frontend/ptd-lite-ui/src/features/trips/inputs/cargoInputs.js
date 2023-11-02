@@ -12,7 +12,7 @@ export const translateCargoInputs = () => {
       name: "weight",
       label: i18next.t("misc.weight"),
       type: "number",
-      step: "0,01",
+      step: "0.01",
       placeholder: i18next.t("misc.weight"),
     },
     {

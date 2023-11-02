@@ -17,13 +17,14 @@ const TripEditCargoModal = ({ groupToEdit }) => {
   const [updateTripGroupInformation] = useUpdateTripGroupInformationMutation();
 
   const onSubmit = async (data) => {
-    let payload = {
-      groupId: data.id,
-      request: data,
+    const weight = parseFloat(data.weight);
+    let groupPayload = {
+      ...data,
+      weight,
     };
     await updateTripGroupInformation({
       groupId: data.id,
-      group: data,
+      group: groupPayload,
     }).unwrap();
     dispatch(stopEditingCargo());
   };
@@ -46,8 +47,8 @@ const TripEditCargoModal = ({ groupToEdit }) => {
           <input
             type={input.type}
             name={input.name}
-            step={input?.step}
             {...register(input.name)}
+            step={input?.step}
             className="primary-input"
           />
         </div>
