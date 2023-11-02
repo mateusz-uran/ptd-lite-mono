@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class TripGroupRequest {
     private String cargoName;
-    private Integer weight;
+    private Double weight;
     private Integer temperature;
     private String notes;
     private List<Long> tripIds;
