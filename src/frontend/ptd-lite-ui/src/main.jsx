@@ -8,7 +8,7 @@ import Auth0Wrapper from "./features/auth/Auth0Wrapper.jsx";
 import "./i18n.js";
 import Auth0ProviderWithNavigate from "./Auth0ProviderWithNavigate.jsx";
 import { BrowserRouter } from "react-router-dom";
-import UpdateCheckWrapper from "./features/updates/UpdateCheckWrapper.jsx";
+import UpdateCheckWrapper from "./features/updates/components/UpdateCheckWrapper.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

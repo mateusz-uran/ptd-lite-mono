@@ -1,16 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isOpen: false,
-  modalMessage: '',
+  modalMessage: "",
   objectIdToDelete: 0,
-  deleteMethod: '',
+  deleteMethod: "",
   showToastNotification: false,
-  toastNotificationType: '',
+  toastNotificationType: "",
 };
 
 const modalSlice = createSlice({
-  name: 'modal',
+  name: "modal",
   initialState,
   reducers: {
     openModal: (state, action) => {
@@ -19,14 +19,14 @@ const modalSlice = createSlice({
       state.objectIdToDelete = action.payload.objectId;
       state.deleteMethod = action.payload.method;
     },
-    closeModal: (state, action) => {
+    closeModal: (action) => {
       return {
         ...initialState,
         showToastNotification: true,
         toastNotificationType: action.payload,
       };
     },
-    closeToastNotification: (state, action) => {
+    closeToastNotification: () => {
       return initialState;
     },
   },
