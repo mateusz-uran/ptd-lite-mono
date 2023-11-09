@@ -17,8 +17,10 @@ const updateInfoSlice = createSlice({
     fillUpdatesArray: (state, action) => {
       state.updates = action.payload;
     },
-    readUpdates: () => {
-      return initialState;
+    readUpdates: (state, action) => {
+      localStorage.setItem("user_updates", action.payload);
+      state.isNewUpdate = false;
+      state.isUpdateRead = true;
     },
   },
 });

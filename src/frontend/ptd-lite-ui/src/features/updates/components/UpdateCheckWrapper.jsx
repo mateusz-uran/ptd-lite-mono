@@ -16,9 +16,9 @@ const UpdateCheckWrapper = ({ children }) => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
+        dispatch(fillUpdatesArray(data));
         if (storedUserUpdates !== data.length) {
           dispatch(toggleNewUpdate());
-          dispatch(fillUpdatesArray(data));
         }
       } catch (error) {
         console.error("Error fetching data:", error);
