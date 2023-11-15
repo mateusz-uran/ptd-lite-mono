@@ -24,9 +24,7 @@ const Auth0ProviderWithNavigate = ({ children }) => {
             <h3>{t("misc.errorFirstPageInfo")}</h3>
             <span>
               <AiTwotoneMail className="icon" />
-              <a href="mailto: ptd-lite-support@gmail.com">
-                ptd-lite-support@gmail.com
-              </a>
+              <a href="mailto: ptdlite@gmail.com">ptdlite@gmail.com</a>
             </span>
             <button
               className="secondary-btn"
