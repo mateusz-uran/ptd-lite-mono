@@ -125,7 +125,9 @@
     "invoiceSelectDefault": "Select a country",
     "invoiceCopy": "Copy",
     "invoiceCopied": "Copied",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "updateIsRead": "Read",
+    "updateNotRead": "Mark as readed"
   },
   "toastify": {
     "error": "Something went wrong",

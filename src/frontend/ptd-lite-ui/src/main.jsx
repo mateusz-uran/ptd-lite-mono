@@ -8,6 +8,7 @@ import Auth0Wrapper from "./features/auth/Auth0Wrapper.jsx";
 import "./i18n.js";
 import Auth0ProviderWithNavigate from "./Auth0ProviderWithNavigate.jsx";
 import { BrowserRouter } from "react-router-dom";
+import UpdateCheckWrapper from "./features/updates/components/UpdateCheckWrapper.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <React.StrictMode>
         <Provider store={store}>
           <Auth0Wrapper>
-            <App />
+            <UpdateCheckWrapper>
+              <App />
+            </UpdateCheckWrapper>
           </Auth0Wrapper>
         </Provider>
       </React.StrictMode>

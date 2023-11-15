@@ -1,0 +1,20 @@
+.h-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+#update-wrapper .single-update {
+  padding: 1rem 0.3rem;
+  margin: 0.5rem 0;
+  background: #fff;
+  border-radius: 5px;
+}
+
+#update-wrapper .single-update h3 {
+  color: var(--text-color);
+}
+
+#update-wrapper .single-update .descriptions {
+  margin-left: 1.5rem;
+  padding: 0.5rem 0;
+}
