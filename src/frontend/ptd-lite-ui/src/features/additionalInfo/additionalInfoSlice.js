@@ -1,20 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  fuelInitialState: '',
-  fuelEndState: '',
-  aggregateInitialState: '',
-  aggregateAdBlue: '',
-  aggregateEndState: '',
-  avgFuelConsumption: '',
-  totalFuelConsumption: '',
-  avgSpeed: '',
-  fuelConsumptionIdle: '',
-  fuelConsumptionUneconomical: '',
+  fuelInitialState: "",
+  fuelEndState: "",
+  aggregateInitialState: "",
+  aggregateAdBlue: "",
+  aggregateEndState: "",
+  avgFuelConsumption: "",
+  totalFuelConsumption: "",
+  avgSpeed: "",
+  fuelConsumptionIdle: "",
+  fuelConsumptionUneconomical: "",
+  selectedCardId: 0,
 };
 
 const additionalInfoSlice = createSlice({
-  name: 'additionalInfo',
+  name: "additionalInfo",
   initialState,
   reducers: {
     saveAdditionalData: (state, action) => {
@@ -28,6 +29,8 @@ const additionalInfoSlice = createSlice({
 });
 
 export const getAdditionalInfo = (state) => state.additionalInfo;
+export const getStoredCardIdAdditionalInfo = (state) =>
+  state.additionalInfo.selectedCardId;
 
 export const { saveAdditionalData, clearAdditionalData } =
   additionalInfoSlice.actions;

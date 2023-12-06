@@ -11,12 +11,19 @@ import { updateCardStatus } from "../slices/updateCardSlice";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
+import {
+  clearAdditionalData,
+  getStoredCardIdAdditionalInfo,
+} from "../../additionalInfo/additionalInfoSlice";
 
 const CardItem = ({ cards }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
   const { user } = useAuth0();
+  const selectedCardIdInAdditionalInfo = useSelector(
+    getStoredCardIdAdditionalInfo
+  );
 
   const toastNotificationIsShown = useSelector(isNotificationShown);
   const toastNotificationType = useSelector(notificationType);

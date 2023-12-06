@@ -9,11 +9,45 @@ import AdBlueTable from "../../fuel/components/AdBlueTable";
 import AdditionalInformation from "../../additionalInfo/AdditionalInformation";
 import { useState } from "react";
 import CardManageBar from "./CardManageBar";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearAdditionalData,
+  getStoredCardIdAdditionalInfo,
+} from "../../additionalInfo/additionalInfoSlice";
 
 const CardSpecification = () => {
   const { t } = useTranslation();
   const { cardNumber, cardId } = useParams();
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
+  const dispatch = useDispatch();
+  const selectedCardIdInAdditionalInfo = useSelector(
+    getStoredCardIdAdditionalInfo
+  );
+
+  var cardAndUser = JSON.parse(localStorage.getItem("card_and_user"));
+  if (
+    cardAndUser !== null &&
+    cardAndUser.cardId &&
+    selectedCardIdInAdditionalInfo !== null &&
+    cardAndUser.cardId !== selectedCardIdInAdditionalInfo
+  ) {
+    dispatch(clearAdditionalData);
+  }
+
+  const handleAdditonalInfo = () => {
+    setShowAdditionalInfo((prevState) => !prevState);
+
+    // clear additional data when user will choose another card while data are saved
+    var cardAndUser = JSON.parse(localStorage.getItem("card_and_user"));
+    if (
+      cardAndUser !== null &&
+      cardAndUser.cardId !== 0 &&
+      selectedCardIdInAdditionalInfo !== null &&
+      cardAndUser.cardId !== selectedCardIdInAdditionalInfo
+    ) {
+      dispatch(clearAdditionalData());
+    }
+  };
 
   return (
     <div className="card-spec">
@@ -45,15 +79,12 @@ const CardSpecification = () => {
               showAdditionalInfo ? "visible" : undefined
             }`}
           >
-            <button
-              className="arrow-button"
-              onClick={() => setShowAdditionalInfo((prevState) => !prevState)}
-            >
+            <button className="arrow-button" onClick={handleAdditonalInfo}>
               {showAdditionalInfo ? t("buttons.shrink") : t("buttons.expand")}
               <MdKeyboardArrowDown className="arrow" />
             </button>
           </div>
-          {showAdditionalInfo && <AdditionalInformation />}
+          {showAdditionalInfo && <AdditionalInformation cardId={cardId} />}
         </div>
       </section>
     </div>
