@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const generatePdf = createAsyncThunk(
-  '/pdf/generate-doc',
+  "/pdf/generate-doc",
   async (arg, { getState }) => {
     const accessToken = getState().auth0.accessToken;
     try {
@@ -26,26 +26,26 @@ export const generatePdf = createAsyncThunk(
             cardId: arg.cardId,
             page: arg.page,
           },
-          responseType: 'blob',
+          responseType: "blob",
         }
       );
-
-      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const blob = new Blob([response.data], { type: "application/pdf" });
       const objectURL = URL.createObjectURL(blob);
-
-      window.open(objectURL, '_blank');
-
-      URL.revokeObjectURL(objectURL);
+      window.open(objectURL, "_blank");
     } catch (error) {
-      toast.error('Error generating PDF');
-      console.error('Error generating PDF:', error);
-      throw new Error('Failed to generate PDF');
+      toast.error("Error generating PDF");
+      console.error("Error generating PDF:", error);
+      throw new Error("Failed to generate PDF");
+    } finally {
+      if (objectURL) {
+        URL.revokeObjectURL(objectURL);
+      }
     }
   }
 );
 
 const pdfApiSlice = createSlice({
-  name: 'pdfApi',
+  name: "pdfApi",
   initialState,
   reducers: {},
   extraReducers(builder) {

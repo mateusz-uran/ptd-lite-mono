@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdditionalInfo } from "../../additionalInfo/additionalInfoSlice";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProgressModal from "./ProgressModal";
 import { useTranslation } from "react-i18next";
 import { generatePdf, selectIsLoading } from "../../../api/pdf/pdfApiSlice";
