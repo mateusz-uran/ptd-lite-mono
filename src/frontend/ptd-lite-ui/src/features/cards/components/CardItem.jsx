@@ -11,6 +11,7 @@ import { updateCardStatus } from "../slices/updateCardSlice";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
+import { format } from "date-fns";
 
 const CardItem = ({ cards }) => {
   const { t } = useTranslation();
@@ -36,11 +37,12 @@ const CardItem = ({ cards }) => {
 
   const formattedCards = cards.map((card) => {
     const creationTime = card.creationTime;
-    const formattedDate = new Date(creationTime).toISOString().split("T")[0];
+    const dateObject = new Date(creationTime);
+    const formattedDateTime = format(dateObject, "yyyy-MM-dd HH:mm");
 
     return {
       ...card,
-      creationTime: formattedDate,
+      creationTime: formattedDateTime,
     };
   });
 
