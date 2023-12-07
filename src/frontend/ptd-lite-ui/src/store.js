@@ -14,6 +14,7 @@ import currencyApiReducer from "./api/currency/currencyApiSlice";
 import petrolContentToggleReducer from "./features/fuel/slices/petrolContentToggleSlice";
 import adBlueContentToggleReducer from "./features/fuel/slices/adBlueContentToggleSlice";
 import crmFormReducer from "./features/crm/slices/crmFormSlice";
+import updateInfoReducer from "./features/updates/slices/updateInfoSlice";
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
     petrolContentToggle: petrolContentToggleReducer,
     adBlueContentToggle: adBlueContentToggleReducer,
     crmForm: crmFormReducer,
+    updateInfo: updateInfoReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

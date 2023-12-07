@@ -18,7 +18,7 @@ import CargoForm from "./features/trips/forms/TripCargoForm";
 import Cards from "./features/cards/components/Cards";
 import InvoiceWrapper from "./features/cards/components/InvoiceWrapper";
 import CRMForm from "./features/crm/CrmForm";
-import CRMViewer from "./features/crm/CRMViewer";
+import UpdateInformations from "./features/updates/components/UpdateInformations";
 
 function App() {
   const isOpen = useSelector(isModalOpen);
@@ -34,6 +34,7 @@ function App() {
           <Route path="/home/cards" element={<Cards />} />
           <Route path="/home/stats" element={<Statistics />} />
           <Route path="/home/archive" element={<Archives />} />
+          <Route path="/home/updates" element={<UpdateInformations />} />
           <Route
             path="/home/:compName/:cardNumber/:cardId"
             element={<CardSpecification />}

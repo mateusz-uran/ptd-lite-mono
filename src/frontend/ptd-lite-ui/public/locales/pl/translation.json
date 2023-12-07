@@ -124,7 +124,9 @@
     "invoiceSelectDefault": "Wybierz kraj",
     "invoiceCopy": "Kopiuj",
     "invoiceCopied": "Skopiowano",
-    "refresh": "Odśwież"
+    "refresh": "Odśwież",
+    "updateIsRead": "Przeczytane",
+    "updateNotRead": "Oznacz jako przeczytane"
   },
   "toastify": {
     "error": "Coś poszło nie tak",
