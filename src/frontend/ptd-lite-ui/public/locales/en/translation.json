@@ -91,7 +91,7 @@
     "invoiceSelectedMid": "Selected currency mid",
     "invoiceHours": "Driven hours",
     "invoiceCopyText": "Transport service in the territory {{countryName}}\nAVERAGE NBP CURRENCY SETTLEMENT RATE\nTable no. {{currencyTable}} from day {{currencyDate}}\n{{currencyCode}}/PLN = {{currencyRate}} ({{selectedRateValue}}\u20AC x {{currencyRate}} = {{drivenHours}})",
-    "cardExists": "Cards with that number already exists",
+    "cardExists": "Card with that number already exists",
     "errorFirstPageInfo": "Something went wrong, please contact support or comeback later."
   },
   "buttons": {
@@ -109,6 +109,7 @@
     "logout": "Logout",
     "login": "Login",
     "clear": "Clear",
+    "generate": "Generate",
     "submit": "Submit",
     "save": "Save",
     "add": "Add",

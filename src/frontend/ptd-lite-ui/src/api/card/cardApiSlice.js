@@ -29,7 +29,7 @@ export const cardApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: card,
       }),
-      invalidatesTags: ["Card", "cardsBigList"],
+      invalidatesTags: ["Card"],
     }),
     updateCard: builder.mutation({
       query: (card) => ({
