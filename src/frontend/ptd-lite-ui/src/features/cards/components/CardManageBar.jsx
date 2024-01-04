@@ -1,16 +1,19 @@
 import React from "react";
 import GeneratePDF from "../../pdf/components/GeneratePDF";
-import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { selectedTripArray } from "../../trips/slices/tripSelectedSlice";
 import { useTranslation } from "react-i18next";
 import { getPermissions } from "../../auth/auth0Slice";
+import { openModal } from "../../modal/slices/modalSlice";
 
 const CardManageBar = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const dispatch = useDispatch();
   const selectedTrips = useSelector(selectedTripArray);
   const loggedInUserRole = useSelector(getPermissions);
+  const { cardId } = useParams();
 
   const containsGroup = selectedTrips.some(
     (item) => item.group && item.group !== null
