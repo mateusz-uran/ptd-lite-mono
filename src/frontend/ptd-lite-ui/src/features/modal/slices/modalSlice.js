@@ -19,7 +19,7 @@ const modalSlice = createSlice({
       state.objectIdToDelete = action.payload.objectId;
       state.deleteMethod = action.payload.method;
     },
-    closeModal: (action) => {
+    closeModal: (state, action) => {
       return {
         ...initialState,
         showToastNotification: true,

@@ -28,7 +28,7 @@ const CardItem = ({ cards }) => {
         toast.info(t("toastify.deletedSuccesfully"));
       } else if (toastNotificationType === "error") {
         toast.error(t("toastify.failDelete"));
-      } else {
+      } else if (toastNotificationType !== "canceled") {
         toast.warn(t("toastify.error"));
       }
       dispatch(closeToastNotification());
