@@ -78,7 +78,7 @@ const Modal = () => {
             type="button"
             className="primary-btn clear-btn"
             onClick={() => {
-              dispatch(closeModal());
+              dispatch(closeModal("canceled"));
             }}
           >
             {t("buttons.cancel")}
