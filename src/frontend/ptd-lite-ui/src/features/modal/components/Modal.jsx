@@ -34,7 +34,11 @@ const Modal = () => {
           var storedCardAndUser = JSON.parse(
             localStorage.getItem("card_and_user")
           );
-          if (storedCardAndUser.cardId === objectIdToDelete) {
+          if (
+            storedCardAndUser &&
+            storedCardAndUser.cardId &&
+            storedCardAndUser.cardId === objectIdToDelete
+          ) {
             localStorage.removeItem("card_and_user");
           }
           if (location.pathname.includes(String(objectIdToDelete))) {

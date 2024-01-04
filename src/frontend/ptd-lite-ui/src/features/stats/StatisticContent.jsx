@@ -11,7 +11,8 @@ const StatisticContent = () => {
   const { t } = useTranslation();
   const { user } = useAuth0();
   const currentDate = new Date();
-  const [statsYear, setStatsYear] = useState(currentDate.getFullYear());
+  const currentYear = currentDate.getFullYear();
+  const [statsYear, setStatsYear] = useState(currentYear);
 
   const {
     data: statisticFromYear,
@@ -97,12 +98,30 @@ const StatisticContent = () => {
       </>
     );
   }
+
+  const years = Array.from(
+    { length: currentYear - 2022 },
+    (_, index) => 2023 + index
+  );
+
   return (
     <div id="statistics">
+      <div className="pick-year-wrapper">
+        {years.map((y, index) => (
+          <div key={index} className="pick-year">
+            <button
+              className={`small-btn ${statsYear == y ? "pick-year-btn" : ""}`}
+              onClick={() => setStatsYear(y)}
+            >
+              {y}
+            </button>
+          </div>
+        ))}
+      </div>
       <section>{sectionContent}</section>
       <p className="info">
         <small>* {t("statistics.info1")}</small>
-        <small>* {t("statistics.info2")}</small>
+        {/* <small>* {t("statistics.info2")}</small> */}
       </p>
     </div>
   );

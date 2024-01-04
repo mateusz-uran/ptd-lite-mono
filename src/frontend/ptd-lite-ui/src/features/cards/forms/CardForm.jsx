@@ -21,6 +21,11 @@ import { translateCardValidations } from "../inputs/cardsValidations";
 import SmallLoader from "../../../components/SmallLoader";
 
 import { toast } from "react-toastify";
+import { format } from "date-fns";
+import {
+  endDateFromRange,
+  updateDateRange,
+} from "../../archive/datesRangeSlice";
 
 const CardForm = () => {
   const { t } = useTranslation();
@@ -33,6 +38,7 @@ const CardForm = () => {
   const editStatus = useSelector(isCardEditing);
   const cardId = useSelector(cardIdToUpdate);
   const cardNumber = useSelector(cardNumberToUpdate);
+  const endDate = useSelector(endDateFromRange);
 
   const [addNewCard, { isLoading: loadingNewCard }] = useAddNewCardMutation();
   const [updateCard, { isLoading: loadingEditedCard }] =
@@ -44,6 +50,7 @@ const CardForm = () => {
     handleSubmit,
     setError,
     setValue,
+    touched,
     formState: { errors },
     reset,
   } = useForm({ resolver: yupResolver(cardSchema) });
@@ -62,6 +69,13 @@ const CardForm = () => {
     return card;
   };
 
+  function roundToNearest30(date = new Date()) {
+    const minutes = 30;
+    const ms = 1000 * 60 * minutes;
+    const roundedDate = new Date(Math.ceil(date.getTime() / ms) * ms);
+    return format(roundedDate, "yyyy-MM-dd HH:mm:ss");
+  }
+
   const onSubmit = async (data) => {
     try {
       const card = createCardObject(data, user, cardId, editStatus);
@@ -69,6 +83,13 @@ const CardForm = () => {
       if (!editStatus) {
         await addNewCard(card).unwrap();
         toast.success(t("toastify.newCard"));
+
+        //card date creation
+        const firstDate = new Date(endDate);
+        const actualDate = new Date();
+        if (firstDate < actualDate) {
+          dispatch(updateDateRange(roundToNearest30(actualDate)));
+        }
       } else {
         await updateCard(card).unwrap();
         var storedCardAndUser = JSON.parse(

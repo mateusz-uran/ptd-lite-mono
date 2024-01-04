@@ -307,10 +307,10 @@ const CRMForm = () => {
                 className="secondary-btn"
                 onClick={handleCleanForm}
               >
-                Wyczyść
+                {t("buttons.clear")}
               </button>
               <button type="submit" className="primary-btn">
-                Generuj
+                {t("buttons.generate")}
               </button>
             </div>
           </form>

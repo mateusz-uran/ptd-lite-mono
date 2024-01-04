@@ -50,7 +50,7 @@ const DatePickers = ({ refetchCards }) => {
     if (endDateRange) {
       setEndDate(parseDate(endDateRange));
     }
-  }, []);
+  }, [endDateRange]);
 
   return (
     <>
