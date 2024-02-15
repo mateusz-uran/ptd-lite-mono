@@ -42,35 +42,36 @@ public class StatisticCollector {
     }
 
     public Map<YearMonth, StatsPojo> gatherActualCardInformation(List<Card> cards) {
-        return cards.stream()
+        var cardsStream = cards.stream()
                 .collect(Collectors.groupingBy(
                         card -> YearMonth.from(card.getCreationTime()),
                         Collectors.collectingAndThen(
                                 Collectors.toList(),
-                                StatisticCollector::createStatsPojo
+                                cardsInside -> createStatsPojo(cardsInside, YearMonth.from(cardsInside.get(0).getCreationTime()))
                         )
                 ));
+        log.info("Card stream: " + cardsStream);
+        return cardsStream;
     }
 
-    private static StatsPojo createStatsPojo(List<Card> cardsInside) {
+    private static StatsPojo createStatsPojo(List<Card> cardsInside, YearMonth cardCreationMonth) {
         int cardCounter = cardsInside.size();
-        int mileage = calculateMileage(cardsInside);
+        int mileage = calculateMileage(cardsInside, cardCreationMonth);
         return new StatsPojo(cardCounter, mileage);
     }
 
-    private static int calculateMileage(List<Card> cardsInside) {
+    private static int calculateMileage(List<Card> cardsInside, YearMonth cardCreationMonth) {
         return cardsInside.stream()
                 .flatMap(card -> card.getTrips().stream())
+                .filter(trip -> {
+                    YearMonth tripEndMonth = YearMonth.from(parseDate(trip.getDayEnd()));
+                    return tripEndMonth.equals(cardCreationMonth);
+                })
                 .filter(trip -> isValidDate(trip.getDayEnd()))
-                .collect(Collectors.groupingBy(
-                        trip -> YearMonth.from(parseDate(trip.getDayEnd())),
-                        Collectors.summingInt(Trip::getCarMileage)
-                ))
-                .values()
-                .stream()
-                .mapToInt(Integer::intValue)
+                .mapToInt(Trip::getCarMileage)
                 .sum();
     }
+
 
     private static boolean isValidDate(String date) {
         try {

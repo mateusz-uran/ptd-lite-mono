@@ -101,7 +101,7 @@ public class AsyncStatisticService {
         summedMileage.addAndGet(diff);
         result.setCardMileage(summedMileage.get());
         repository.save(result);
-        log.info("Car mileage per month has been updated dew to trip update.");
+        log.info("Car mileage per month has been updated due to trip update.");
     }
 
     private Map<YearMonth, Integer> mapDayEndFromTrips(List<Trip> trips) {

@@ -1,9 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import {
   removeSelectedTrip,
   selectedTripArray,
   storeSelectedTrips,
-} from '../slices/tripSelectedSlice';
+} from "../slices/tripSelectedSlice";
 
 const TripSingleSelect = ({ tripObject }) => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const TripSingleSelect = ({ tripObject }) => {
     }
   };
 
-  const isChecked = selectedTrip.includes(tripObject);
+  const isChecked = selectedTrip.some((trip) => trip.id === tripObject.id);
 
   return (
     <input

@@ -21,6 +21,7 @@ public class StatisticExecutor {
 
         for (String user : users) {
             collector.statisticExecutor(user);
+
         }
     }
 }
