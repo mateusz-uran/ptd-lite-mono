@@ -128,7 +128,7 @@
     "invoiceCopied": "Copied",
     "refresh": "Refresh",
     "updateIsRead": "Read",
-    "updateNotRead": "Mark as readed"
+    "updateNotRead": "Mark as read"
   },
   "toastify": {
     "error": "Something went wrong",
