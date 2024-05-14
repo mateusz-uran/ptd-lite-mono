@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -56,16 +57,15 @@ class StatisticCollectorTest {
     void givenCardsList_whenStream_thenReturnMapWithYearMonthAndStatsPojo() {
         //given
         String username = "johndoe123";
-        LocalDateTime creationTimeFirstCard = LocalDateTime.of(2023, 5, 13, 16, 45);
-        LocalDateTime creationTimeSecondCard = LocalDateTime.of(2023, 6, 3, 12, 12);
-        StatsPojo expectedStatPojo = new StatsPojo(1,800);
+        LocalDateTime creationTimeFirstCard = LocalDateTime.of(2023, 7, 13, 16, 45);
+        LocalDateTime creationTimeSecondCard = LocalDateTime.of(2023, 7, 3, 12, 12);
+        StatsPojo expectedStatPojo = new StatsPojo(2,1509);
         var cards = helpers.cardModelFroStatistic(username, creationTimeFirstCard, creationTimeSecondCard);
         //when
         var map = collector.gatherActualCardInformation(cards);
         //then
-        assertThat(map.size(), is(2));
-        assertThat(map, hasKey(YearMonth.of(2023, 6)));
-        assertThat(map, hasKey(YearMonth.of(2023, 5)));
+        assertThat(map.size(), is(1));
+        assertThat(map, hasKey(YearMonth.of(2023, 7)));
         assertThat(map, hasValue(expectedStatPojo));
     }
 }

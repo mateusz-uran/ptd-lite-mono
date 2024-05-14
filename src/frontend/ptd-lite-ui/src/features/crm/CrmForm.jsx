@@ -147,7 +147,7 @@ const CRMForm = () => {
                     disabled={moveSenderAddress || moveSender}
                   />
                   <div className="mover-wrapper">
-                    <p>{t("cmr.move")}</p>
+                    <p>{t("cmr.move")} (4)</p>
                     <input
                       type="checkbox"
                       name="senderCheck"
@@ -166,7 +166,7 @@ const CRMForm = () => {
                   disabled={moveSender}
                 />
                 <div className="sender-check-wrapper">
-                  <p>{t("cmr.moveSignature")} (14)</p>
+                  <p>{t("cmr.moveSignature")} (22)</p>
                   <input
                     type="checkbox"
                     name="senderCheck"
@@ -202,7 +202,7 @@ const CRMForm = () => {
                     disabled={moveReceiverAddress}
                   />
                   <div className="mover-wrapper">
-                    <p>{t("cmr.move")}</p>
+                    <p>{t("cmr.move")} (3)</p>
                     <input
                       type="checkbox"
                       name="receiverCheck"

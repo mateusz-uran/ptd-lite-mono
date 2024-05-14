@@ -23,6 +23,7 @@ const CRMViewer = () => {
   const cargoInfoForm = useSelector(cargoInfo);
   const cargoInstructionsForm = useSelector(cargoInstructions);
   const signatureForm = useSelector(signature);
+
   return (
     <PDFViewer className="pdf-viewer">
       <CRMReadyPDF

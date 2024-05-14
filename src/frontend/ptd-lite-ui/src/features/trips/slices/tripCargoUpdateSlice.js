@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   cargoInfo: null,
@@ -6,11 +6,10 @@ const initialState = {
 };
 
 const tripCargoUpdateSlice = createSlice({
-  name: 'tripCargoUpdate',
+  name: "tripCargoUpdate",
   initialState,
   reducers: {
     startEditingCargo: (state, action) => {
-      console.log(action.payload);
       state.cargoInfo = action.payload;
       state.showEditForm = true;
     },
