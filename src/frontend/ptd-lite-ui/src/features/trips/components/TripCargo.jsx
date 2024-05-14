@@ -1,25 +1,24 @@
-import { MdDeleteOutline } from 'react-icons/md';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { Fragment } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { MdDeleteOutline } from "react-icons/md";
+import { AiOutlineEdit } from "react-icons/ai";
+import { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   clearSelectedTrips,
   selectedTripArray,
-} from '../slices/tripSelectedSlice';
+} from "../slices/tripSelectedSlice";
 import {
   useAddTripToExistingGroupMutation,
-  useDeleteTripGroupMutation,
   useRemoveTripFromGroupMutation,
-} from '../../../api/trips/tripsApiSlice';
+} from "../../../api/trips/tripsApiSlice";
 import {
   cargoToEdit,
   editCargoFormStatus,
   startEditingCargo,
-} from '../slices/tripCargoUpdateSlice';
-import TripEditCargoModal from '../forms/TripEditCargoModal';
-import { useTranslation } from 'react-i18next';
-import { openModal } from '../../modal/slices/modalSlice';
-import { toast } from 'react-toastify';
+} from "../slices/tripCargoUpdateSlice";
+import TripEditCargoModal from "../forms/TripEditCargoModal";
+import { useTranslation } from "react-i18next";
+import { openModal } from "../../modal/slices/modalSlice";
+import { toast } from "react-toastify";
 
 const TripCargo = ({ group }) => {
   const { t } = useTranslation();
@@ -44,10 +43,10 @@ const TripCargo = ({ group }) => {
         groupId: group.id,
       }).unwrap();
       dispatch(clearSelectedTrips());
-      toast.success(t('toasitfy.cargoAddSuccess'));
+      toast.success(t("toastify.cargoAddSuccess"));
     } catch (err) {
-      console.log('Cant add trip to cargo: ', err);
-      toast.error(t('toastify.cargoAddFail'));
+      console.log("Cant add trip to cargo: ", err);
+      toast.error(t("toastify.cargoAddFail"));
     }
   };
 
@@ -59,10 +58,10 @@ const TripCargo = ({ group }) => {
         groupId: group.id,
       }).unwrap();
       dispatch(clearSelectedTrips());
-      toast.info(t('toastify.cargoRemoveSuccess'));
+      toast.info(t("toastify.cargoRemoveSuccess"));
     } catch (err) {
-      console.log('Cannot remove this trip from cargo: ', err);
-      toast.error(t('toastify.cargoRemoveFail'));
+      console.log("Cannot remove this trip from cargo: ", err);
+      toast.error(t("toastify.cargoRemoveFail"));
     }
   };
 
@@ -70,12 +69,12 @@ const TripCargo = ({ group }) => {
     try {
       let tripGroupDeletePayload = {
         objectId: groupId,
-        message: t('misc.modalMessage'),
-        method: 'deleteTripGroup',
+        message: t("misc.modalMessage"),
+        method: "deleteTripGroup",
       };
       dispatch(openModal(tripGroupDeletePayload));
     } catch (err) {
-      console.log('Cannot delete this cargo: ', err);
+      console.log("Cannot delete this cargo: ", err);
     }
   };
 
@@ -95,7 +94,7 @@ const TripCargo = ({ group }) => {
               disabled={selectedTrips.length <= 0 || tripHasGroup}
               onClick={() => handleAddTripToGroup()}
             >
-              {t('buttons.add')}
+              {t("buttons.add")}
             </button>
             <button
               className="small-btn"
@@ -106,7 +105,7 @@ const TripCargo = ({ group }) => {
               }
               onClick={() => handleRemoveTripFromGroup()}
             >
-              {t('buttons.remove')}
+              {t("buttons.remove")}
             </button>
           </div>
         </div>

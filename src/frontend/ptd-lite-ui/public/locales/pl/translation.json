@@ -75,7 +75,7 @@
     "dateTo": "Do",
     "cargo": "Ładunek",
     "weight": "Tonaż (t)",
-    "temperature": "Temperatura",
+    "temperature": "Temperatura (\u00b0C)",
     "notes": "Notatki",
     "cargoFormHead": "Wybrane punkty trasy",
     "cargoEditFormHead": "Edytuj informacje o ładunku",

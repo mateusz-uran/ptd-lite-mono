@@ -76,7 +76,7 @@
     "dateTo": "To",
     "cargo": "Cargo",
     "weight": "Weight (t)",
-    "temperature": "Temperature",
+    "temperature": "Temperature (\u00b0C)",
     "notes": "Notes",
     "cargoFormHead": "Selected trips",
     "cargoEditFormHead": "Edit cargo information",
