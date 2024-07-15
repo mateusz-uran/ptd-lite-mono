@@ -12,8 +12,6 @@ import "../css/sidebar.css";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAuthContext } from "../features/auth/auth0Slice";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,7 +22,6 @@ import {
 
 const Sidebar = () => {
   const { t } = useTranslation();
-  const { logout, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(false);
   const outlet = useOutlet();
@@ -32,8 +29,7 @@ const Sidebar = () => {
   const readUpdate = useSelector(isUpdateRead);
 
   const handleLogout = () => {
-    logout();
-    dispatch(clearAuthContext());
+    //TODO: clear local storage from nickname
   };
 
   return (
@@ -121,7 +117,7 @@ const Sidebar = () => {
 
       <div className="outlet-wrapper">
         <ToastContainer autoClose={3000} position="top-right" />
-        {isAuthenticated && outlet}
+        {outlet}
       </div>
     </div>
   );

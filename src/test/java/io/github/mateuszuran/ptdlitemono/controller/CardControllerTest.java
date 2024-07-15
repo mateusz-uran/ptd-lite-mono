@@ -16,12 +16,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.time.YearMonth;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -62,7 +60,6 @@ class CardControllerTest {
         repository.deleteAll();
     }
 
-    @WithMockUser(username = "admin")
     @Test
     void givenUsername_whenGet_thenReturnLastThreeCards() throws Exception {
         //given
@@ -79,7 +76,6 @@ class CardControllerTest {
 
     }
 
-    @WithMockUser(username = "admin")
     @Test
     void givenCardObjectAndDate_whenSave_thenStatus() throws Exception {
         mockMvc.perform(post("/api/card/addcard")
@@ -89,7 +85,6 @@ class CardControllerTest {
                 .andDo(print());
     }
 
-    @WithMockUser(username = "admin")
     @Test
     void givenCardNumberAndId_whenUpdate_thenReturnUpdatedObject() throws Exception {
         //given
@@ -102,7 +97,6 @@ class CardControllerTest {
                 .andExpect(jsonPath("$.number").value("\"test\""));
     }
 
-    @WithMockUser(username = "admin")
     @Test
     void givenCardId_whenDelete_thenReturnStatus() throws Exception {
         //given
@@ -115,7 +109,6 @@ class CardControllerTest {
                 .andDo(print());
     }
 
-    @WithMockUser(username = "admin")
     @Test
     void givenCardId_whenCardNotFound_thenThrowException() throws Exception {
         // when + then
@@ -128,7 +121,6 @@ class CardControllerTest {
     }
 
 
-    @WithMockUser(username = "admin")
     @Test
     void givenCardId_whenGetTripsAndFuels_thenReturnCardDetails() throws Exception {
         Trip trip1 = Trip.builder().counterStart(200).counterEnd(300).build();
@@ -147,7 +139,6 @@ class CardControllerTest {
                 .andDo(print());
     }
 
-    @WithMockUser(username = "admin")
     @Test
     void givenUsernameAndDates_whenRetrieve_thenReturnMappedCardsList() throws Exception {
         //given
@@ -167,7 +158,6 @@ class CardControllerTest {
                 .andExpect(jsonPath("$.size()", is(4)));
     }
 
-    @WithMockUser(username = "john", authorities = {"read:rates"})
     @Test
     void givenUsername_whenRatesExists_thenReturnSelectedUserJsonRates() throws Exception {
         // given
@@ -189,7 +179,6 @@ class CardControllerTest {
                 .andExpect(jsonPath("$.username").value(username));
     }
 
-    @WithMockUser(username = "john")
     @Test
     void givenUsernameAndYear_whenStatisticExists_thenReturnListOfPerYear() throws Exception {
         statisticsRepository.deleteAll();
@@ -208,7 +197,6 @@ class CardControllerTest {
                 .andExpect(jsonPath("$.[2].yearMonth").value("2023-06"));
     }
 
-    @WithMockUser(username = "john")
     @Test
     void givenUsernameAndYearAndMonth_whenStatisticExists_thenReturnSpecificStatistic() throws Exception {
         //given

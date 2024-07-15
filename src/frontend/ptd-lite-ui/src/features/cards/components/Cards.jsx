@@ -1,25 +1,26 @@
-import '../../../css/cards.css';
-import Header from '../../../components/Header';
-import { useGetLastCardsQuery } from '../../../api/card/cardApiSlice';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useSelector } from 'react-redux';
-import { isCardEditing } from '../slices/updateCardSlice';
-import LoadingDots from '../../../components/LoadingDots';
-import { useTranslation } from 'react-i18next';
-import CardItem from './CardItem';
-import CardForm from '../forms/CardForm';
+import "../../../css/cards.css";
+import Header from "../../../components/Header";
+import { useGetLastCardsQuery } from "../../../api/card/cardApiSlice";
+import { useSelector } from "react-redux";
+import { isCardEditing } from "../slices/updateCardSlice";
+import LoadingDots from "../../../components/LoadingDots";
+import { useTranslation } from "react-i18next";
+import CardItem from "./CardItem";
+import CardForm from "../forms/CardForm";
 
 const Cards = () => {
   const { t } = useTranslation();
-  const { user } = useAuth0();
   let cards;
   const isEditing = useSelector(isCardEditing);
+
+  //TODO: read nickname from localstorage
+  const nickname = "John Doe";
   const {
     data: lastCards,
     isSuccess,
     isError,
     isLoading,
-  } = useGetLastCardsQuery(user.nickname);
+  } = useGetLastCardsQuery(nickname);
 
   if (isLoading) {
     cards = (
@@ -35,7 +36,7 @@ const Cards = () => {
     cards = (
       <div className="card-wrapper">
         <div className="single-card error">
-          <span>{t('misc.errorMessage')}</span>
+          <span>{t("misc.errorMessage")}</span>
         </div>
       </div>
     );
@@ -49,7 +50,7 @@ const Cards = () => {
     cards = (
       <div className="card-wrapper">
         <div className="single-card error">
-          <span>{t('misc.noCards')}.</span>
+          <span>{t("misc.noCards")}.</span>
         </div>
       </div>
     );
@@ -60,20 +61,20 @@ const Cards = () => {
       <Header
         compArray={[
           {
-            compName: t('misc.cards'),
+            compName: t("misc.cards"),
           },
         ]}
       />
       <section className="cards-section">
         <span className="h-section">
-          <p className={`${!isEditing ? 'edit' : ''}`}>
-            {t('buttons.smallAdd')}
+          <p className={`${!isEditing ? "edit" : ""}`}>
+            {t("buttons.smallAdd")}
           </p>
           <span>&nbsp;/&nbsp;</span>
-          <p className={`${isEditing ? 'edit' : ''}`}>
-            {t('buttons.smallEdit')}
+          <p className={`${isEditing ? "edit" : ""}`}>
+            {t("buttons.smallEdit")}
           </p>
-          <span>{t('misc.card')}</span>
+          <span>{t("misc.card")}</span>
         </span>
         <CardForm />
         {cards}

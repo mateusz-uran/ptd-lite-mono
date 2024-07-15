@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import auht0Reducer from "./features/auth/auth0Slice";
 import updateCardReducer from "./features/cards/slices/updateCardSlice";
 import tripUpdateReducer from "./features/trips/slices/tripUpdateSlice";
 import fuelEditReducer from "./features/fuel/slices/fuelEditSlice";
@@ -18,7 +17,6 @@ import updateInfoReducer from "./features/updates/slices/updateInfoSlice";
 
 export const store = configureStore({
   reducer: {
-    auth0: auht0Reducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
     updateCard: updateCardReducer,
     updateTrip: tripUpdateReducer,

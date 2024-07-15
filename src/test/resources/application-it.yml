@@ -15,13 +15,6 @@ spring:
       ddl-auto: create-drop
     show-sql: 'false'
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          audience: https://ptd-lite/api
-          issuer-uri: https://dev-t6j70c45sd0mgjac.eu.auth0.com/
-
 pdf:
   csv:
     link: file:/test.csv
@@ -34,11 +27,3 @@ frontend:
 backend:
   url: http://localhost:8080
 
-# Machine to Machine credentials #
-ptd:
-  lite:
-    machine-to-machine:
-      domain: dev-123.eu.auth0.com
-      audience: https://dev-123.eu.auth0.com/api/v2/
-      client-secret: xyz
-      client-id: abc

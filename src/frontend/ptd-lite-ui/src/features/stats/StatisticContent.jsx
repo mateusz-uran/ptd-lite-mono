@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetStatisticsFromYearByUsernameQuery } from "../../api/stats/statsApiSlice";
@@ -9,11 +8,12 @@ import LoadingDots from "../../components/LoadingDots";
 
 const StatisticContent = () => {
   const { t } = useTranslation();
-  const { user } = useAuth0();
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const [statsYear, setStatsYear] = useState(currentYear);
 
+  // TODO: retrieve nickname from local storage
+  const nickname = "John Doe";
   const {
     data: statisticFromYear,
     isSuccess,
@@ -22,7 +22,7 @@ const StatisticContent = () => {
     error,
   } = useGetStatisticsFromYearByUsernameQuery({
     year: statsYear,
-    username: user.nickname,
+    username: nickname,
   });
 
   let sectionContent;

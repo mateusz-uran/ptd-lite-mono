@@ -7,8 +7,6 @@ import io.github.mateuszuran.ptdlitemono.dto.response.CardStatisticResponse;
 import io.github.mateuszuran.ptdlitemono.service.CardService;
 import io.github.mateuszuran.ptdlitemono.service.CardStatisticService;
 import io.github.mateuszuran.ptdlitemono.service.HourRateService;
-import io.github.mateuszuran.ptdlitemono.service.cronjob.Auth0UsersListProvider;
-import io.github.mateuszuran.ptdlitemono.service.cronjob.StatisticCollector;
 import io.github.mateuszuran.ptdlitemono.service.logic.json.pojo.UserRates;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +26,6 @@ public class CardController {
     private final HourRateService hourRateService;
 
     private final CardStatisticService statisticsService;
-    private final StatisticCollector updater;
-
-    private final Auth0UsersListProvider nicknamesProvider;
 
     @GetMapping
     public ResponseEntity<List<CardResponse>> getLastThreeCardsByMonth(@RequestParam String username) {

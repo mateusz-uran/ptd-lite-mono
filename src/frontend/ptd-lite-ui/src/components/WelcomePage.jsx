@@ -2,96 +2,32 @@ import logo from "../assets/logo-bg.png";
 import "../css/welcome_page.css";
 import { MdLogin, MdDashboard, MdOutlineQueryStats } from "react-icons/md";
 import { BsBook, BsArchiveFill } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import useStoredNick from "../hooks/useStoredNick";
+import { useState } from "react";
 
 const WelcomePage = () => {
   const { t } = useTranslation();
-  const { logout, isAuthenticated, isLoading } = useAuth0();
-  const navigate = useNavigate();
+  const [nick, setNick] = useStoredNick();
+  const [inputNick, setInputNick] = useState("");
 
-  const handleLogout = () => {
-    logout({
-      logoutParams: {
-        returnTo: window.location.origin,
-      },
-    });
+  const handleLogin = () => {
+    setNick(inputNick);
+    setInputNick("");
   };
 
-  let navbar;
-
-  if (isLoading) {
-    navbar = <nav></nav>;
-  }
-
-  if (!isLoading && !isAuthenticated) {
-    navbar = (
-      <nav>
-        <button onClick={() => navigate("/home")}>
-          <span>{t("buttons.login")}</span>
-          <MdLogin />
-        </button>
-      </nav>
-    );
-  }
-
-  if (!isLoading && isAuthenticated) {
-    navbar = (
-      <nav>
-        <button onClick={handleLogout}>
-          <span>{t("buttons.logout")}</span>
-          <MdLogin />
-        </button>
-      </nav>
-    );
-  }
-  let links;
-
-  if (isLoading) {
-    links = (
-      <div className="link-wrapper">
-        <div className="link">
-          <div className="container">
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (isAuthenticated && !isLoading) {
-    links = (
-      <div className="link-wrapper">
-        <div className="link">
-          <Link to={"/home/dashboard"}>
-            <MdDashboard className="icon" />
-            <span>{t("misc.dashboard")}</span>
-          </Link>
-        </div>
-        <div className="link">
-          <Link to={"/home/cards"}>
-            <BsBook className="icon" />
-            <span>{t("misc.cards")}</span>
-          </Link>
-        </div>
-        <div className="link">
-          <Link to={"/home/stats"}>
-            <MdOutlineQueryStats className="icon" />
-            <span>{t("misc.stats")}</span>
-          </Link>
-        </div>
-        <div className="link">
-          <Link to={"/home/archive"}>
-            <BsArchiveFill className="icon" />
-            <span>{t("misc.arch")}</span>
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const navbar = (
+    <nav>
+      {nick !== "empty" ? (
+        <span>
+          Karty użytkownika: <p> {nick}</p>
+        </span>
+      ) : (
+        <span>Zaloguj się byku</span>
+      )}
+    </nav>
+  );
 
   return (
     <section className="welcome-page">
@@ -103,6 +39,23 @@ const WelcomePage = () => {
           <span className="dot"></span>
         </div>
       </div>
+      <aside>
+        <div className="wrapper">
+          <label htmlFor="nickname" className="primary-label">
+            Podaj nick parówo
+          </label>
+          <input
+            type="text"
+            id="nickname"
+            className="primary-input"
+            value={inputNick}
+            onChange={(e) => setInputNick(e.target.value)}
+          />
+          <button className="primary-btn" onClick={handleLogin}>
+            Zapisz
+          </button>
+        </div>
+      </aside>
       <div className="link-wrapper">
         <div className="link">
           <Link to={"/home/dashboard"}>

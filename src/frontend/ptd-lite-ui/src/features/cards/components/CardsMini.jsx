@@ -1,22 +1,23 @@
-import { Link } from 'react-router-dom';
-import '../../css/cards_mini.css';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useGetLastCardsQuery } from '../../api/card/cardApiSlice';
-import { useTranslation } from 'react-i18next';
+import { Link } from "react-router-dom";
+import "../../css/cards_mini.css";
+import { useGetLastCardsQuery } from "../../api/card/cardApiSlice";
+import { useTranslation } from "react-i18next";
 
 const CardsMini = () => {
   const { t } = useTranslation();
-  const { user } = useAuth0();
+
+  //TODO: read nickname from localstorage
+  const nickname = "John Doe";
 
   const {
     data: lastCards,
     isSuccess,
     isError,
     isLoading,
-  } = useGetLastCardsQuery(user.nickname);
+  } = useGetLastCardsQuery(nickname);
 
   function storeSelectedCard(cardId) {
-    localStorage.setItem('selected_card', Number(cardId));
+    localStorage.setItem("selected_card", Number(cardId));
   }
 
   let cardsMiniList;
@@ -36,7 +37,7 @@ const CardsMini = () => {
       <section className="cards-mini">
         <ul>
           <li>
-            <span className="empty">{t('misc.cardsMiniError')}</span>
+            <span className="empty">{t("misc.cardsMiniError")}</span>
           </li>
         </ul>
       </section>
@@ -72,7 +73,7 @@ const CardsMini = () => {
       <section className="cards-mini">
         <ul>
           <li>
-            <span className="empty">{t('misc.cardsMiniNoData')}</span>
+            <span className="empty">{t("misc.cardsMiniNoData")}</span>
           </li>
         </ul>
       </section>

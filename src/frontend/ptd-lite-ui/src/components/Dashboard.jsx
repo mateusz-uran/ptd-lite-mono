@@ -4,7 +4,6 @@ import StatisticContent from "../features/stats/StatisticContent";
 import { Link, useLocation } from "react-router-dom";
 import { selectedTripArray } from "../features/trips/slices/tripSelectedSlice";
 import { useSelector } from "react-redux";
-import { getPermissions } from "../features/auth/auth0Slice";
 import "../css/dashboard.css";
 import { BiLinkExternal } from "react-icons/bi";
 import DashManageBar from "../features/dashboard/DashManageBar";
@@ -13,24 +12,16 @@ import { useGetLastTripByCardIdQuery } from "../api/trips/tripsApiSlice";
 import PetrolTable from "../features/fuel/components/PetrolTable";
 import AdBlueTable from "../features/fuel/components/AdBlueTable";
 import DashSkeleton from "../features/dashboard/DashSkeleton";
-import { useAuth0 } from "@auth0/auth0-react";
+import useStoredNick from "../hooks/useStoredNick";
+import useStoredCardDetails from "../hooks/useStoredCardDetails ";
 
 const Dashboard = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const { user } = useAuth0();
-  var storedCardAndUser = JSON.parse(localStorage.getItem("card_and_user"));
-
-  let fetchData = true;
-  if (storedCardAndUser && storedCardAndUser.nick === user.nickname) {
-    fetchData = true;
-  } else {
-    localStorage.removeItem("card_and_user");
-    fetchData = false;
-  }
+  const [nick] = useStoredNick();
+  const [cardDetails, storeCardDetails] = useStoredCardDetails();
 
   const selectedTrips = useSelector(selectedTripArray);
-  const loggedInUserRole = useSelector(getPermissions);
 
   const containsGroup = selectedTrips.some(
     (item) => item.group && item.group !== null
@@ -42,13 +33,13 @@ const Dashboard = () => {
     error,
     isLoading,
     isSuccess,
-  } = useGetLastTripByCardIdQuery(storedCardAndUser?.cardId, {
-    skip: storedCardAndUser === null || !fetchData,
+  } = useGetLastTripByCardIdQuery(cardDetails.cardId, {
+    skip: nick === "empty",
   });
 
   let sectionContent;
 
-  if (storedCardAndUser === null) {
+  if (nick === null || nick === "empty") {
     sectionContent = <DashSkeleton />;
   } else {
     sectionContent = (
@@ -57,32 +48,29 @@ const Dashboard = () => {
           <h5>
             {t("dashboard.chosenCard")}
             :&nbsp;
-            {storedCardAndUser.cardNumber
-              ? storedCardAndUser.cardNumber
-              : "-/-"}
+            {cardDetails.cardNumber ? cardDetails.cardNumber : "-/-"}
           </h5>
           <Link
             to={`${location.pathname}/${encodeURIComponent(
-              storedCardAndUser.cardNumber
-            )}/${storedCardAndUser.cardId}`}
+              cardDetails.cardNumber
+            )}/${cardDetails.cardId}`}
             className={`${
-              storedCardAndUser.cardNumber === null ? "disabled-link" : ""
+              cardDetails.cardNumber === null ? "disabled-link" : ""
             }`}
           >
             <button
               className="small-btn small-manage-btn"
-              disabled={storedCardAndUser.cardNumber === null}
+              disabled={cardDetails.cardNumber === null}
             >
               <BiLinkExternal />
             </button>
           </Link>
         </div>
         <DashManageBar
-          selectedCardId={storedCardAndUser.cardId}
-          selectedCardNumber={storedCardAndUser.cardNumber}
+          selectedCardId={cardDetails.cardId}
+          selectedCardNumber={cardDetails.cardNumber}
           selectedTrips={selectedTrips}
           containsGroup={containsGroup}
-          loggedInUserRole={loggedInUserRole}
         />
 
         <div className="trip-manage">
@@ -95,16 +83,10 @@ const Dashboard = () => {
           />
         </div>
         <div className="petrol-manage">
-          <PetrolTable
-            cardId={storedCardAndUser.cardId}
-            component={"dashboard"}
-          />
+          <PetrolTable cardId={cardDetails.cardId} component={"dashboard"} />
         </div>
         <div className="adblue-manage">
-          <AdBlueTable
-            cardId={storedCardAndUser.cardId}
-            component={"dashboard"}
-          />
+          <AdBlueTable cardId={cardDetails.cardId} component={"dashboard"} />
         </div>
         <StatisticContent />
       </>

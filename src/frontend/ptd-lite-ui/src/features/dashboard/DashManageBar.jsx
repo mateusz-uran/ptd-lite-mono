@@ -8,7 +8,6 @@ const DashManageBar = ({
   selectedCardNumber,
   selectedTrips,
   containsGroup,
-  loggedInUserRole,
 }) => {
   const { t } = useTranslation();
   return (
@@ -52,23 +51,22 @@ const DashManageBar = ({
             {t("buttons.addCargo")}
           </button>
         </Link>
-        {loggedInUserRole.includes("super_driver") && (
-          <Link
-            to={`${location.pathname}/${encodeURIComponent(
-              selectedCardNumber
-            )}/${selectedCardId}/invoice`}
-            className={`cargo-link ${
-              selectedTrips?.length <= 0 ? "inactive" : undefined
-            }`}
+        {"TODO: visible only for super_driver, hide if user is not"}
+        <Link
+          to={`${location.pathname}/${encodeURIComponent(
+            selectedCardNumber
+          )}/${selectedCardId}/invoice`}
+          className={`cargo-link ${
+            selectedTrips?.length <= 0 ? "inactive" : undefined
+          }`}
+        >
+          <button
+            className="secondary-btn"
+            disabled={selectedTrips?.length <= 0}
           >
-            <button
-              className="secondary-btn"
-              disabled={selectedTrips?.length <= 0}
-            >
-              {t("buttons.countInvoice")}
-            </button>
-          </Link>
-        )}
+            {t("buttons.countInvoice")}
+          </button>
+        </Link>
         <Link to={`${location.pathname}/crm`}>
           <button className="secondary-btn">CRM</button>
         </Link>

@@ -1,23 +1,14 @@
 pdf:
   csv:
-    link: ${CSV_LINK}
+    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1718383956/user_metadata_witcnu.csv
 hour-rate:
   json:
-    link: ${JSON_LINK}
+    link: https://res.cloudinary.com/dzwnsabwr/raw/upload/v1689863848/driver_rates_json_tshfmc.txt
 
 frontend:
   urls: http://localhost:5173,http://localhost:5173/home
 backend:
   url: http://localhost:8080
-
-# Machine to Machine credentials #
-ptd:
-  lite:
-    machine-to-machine:
-      domain: ${M2M_DOMAIN}
-      audience: ${M2M_AUDIENCE}
-      client-secret: ${M2M_CLIENT_SECRET}
-      client-id: ${M2M_CLIENT_ID}
 
 spring:
   jpa:
@@ -28,13 +19,6 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: mateuszuran
     password: password
-
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          audience: ${AUTH0_AUDIENCE}
-          issuer-uri: ${AUTH0_ISSUER_URI}
 
   application:
     name: ptd-lite
@@ -52,3 +36,7 @@ management:
       enabled: true
     prometheus:
       enabled: true
+
+application:
+  cors:
+    origins: http://localhost:5173

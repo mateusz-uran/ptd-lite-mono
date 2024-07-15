@@ -4,7 +4,6 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectedTripArray } from "../../trips/slices/tripSelectedSlice";
 import { useTranslation } from "react-i18next";
-import { getPermissions } from "../../auth/auth0Slice";
 import { openModal } from "../../modal/slices/modalSlice";
 
 const CardManageBar = () => {
@@ -12,7 +11,6 @@ const CardManageBar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const selectedTrips = useSelector(selectedTripArray);
-  const loggedInUserRole = useSelector(getPermissions);
   const { cardId } = useParams();
 
   const containsGroup = selectedTrips.some(
@@ -59,21 +57,20 @@ const CardManageBar = () => {
             {t("buttons.addCargo")}
           </button>
         </Link>
-        {loggedInUserRole.includes("super_driver") && (
-          <Link
-            to={"invoice"}
-            className={`cargo-link ${
-              selectedTrips?.length <= 0 ? "inactive" : undefined
-            }`}
+        {/* TODO: replace with different approach to render driver rates */}
+        <Link
+          to={"invoice"}
+          className={`cargo-link ${
+            selectedTrips?.length <= 0 ? "inactive" : undefined
+          }`}
+        >
+          <button
+            className="secondary-btn"
+            disabled={selectedTrips?.length <= 0}
           >
-            <button
-              className="secondary-btn"
-              disabled={selectedTrips?.length <= 0}
-            >
-              {t("buttons.countInvoice")}
-            </button>
-          </Link>
-        )}
+            {t("buttons.countInvoice")}
+          </button>
+        </Link>
         <button onClick={handleDeleteCard} className="primary-btn delete">
           {t("buttons.deleteCard")}
         </button>

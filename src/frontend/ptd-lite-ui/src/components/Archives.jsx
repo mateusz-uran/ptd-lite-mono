@@ -2,7 +2,6 @@ import "../css/archives.css";
 import { useTranslation } from "react-i18next";
 import Header from "./Header";
 import "react-datepicker/dist/react-datepicker.css";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useGetCardsFromArchiveQuery } from "../api/card/cardApiSlice";
 import CardItem from "../features/cards/components/CardItem";
 import LoadingDots from "./LoadingDots";
@@ -18,12 +17,14 @@ import {
 
 const Archives = () => {
   const { t } = useTranslation();
-  const { user } = useAuth0();
   let archiveBody;
 
   const skipStatus = useSelector(isFetchingByDatesRange);
   const startDateRange = useSelector(startDateFromRange);
   const endDateRange = useSelector(endDateFromRange);
+
+  // TODO: read username from local storage
+  const nickname = "test";
 
   const {
     data: allCards,
@@ -33,7 +34,7 @@ const Archives = () => {
     refetch,
   } = useGetCardsFromArchiveQuery(
     {
-      username: user.nickname,
+      username: nickname,
       firstDate: String(startDateRange),
       secondDate: String(endDateRange),
     },
