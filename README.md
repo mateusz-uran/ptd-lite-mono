@@ -141,7 +141,7 @@ Authorization: Bearer ${token}
 | PATCH  | `/api/card?cardId=123`                                     | [update card number](#update-card)                                  |
 | DELETE | `/api/card/delete?cardId=123`                              | [delete card by id](#delete-card)                                   |
 | GET    | `/api/stat/2023/john123`                                   | [get user stats by year ](#users-statistics-by-year)                      |
-| GET    | `/api/stat/2023/6/john123`                                 | [get user stats by motnh and year](#users-statistics-by-year-and-month)   |
+| GET    | `/api/stat/2023/6/john123`                                 | [get user stats by month and year](#users-statistics-by-year-and-month)   |
 
 ---
 
