@@ -43,7 +43,7 @@ Features:
 
 ### Built With
 
-React 18+, Vite, React Router v6, React Redux, Axios, i18next, react-hook-form, react-datepicker, yup
+React 18+, Vite, React Router v6, React Redux, Axios, i18next, react-hook-form, react-datepicker, yup, recharts, toastify
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -198,6 +198,15 @@ helper links:
 
 <p align="center">
   <img src="https://github.com/mateusz-uran/ptd-lite-mono/blob/dev/src/frontend/ptd-lite-ui/readmeimg/invoice.png">
+</p>
+
+12. A new available feature includes statistics handled by Recharts. Each user can check driven kilometers
+    or created cards per year or month. The application has a separate tab where the user can check these numbers
+    in convenient charts. By default, statistics from the current year are loaded, but users can also browse statistics
+    from previous years if they exist.
+
+<p align="center">
+  <img src="https://github.com/mateusz-uran/ptd-lite-mono/blob/dev/src/frontend/ptd-lite-ui/readmeimg/stats.png">
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
