@@ -47,6 +47,13 @@ All of this information must be present on the road card and delivered to the em
 improves this process by automating certain tasks and using dynamic forms.
 Ultimately, the user stores all the data, and the application generates a finalized and formatted PDF file.
 
+Additionally, the application has the functionality to save statistics based on the data added by the user. 
+This means that by consecutively adding new cards and route points, the background counters for statistics update information
+such as the number of kilometers traveled by the user in a month or the number of cards created. Furthermore, 
+a so-called cron job runs once a month to check and, if necessary, update the statistics to ensure everything is accurate.
+
+Additonaly
+
 Features:
 
 * Adding, removing, and editing all data that the user enters.
@@ -58,6 +65,7 @@ Features:
 * Managing exceptions through ControllerAdvice.
 * And most importantly, generating PDF files.
   Additionally, reading data from CSV and JSON files stored in the cloud under a public address.
+* Collecting statistics individually for each user.
 
 ### Built With
 
@@ -101,11 +109,11 @@ Requirements for application to work properly:
 
 #### 1. [ptd-lite-ui](https://github.com/mateusz-uran/ptd-lite-mono/tree/dev/src/frontend/ptd-lite-ui/README.md)
 
-- Main frontend application activly used in production environment, still in development.      
+- Fully developed frontend application ready to be enhanced with new features.      
 
 #### 2. [ptd-lite-mono-interface (_deprecated_)](https://github.com/mateusz-uran/ptd-lite-mono/blob/dev/src/frontend/ptd-lite-mono-interface/README.md)
 
-- Old frontend application that is no longer maintained and used. Soon all api endpoints that is using will be deleted.
+- Old frontend application that is no longer maintained and used.
 
 ### API Endpoints
 
@@ -123,15 +131,17 @@ Authorization: Bearer ${token}
 
 ### GET, POST, PATCH, DELETE
 
-| Method | Endpoint                                                   | Description                                       |
-|--------|------------------------------------------------------------|---------------------------------------------------|
-| GET    | `/api/card?username=john123`                               | [get last three cards](#get-last-cards)           |
-| GET    | `/api/card/rates?username=john123`                         | [get user rates from json file](#get-rates)       |
-| GET    | `/api/card/details?id=123`                                 | [get all associated data from card](#get-details) |
-| GET    | `/api/card/archive?username=""&firstDate=""&secondDate=""` | [get all cards by dates between](#get-archive)    |
-| POST   | `/api/card/addcard`                                        | [add new card](#add-card)                         |
-| PATCH  | `/api/card?cardId=123`                                     | [update card number](#update-card)                |
-| DELETE | `/api/card/delete?cardId=123`                              | [delete card by id](#delete-card)                 |
+| Method | Endpoint                                                   | Description                                                         |
+|--------|------------------------------------------------------------|---------------------------------------------------------------------|
+| GET    | `/api/card?username=john123`                               | [get last three cards](#get-last-cards)                             |
+| GET    | `/api/card/rates?username=john123`                         | [get user rates from json file](#get-rates)                         |
+| GET    | `/api/card/details?id=123`                                 | [get all associated data from card](#get-details)                   |
+| GET    | `/api/card/archive?username=""&firstDate=""&secondDate=""` | [get all cards by dates between](#get-archives)                     |
+| POST   | `/api/card/addcard`                                        | [add new card](#add-card)                                           |
+| PATCH  | `/api/card?cardId=123`                                     | [update card number](#update-card)                                  |
+| DELETE | `/api/card/delete?cardId=123`                              | [delete card by id](#delete-card)                                   |
+| GET    | `/api/stat/2023/john123`                                   | [get user stats by year ](#users-statistics-by-year)                      |
+| GET    | `/api/stat/2023/6/john123`                                 | [get user stats by motnh and year](#users-statistics-by-year-and-month)   |
 
 ---
 
@@ -164,9 +174,9 @@ Authorization: Bearer ${token}
 | POST   | `/api/fuel/petrol/addmultiple?cardId=123` | [add array of petrol to card](#add-petrol) |
 | POST   | `/api/fuel/blue/addmultiple?cardId=123`   | [add array of adBlue to card](#add-blue)   |
 | PATCH  | `/api/fuel/petrol/update?fuelId=123`      | [update petrol info](#update-petrol)       |
-| PATCH  | `/api/fuel/petrol/update?blueId=123`      | [update adBlue info](#update-blue)         |
+| PATCH  | `/api/fuel/blue/update?blueId=123`        | [update adBlue info](#update-blue)         |
 | DELETE | `/api/fuel/petrol/delete?fuelId=123`      | [delete single petrol](#delete-petrol)     |
-| DELETE | `/api/fuel/petrol/delete?blueId=123`      | [delete single adBlue](#delete-blue)       |
+| DELETE | `/api/fuel/blue/delete?blueId=123`        | [delete single adBlue](#delete-blue)       |
 
 #### 4. PDF controller
 
@@ -301,7 +311,7 @@ _Response example_ </br>
 
 ---
 
-### Get Archives
+#### Get Archives
 
 endpoint: `/api/card/archive?username="john123"&firstDate="12/06/2023"&secondDate="27/07/2023"`
 
@@ -395,6 +405,67 @@ _Response example_
 ```
 // status
 HttpStatus.NO_CONTENT 204
+```
+
+---
+
+#### Users statistics by year
+
+endpoint: `/api/card/stat/2023/johndoe123`
+
+| Path variables | Required |  Type  | Description                                    |
+|:------:|:--------:|:------:|------------------------------------------------|
+| year |   true   | int | The year from which statistics will be taken for each user |
+| username |   true   | string | Username of the user from whom the statistics are taken |
+
+_Response example_
+
+```
+// list of CardStatistics
+[
+    {
+        "id": 3,
+        "cardMileage": 4500,
+        "cardCounter": 3,
+        "yearMonth": "2023-06"
+    },
+    {
+        "id": 4,
+        "cardMileage": 6593,
+        "cardCounter": 5,
+        "yearMonth": "2023-07"
+    },
+    {
+        "id": 1,
+        "cardMileage": 13453,
+        "cardCounter": 8,
+        "yearMonth": "2023-09"
+    }
+]
+```
+
+---
+
+#### Users statistics by year and month
+
+endpoint: `/api/card/stat/2023/6/johndoe123`
+
+| Path variables | Required |  Type  | Description                                    |
+|:------:|:--------:|:------:|------------------------------------------------|
+| year |   true   | int | The year from which statistics will be taken for each user |
+| month |   true   | int | The month from which statistics will be taken for each user |
+| username |   true   | string | Username of the user from whom the statistics are taken |
+
+_Response example_
+
+```
+//single object CardResponse
+{
+    "id": 3,
+    "cardMileage": 4500,
+    "cardCounter": 3,
+    "yearMonth": "2023-06"
+}
 ```
 
 ---
